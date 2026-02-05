@@ -1,0 +1,116 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-05T21:03:32.082Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 6,
+    "implemented": 4,
+    "items": [
+      {
+        "id": "REQ-12",
+        "summary": "Implement backend auto-seeding so the app always starts with at least 5 premium/luxury salons (never an empty salon list). On canister init and post-upgrade (or on the first getSalons call), if there are zero salons stored, automatically create 5 salons with: (1) premium flag, (2) photo URL(s) pointing to real photos, (3) neighborhood and description, (4) a non-empty services list, and (5) bookable availability time slots for today and tomorrow.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-13",
+        "summary": "Extend the backend salon and booking data model to support the new SaaS creation flow and seeded content: salons must store neighborhood, description, photo URL, premium flag, and a list of services (label, durationMinutes, price). Availability must support bookable slots for specific dates (today/tomorrow), not only a weekday label. Update booking logic to book a specific date+time slot and to correctly mark that exact slot as unavailable after booking.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-14",
+        "summary": "Replace the current Pro ‘Create salon’ single-input form with a 3-step configuration wizard: Step 1 Salon info (Name, Neighborhood, Description, optional Photo URL), Step 2 Services (add/remove services with Label, Duration (minutes), Price), Step 3 Planning (define opening hours used to generate availability). On completion, submit the full configuration to the backend and create the salon with generated availability for today and tomorrow.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/ProSalonWizard.tsx",
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/pages/ProDashboardPage.tsx",
+          "frontend/src/components/CreateSalonForm.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/ProSalonWizard.tsx",
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/pages/ProDashboardPage.tsx",
+          "frontend/src/components/CreateSalonForm.tsx"
+        ]
+      },
+      {
+        "id": "REQ-15",
+        "summary": "Update the client home salon list UI to be driven by backend salon metadata: display each salon’s real photo (from salon.photoUrl), description, neighborhood, and premium status. Ensure the UI does not show an ‘No salons available’ empty state under normal conditions because the backend auto-seeds salons when empty.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/components/SalonListSection.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/components/SalonListSection.tsx"
+        ]
+      },
+      {
+        "id": "REQ-16",
+        "summary": "Implement a loyalty system: add XP to the client profile, show a ‘Member Card’ on the client Profile tab with a VIP progress bar and tier label (e.g., “Silver — 300 XP”), and grant XP whenever a booking is successfully confirmed. Store XP in the backend user profile so it persists across refresh/login.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/MemberCard.tsx",
+          "frontend/src/pages/ClientDashboardPage.tsx",
+          "frontend/src/hooks/useQueries.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/MemberCard.tsx",
+          "frontend/src/pages/ClientDashboardPage.tsx",
+          "frontend/src/hooks/useQueries.ts"
+        ]
+      },
+      {
+        "id": "REQ-17",
+        "summary": "Add a visual ‘Premium’ badge on salons marked as premium by the backend (in both the salon list and salon details surfaces). The badge must be data-driven (based on the backend isPremium field), not hardcoded to the first salon.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/PremiumBadge.tsx",
+          "frontend/src/components/SalonListSection.tsx",
+          "frontend/src/pages/SalonDetailsPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/PremiumBadge.tsx",
+          "frontend/src/components/SalonListSection.tsx",
+          "frontend/src/pages/SalonDetailsPage.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "backend/main.mo",
+    "backend/migration.mo",
+    "build-request.json",
+    "build-template/README.md",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/CreateSalonForm.tsx",
+    "frontend/src/components/MemberCard.tsx",
+    "frontend/src/components/PremiumBadge.tsx",
+    "frontend/src/components/ProSalonWizard.tsx",
+    "frontend/src/components/ProfileSetupModal.tsx",
+    "frontend/src/components/SalonListSection.tsx",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/pages/ClientDashboardPage.tsx",
+    "frontend/src/pages/ProDashboardPage.tsx",
+    "frontend/src/pages/SalonDetailsPage.tsx",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

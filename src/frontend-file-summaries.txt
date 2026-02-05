@@ -1,0 +1,18 @@
+{
+  "frontend/src/App.tsx": "Main application component that handles authentication state, profile loading with proper null/undefined checks, and role-based routing to Client or Pro dashboards.",
+  "frontend/src/pages/LoginPage.tsx": "Landing and login page with Internet Identity authentication, featuring the QuickReveal branding and marketing content using CSS animations instead of framer-motion.",
+  "frontend/src/pages/ClientDashboardPage.tsx": "Client dashboard with bottom navigation for exploring salons, viewing bookings, and accessing profile with integrated MemberCard showing loyalty tier and XP.",
+  "frontend/src/pages/ProDashboardPage.tsx": "Professional dashboard with Monopoly Mode, revenue chart, team management, and new ProSalonWizard for creating salons with full configuration.",
+  "frontend/src/pages/SalonDetailsPage.tsx": "Salon detail view with premium badge, backend-driven services list, time slot booking with dynamic pricing, and proper booking submission with date/service parameters.",
+  "frontend/src/components/AuthHeader.tsx": "Header component displaying branding, user type badge, notifications icon, and logout button.",
+  "frontend/src/components/ProfileSetupModal.tsx": "Modal dialog for first-time users to set up their profile with name and role selection, now including default XP and tier values required by the UserProfile type.",
+  "frontend/src/components/SalonListSection.tsx": "Salon list component displaying featured premium salon hero card and recommended salons grid using backend data (photos, descriptions, neighborhoods, premium badges).",
+  "frontend/src/components/CreateSalonForm.tsx": "Form component for creating new salons with name input and submission handling.",
+  "frontend/src/components/MonopolyModeSwitch.tsx": "Toggle switch component for Monopoly Mode with visual state changes using CSS transitions instead of framer-motion.",
+  "frontend/src/components/RevenueChart.tsx": "Area chart component displaying weekly revenue data using Recharts.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for backend operations including user profiles, salons with auto-seeding, and bookings with proper cache invalidation including profile refresh after booking.",
+  "frontend/src/index.css": "Global styles with custom CSS variables for the dark theme color palette and scrollbar hiding utilities.",
+  "frontend/src/components/ProSalonWizard.tsx": "A 3-step wizard component for creating salons with Info (name/neighborhood/description/photo/premium), Services (add/edit/remove services with duration and price), and Opening Hours steps that submits complete salon configuration to the backend.",
+  "frontend/src/components/MemberCard.tsx": "A loyalty member card component displaying user's tier (Bronze/Silver/Gold/Platinum), current XP, progress bar to next tier, and tier-specific gradient styling.",
+  "frontend/src/components/PremiumBadge.tsx": "A small reusable badge component with crown icon that displays \"Premium\" label for premium salons."
+}

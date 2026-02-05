@@ -1,0 +1,79 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-05T21:03:32.079Z",
+  "summary": "Diff implements the new data fields (neighborhood/description/photoUrls/isPremium/services, availability with date), adds a seeding mechanism and premium badge UI, and adds a loyalty MemberCard UI with XP/tier stored in UserProfile. However, several acceptance criteria are not fully evidenced: seeding uses hardcoded dates rather than today/tomorrow, the Pro wizard’s Step 3 planning does not appear to affect availability generation, and backend booking→slot-unavailable + XP increment behavior is not clearly shown in the truncated backend diff.",
+  "missing_requirements": [
+    {
+      "id": "REQ-12",
+      "requirement": "Seed availability slots for today and tomorrow (real current dates), not fixed example dates.",
+      "reason": "Seeding uses hardcoded date strings (\"2024-01-15\"/\"2024-01-16\") rather than computing today/tomorrow from current time.",
+      "evidence": [
+        "backend/main.mo",
+        "backend/migration.mo"
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "requirement": "bookSalon must book a specific date+time slot and mark only that exact slot as unavailable after booking.",
+      "reason": "Frontend passes (salonName, time, date, serviceName), but the backend booking/unavailability logic is not visible in the truncated backend diff, so it is not evidenced that the exact slot is marked unavailable.",
+      "evidence": [
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/pages/SalonDetailsPage.tsx",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "requirement": "Wizard Step 3 Planning must capture opening hours used to generate availability for today and tomorrow, and submit that configuration to backend so availability is generated accordingly.",
+      "reason": "ProSalonWizard maintains an openingHours state, but the createSalon mutation payload does not include opening hours/planning data, and the backend createSalon signature shown in hooks only takes (name, neighborhood, description, photoUrls, services, isPremium). No evidence that Step 3 drives availability generation.",
+      "evidence": [
+        "frontend/src/components/ProSalonWizard.tsx",
+        "frontend/src/hooks/useQueries.ts"
+      ]
+    },
+    {
+      "id": "REQ-16",
+      "requirement": "Grant XP whenever a booking is successfully confirmed and persist it in backend profile.",
+      "reason": "Frontend invalidates the currentUserProfile query after booking, and profile types include xp/tier, but the backend logic that increments xp upon successful booking is not shown in the truncated backend diff.",
+      "evidence": [
+        "frontend/src/hooks/useQueries.ts",
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Pro salon creation wizard includes an isPremium toggle during creation.",
+      "reason": "REQ-14 specifies step inputs (info, services, planning) but does not request allowing pros to set premium status; premium is intended to be seeded/data-driven.",
+      "evidence": [
+        "frontend/src/components/ProSalonWizard.tsx",
+        "frontend/src/hooks/useQueries.ts"
+      ]
+    },
+    {
+      "description": "Added a dedicated backend method call from the frontend: actor.ensureSalonsSeeded().",
+      "reason": "REQ-12 allows seeding on init/post-upgrade/first getSalons, but introducing a new explicit RPC for seeding is an extra behavior not requested (even if it supports the goal).",
+      "evidence": [
+        "frontend/src/hooks/useQueries.ts"
+      ]
+    }
+  ],
+  "confidence": 0.66,
+  "changed_files": [
+    "backend/main.mo",
+    "backend/migration.mo",
+    "frontend-file-summaries.txt",
+    "frontend/src/components/CreateSalonForm.tsx",
+    "frontend/src/components/MemberCard.tsx",
+    "frontend/src/components/PremiumBadge.tsx",
+    "frontend/src/components/ProSalonWizard.tsx",
+    "frontend/src/components/ProfileSetupModal.tsx",
+    "frontend/src/components/SalonListSection.tsx",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/pages/ClientDashboardPage.tsx",
+    "frontend/src/pages/ProDashboardPage.tsx",
+    "frontend/src/pages/SalonDetailsPage.tsx",
+    "project_state.json"
+  ]
+}

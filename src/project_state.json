@@ -1,0 +1,230 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 5,
+  "summary": "Étendre le MVP full‑stack (React « Midnight Glass » + backend Motoko sur Internet Computer avec Internet Identity) pour offrir une expérience immédiatement riche : auto‑seeding de salons premium avec photos/services/créneaux pour aujourd’hui/demain, création de salon avancée via wizard SaaS (infos/services/planning), et système de fidélité client (carte membre, XP/niveaux, progression) avec badge « Premium » sur les salons.",
+  "architectural_notes": [
+    "Architecture IC : backend Motoko en single canister (monolithe) pour le MVP.",
+    "Authentification via Internet Identity; le rôle (client/pro) détermine la redirection vers l’interface appropriée.",
+    "Les données ne doivent pas être statiques : persistance des salons, créneaux et réservations dans le canister.",
+    "Les créneaux sont générés et gérés explicitement par le backend (ex: toutes les heures de 14h à 23h), et catégorisés (Nuit >19h, Dimanche) pour la tarification.",
+    "La majoration « Mode Monopole » est appliquée côté backend : +20% sur réservations Nuit/Dimanche quand activé.",
+    "Mise à jour UI/graphique après actions utilisateur (pas de temps réel type WebSocket).",
+    "Optimistic UI requis pour le switch Mode Monopole : l’UI se met à jour immédiatement, puis rollback/confirmation selon réponse backend.",
+    "Le frontend doit rester entièrement en français (libellés, menus, messages).",
+    "Prévoir un mécanisme d’auto-seeding côté backend (idempotent) pour créer des salons/services/créneaux de démonstration au démarrage afin d’éviter un état vide.",
+    "Le flux Pro de création de salon devient un wizard en 3 étapes incluant la configuration des heures d’ouverture et la génération de créneaux associée."
+  ],
+  "known_issues": [
+    "Risque de confusion dans le périmètre « temps réel » : l’actualisation du graphique doit se faire après actions utilisateur (pas de push serveur)."
+  ],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-implement-internet-identity-authentication-and-replace-the-existing-fake-login-screen-with-the-internet-identity-login-flow",
+      "title": "Implement Internet Identity authentication and replace the existing fake login screen with the Internet Identity login flow.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-role-based-routing-after-internet-identity-login-redirect-the-authenticated-user-to-the-correct-dashboard-client-or-pro-based-on-the-user-role-stored-returned-by-the-backend",
+      "title": "Implement role-based routing after Internet Identity login: redirect the authenticated user to the correct dashboard (Client or Pro) based on the user role stored/returned by the backend.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-static-frontend-lists-e-g-salons-membres-equipe-with-dynamic-data-loaded-from-the-motoko-backend-using-react-query",
+      "title": "Replace static frontend lists (e.g., SALONS, MEMBRES_EQUIPE) with dynamic data loaded from the Motoko backend using React Query.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-backend-persistence-and-minimal-crud-for-salons-allow-creating-a-new-salon-from-the-existing-ui-and-persist-it-in-the-motoko-canister-so-it-remains-after-refresh",
+      "title": "Add backend persistence and minimal CRUD for salons: allow creating a new salon from the existing UI and persist it in the Motoko canister so it remains after refresh.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-the-booking-confirmation-button-functional-when-the-user-confirms-a-booking-the-frontend-calls-the-backend-to-create-a-booking-and-the-backend-removes-deducts-the-selected-slot-from-the-salon-s-availability-so-it-cannot-be-booked-again",
+      "title": "Make the booking confirmation button functional: when the user confirms a booking, the frontend calls the backend to create a booking, and the backend removes/deducts the selected slot from the salon’s availability so it cannot be booked again.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-optimistic-ui-for-the-monopoly-mode-switch-when-the-user-toggles-the-switch-update-the-switch-ui-state-and-the-revenue-chart-immediately-then-reconcile-with-the-backend-response-rollback-and-show-an-error-if-the-backend-call-fails",
+      "title": "Implement Optimistic UI for the Monopoly Mode switch: when the user toggles the switch, update the switch UI state and the revenue chart immediately, then reconcile with the backend response (rollback and show an error if the backend call fails).",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-revenue-chart-only-after-user-actions-e-g-booking-confirmation-monopoly-mode-toggle-by-refetching-recomputing-relevant-data-from-the-backend-do-not-implement-server-push-or-real-time-sockets",
+      "title": "Update the revenue chart only after user actions (e.g., booking confirmation, Monopoly Mode toggle) by refetching/recomputing relevant data from the backend; do not implement server push or real-time sockets.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-coherent-distinctive-visual-theme-across-the-frontend-while-preserving-the-provided-layout-and-ux-structure-keep-all-user-facing-text-in-english",
+      "title": "Apply a coherent, distinctive visual theme across the frontend while preserving the provided layout and UX structure; keep all user-facing text in English.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-current-pro-create-salon-single-input-form-with-a-3-step-configuration-wizard-step-1-salon-info-name-neighborhood-description-optional-photo-url-step-2-services-add-remove-services-with-label-duration-minutes-price-step-3-planning-define-opening-hours-used-to-generate-availability-on-completion-submit-the-full-configuration-to-the-backend-and-create-the-salon-with-generated-availability-for-today-and-tomorrow",
+      "title": "Replace the current Pro ‘Create salon’ single-input form with a 3-step configuration wizard: Step 1 Salon info (Name, Neighborhood, Description, optional Photo URL), Step 2 Services (add/remove services with Label, Duration (minutes), Price), Step 3 Planning (define opening hours used to generate availability). On completion, submit the full configuration to the backend and create the salon with generated availability for today and tomorrow.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-client-home-salon-list-ui-to-be-driven-by-backend-salon-metadata-display-each-salon-s-real-photo-from-salon-photourl-description-neighborhood-and-premium-status-ensure-the-ui-does-not-show-an-no-salons-available-empty-state-under-normal-conditions-because-the-backend-auto-seeds-salons-when-empty",
+      "title": "Update the client home salon list UI to be driven by backend salon metadata: display each salon’s real photo (from salon.photoUrl), description, neighborhood, and premium status. Ensure the UI does not show an ‘No salons available’ empty state under normal conditions because the backend auto-seeds salons when empty.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-loyalty-system-add-xp-to-the-client-profile-show-a-member-card-on-the-client-profile-tab-with-a-vip-progress-bar-and-tier-label-e-g-silver-300-xp-and-grant-xp-whenever-a-booking-is-successfully-confirmed-store-xp-in-the-backend-user-profile-so-it-persists-across-refresh-login",
+      "title": "Implement a loyalty system: add XP to the client profile, show a ‘Member Card’ on the client Profile tab with a VIP progress bar and tier label (e.g., “Silver — 300 XP”), and grant XP whenever a booking is successfully confirmed. Store XP in the backend user profile so it persists across refresh/login.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-visual-premium-badge-on-salons-marked-as-premium-by-the-backend-in-both-the-salon-list-and-salon-details-surfaces-the-badge-must-be-data-driven-based-on-the-backend-ispremium-field-not-hardcoded-to-the-first-salon",
+      "title": "Add a visual ‘Premium’ badge on salons marked as premium by the backend (in both the salon list and salon details surfaces). The badge must be data-driven (based on the backend isPremium field), not hardcoded to the first salon.",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Transformer le frontend React fourni en DApp full‑stack sur l’Internet Computer (Caffeine) avec backend Motoko",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Authentification Internet Identity (remplacer l’écran login factice) + redirection post-login selon rôle (Client vs Pro)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Backend Motoko single-canister avec persistance : gestion Salons, Services, Utilisateurs/Rôles, Réservations",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Données dynamiques : CRUD salons (au minimum créer un salon sauvegardé), remplacement des listes statiques (SALONS, MEMBRES_EQUIPE)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Gestion explicite des créneaux par salon générés par le backend (ex: 14h–23h) avec catégorisation Nuit (>19h) et Dimanche",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Réservations : rendre le bouton « Confirmer » fonctionnel (enregistrer réservation, déduire/retirer le créneau des disponibilités)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Logique business « Mode Monopole » côté backend : visibilité + majoration automatique de 20% sur réservations Nuit/Dimanche; mise à jour du graphique revenus après actions utilisateur",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "UX : Optimistic UI pour le switch « Mode Monopole » (changement UI/graphique immédiat puis confirmation backend)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Implement backend-generated explicit availability time slots per salon, including a slot classification that identifies whether a slot is 'Night' (time > 19:00) and whether it is Sunday.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Generate default availability slots for each salon in the backend (e.g., every hour from 14:00 to 23:00) and ensure they exist for newly created salons.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Implement the 'Monopoly Mode' switch business logic in the backend: when enabled, apply an automatic +20% markup to the total booking price for bookings on Night slots (time > 19:00) or on Sunday.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Auto-seeding au démarrage : générer automatiquement 5 salons premium/luxe avec vraies photos, descriptions, services et créneaux réservables pour aujourd’hui et demain afin d’éviter l’état « Aucun salon disponible »",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-18",
+      "summary": "Création de salon avancée (mode SaaS) : remplacer le champ simple par un wizard de configuration en 3 étapes (Infos salon: nom/quartier/description; Services: ajout libellé/durée/prix; Planning: définition des heures d’ouverture)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Système de fidélité : carte de membre dans le profil client, barre de progression VIP (XP/niveau), ajout de points à chaque réservation confirmée, badge visuel « Premium » sur les salons",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Implement backend auto-seeding so the app always starts with at least 5 premium/luxury salons (never an empty salon list). On canister init and post-upgrade (or on the first getSalons call), if there are zero salons stored, automatically create 5 salons with: (1) premium flag, (2) photo URL(s) pointing to real photos, (3) neighborhood and description, (4) a non-empty services list, and (5) bookable availability time slots for today and tomorrow.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Extend the backend salon and booking data model to support the new SaaS creation flow and seeded content: salons must store neighborhood, description, photo URL, premium flag, and a list of services (label, durationMinutes, price). Availability must support bookable slots for specific dates (today/tomorrow), not only a weekday label. Update booking logic to book a specific date+time slot and to correctly mark that exact slot as unavailable after booking.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "status": "pending"
+    }
+  ],
+  "projectName": "QuickReveal",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}
