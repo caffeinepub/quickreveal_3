@@ -1,12 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Restore a fully French/Swiss Client experience by fixing Swiss-only seeded data, reinstating category filters, and removing remaining Paris/English UI regressions.
+**Goal:** Perform a hard reset of the project by fully replacing the existing backend and frontend with the user-provided V1.0 `backend/main.mo` and `src/App.jsx` baselines.
 
 **Planned changes:**
-- Update backend salon seeding so it only creates salons in Lausanne, Genève, and Montreux, with services/categories strictly limited to: "Coiffure", "Barbier", "Spa", "Onglerie" (no Paris, no English).
-- Restore the Client salon list category filter bar and filtering logic with buttons in this order: "Tout", "Coiffure", "Barbier", "Spa", "Onglerie".
-- Replace specific Client UI strings: "PARIS 11e" → "Suisse Romande", "Recommended for you" → "Les meilleures adresses", and ensure the welcome header shows "Bienvenue".
-- Remove remaining obvious English strings in the Client salon list and salon details flows (notably empty/error states and primary actions) so the overall Client journey is consistently French.
+- Delete the existing Motoko backend implementation and replace it entirely with the user-provided `backend/main.mo` as the official V1.0 backend.
+- Remove the existing frontend app code and mount the user-provided `src/App.jsx` as the new V1.0 root UI, using only editable entry points (no changes to immutable paths).
+- Remove/disable all previously implemented advanced features and code paths unless they exist in the two user-provided V1.0 files, ensuring the repo builds and runs end-to-end after the reset.
 
-**User-visible outcome:** Client users see Swiss (Lausanne/Genève/Montreux) salons and French-only categories, can filter salons by "Coiffure/Barbier/Spa/Onglerie" via a restored top filter bar, and no longer encounter Paris/English labels across key Client screens.
+**User-visible outcome:** The app runs using only the new V1.0 backend and the new V1.0 single-root UI behavior defined by the user-provided files, with prior features no longer present unless included in those V1.0 sources.

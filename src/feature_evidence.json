@@ -2,10 +2,11 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-restore-the-client-category-filter-bar-at-the-top-of-the-salon-list-and-make-filtering-work-exactly-with-the-french-categories-show-buttons-in-this-order-tout-coiffure-barbier-spa-onglerie-and-when-a-category-is-selected-e-g-barbier-display-only-salons-that-match-that-category-based-on-salon-services-category-data",
-      "featureTitle": "Restore the Client category filter bar at the top of the salon list and make filtering work exactly with the French categories: show buttons in this order [\"Tout\", \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\"], and when a category is selected (e.g., \"Barbier\"), display only salons that match that category (based on salon services category data).",
+      "featureId": "feature-perform-a-complete-frontend-reset-by-removing-the-existing-frontend-application-code-and-replacing-the-app-s-root-component-with-the-user-provided-src-app-jsx-code-as-the-official-v1-0-ui-while-respecting-platform-constraints-on-immutable-files-by-wiring-the-new-app-through-editable-entry-points-only",
+      "featureTitle": "Perform a complete frontend reset by removing the existing frontend application code and replacing the app’s root component with the user-provided `src/App.jsx` code as the official V1.0 UI, while respecting platform constraints on immutable files by wiring the new app through editable entry points only.",
       "files": [
-        "frontend/src/components/SalonListSection.tsx"
+        "frontend/src/App.tsx",
+        "frontend/src/AppV1.jsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -17,37 +18,31 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-29"
+        "REQ-41"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-remove-remaining-paris-english-ui-regressions-on-the-client-surfaces-explicitly-called-out-by-the-user-replace-the-authheader-badge-text-paris-11e-with-suisse-romande-client-user-type-replace-the-salon-list-section-title-recommended-for-you-with-les-meilleures-adresses-and-ensure-the-welcome-header-text-reads-bienvenue",
-      "featureTitle": "Remove remaining Paris/English UI regressions on the Client surfaces explicitly called out by the user: replace the AuthHeader badge text \"PARIS 11e\" with \"Suisse Romande\" (Client user type), replace the salon list section title \"Recommended for you\" with \"Les meilleures adresses\", and ensure the welcome header text reads \"Bienvenue\".",
+      "featureId": "feature-treat-the-reset-as-a-hard-cutover-remove-disable-all-previously-implemented-advanced-features-and-code-paths-e-g-internet-identity-auth-role-based-routing-react-query-data-layer-bookings-availability-monopoly-mode-logic-on-chain-image-upload-loyalty-vip-dashboard-seeded-premium-salons-logic-unless-they-exist-in-the-two-user-provided-v1-0-files",
+      "featureTitle": "Treat the reset as a hard cutover: remove/disable all previously implemented advanced features and code paths (e.g., Internet Identity auth, role-based routing, React Query data layer, bookings/availability/monopoly mode logic, on-chain image upload, loyalty/VIP dashboard, seeded premium salons logic) unless they exist in the two user-provided V1.0 files.",
       "files": [
         "frontend/src/components/AuthHeader.tsx",
-        "frontend/src/components/SalonListSection.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-30"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-eliminate-obvious-remaining-english-strings-on-the-client-salon-list-and-salon-details-flows-that-contribute-to-the-app-feeling-partially-broken-including-error-empty-state-labels-and-primary-action-buttons-so-the-client-experience-is-consistently-french",
-      "featureTitle": "Eliminate obvious remaining English strings on the Client salon list and salon details flows that contribute to the app feeling partially broken, including error/empty-state labels and primary action buttons, so the Client experience is consistently French.",
-      "files": [
+        "frontend/src/components/MemberCard.tsx",
+        "frontend/src/components/MonopolyModeSwitch.tsx",
+        "frontend/src/components/ProSalonWizard.tsx",
+        "frontend/src/components/ProStudioCreator.tsx",
+        "frontend/src/components/ProfileSetupModal.tsx",
+        "frontend/src/components/RevenueChart.tsx",
         "frontend/src/components/SalonListSection.tsx",
-        "frontend/src/pages/SalonDetailsPage.tsx"
+        "frontend/src/components/VipDashboard.tsx",
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/hooks/useSalonImage.ts",
+        "frontend/src/pages/ClientDashboardPage.tsx",
+        "frontend/src/pages/LoginPage.tsx",
+        "frontend/src/pages/ProDashboardPage.tsx",
+        "frontend/src/pages/SalonDetailsPage.tsx",
+        "frontend/src/utils/currency.ts",
+        "frontend/src/utils/urlParams.ts"
       ],
       "components": [
         "authorization@4.0.0",
@@ -59,7 +54,7 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-31"
+        "REQ-42"
       ],
       "confidence": "high"
     }

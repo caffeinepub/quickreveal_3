@@ -1,69 +1,121 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Restore Swiss-French client UI: category filter bar + remove English/Paris strings",
+  "title": "Frontend hard reset: mount user-provided V1.0 App.jsx via editable entry points and remove legacy feature UI",
   "requirements": [
     {
-      "id": "REQ-29",
-      "summary": "Restore the Client salon-list category filter bar with fixed French categories and correct filtering behavior.",
+      "id": "REQ-41",
+      "summary": "Reset the frontend UI by wiring the user-provided V1.0 src/App.jsx as the new root UI without modifying immutable files.",
       "acceptanceCriteria": [
-        "The salon list screen renders a visible horizontal filter bar at the top with labels exactly: \"Tout\", \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\".",
-        "Default selected filter is \"Tout\" and shows all salons.",
-        "Selecting \"Barbier\" shows only salons that have at least one service with category === \"Barbier\"; switching back to \"Tout\" restores the full list.",
-        "The filter bar remains present after navigation within the Client dashboard (as long as the salon list is displayed)."
+        "The root rendered UI matches the user-provided `src/App.jsx` behavior and structure as the new V1.0 baseline (not the prior multi-page app).",
+        "No edits are made to files under `frontend/src/hooks/useInternetIdentity.ts`, `frontend/src/hooks/useInternetIdentity.tsx`, `frontend/src/hooks/useActor.ts`, `frontend/src/main.tsx`, or `frontend/src/components/ui` (immutable paths); if the new app must be mounted, it is done via editable files (e.g., `frontend/src/App.tsx` and/or new files) without modifying immutable paths.",
+        "The frontend builds successfully with the current toolchain (React + TypeScript + Tailwind)."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/SalonListSection.tsx",
+          "path": "frontend/src/AppV1.jsx",
+          "operation": "create",
+          "description": "Add the user-provided V1.0 `src/App.jsx` code as-is in this file (exact replacement baseline for the reset)."
+        },
+        {
+          "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Replace the current dynamic category list (\"All\" + backend categories) with the fixed French filter buttons in the required order [\"Tout\", \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\"]. Update state/default selection to \"Tout\" and ensure salon filtering is driven by salon.services[].category matching the selected category, with \"Tout\" showing all salons."
+          "description": "Replace the current root component implementation so it only mounts/exports the V1.0 UI from `frontend/src/AppV1.jsx`, ensuring no imports/usages of legacy auth/routing/data-layer flows remain here (and without changing `frontend/src/main.tsx`)."
         }
       ]
     },
     {
-      "id": "REQ-30",
-      "summary": "Remove specified Paris/English UI regressions on Client surfaces (badge, section title, welcome header).",
+      "id": "REQ-42",
+      "summary": "Hard cutover: remove/disable previously implemented advanced frontend features and references not present in the user-provided V1.0 files.",
       "acceptanceCriteria": [
-        "When logged in as a Client, the header badge shows \"Suisse Romande\" (and never \"PARIS 11e\").",
-        "On the salon list screen, the section title uses \"Les meilleures adresses\" where it previously showed \"Recommended for you\".",
-        "No UI surface in the login or client header displays \"Welcome\"; it displays \"Bienvenue\"."
+        "The app no longer references previous feature modules/components/hooks/routes that are not part of the user-provided V1.0 files.",
+        "The repository compiles and runs end-to-end (frontend + backend) after the reset without relying on any of the previously built feature code."
       ],
       "file_operations": [
-        {
-          "path": "frontend/src/components/AuthHeader.tsx",
-          "operation": "modify",
-          "description": "Update the client badge text to display \"Suisse Romande\" instead of \"PARIS 11e\" (keep the pro badge unchanged)."
-        },
-        {
-          "path": "frontend/src/components/SalonListSection.tsx",
-          "operation": "modify",
-          "description": "Replace the salon list section title string \"Recommended for you\" with \"Les meilleures adresses\" while preserving the existing conditional title behavior when no salons match the selected filter."
-        },
         {
           "path": "frontend/src/pages/LoginPage.tsx",
-          "operation": "modify",
-          "description": "Verify the login welcome header is consistently \"Bienvenue\" (and not \"Welcome\") and adjust any remaining login-facing welcome text if present."
-        }
-      ]
-    },
-    {
-      "id": "REQ-31",
-      "summary": "Eliminate remaining obvious English strings in Client salon list and salon details flows (errors, empty states, labels, and primary actions) to ensure consistent French UX.",
-      "acceptanceCriteria": [
-        "Salon list: error and empty states do not show English (e.g., replace \"Error loading salons\", \"Coming Soon\", \"Opening near you soon...\", \"No salons found\", \"View all\").",
-        "Salon details: slot/confirmation UI does not show English (e.g., replace \"Available Slots\", \"Total\", \"Confirm\", \"Confirming...\").",
-        "After these changes, a spot-check of ClientDashboardPage, SalonListSection, SalonDetailsPage, AuthHeader, and LoginPage shows no visible English phrases in normal usage."
-      ],
-      "file_operations": [
+          "operation": "delete",
+          "description": "Remove legacy Internet Identity login page implementation so it cannot be referenced by the new V1.0 root UI."
+        },
         {
-          "path": "frontend/src/components/SalonListSection.tsx",
-          "operation": "modify",
-          "description": "Translate remaining English strings in loading/error/empty states and list UI to French, including: \"Error loading salons\", \"Coming Soon\", \"Opening near you soon...\", \"No salons found\", \"No salons in this category.\", \"View all\", and other visible English labels (e.g., featured badge \"Night\", rating text containing \"reviews\", and service count label \"services\" where displayed in English context)."
+          "path": "frontend/src/pages/ClientDashboardPage.tsx",
+          "operation": "delete",
+          "description": "Remove legacy client dashboard page (tabs, browsing, VIP/dashboard logic) as part of the hard reset."
+        },
+        {
+          "path": "frontend/src/pages/ProDashboardPage.tsx",
+          "operation": "delete",
+          "description": "Remove legacy pro dashboard page (monopoly mode, revenue chart, creator flows) as part of the hard reset."
         },
         {
           "path": "frontend/src/pages/SalonDetailsPage.tsx",
-          "operation": "modify",
-          "description": "Translate remaining English UI strings to French, including: \"Available Slots\", \"Total\", \"Confirm\", and \"Confirming...\". Also replace any obviously English date/day abbreviations shown in DATE_OPTIONS with French equivalents to keep the booking flow fully French."
+          "operation": "delete",
+          "description": "Remove legacy salon details/booking flow UI to ensure no bookings/availability/monopoly logic remains after the reset."
+        },
+        {
+          "path": "frontend/src/components/AuthHeader.tsx",
+          "operation": "delete",
+          "description": "Remove legacy authenticated header UI so the reset does not retain logout/badge/notification logic."
+        },
+        {
+          "path": "frontend/src/components/ProfileSetupModal.tsx",
+          "operation": "delete",
+          "description": "Remove legacy profile-setup modal to disable prior profile onboarding flow."
+        },
+        {
+          "path": "frontend/src/components/VipDashboard.tsx",
+          "operation": "delete",
+          "description": "Remove legacy loyalty/VIP dashboard UI and visuals."
+        },
+        {
+          "path": "frontend/src/components/MemberCard.tsx",
+          "operation": "delete",
+          "description": "Remove legacy loyalty tier/XP card component to eliminate VIP/XP display logic."
+        },
+        {
+          "path": "frontend/src/components/SalonListSection.tsx",
+          "operation": "delete",
+          "description": "Remove legacy salon browsing list implementation (categories, featured salon, image loading) as part of the reset."
+        },
+        {
+          "path": "frontend/src/components/ProSalonWizard.tsx",
+          "operation": "delete",
+          "description": "Remove legacy multi-step salon creation wizard to disable seeded premium salons and publishing flows."
+        },
+        {
+          "path": "frontend/src/components/ProStudioCreator.tsx",
+          "operation": "delete",
+          "description": "Remove legacy studio/salon creator flow to disable salon creation management UI."
+        },
+        {
+          "path": "frontend/src/components/MonopolyModeSwitch.tsx",
+          "operation": "delete",
+          "description": "Remove legacy monopoly-mode toggle UI to ensure the reset no longer exposes that feature."
+        },
+        {
+          "path": "frontend/src/components/RevenueChart.tsx",
+          "operation": "delete",
+          "description": "Remove legacy revenue chart UI to eliminate pro analytics visuals from the reset baseline."
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "delete",
+          "description": "Remove legacy React Query-based data layer hooks so the reset does not rely on the prior caching/query architecture."
+        },
+        {
+          "path": "frontend/src/hooks/useSalonImage.ts",
+          "operation": "delete",
+          "description": "Remove legacy salon image fetching/conversion hook to eliminate prior on-chain image retrieval logic from the UI."
+        },
+        {
+          "path": "frontend/src/utils/currency.ts",
+          "operation": "delete",
+          "description": "Remove legacy currency formatting utilities that were specific to the previous multi-feature UI."
+        },
+        {
+          "path": "frontend/src/utils/urlParams.ts",
+          "operation": "delete",
+          "description": "Remove legacy URL parameter utilities that supported prior admin/feature flows."
         }
       ]
     }

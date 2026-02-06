@@ -6,19 +6,15 @@ import Principal "mo:core/Principal";
 import Text "mo:core/Text";
 import Runtime "mo:core/Runtime";
 import Iter "mo:core/Iter";
-import Time "mo:core/Time";
 import Nat "mo:core/Nat";
 import Int "mo:core/Int";
-import Debug "mo:core/Debug";
 import Blob "mo:core/Blob";
 import AccessControl "authorization/access-control";
-import Migration "migration";
+
 import MixinAuthorization "authorization/MixinAuthorization";
 import Storage "blob-storage/Storage";
 import MixinStorage "blob-storage/Mixin";
 
-// Stable Persistent State
-(with migration = Migration.run)
 actor {
   // Data Types
   type Client = Principal;
@@ -44,6 +40,12 @@ actor {
     contentType : Text;
   };
 
+  public type SocialLinks = {
+    instagram : ?Text;
+    facebook : ?Text;
+    website : ?Text;
+  };
+
   public type Salon = {
     name : Text;
     owner : Principal;
@@ -54,6 +56,7 @@ actor {
     isPremium : Bool;
     services : [Service];
     imageIds : [Text];
+    socialLinks : SocialLinks;
   };
 
   module Salon {
@@ -101,48 +104,23 @@ actor {
   let userProfiles = Map.empty<Principal, UserProfile>();
 
   var monopolyMode : Bool = false;
-  var salonsSeeded : Bool = false;
 
-  // Internal function to seed salons and services
-  private func seedSalonsIfNeeded() {
-    if (salonsSeeded or salons.size() > 0) {
+  // Internal function to seed Swiss salons
+  private func seedSwissSalonsIfNeeded() {
+    if (salons.size() > 0) {
       return;
     };
 
     let today = "2024-01-15";
-    let tomorrow = "2024-01-16";
 
-    // Only French/Swiss service names and categories
-    let louisVuittonServices : [Service] = [
-      { name = "Coupe homme"; durationMinutes = 45; price = 1000; category = "Coiffure" },
-      { name = "Balayage VIP"; durationMinutes = 120; price = 3500; category = "Coiffure" },
-      { name = "Rasage D'Exception"; durationMinutes = 60; price = 2000; category = "Barbier" },
-      { name = "Massage Suédois"; durationMinutes = 90; price = 1800; category = "Spa" },
-      { name = "Manucure Luxe"; durationMinutes = 60; price = 1500; category = "Onglerie" },
-    ];
-
-    let premiumServices : [Service] = [
-      { name = "Coupe de Cheveux Femme"; durationMinutes = 60; price = 130; category = "Coiffure" },
-      { name = "Barbe de Luxe"; durationMinutes = 45; price = 90; category = "Barbier" },
-      { name = "Soins du Visage Spa"; durationMinutes = 75; price = 180; category = "Spa" },
-      { name = "Pédicure Pro"; durationMinutes = 50; price = 120; category = "Onglerie" },
-    ];
-
-    let standardServices : [Service] = [
-      { name = "Coupe simple"; durationMinutes = 30; price = 50; category = "Coiffure" },
-      { name = "Rasage traditionnel"; durationMinutes = 30; price = 40; category = "Barbier" },
-      { name = "Massage Relaxant"; durationMinutes = 45; price = 100; category = "Spa" },
-      { name = "Manucure Basique"; durationMinutes = 30; price = 60; category = "Onglerie" },
-    ];
-
-    let todaySlots = Array.tabulate(
-      8,
+    let defaultAvailableHours = Array.tabulate(
+      9,
       func(i) {
-        let time = 10 + i;
+        let time = 7 + i;
         {
           day = "Monday";
           time;
-          isNight = time >= 18;
+          isNight = false;
           isSunday = false;
           isAvailable = true;
           date = today;
@@ -150,115 +128,128 @@ actor {
       },
     );
 
-    let tomorrowSlots = Array.tabulate(
-      8,
-      func(i) {
-        let time = 10 + i;
-        {
-          day = "Tuesday";
-          time;
-          isNight = time >= 18;
-          isSunday = false;
-          isAvailable = true;
-          date = tomorrow;
-        };
-      },
-    );
-
-    let allSlots = todaySlots.concat(tomorrowSlots);
-
-    let premiumSalons : [Salon] = [
-      {
-        name = "Louis Vuitton Beauté Luxe";
-        owner = Principal.fromText("aaaaa-aa");
-        availabilities = allSlots;
-        neighborhood = "Lausanne Centre";
-        description = "Expérience beauté premium avec des services de luxe exclusifs";
-        photoUrls = ["https://images.unsplash.com/photo-1562322140-8baeececf3df"];
-        isPremium = true;
-        services = louisVuittonServices;
-        imageIds = [];
-      },
-      {
-        name = "Beauté Royale";
-        owner = Principal.fromText("aaaaa-aa");
-        availabilities = allSlots;
-        neighborhood = "Montreux Centre";
-        description = "Services de beauté luxueux pour une clientèle royale";
-        photoUrls = ["https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f"];
-        isPremium = true;
-        services = premiumServices;
-        imageIds = [];
-      },
-      {
-        name = "Lausanne Elite Spa";
-        owner = Principal.fromText("aaaaa-aa");
-        availabilities = allSlots;
-        neighborhood = "Lausanne Centre";
-        description = "Spa et beauté pour les clients exigeants au cœur de Lausanne";
-        photoUrls = ["https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6"];
-        isPremium = true;
-        services = premiumServices;
-        imageIds = [];
-      },
-      {
-        name = "Genève Exécutif Barbershop";
-        owner = Principal.fromText("aaaaa-aa");
-        availabilities = allSlots;
-        neighborhood = "Genève Plainpalais";
-        description = "Expérience exclusive de barbier pour une clientèle d'affaires";
-        photoUrls = ["https://images.unsplash.com/photo-1522337360788-8b13dee7a37e"];
-        isPremium = true;
-        services = premiumServices;
-        imageIds = [];
-      },
+    let exclusiveServices : [Service] = [
+      { name = "Coiffure homme"; durationMinutes = 30; price = 65; category = "Coiffure" },
+      { name = "Coiffure femme"; durationMinutes = 45; price = 85; category = "Coiffure" },
+      { name = "Coupe enfant"; durationMinutes = 25; price = 53; category = "Coiffure" },
+      { name = "Barbe"; durationMinutes = 30; price = 30; category = "Barbier" },
+      { name = "Massage cuir chevelu"; durationMinutes = 10; price = 25; category = "Spa" },
+      { name = "Soin Kérathermie"; durationMinutes = 60; price = 89; category = "Spa" },
+      { name = "Couleurs"; durationMinutes = 90; price = 79; category = "Coiffure" },
     ];
 
-    let standardSalons : [Salon] = [
+    let lOrealServices : [Service] = [
+      { name = "Coiffure homme"; durationMinutes = 30; price = 45; category = "Coiffure" },
+      { name = "Coiffure femme"; durationMinutes = 45; price = 55; category = "Coiffure" },
+      { name = "Balayage"; durationMinutes = 45; price = 59; category = "Coiffure" },
+      { name = "Coiffure enfant"; durationMinutes = 25; price = 29; category = "Coiffure" },
+      { name = "Soin lissant"; durationMinutes = 45; price = 39; category = "Spa" },
+      { name = "Massage cheveux"; durationMinutes = 10; price = 22; category = "Spa" },
       {
-        name = "Le Barbier Moderne";
-        owner = Principal.fromText("aaaaa-aa");
-        availabilities = allSlots;
-        neighborhood = "Lausanne Centre";
-        description = "Services de coiffure et barbier modernes pour hommes et femmes";
-        photoUrls = ["https://images.unsplash.com/photo-1560066984-138dadb4c035"];
-        isPremium = false;
-        services = standardServices;
-        imageIds = [];
+        name = "Peignage coiffage";
+        durationMinutes = 25;
+        price = 29;
+        category = "Coiffure";
       },
-      {
-        name = "Beauté Naturelle Genève";
-        owner = Principal.fromText("aaaaa-aa");
-        availabilities = allSlots;
-        neighborhood = "Genève Plainpalais";
-        description = "Soins de beauté et spa inspirés de la nature";
-        photoUrls = ["https://images.unsplash.com/photo-1517841905240-472988babdf9"];
-        isPremium = false;
-        services = standardServices;
-        imageIds = [];
-      },
-      {
-        name = "La Main d'Or";
-        owner = Principal.fromText("aaaaa-aa");
-        availabilities = allSlots;
-        neighborhood = "Montreux Clarens";
-        description = "Salon de manucure et SPA au service irréprochable";
-        photoUrls = ["https://images.unsplash.com/photo-1520880867055-1e30d1cb001c"];
-        isPremium = false;
-        services = standardServices;
-        imageIds = [];
-      },
+      { name = "Coloration"; durationMinutes = 45; price = 50; category = "Coiffure" },
     ];
 
-    for (salon in premiumSalons.vals()) {
-      salons.add(salon.name, salon);
+    let beautyServices : [Service] = [
+      { name = "Coupe femme"; durationMinutes = 30; price = 35; category = "Coiffure" },
+      { name = "Shampoing femme"; durationMinutes = 15; price = 12; category = "Coiffure" },
+      { name = "Coiffure homme"; durationMinutes = 30; price = 18; category = "Coiffure" },
+      { name = "Lissage brésilien"; durationMinutes = 30; price = 49; category = "Spa" },
+      { name = "Brushing"; durationMinutes = 25; price = 19; category = "Coiffure" },
+      { name = "Coloration"; durationMinutes = 35; price = 29; category = "Coiffure" },
+    ];
+
+    let spaAndBeautyServices : [Service] = [
+      { name = "Coiffure femme"; durationMinutes = 30; price = 50; category = "Coiffure" },
+      { name = "Coiffure homme"; durationMinutes = 30; price = 38; category = "Coiffure" },
+      { name = "Soin capillaire"; durationMinutes = 20; price = 25; category = "Coiffure" },
+      { name = "Soins visage"; durationMinutes = 45; price = 72; category = "Spa" },
+      { name = "Beauté mains"; durationMinutes = 35; price = 54; category = "Onglerie" },
+      { name = "Massage du dos"; durationMinutes = 38; price = 62; category = "Spa" },
+    ];
+
+    let blackbladeSalon : Salon = {
+      name = "BlackBlade Hairstylist";
+      owner = Principal.fromText("aaaaa-aa");
+      availabilities = defaultAvailableHours;
+      neighborhood = "Rue Centrale 5, Lausanne";
+      description = "Salon de coiffure haut de gamme à Lausanne";
+      photoUrls = [
+        "https://d3jxhwq3gtskzp.cloudfront.net/J9BdEf8v9Um30WZJoEE9GWvZYI9DjH_salon_89c29bc0-9075-11ee-9c01-0242ac110005_external.jpeg"
+      ];
+      isPremium = true;
+      services = exclusiveServices;
+      imageIds = [];
+      socialLinks = {
+        instagram = ?"/blackbladehairstylist";
+        facebook = ?"/BlackBladeHairstylist";
+        website = ?"/www.blackbladehairstylist.ch";
+      };
     };
 
-    for (salon in standardSalons.vals()) {
-      salons.add(salon.name, salon);
+    let leStudio : Salon = {
+      name = "Le Studio - L'Oréal";
+      owner = Principal.fromText("aaaaa-aa");
+      availabilities = defaultAvailableHours;
+      neighborhood = "Rue de Bourg 21, Lausanne";
+      description = "Salon de beauté et coiffure partenaire L’Oréal";
+      photoUrls = ["https://images.unsplash.com/photo-1506744038136-46273834b3fb"];
+      isPremium = true;
+      services = lOrealServices;
+      imageIds = [];
+      socialLinks = {
+        instagram = ?"/loreal";
+        facebook = ?"/LeStudioLinz";
+        website = ?"/www.lorealparis.ch";
+      };
     };
 
-    salonsSeeded := true;
+    let suzyCoiffure : Salon = {
+      name = "Suzy Coiffure & Head Spa";
+      owner = Principal.fromText("aaaaa-aa");
+      availabilities = defaultAvailableHours;
+      neighborhood = "Rue Belle-Fontaine 3, Lausanne";
+      description = "Salon de coiffure et spa";
+      photoUrls = [
+        "https://d3jxhwq3gtskzp.cloudfront.net/J9BdEf8v9Um30WZJoEE9GWvZYI9DjH_salon_89c29bc0-9075-11ee-9c01-0242ac110005_external.jpeg"
+      ];
+      isPremium = true;
+      services = beautyServices;
+      imageIds = [];
+      socialLinks = {
+        instagram = ?"/suzycoiffure";
+        facebook = ?"/suzycoiffure";
+        website = null;
+      };
+    };
+
+    let emerCoiffure : Salon = {
+      name = "EMER Coiffure";
+      owner = Principal.fromText("aaaaa-aa");
+      availabilities = defaultAvailableHours;
+      neighborhood = "Rue Georges Gremaud 6, Lausanne";
+      description = "Salon de beauté et spa à Lausanne";
+      photoUrls = [
+        "https://d3jxhwq3gtskzp.cloudfront.net/J9BdEf8v9Um30WZJoEE9GWvZYI9DjH_salon_89c29bc0-9075-11ee-9c01-0242ac110005_external.jpeg"
+      ];
+      isPremium = true;
+      services = spaAndBeautyServices;
+      imageIds = [];
+      socialLinks = {
+        instagram = ?"/emercoiffure";
+        facebook = ?"/EmerCoiffure";
+        website = ?"/www.spa-beaute.ch";
+      };
+    };
+
+    salons.add("BlackBlade Hairstylist", blackbladeSalon);
+    salons.add("Le Studio - L'Oréal", leStudio);
+    salons.add("Suzy Coiffure & Head Spa", suzyCoiffure);
+    salons.add("EMER Coiffure", emerCoiffure);
   };
 
   // Calculate loyalty tier based on XP
@@ -288,7 +279,7 @@ actor {
       case (?profile) { profile };
     };
 
-    let newXP = currentProfile.xp + amount;
+    let newXP : Nat = currentProfile.xp + amount;
     let newTier = calculateTier(newXP);
 
     userProfiles.add(user, {
@@ -337,7 +328,6 @@ actor {
       Runtime.trap("Unauthorized: Only users can save profiles");
     };
 
-    // Preserve XP and tier from existing profile - users cannot modify these
     let existingProfile = userProfiles.get(caller);
     let finalProfile = switch (existingProfile) {
       case (null) {
@@ -372,7 +362,7 @@ actor {
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only authenticated users can trigger seeding");
     };
-    seedSalonsIfNeeded();
+    seedSwissSalonsIfNeeded();
   };
 
   public query ({ caller }) func getSalon(name : Text) : async Salon {
@@ -391,12 +381,15 @@ actor {
     description : Text,
     photoUrls : [Text],
     services : [Service],
-    isPremium : Bool
+    isPremium : Bool,
+    socialLinks : SocialLinks
   ) : async () {
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only authenticated users can create salons");
     };
-    if (salons.containsKey(name)) { Runtime.trap("Salon already exists") };
+
+    let id = name # neighborhood;
+    if (salons.containsKey(id)) { Runtime.trap("Salon already exists") };
 
     let defaultAvailabilities = Array.tabulate(
       10,
@@ -423,8 +416,9 @@ actor {
       isPremium;
       services;
       imageIds = [];
+      socialLinks;
     };
-    salons.add(name, salon);
+    salons.add(id, salon);
   };
 
   // Booking with Pricing Logic
@@ -441,18 +435,15 @@ actor {
     switch (salons.get(salonName)) {
       case (null) { Runtime.trap("Salon not found") };
       case (?salon) {
-        // Prevent salon owners from booking their own salon
         if (caller == salon.owner) {
           Runtime.trap("Unauthorized: Salon owners cannot book their own salon");
         };
 
-        // For simplicity, pick the first available service for booking
         let service = switch (salon.services.size() > 0) {
           case (true) { salon.services[0] };
           case (false) { Runtime.trap("Service not found") };
         };
 
-        // Find and update the specific availability slot
         var slotFound = false;
         var selectedSlot : ?Availability = null;
         let updatedAvailabilities = salon.availabilities.map(
@@ -476,7 +467,6 @@ actor {
         };
         salons.add(salonName, updatedSalon);
 
-        // Calculate Price using the actual slot's flags
         let slot = switch (selectedSlot) {
           case (null) { Runtime.trap("Internal error: slot not found") };
           case (?s) { s };
@@ -501,8 +491,6 @@ actor {
         };
 
         bookings.add(bookingKey, booking);
-
-        // Award XP (50 XP per booking)
         awardXP(caller, 50);
       };
     };
@@ -524,7 +512,6 @@ actor {
       case (?salon) { salon };
     };
 
-    // Only salon owner or admin can upload images
     if (caller != salon.owner and not AccessControl.isAdmin(accessControlState, caller)) {
       Runtime.trap("Unauthorized: Only salon owner or admin can upload images");
     };
@@ -619,6 +606,7 @@ actor {
   };
 
   system func postupgrade() {
-    seedSalonsIfNeeded();
+    seedSwissSalonsIfNeeded();
   };
 };
+

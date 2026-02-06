@@ -1,53 +1,128 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-06T00:12:39.456Z",
-  "summary": "REQ-29 appears implemented via a fixed French category filter bar and correct salon filtering in SalonListSection. REQ-30 is partially evidenced (AuthHeader badge updated to \"Suisse Romande\"). REQ-31 is partially evidenced (French error/empty states on salon list). Backend seeding (REQ-28) shows French category/service names, but the diff is truncated so location/categorization endpoints can’t be fully verified. A migration file was added that changes monopolyMode, which was not requested.",
+  "generatedAt": "2026-02-06T02:58:05.890Z",
+  "summary": "Diff does not reflect a hard reset to user-provided V1.0 files. Instead, it keeps/introduces multiple advanced features (auth/authorization mixins, storage, bookings, loyalty, VIP, monopoly mode, multiple pages/components) and does not replace the frontend with an exact `src/App.jsx` baseline. No files were removed, which is inconsistent with a “complete reset/remove old app code” requirement.",
   "missing_requirements": [
     {
-      "id": "REQ-28",
-      "requirement": "Seed salons only in Lausanne, Genève, and Montreux (not Paris) and ensure getCategories returns only a subset of \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\" (no English categories).",
-      "reason": "backend/main.mo is truncated after service arrays; the diff summary does not show the seeded salon neighborhood/location strings, nor any changes to getCategories output to prove it is restricted to the required French categories.",
+      "id": "REQ-40",
+      "requirement": "Replace the existing Motoko backend implementation entirely with the user-provided `backend/main.mo` (exact match; no partial merges; no old advanced features/state work).",
+      "reason": "The new `backend/main.mo` shown contains extensive functionality (authorization mixins, blob storage mixins, bookings, loyalty tiers, seeded salons, images, etc.), suggesting it is not a minimal exact replacement with a provided V1.0 file and it retains/implements advanced features explicitly called out as non-goals unless present in user-provided V1.0 files (which are not evidenced here).",
       "evidence": [
         "backend/main.mo"
       ]
     },
     {
-      "id": "REQ-30",
-      "requirement": "Replace salon list section title \"Recommended for you\" with \"Les meilleures adresses\" and ensure welcome header text reads \"Bienvenue\" (no \"Welcome\").",
-      "reason": "The provided diff excerpt for SalonListSection does not show the section title string, and no change is shown for any \"Welcome\"/\"Bienvenue\" header text (LoginPage/Client surfaces are only described in a separate summary file, not evidenced by actual diff content here).",
+      "id": "REQ-41",
+      "requirement": "Replace the frontend by making the app’s root component match the user-provided `src/App.jsx` behavior/structure (wired through editable entry points without touching immutable files).",
+      "reason": "Instead of using a user-provided `src/App.jsx`, the diff adds `frontend/src/AppV1.jsx` and wires `frontend/src/App.tsx` to render `AppV1`. There is no evidence that the root component is the user-provided `src/App.jsx` or that it matches it exactly.",
       "evidence": [
-        "frontend/src/components/SalonListSection.tsx",
-        "frontend-file-summaries.txt"
+        "frontend/src/AppV1.jsx",
+        "frontend/src/App.tsx"
       ]
     },
     {
-      "id": "REQ-31",
-      "requirement": "Remove remaining English strings on Client salon details flow (e.g., replace \"Available Slots\", \"Total\", \"Confirm\", \"Confirming...\") so it is consistently French.",
-      "reason": "SalonDetailsPage.tsx excerpt is truncated before the UI labels in question; no concrete evidence in the shown diff confirms these specific strings were replaced.",
+      "id": "REQ-42",
+      "requirement": "Hard cutover: remove/disable all previously implemented advanced features and code paths unless they exist in the two user-provided V1.0 files; app should no longer reference prior feature modules/components/hooks/routes.",
+      "reason": "Multiple advanced-feature modules/components/pages/hooks are present/modified (auth UI, VIP dashboard, monopoly mode switch, image hooks, multi-page structure, query hooks). Also, the diff reports zero removed files, which conflicts with “remove/disable” and “complete reset” expectations.",
       "evidence": [
-        "frontend/src/pages/SalonDetailsPage.tsx"
+        "frontend/src/components/AuthHeader.tsx",
+        "frontend/src/components/MonopolyModeSwitch.tsx",
+        "frontend/src/components/VipDashboard.tsx",
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/hooks/useSalonImage.ts",
+        "frontend/src/pages/LoginPage.tsx",
+        "frontend/src/pages/ClientDashboardPage.tsx",
+        "frontend/src/pages/ProDashboardPage.tsx",
+        "backend/main.mo"
       ]
     }
   ],
   "hallucinated_features": [
     {
-      "description": "Added a stable migration that forces `monopolyMode = false` during upgrade.",
-      "reason": "BuildRequest focuses on Swiss/French seeding and Client localization/category filter regressions; it does not request changing monopolyMode behavior/state during migration.",
+      "description": "Authorization/access control mixins and related backend auth plumbing.",
+      "reason": "Not requested in the reset; explicitly called out as an advanced feature to remove/avoid unless present in user-provided V1.0 files (not evidenced).",
       "evidence": [
-        "backend/migration.mo",
+        "backend/main.mo (imports `authorization/access-control`, `authorization/MixinAuthorization`)"
+      ]
+    },
+    {
+      "description": "Blob/image storage backend (Storage/MixinStorage) and frontend image hook.",
+      "reason": "On-chain image upload/retrieval and storage were explicitly listed as non-goals unless included in user-provided V1.0 files; diff implements storage and image handling.",
+      "evidence": [
+        "backend/main.mo (imports `blob-storage/Storage`, `blob-storage/Mixin`, `InternalImage`, `images` map)",
+        "frontend/src/hooks/useSalonImage.ts"
+      ]
+    },
+    {
+      "description": "Bookings/availability management and related data structures.",
+      "reason": "Bookings/availability slot management were explicitly listed as non-goals unless included in V1.0 files; backend defines `Booking`, `Availability`, and `bookings` map.",
+      "evidence": [
         "backend/main.mo"
+      ]
+    },
+    {
+      "description": "Loyalty/XP tiers and VIP dashboard UI.",
+      "reason": "Loyalty/XP and VIP/premium features were explicitly listed as non-goals unless included in V1.0; diff includes backend `LoyaltyTier`/`UserProfile` and a VIP dashboard component.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/components/VipDashboard.tsx",
+        "frontend/src/components/PremiumBadge.tsx",
+        "frontend/src/components/MemberCard.tsx"
+      ]
+    },
+    {
+      "description": "Monopoly mode UI and backend variable.",
+      "reason": "Monopoly mode pricing was explicitly listed as a non-goal unless included in V1.0; diff includes `monopolyMode` on backend and a `MonopolyModeSwitch` component.",
+      "evidence": [
+        "backend/main.mo (var `monopolyMode`)",
+        "frontend/src/components/MonopolyModeSwitch.tsx"
+      ]
+    },
+    {
+      "description": "Multi-page app structure (login/client/pro dashboards) rather than a single V1.0 root UI replacement.",
+      "reason": "REQ-41 expects replacing the prior multi-page app with the user-provided `src/App.jsx` baseline; adding pages suggests continuing/introducing multi-page routing structure not requested.",
+      "evidence": [
+        "frontend/src/pages/LoginPage.tsx",
+        "frontend/src/pages/ClientDashboardPage.tsx",
+        "frontend/src/pages/ProDashboardPage.tsx"
+      ]
+    },
+    {
+      "description": "React-query-like query hook layer (`useQueries`).",
+      "reason": "React Query/data layer was explicitly listed as a non-goal unless included in V1.0; the diff adds/modifies a `useQueries` hook file.",
+      "evidence": [
+        "frontend/src/hooks/useQueries.ts"
       ]
     }
   ],
-  "confidence": 0.64,
+  "confidence": 0.78,
   "changed_files": [
     "backend/main.mo",
-    "backend/migration.mo",
     "frontend-file-summaries.txt",
+    "frontend/src/App.tsx",
+    "frontend/src/AppV1.jsx",
     "frontend/src/components/AuthHeader.tsx",
+    "frontend/src/components/MemberCard.tsx",
+    "frontend/src/components/MonopolyModeSwitch.tsx",
+    "frontend/src/components/MotionButton.tsx",
+    "frontend/src/components/PremiumBadge.tsx",
+    "frontend/src/components/Pressable.tsx",
+    "frontend/src/components/ProSalonWizard.tsx",
+    "frontend/src/components/ProStudioCreator.tsx",
+    "frontend/src/components/ProfileSetupModal.tsx",
+    "frontend/src/components/RevenueChart.tsx",
     "frontend/src/components/SalonListSection.tsx",
+    "frontend/src/components/VipDashboard.tsx",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/hooks/useSalonImage.ts",
+    "frontend/src/index.css",
+    "frontend/src/pages/ClientDashboardPage.tsx",
+    "frontend/src/pages/LoginPage.tsx",
+    "frontend/src/pages/ProDashboardPage.tsx",
     "frontend/src/pages/SalonDetailsPage.tsx",
+    "frontend/src/utils/currency.ts",
+    "frontend/src/utils/urlParams.ts",
     "project_state.json"
   ]
 }

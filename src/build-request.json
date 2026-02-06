@@ -1,95 +1,87 @@
 {
   "kind": "build_request",
-  "title": "Urgent fix: restore French/Swiss client UI and category filters (remove English/Paris)",
+  "title": "Full project reset: replace backend and frontend with user-provided V1.0 files",
   "priority": "high",
   "requirements": [
     {
-      "id": "REQ-28",
-      "text": "Update the backend salon seeding data so it is 100% French + Swiss and does not introduce English categories/services into the Client app: seed salons only in Lausanne, Genève, and Montreux; ensure seeded services use only the categories \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\" (no \"Hairdresser\", no \"Physiotherapist\", no English service names).",
+      "id": "REQ-40",
+      "text": "Perform a complete backend reset by deleting the existing Motoko backend implementation and replacing it entirely with the user-provided `backend/main.mo` source code, treating it as the official V1.0 backend.",
       "target": "backend",
       "source": {
         "messageIds": [
-          "msg-4"
+          "msg-2"
         ],
         "quotes": [
-          "1. DONNÉES EN DUR (100% FRANÇAIS & SUISSE) :\n * ...\n * BANNIS l'anglais : Pas de \"Hairdresser\", pas de \"Haircut\", pas de \"Paris\".\n * IMPOSE le Français : Utilise uniquement les catégories : \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\".\n * LOCALISATION : Villes = Lausanne, Genève, Montreux. Devise = CHF."
+          "OUI, supprime l'intégralité du backend existant et remplace-le par le code backend/main.mo que je t'ai fourni.",
+          "C'est un RESET COMPLET. Considère ces fichiers comme la nouvelle V1.0 Officielle du projet."
         ]
       },
       "acceptanceCriteria": [
-        "Calling the existing salon seeding flow (ensureSalonsSeeded + getSalons) returns salons whose neighborhood/location strings reference Lausanne/Genève/Montreux (and not Paris).",
-        "The seeded salons’ services contain only the categories exactly: \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\".",
-        "No seeded service name or category contains English terms such as \"Hairdresser\" or \"Haircut\".",
-        "The categories returned by getCategories are a subset of: \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\" (no English categories)."
+        "`backend/main.mo` matches the user-provided code exactly (no partial merges with the previous backend).",
+        "The backend canister compiles successfully after the replacement.",
+        "No state-migration work is implemented for the previous backend state (the reset intentionally discards old persistence)."
       ]
     },
     {
-      "id": "REQ-29",
-      "text": "Restore the Client category filter bar at the top of the salon list and make filtering work exactly with the French categories: show buttons in this order [\"Tout\", \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\"], and when a category is selected (e.g., \"Barbier\"), display only salons that match that category (based on salon services category data).",
+      "id": "REQ-41",
+      "text": "Perform a complete frontend reset by removing the existing frontend application code and replacing the app’s root component with the user-provided `src/App.jsx` code as the official V1.0 UI, while respecting platform constraints on immutable files by wiring the new app through editable entry points only.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4"
+          "msg-2"
         ],
         "quotes": [
-          "2. RÉPARATION DES FILTRES :\n * Rétablis la barre de filtres en haut : [\"Tout\", \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\"].\n * La logique de filtrage doit fonctionner : Si je clique sur \"Barbier\", affiche uniquement les salons dont la catégorie est \"Barbier\"."
+          "OUI, supprime l'intégralité du frontend existant et remplace-le par le code src/App.jsx que je t'ai fourni.",
+          "C'est un RESET COMPLET. Considère ces fichiers comme la nouvelle V1.0 Officielle du projet."
         ]
       },
       "acceptanceCriteria": [
-        "The salon list screen renders a visible horizontal filter bar at the top with labels exactly: \"Tout\", \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\".",
-        "Default selected filter is \"Tout\" and shows all salons.",
-        "Selecting \"Barbier\" shows only salons that have at least one service with category === \"Barbier\"; switching back to \"Tout\" restores the full list.",
-        "The filter bar remains present after navigation within the Client dashboard (as long as the salon list is displayed)."
+        "The root rendered UI matches the user-provided `src/App.jsx` behavior and structure as the new V1.0 baseline (not the prior multi-page app).",
+        "No edits are made to files under `frontend/src/hooks/useInternetIdentity.ts`, `frontend/src/hooks/useInternetIdentity.tsx`, `frontend/src/hooks/useActor.ts`, `frontend/src/main.tsx`, or `frontend/src/components/ui` (immutable paths); if the new app must be mounted, it is done via editable files (e.g., `frontend/src/App.tsx` and/or new files) without modifying immutable paths.",
+        "The frontend builds successfully with the current toolchain (React + TypeScript + Tailwind)."
       ]
     },
     {
-      "id": "REQ-30",
-      "text": "Remove remaining Paris/English UI regressions on the Client surfaces explicitly called out by the user: replace the AuthHeader badge text \"PARIS 11e\" with \"Suisse Romande\" (Client user type), replace the salon list section title \"Recommended for you\" with \"Les meilleures adresses\", and ensure the welcome header text reads \"Bienvenue\".",
-      "target": "frontend",
+      "id": "REQ-42",
+      "text": "Treat the reset as a hard cutover: remove/disable all previously implemented advanced features and code paths (e.g., Internet Identity auth, role-based routing, React Query data layer, bookings/availability/monopoly mode logic, on-chain image upload, loyalty/VIP dashboard, seeded premium salons logic) unless they exist in the two user-provided V1.0 files.",
+      "target": "both",
       "source": {
         "messageIds": [
-          "msg-4"
+          "msg-2"
         ],
         "quotes": [
-          "3. NETTOYAGE UI :\n * Remplace le badge \"Paris 11e\" par \"Suisse Romande\".\n * Remplace \"Recommended for you\" par \"Les meilleures adresses\".\n * Remplace \"Welcome\" par \"Bienvenue\"."
+          "Ne t'inquiète pas pour l'ancien code ou la persistance, je veux repartir sur une base saine et propre.",
+          "C'est un RESET COMPLET."
         ]
       },
       "acceptanceCriteria": [
-        "When logged in as a Client, the header badge shows \"Suisse Romande\" (and never \"PARIS 11e\").",
-        "On the salon list screen, the section title uses \"Les meilleures adresses\" where it previously showed \"Recommended for you\".",
-        "No UI surface in the login or client header displays \"Welcome\"; it displays \"Bienvenue\"."
-      ]
-    },
-    {
-      "id": "REQ-31",
-      "text": "Eliminate obvious remaining English strings on the Client salon list and salon details flows that contribute to the app feeling partially broken, including error/empty-state labels and primary action buttons, so the Client experience is consistently French.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-4"
-        ],
-        "quotes": [
-          "URGENCE : L'application est cassée côté Client (Anglais + Filtres disparus)."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Salon list: error and empty states do not show English (e.g., replace \"Error loading salons\", \"Coming Soon\", \"Opening near you soon...\", \"No salons found\", \"View all\").",
-        "Salon details: slot/confirmation UI does not show English (e.g., replace \"Available Slots\", \"Total\", \"Confirm\", \"Confirming...\").",
-        "After these changes, a spot-check of ClientDashboardPage, SalonListSection, SalonDetailsPage, AuthHeader, and LoginPage shows no visible English phrases in normal usage."
+        "The app no longer references previous feature modules/components/hooks/routes that are not part of the user-provided V1.0 files.",
+        "The repository compiles and runs end-to-end (frontend + backend) after the reset without relying on any of the previously built feature code."
       ]
     }
   ],
   "constraints": [
-    "Do not edit files under frontend/src/components/ui (shadcn) or any other paths listed as immutable in SYSTEM_CONTEXT.",
-    "Keep the backend as a single Motoko actor in backend/main.mo; only introduce/modify backend/migration.mo if a stable-state upgrade requires it.",
-    "Do not introduce real-time mechanisms (no WebSockets/server push) as part of this fix."
+    "Do not modify any files listed as immutable: `frontend/src/hooks/useInternetIdentity.ts`, `frontend/src/hooks/useInternetIdentity.tsx`, `frontend/src/hooks/useActor.ts`, `frontend/src/main.tsx`, and anything under `frontend/src/components/ui`.",
+    "Backend must remain a single-actor Motoko architecture with all logic in `backend/main.mo`.",
+    "Do not add `backend/migration.mo`; the reset explicitly discards old state and does not preserve prior deployed data."
   ],
   "nonGoals": [
-    "Do not add new product features beyond restoring the category filters and fixing the specified localization/Swiss-context regressions.",
-    "Do not change the authentication flow (Internet Identity) as part of this fix.",
-    "Do not add external databases or third-party services."
+    "Preserving or migrating any existing canister state, stable memory data, or previously implemented backend persistence.",
+    "Keeping Internet Identity authentication, role-based routing, React Query caching, bookings, availability slot management, monopoly mode pricing, image upload/retrieval, loyalty/XP, premium badges, or any other previously implemented features unless they are included in the user-provided V1.0 files.",
+    "Incremental refactors of the pre-reset codebase (this is a total replacement)."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }

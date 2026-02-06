@@ -23,6 +23,7 @@ export interface Salon {
     photoUrls: Array<string>;
     owner: Principal;
     isPremium: boolean;
+    socialLinks: SocialLinks;
     neighborhood: string;
     name: string;
     description: string;
@@ -30,12 +31,18 @@ export interface Salon {
     availabilities: Array<Availability>;
     services: Array<Service>;
 }
+export interface SocialLinks {
+    instagram?: string;
+    website?: string;
+    facebook?: string;
+}
 export interface Service {
     name: string;
     durationMinutes: bigint;
     category: string;
     price: bigint;
 }
+export type Client = Principal;
 export interface Booking {
     service: Service;
     client: Client;
@@ -46,7 +53,6 @@ export interface Booking {
     salonName: string;
     isSunday: boolean;
 }
-export type Client = Principal;
 export interface UserProfile {
     xp: bigint;
     name: string;
@@ -61,7 +67,7 @@ export enum UserRole {
 export interface backendInterface {
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
     bookSalon(salonName: string, time: bigint, date: string, _serviceName: string): Promise<void>;
-    createSalon(name: string, neighborhood: string, description: string, photoUrls: Array<string>, services: Array<Service>, isPremium: boolean): Promise<void>;
+    createSalon(name: string, neighborhood: string, description: string, photoUrls: Array<string>, services: Array<Service>, isPremium: boolean, socialLinks: SocialLinks): Promise<void>;
     deleteBooking(bookingKey: string): Promise<void>;
     ensureSalonsSeeded(): Promise<void>;
     getBookings(salonName: string): Promise<Array<Booking>>;

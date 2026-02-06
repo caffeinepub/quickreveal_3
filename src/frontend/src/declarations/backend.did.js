@@ -30,6 +30,11 @@ export const Service = IDL.Record({
   'category' : IDL.Text,
   'price' : IDL.Nat,
 });
+export const SocialLinks = IDL.Record({
+  'instagram' : IDL.Opt(IDL.Text),
+  'website' : IDL.Opt(IDL.Text),
+  'facebook' : IDL.Opt(IDL.Text),
+});
 export const Client = IDL.Principal;
 export const Booking = IDL.Record({
   'service' : Service,
@@ -63,6 +68,7 @@ export const Salon = IDL.Record({
   'photoUrls' : IDL.Vec(IDL.Text),
   'owner' : IDL.Principal,
   'isPremium' : IDL.Bool,
+  'socialLinks' : SocialLinks,
   'neighborhood' : IDL.Text,
   'name' : IDL.Text,
   'description' : IDL.Text,
@@ -109,6 +115,7 @@ export const idlService = IDL.Service({
         IDL.Vec(IDL.Text),
         IDL.Vec(Service),
         IDL.Bool,
+        SocialLinks,
       ],
       [],
       [],
@@ -173,6 +180,11 @@ export const idlFactory = ({ IDL }) => {
     'category' : IDL.Text,
     'price' : IDL.Nat,
   });
+  const SocialLinks = IDL.Record({
+    'instagram' : IDL.Opt(IDL.Text),
+    'website' : IDL.Opt(IDL.Text),
+    'facebook' : IDL.Opt(IDL.Text),
+  });
   const Client = IDL.Principal;
   const Booking = IDL.Record({
     'service' : Service,
@@ -206,6 +218,7 @@ export const idlFactory = ({ IDL }) => {
     'photoUrls' : IDL.Vec(IDL.Text),
     'owner' : IDL.Principal,
     'isPremium' : IDL.Bool,
+    'socialLinks' : SocialLinks,
     'neighborhood' : IDL.Text,
     'name' : IDL.Text,
     'description' : IDL.Text,
@@ -252,6 +265,7 @@ export const idlFactory = ({ IDL }) => {
           IDL.Vec(IDL.Text),
           IDL.Vec(Service),
           IDL.Bool,
+          SocialLinks,
         ],
         [],
         [],

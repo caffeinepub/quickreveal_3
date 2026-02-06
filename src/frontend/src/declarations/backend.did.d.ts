@@ -34,6 +34,7 @@ export interface Salon {
   'photoUrls' : Array<string>,
   'owner' : Principal,
   'isPremium' : boolean,
+  'socialLinks' : SocialLinks,
   'neighborhood' : string,
   'name' : string,
   'description' : string,
@@ -46,6 +47,11 @@ export interface Service {
   'durationMinutes' : bigint,
   'category' : string,
   'price' : bigint,
+}
+export interface SocialLinks {
+  'instagram' : [] | [string],
+  'website' : [] | [string],
+  'facebook' : [] | [string],
 }
 export interface UserProfile {
   'xp' : bigint,
@@ -87,7 +93,15 @@ export interface _SERVICE {
   'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
   'bookSalon' : ActorMethod<[string, bigint, string, string], undefined>,
   'createSalon' : ActorMethod<
-    [string, string, string, Array<string>, Array<Service>, boolean],
+    [
+      string,
+      string,
+      string,
+      Array<string>,
+      Array<Service>,
+      boolean,
+      SocialLinks,
+    ],
     undefined
   >,
   'deleteBooking' : ActorMethod<[string], undefined>,

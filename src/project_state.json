@@ -1,24 +1,20 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 11,
-  "summary": "Refonte frontend \"LUXE V3\" visant une expérience premium, 100% francisée, plus fluide (animations type app native), plus addictive (VIP gamification), et avec des états vides transformés en CTA utiles.",
+  "projectStateVersion": 17,
+  "summary": "RESET 100% confirmé : nouvelle V1.0 officielle basée sur 2 fichiers uniquement. Backend Motoko minimal (stable var salons, auto-seed de 4 salons suisses, getSalons + createSalon) et frontend React minimal (src/App.jsx) avec navigation landing/auth/app, sélection Client/Pro locale, liste salons avec filtres FR, et Studio Pro gamifié; aucune conservation des features avancées précédentes (II, persistance complète, créneaux, réservations, upload on-chain, React Query, etc.).",
   "architectural_notes": [
-    "Architecture IC : backend Motoko en single canister (monolithe) pour le MVP.",
-    "Authentification via Internet Identity; le rôle (client/pro) détermine la redirection vers l’interface appropriée.",
-    "Les données ne doivent pas être statiques : persistance des salons, créneaux et réservations dans le canister.",
-    "Les créneaux sont générés et gérés explicitement par le backend (ex: toutes les heures de 14h à 23h), et catégorisés (Nuit >19h, Dimanche) pour la tarification.",
-    "La majoration « Mode Monopole » est appliquée côté backend : +20% sur réservations Nuit/Dimanche quand activé.",
-    "Mise à jour UI/graphique après actions utilisateur (pas de temps réel type WebSocket).",
-    "Optimistic UI requis pour le switch Mode Monopole : l’UI se met à jour immédiatement, puis rollback/confirmation selon réponse backend.",
-    "Le frontend doit rester entièrement en français (libellés, menus, messages).",
-    "Prévoir un mécanisme d’auto-seeding côté backend (idempotent) pour créer des salons/services/créneaux de démonstration au démarrage afin d’éviter un état vide.",
-    "Le flux Pro de création de salon devient un wizard en 3 étapes incluant la configuration des heures d’ouverture et la génération de créneaux associée."
+    "RESET complet : écrasement total du backend et du frontend, considéré comme nouvelle V1.0 officielle.",
+    "Backend Motoko réduit à un modèle Salon/Service/Socials avec `stable var salons` et endpoints `getSalons` (query) + `createSalon` (shared); seed de 4 salons suisses au démarrage (si salons vide).",
+    "Frontend réduit à un seul `src/App.jsx` autonome (sans React Query/II) : données salons initialisées côté client (miroir du seed) + choix de rôle Client/Pro via écran Auth + Studio Pro gamifié pour ajouter un salon localement."
   ],
   "known_issues": [
     "Risque de confusion dans le périmètre « temps réel » : l’actualisation du graphique doit se faire après actions utilisateur (pas de push serveur).",
     "Incohérence de spécification à résoudre : une feature existante demande de garder les textes UI en anglais (REQ-11) alors que la direction produit impose désormais une traduction intégrale 100% français.",
     "L’application côté Client est cassée : présence de textes/données en anglais (ex: catégories Hairdresser/Haircut, Paris) au lieu de 100% FR + contexte Suisse (Lausanne/Genève/Montreux, CHF).",
-    "Régression UI/UX : la barre de filtres en haut a disparu et/ou la logique de filtrage par catégorie ne fonctionne plus (ex: clic 'Barbier' n’isole pas les salons 'Barbier')."
+    "Régression UI/UX : la barre de filtres en haut a disparu et/ou la logique de filtrage par catégorie ne fonctionne plus (ex: clic 'Barbier' n’isole pas les salons 'Barbier').",
+    "Le RESET supprime explicitement des fonctionnalités précédemment prévues/implémentées (Internet Identity, rôles backend, persistance complète pré/post-upgrade, créneaux datés, réservations, Monopoly Mode, upload d’images on-chain, React Query).",
+    "Le code backend fourni utilise `public func init()` pour l’initialisation; sur IC, l’initialisation standard se fait via le hook système `system func init()` (risque que le seed ne s’exécute pas automatiquement).",
+    "Les champs `image` contiennent des liens au format Markdown `[url](url)` au lieu d’une URL brute, ce qui peut casser l’affichage `<img src=...>` côté React."
   ],
   "isFixRequest": true,
   "existing_features": [
@@ -205,6 +201,54 @@
         "REQ-31"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-implement-the-gamified-prostudiocreator-component-the-gauge-based-dark-midnight-ui-as-the-official-pro-salon-creation-interface-and-replace-the-current-prosalonwizard-usage-in-the-pro-dashboard-with-prostudiocreator",
+      "title": "Implement the gamified ProStudioCreator component (the gauge-based dark 'Midnight' UI) as the official Pro salon creation interface, and replace the current ProSalonWizard usage in the Pro dashboard with ProStudioCreator.",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-wire-prostudiocreator-to-the-backend-on-publish-call-createsalon-with-the-entered-salon-metadata-services-and-then-if-a-local-image-file-is-chosen-upload-the-image-bytes-to-the-backend-using-arraybuffer-uint8array-and-uploadsalonimage-ensure-react-query-caches-are-invalidated-so-the-new-salon-appears-in-the-client-list-without-a-hard-refresh",
+      "title": "Wire ProStudioCreator to the backend: on publish, call createSalon with the entered salon metadata/services and then (if a local image file is chosen) upload the image bytes to the backend using ArrayBuffer->Uint8Array and uploadSalonImage; ensure React Query caches are invalidated so the new salon appears in the client list without a hard refresh.",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-salondetails-page-to-display-social-icons-links-under-the-description-when-salon-socials-exists-instagram-facebook-website-while-keeping-the-existing-midnight-styling",
+      "title": "Update the SalonDetails page to display social icons/links under the description when salon.socials exists (Instagram/Facebook/Website), while keeping the existing Midnight styling.",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-keep-the-corrected-category-filter-ux-exactly-as-tout-coiffure-barbier-spa-onglerie-and-ensure-filtering-continues-to-work-by-salon-service-category",
+      "title": "Keep the corrected category filter UX exactly as: [\"Tout\", \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\"], and ensure filtering continues to work by salon service category.",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-perform-a-complete-frontend-reset-by-removing-the-existing-frontend-application-code-and-replacing-the-app-s-root-component-with-the-user-provided-src-app-jsx-code-as-the-official-v1-0-ui-while-respecting-platform-constraints-on-immutable-files-by-wiring-the-new-app-through-editable-entry-points-only",
+      "title": "Perform a complete frontend reset by removing the existing frontend application code and replacing the app’s root component with the user-provided `src/App.jsx` code as the official V1.0 UI, while respecting platform constraints on immutable files by wiring the new app through editable entry points only.",
+      "reqIds": [
+        "REQ-41"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-treat-the-reset-as-a-hard-cutover-remove-disable-all-previously-implemented-advanced-features-and-code-paths-e-g-internet-identity-auth-role-based-routing-react-query-data-layer-bookings-availability-monopoly-mode-logic-on-chain-image-upload-loyalty-vip-dashboard-seeded-premium-salons-logic-unless-they-exist-in-the-two-user-provided-v1-0-files",
+      "title": "Treat the reset as a hard cutover: remove/disable all previously implemented advanced features and code paths (e.g., Internet Identity auth, role-based routing, React Query data layer, bookings/availability/monopoly mode logic, on-chain image upload, loyalty/VIP dashboard, seeded premium salons logic) unless they exist in the two user-provided V1.0 files.",
+      "reqIds": [
+        "REQ-42"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -365,6 +409,64 @@
       "summary": "Update the backend salon seeding data so it is 100% French + Swiss and does not introduce English categories/services into the Client app: seed salons only in Lausanne, Genève, and Montreux; ensure seeded services use only the categories \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\" (no \"Hairdresser\", no \"Physiotherapist\", no English service names).",
       "reqIds": [
         "REQ-28"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-31",
+      "summary": "Backend Motoko : remplacer/adapter l’auto-seeding pour initialiser en mémoire stable exactement les 4 salons suisses fournis (BlackBlade, Le Studio – L'Oréal, Suzy Coiffure & Head Spa, EMER Coiffure) au démarrage (on-chain)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-32",
+      "summary": "Frontend Pro : remplacer ProCreateSalon par ProStudioCreator (version gamifiée avec jauge) et le connecter au backend (createSalon) ; gérer l’upload d’image via Blob/ArrayBuffer vers Motoko",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-33",
+      "summary": "Frontend UX : imposer les catégories de filtre [\"Tout\",\"Coiffure\",\"Barbier\",\"Spa\",\"Onglerie\"], conserver le thème sombre « Midnight », et afficher les réseaux sociaux (Instagram/Facebook/Site Web) dans SalonDetail si disponibles",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-34",
+      "summary": "Replace the backend salon auto-seeding logic so that, when the canister has zero salons, it seeds exactly the 4 Swiss salons provided by the user (BlackBlade Hairstylist, Le Studio - L'Oréal, Suzy Coiffure & Head Spa, EMER Coiffure) into persistent storage (survives refresh and upgrade).",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-35",
+      "summary": "Implement true stable persistence for salons, bookings, images, and user profiles using Internet Computer upgrade hooks (preupgrade/postupgrade) so seeded data and user-created data survive upgrades; apply seeding on init/post-upgrade only when there are zero salons stored.",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-36",
+      "summary": "Extend the backend Salon data model to support social links (instagram/facebook/website) coming from the Swiss seed dataset and needed by the SalonDetails UI, and expose them via existing getSalons/getSalon responses.",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-37",
+      "summary": "Add/adjust backend createSalon support so the Pro creation flow can create a salon and then upload an on-chain image (Blob) from the frontend using ArrayBuffer/Uint8Array; ensure authorization rules allow the salon owner to upload an image for the salon they just created.",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-38",
+      "summary": "Perform a complete backend reset by deleting the existing Motoko backend implementation and replacing it entirely with the user-provided `backend/main.mo` source code, treating it as the official V1.0 backend.",
+      "reqIds": [
+        "REQ-40"
       ],
       "status": "pending"
     }

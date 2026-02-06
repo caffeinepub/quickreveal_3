@@ -1,72 +1,109 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-06T00:12:39.459Z",
+  "generatedAt": "2026-02-06T02:58:05.894Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 4,
-    "implemented": 3,
+    "total": 3,
+    "implemented": 2,
     "items": [
       {
-        "id": "REQ-28",
-        "summary": "Update the backend salon seeding data so it is 100% French + Swiss and does not introduce English categories/services into the Client app: seed salons only in Lausanne, Genève, and Montreux; ensure seeded services use only the categories \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\" (no \"Hairdresser\", no \"Physiotherapist\", no English service names).",
+        "id": "REQ-40",
+        "summary": "Perform a complete backend reset by deleting the existing Motoko backend implementation and replacing it entirely with the user-provided `backend/main.mo` source code, treating it as the official V1.0 backend.",
         "status": "unknown",
         "plannedFiles": [],
         "matchedFiles": []
       },
       {
-        "id": "REQ-29",
-        "summary": "Restore the Client category filter bar at the top of the salon list and make filtering work exactly with the French categories: show buttons in this order [\"Tout\", \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\"], and when a category is selected (e.g., \"Barbier\"), display only salons that match that category (based on salon services category data).",
+        "id": "REQ-41",
+        "summary": "Perform a complete frontend reset by removing the existing frontend application code and replacing the app’s root component with the user-provided `src/App.jsx` code as the official V1.0 UI, while respecting platform constraints on immutable files by wiring the new app through editable entry points only.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/SalonListSection.tsx"
+          "frontend/src/AppV1.jsx",
+          "frontend/src/App.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/SalonListSection.tsx"
+          "frontend/src/AppV1.jsx",
+          "frontend/src/App.tsx"
         ]
       },
       {
-        "id": "REQ-30",
-        "summary": "Remove remaining Paris/English UI regressions on the Client surfaces explicitly called out by the user: replace the AuthHeader badge text \"PARIS 11e\" with \"Suisse Romande\" (Client user type), replace the salon list section title \"Recommended for you\" with \"Les meilleures adresses\", and ensure the welcome header text reads \"Bienvenue\".",
+        "id": "REQ-42",
+        "summary": "Treat the reset as a hard cutover: remove/disable all previously implemented advanced features and code paths (e.g., Internet Identity auth, role-based routing, React Query data layer, bookings/availability/monopoly mode logic, on-chain image upload, loyalty/VIP dashboard, seeded premium salons logic) unless they exist in the two user-provided V1.0 files.",
         "status": "implemented",
         "plannedFiles": [
+          "frontend/src/pages/LoginPage.tsx",
+          "frontend/src/pages/ClientDashboardPage.tsx",
+          "frontend/src/pages/ProDashboardPage.tsx",
+          "frontend/src/pages/SalonDetailsPage.tsx",
           "frontend/src/components/AuthHeader.tsx",
+          "frontend/src/components/ProfileSetupModal.tsx",
+          "frontend/src/components/VipDashboard.tsx",
+          "frontend/src/components/MemberCard.tsx",
           "frontend/src/components/SalonListSection.tsx",
-          "frontend/src/pages/LoginPage.tsx"
+          "frontend/src/components/ProSalonWizard.tsx",
+          "frontend/src/components/ProStudioCreator.tsx",
+          "frontend/src/components/MonopolyModeSwitch.tsx",
+          "frontend/src/components/RevenueChart.tsx",
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/hooks/useSalonImage.ts",
+          "frontend/src/utils/currency.ts",
+          "frontend/src/utils/urlParams.ts"
         ],
         "matchedFiles": [
+          "frontend/src/pages/LoginPage.tsx",
+          "frontend/src/pages/ClientDashboardPage.tsx",
+          "frontend/src/pages/ProDashboardPage.tsx",
+          "frontend/src/pages/SalonDetailsPage.tsx",
           "frontend/src/components/AuthHeader.tsx",
-          "frontend/src/components/SalonListSection.tsx"
-        ]
-      },
-      {
-        "id": "REQ-31",
-        "summary": "Eliminate obvious remaining English strings on the Client salon list and salon details flows that contribute to the app feeling partially broken, including error/empty-state labels and primary action buttons, so the Client experience is consistently French.",
-        "status": "implemented",
-        "plannedFiles": [
+          "frontend/src/components/ProfileSetupModal.tsx",
+          "frontend/src/components/VipDashboard.tsx",
+          "frontend/src/components/MemberCard.tsx",
           "frontend/src/components/SalonListSection.tsx",
-          "frontend/src/pages/SalonDetailsPage.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/SalonListSection.tsx",
-          "frontend/src/pages/SalonDetailsPage.tsx"
+          "frontend/src/components/ProSalonWizard.tsx",
+          "frontend/src/components/ProStudioCreator.tsx",
+          "frontend/src/components/MonopolyModeSwitch.tsx",
+          "frontend/src/components/RevenueChart.tsx",
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/hooks/useSalonImage.ts",
+          "frontend/src/utils/currency.ts",
+          "frontend/src/utils/urlParams.ts"
         ]
       }
     ]
   },
   "changedFiles": [
     "backend/main.mo",
-    "backend/migration.mo",
     "build-request.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
+    "frontend/src/App.tsx",
+    "frontend/src/AppV1.jsx",
     "frontend/src/components/AuthHeader.tsx",
+    "frontend/src/components/MemberCard.tsx",
+    "frontend/src/components/MonopolyModeSwitch.tsx",
+    "frontend/src/components/MotionButton.tsx",
+    "frontend/src/components/PremiumBadge.tsx",
+    "frontend/src/components/Pressable.tsx",
+    "frontend/src/components/ProSalonWizard.tsx",
+    "frontend/src/components/ProStudioCreator.tsx",
+    "frontend/src/components/ProfileSetupModal.tsx",
+    "frontend/src/components/RevenueChart.tsx",
     "frontend/src/components/SalonListSection.tsx",
+    "frontend/src/components/VipDashboard.tsx",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/hooks/useSalonImage.ts",
+    "frontend/src/index.css",
+    "frontend/src/pages/ClientDashboardPage.tsx",
+    "frontend/src/pages/LoginPage.tsx",
+    "frontend/src/pages/ProDashboardPage.tsx",
     "frontend/src/pages/SalonDetailsPage.tsx",
+    "frontend/src/utils/currency.ts",
+    "frontend/src/utils/urlParams.ts",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",
