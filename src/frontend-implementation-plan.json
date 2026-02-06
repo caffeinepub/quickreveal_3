@@ -1,121 +1,42 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Frontend hard reset: mount user-provided V1.0 App.jsx via editable entry points and remove legacy feature UI",
+  "title": "V14 “DIVINE OS” local-demo reset (AppV1.jsx verbatim overwrite)",
   "requirements": [
     {
-      "id": "REQ-41",
-      "summary": "Reset the frontend UI by wiring the user-provided V1.0 src/App.jsx as the new root UI without modifying immutable files.",
+      "id": "REQ-65",
+      "summary": "Fully overwrite frontend/src/AppV1.jsx with the provided V14 “DIVINE OS” code block verbatim (local React state only).",
       "acceptanceCriteria": [
-        "The root rendered UI matches the user-provided `src/App.jsx` behavior and structure as the new V1.0 baseline (not the prior multi-page app).",
-        "No edits are made to files under `frontend/src/hooks/useInternetIdentity.ts`, `frontend/src/hooks/useInternetIdentity.tsx`, `frontend/src/hooks/useActor.ts`, `frontend/src/main.tsx`, or `frontend/src/components/ui` (immutable paths); if the new app must be mounted, it is done via editable files (e.g., `frontend/src/App.tsx` and/or new files) without modifying immutable paths.",
-        "The frontend builds successfully with the current toolchain (React + TypeScript + Tailwind)."
+        "`frontend/src/AppV1.jsx` content matches the provided V14 code block exactly (full file overwrite; no partial merges).",
+        "No backend calls are introduced by the new `AppV1` implementation; all behavior is driven by local React state only.",
+        "The app renders the Landing screen first and allows switching to Client (\"Explorer\") and Pro (\"Créer\") flows per the injected code."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
-          "operation": "create",
-          "description": "Add the user-provided V1.0 `src/App.jsx` code as-is in this file (exact replacement baseline for the reset)."
-        },
-        {
-          "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Replace the current root component implementation so it only mounts/exports the V1.0 UI from `frontend/src/AppV1.jsx`, ensuring no imports/usages of legacy auth/routing/data-layer flows remain here (and without changing `frontend/src/main.tsx`)."
+          "description": "Replace the entire file contents with the user-provided V14 “DIVINE OS” code block exactly as given (verbatim), ensuring it remains a 100% local demo (no actor/hooks/backend imports or calls)."
         }
       ]
     },
     {
-      "id": "REQ-42",
-      "summary": "Hard cutover: remove/disable previously implemented advanced frontend features and references not present in the user-provided V1.0 files.",
+      "id": "REQ-66",
+      "summary": "Ensure the app still compiles/runs with App.tsx remaining a thin wrapper that renders AppV1, and preserve the injected UI behaviors across Client/Pro flows.",
       "acceptanceCriteria": [
-        "The app no longer references previous feature modules/components/hooks/routes that are not part of the user-provided V1.0 files.",
-        "The repository compiles and runs end-to-end (frontend + backend) after the reset without relying on any of the previously built feature code."
+        "`frontend/src/App.tsx` remains a thin wrapper rendering `AppV1` (no entry wiring changes).",
+        "Production build/dev server succeeds without runtime errors on initial load.",
+        "In the Client view: (a) toggling a heart updates Favorites state and Favorites tab renders the favorite salons; (b) clicking the trash icon removes a salon card from the feed; (c) clicking a service adds a booking entry and navigates to the Agenda tab; (d) completing ProWizard and clicking “DÉPLOYER” injects the new salon into the Client feed and it appears in the Stories rail list during the same session."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/LoginPage.tsx",
-          "operation": "delete",
-          "description": "Remove legacy Internet Identity login page implementation so it cannot be referenced by the new V1.0 root UI."
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Keep App.tsx as the thin wrapper that only renders <AppV1 />; make no functional entry/wiring changes beyond what is required to compile."
         },
         {
-          "path": "frontend/src/pages/ClientDashboardPage.tsx",
-          "operation": "delete",
-          "description": "Remove legacy client dashboard page (tabs, browsing, VIP/dashboard logic) as part of the hard reset."
-        },
-        {
-          "path": "frontend/src/pages/ProDashboardPage.tsx",
-          "operation": "delete",
-          "description": "Remove legacy pro dashboard page (monopoly mode, revenue chart, creator flows) as part of the hard reset."
-        },
-        {
-          "path": "frontend/src/pages/SalonDetailsPage.tsx",
-          "operation": "delete",
-          "description": "Remove legacy salon details/booking flow UI to ensure no bookings/availability/monopoly logic remains after the reset."
-        },
-        {
-          "path": "frontend/src/components/AuthHeader.tsx",
-          "operation": "delete",
-          "description": "Remove legacy authenticated header UI so the reset does not retain logout/badge/notification logic."
-        },
-        {
-          "path": "frontend/src/components/ProfileSetupModal.tsx",
-          "operation": "delete",
-          "description": "Remove legacy profile-setup modal to disable prior profile onboarding flow."
-        },
-        {
-          "path": "frontend/src/components/VipDashboard.tsx",
-          "operation": "delete",
-          "description": "Remove legacy loyalty/VIP dashboard UI and visuals."
-        },
-        {
-          "path": "frontend/src/components/MemberCard.tsx",
-          "operation": "delete",
-          "description": "Remove legacy loyalty tier/XP card component to eliminate VIP/XP display logic."
-        },
-        {
-          "path": "frontend/src/components/SalonListSection.tsx",
-          "operation": "delete",
-          "description": "Remove legacy salon browsing list implementation (categories, featured salon, image loading) as part of the reset."
-        },
-        {
-          "path": "frontend/src/components/ProSalonWizard.tsx",
-          "operation": "delete",
-          "description": "Remove legacy multi-step salon creation wizard to disable seeded premium salons and publishing flows."
-        },
-        {
-          "path": "frontend/src/components/ProStudioCreator.tsx",
-          "operation": "delete",
-          "description": "Remove legacy studio/salon creator flow to disable salon creation management UI."
-        },
-        {
-          "path": "frontend/src/components/MonopolyModeSwitch.tsx",
-          "operation": "delete",
-          "description": "Remove legacy monopoly-mode toggle UI to ensure the reset no longer exposes that feature."
-        },
-        {
-          "path": "frontend/src/components/RevenueChart.tsx",
-          "operation": "delete",
-          "description": "Remove legacy revenue chart UI to eliminate pro analytics visuals from the reset baseline."
-        },
-        {
-          "path": "frontend/src/hooks/useQueries.ts",
-          "operation": "delete",
-          "description": "Remove legacy React Query-based data layer hooks so the reset does not rely on the prior caching/query architecture."
-        },
-        {
-          "path": "frontend/src/hooks/useSalonImage.ts",
-          "operation": "delete",
-          "description": "Remove legacy salon image fetching/conversion hook to eliminate prior on-chain image retrieval logic from the UI."
-        },
-        {
-          "path": "frontend/src/utils/currency.ts",
-          "operation": "delete",
-          "description": "Remove legacy currency formatting utilities that were specific to the previous multi-feature UI."
-        },
-        {
-          "path": "frontend/src/utils/urlParams.ts",
-          "operation": "delete",
-          "description": "Remove legacy URL parameter utilities that supported prior admin/feature flows."
+          "path": "frontend/src/AppV1.jsx",
+          "operation": "modify",
+          "description": "After the verbatim overwrite, validate the injected V14 UI compiles under the existing Vite/React/Tailwind setup and that all required in-session behaviors (favorites, delete from feed, booking->agenda navigation, Pro deploy injecting salon into feed/stories) work without introducing backend calls; if any compile-only fixes are necessary, they must be reconciled with the requirement that the file match the provided code verbatim."
         }
       ]
     }

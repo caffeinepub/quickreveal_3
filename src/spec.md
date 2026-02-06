@@ -1,11 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Perform a hard reset of the project by fully replacing the existing backend and frontend with the user-provided V1.0 `backend/main.mo` and `src/App.jsx` baselines.
+**Goal:** Reset the V14 “DIVINE OS” local demo by fully overwriting `frontend/src/AppV1.jsx` with the user-provided code verbatim, ensuring it runs as a 100% local React-state-driven demo.
 
 **Planned changes:**
-- Delete the existing Motoko backend implementation and replace it entirely with the user-provided `backend/main.mo` as the official V1.0 backend.
-- Remove the existing frontend app code and mount the user-provided `src/App.jsx` as the new V1.0 root UI, using only editable entry points (no changes to immutable paths).
-- Remove/disable all previously implemented advanced features and code paths unless they exist in the two user-provided V1.0 files, ensuring the repo builds and runs end-to-end after the reset.
+- Fully replace the contents of `frontend/src/AppV1.jsx` with the provided V14 “DIVINE OS” code block exactly as given (full overwrite; no merges).
+- Keep `frontend/src/App.tsx` as a thin wrapper rendering `AppV1` (no entry wiring changes) and ensure the frontend compiles/runs with the injected UI and behavior.
+- Ensure all demo behaviors remain local-only (no backend calls), including Landing → Client (“Explorer”) / Pro (“Créer”) flow switching, Client favorites, card removal, service-to-agenda booking navigation, and Pro wizard “DÉPLOYER” injecting a new salon into the Client feed and Stories during the same session.
 
-**User-visible outcome:** The app runs using only the new V1.0 backend and the new V1.0 single-root UI behavior defined by the user-provided files, with prior features no longer present unless included in those V1.0 sources.
+**User-visible outcome:** The app launches into the Landing screen and users can navigate between Client and Pro demo flows; in Client they can favorite salons, remove salons from the feed, add bookings by selecting services (which navigates to Agenda), and in Pro they can complete the wizard and deploy a new salon that immediately appears in the Client feed and Stories—all without any backend dependency.

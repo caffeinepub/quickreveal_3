@@ -2,10 +2,9 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-perform-a-complete-frontend-reset-by-removing-the-existing-frontend-application-code-and-replacing-the-app-s-root-component-with-the-user-provided-src-app-jsx-code-as-the-official-v1-0-ui-while-respecting-platform-constraints-on-immutable-files-by-wiring-the-new-app-through-editable-entry-points-only",
-      "featureTitle": "Perform a complete frontend reset by removing the existing frontend application code and replacing the app’s root component with the user-provided `src/App.jsx` code as the official V1.0 UI, while respecting platform constraints on immutable files by wiring the new app through editable entry points only.",
+      "featureId": "feature-replace-the-entire-contents-of-frontend-src-appv1-jsx-with-the-user-provided-v14-divine-os-code-block-exactly-as-given-verbatim-with-a-full-overwrite-of-the-file",
+      "featureTitle": "Replace the entire contents of `frontend/src/AppV1.jsx` with the user-provided V14 “DIVINE OS” code block exactly as given (verbatim), with a full overwrite of the file.",
       "files": [
-        "frontend/src/App.tsx",
         "frontend/src/AppV1.jsx"
       ],
       "components": [
@@ -18,31 +17,15 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-41"
+        "REQ-65"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-treat-the-reset-as-a-hard-cutover-remove-disable-all-previously-implemented-advanced-features-and-code-paths-e-g-internet-identity-auth-role-based-routing-react-query-data-layer-bookings-availability-monopoly-mode-logic-on-chain-image-upload-loyalty-vip-dashboard-seeded-premium-salons-logic-unless-they-exist-in-the-two-user-provided-v1-0-files",
-      "featureTitle": "Treat the reset as a hard cutover: remove/disable all previously implemented advanced features and code paths (e.g., Internet Identity auth, role-based routing, React Query data layer, bookings/availability/monopoly mode logic, on-chain image upload, loyalty/VIP dashboard, seeded premium salons logic) unless they exist in the two user-provided V1.0 files.",
+      "featureId": "feature-ensure-the-application-compiles-and-runs-after-the-appv1-jsx-overwrite-while-preserving-the-injected-ui-behavior-do-not-change-any-immutable-entry-files-and-keep-frontend-src-app-tsx-as-the-thin-wrapper-that-renders-appv1",
+      "featureTitle": "Ensure the application compiles and runs after the `AppV1.jsx` overwrite while preserving the injected UI/behavior; do not change any immutable entry files and keep `frontend/src/App.tsx` as the thin wrapper that renders `AppV1`.",
       "files": [
-        "frontend/src/components/AuthHeader.tsx",
-        "frontend/src/components/MemberCard.tsx",
-        "frontend/src/components/MonopolyModeSwitch.tsx",
-        "frontend/src/components/ProSalonWizard.tsx",
-        "frontend/src/components/ProStudioCreator.tsx",
-        "frontend/src/components/ProfileSetupModal.tsx",
-        "frontend/src/components/RevenueChart.tsx",
-        "frontend/src/components/SalonListSection.tsx",
-        "frontend/src/components/VipDashboard.tsx",
-        "frontend/src/hooks/useQueries.ts",
-        "frontend/src/hooks/useSalonImage.ts",
-        "frontend/src/pages/ClientDashboardPage.tsx",
-        "frontend/src/pages/LoginPage.tsx",
-        "frontend/src/pages/ProDashboardPage.tsx",
-        "frontend/src/pages/SalonDetailsPage.tsx",
-        "frontend/src/utils/currency.ts",
-        "frontend/src/utils/urlParams.ts"
+        "frontend/src/AppV1.jsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -54,7 +37,7 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-42"
+        "REQ-66"
       ],
       "confidence": "high"
     }

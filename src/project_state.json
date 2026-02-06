@@ -1,11 +1,18 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 17,
-  "summary": "RESET 100% confirmé : nouvelle V1.0 officielle basée sur 2 fichiers uniquement. Backend Motoko minimal (stable var salons, auto-seed de 4 salons suisses, getSalons + createSalon) et frontend React minimal (src/App.jsx) avec navigation landing/auth/app, sélection Client/Pro locale, liste salons avec filtres FR, et Studio Pro gamifié; aucune conservation des features avancées précédentes (II, persistance complète, créneaux, réservations, upload on-chain, React Query, etc.).",
+  "projectStateVersion": 37,
+  "summary": "V14 « DIVINE OS » : reset total en mode démo 100% local. Remplacer intégralement `frontend/src/AppV1.jsx` (point d’entrée éditable) par le code V14 fourni, copié strictement verbatim. UX cible : navigation Client « story-first » (StoriesRail en haut), design holographique (backdrop-blur/verre), ProWizard avec calcul temps réel d’un « Rarity Score », et bouton « DÉPLOYER » qui injecte instantanément le nouveau salon dans le feed + la barre de Stories (via l’état React local).",
   "architectural_notes": [
     "RESET complet : écrasement total du backend et du frontend, considéré comme nouvelle V1.0 officielle.",
     "Backend Motoko réduit à un modèle Salon/Service/Socials avec `stable var salons` et endpoints `getSalons` (query) + `createSalon` (shared); seed de 4 salons suisses au démarrage (si salons vide).",
-    "Frontend réduit à un seul `src/App.jsx` autonome (sans React Query/II) : données salons initialisées côté client (miroir du seed) + choix de rôle Client/Pro via écran Auth + Studio Pro gamifié pour ajouter un salon localement."
+    "Frontend réduit à un seul `src/App.jsx` autonome (sans React Query/II) : données salons initialisées côté client (miroir du seed) + choix de rôle Client/Pro via écran Auth + Studio Pro gamifié pour ajouter un salon localement.",
+    "Frontend : base officielle = un seul fichier `src/App.jsx` \"Swiss Vogue\" avec dataset local `INITIAL_SWISS_DATA` pour fonctionner immédiatement; intégrations backend/II mises en pause.",
+    "UX : Client = feed de cartes \"Luxury\" + filtres cliquables (Badge button) sur catégories FR [Tout, Coiffure, Barbier, Spa, Onglerie] + dock de navigation flottant.",
+    "UX : Pro = wizard immersif 3 étapes (nom → upload photo locale via `URL.createObjectURL` → écran confirmation), sans persistance backend pour l’instant.",
+    "Frontend V3.0 : `src/App.jsx` remplacé par \"STUDIO PRO ULTIMATE\" (Luxe) avec dataset local suisse `INITIAL_SWISS_DATA` (4 salons, CHF, images HD), sans appels backend.",
+    "Mode Pro : wizard immersif en 5 étapes (Nom/Ville → Catégorie/Pitch → Photo → Menu services → Confirmation) avec gestion locale des services (ajout/suppression) et photo via upload local (`URL.createObjectURL`).",
+    "Frontend V5 « BUSINESS SUITE » : services enrichis (duration/desc/popular) et affichage détaillé côté Client; mode Pro : wizard 5 étapes avec éditeur de services avancé (prix/durée/description/populaire) + upload photo locale via `URL.createObjectURL`, toujours sans backend.",
+    "Frontend V8 « INFINITY VERSE » : App monofichier `src/App.jsx` (Landing → Auth → Client/Pro) avec dataset local `INITIAL_SWISS_DATA` orienté Video Commerce + Drops + Membership, et ProWizard 5 étapes incluant projection de revenus en temps réel."
   ],
   "known_issues": [
     "Risque de confusion dans le périmètre « temps réel » : l’actualisation du graphique doit se faire après actions utilisateur (pas de push serveur).",
@@ -14,9 +21,12 @@
     "Régression UI/UX : la barre de filtres en haut a disparu et/ou la logique de filtrage par catégorie ne fonctionne plus (ex: clic 'Barbier' n’isole pas les salons 'Barbier').",
     "Le RESET supprime explicitement des fonctionnalités précédemment prévues/implémentées (Internet Identity, rôles backend, persistance complète pré/post-upgrade, créneaux datés, réservations, Monopoly Mode, upload d’images on-chain, React Query).",
     "Le code backend fourni utilise `public func init()` pour l’initialisation; sur IC, l’initialisation standard se fait via le hook système `system func init()` (risque que le seed ne s’exécute pas automatiquement).",
-    "Les champs `image` contiennent des liens au format Markdown `[url](url)` au lieu d’une URL brute, ce qui peut casser l’affichage `<img src=...>` côté React."
+    "Les champs `image` contiennent des liens au format Markdown `[url](url)` au lieu d’une URL brute, ce qui peut casser l’affichage `<img src=...>` côté React.",
+    "Risque de build : le code V5 fourni semble contenir une duplication de `export default function App()` (à vérifier/retirer si présent dans `src/App.jsx`).",
+    "Le code V8 fourni contient une duplication de `export default function App()` (défini deux fois), ce qui cassera le build si copié tel quel dans `src/App.jsx`.",
+    "Le code V8 utilise des classes Tailwind utilitaires (ex: `hide-scrollbar`) et des composants/animations (Framer Motion, lucide-react) : vérifier que ces dépendances/utilitaires existent dans le projet sinon risque de build/UI cassée."
   ],
-  "isFixRequest": true,
+  "isFixRequest": false,
   "existing_features": [
     {
       "id": "feature-implement-internet-identity-authentication-and-replace-the-existing-fake-login-screen-with-the-internet-identity-login-flow",
@@ -249,6 +259,174 @@
         "REQ-42"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-replace-the-current-editable-app-root-ui-implementation-with-the-user-provided-swiss-vogue-react-code-so-the-application-boots-into-the-new-landing-auth-client-pro-app-flow-using-only-the-in-file-initial-swiss-data-no-backend-calls-implement-this-by-overwriting-frontend-src-appv1-jsx-with-the-exact-code-the-user-provided-keeping-frontend-src-app-tsx-as-the-wrapper-that-renders-appv1",
+      "title": "Replace the current editable app-root UI implementation with the user-provided “Swiss Vogue” React code so the application boots into the new Landing → Auth (Client/Pro) → App flow using only the in-file `INITIAL_SWISS_DATA` (no backend calls). Implement this by overwriting `frontend/src/AppV1.jsx` with the exact code the user provided, keeping `frontend/src/App.tsx` as the wrapper that renders `AppV1`.",
+      "reqIds": [
+        "REQ-43"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-entire-current-editable-app-root-implementation-by-overwriting-frontend-src-appv1-jsx-with-the-exact-user-provided-studio-pro-ultimate-v3-0-code-block-preserving-it-verbatim-components-data-styles-imports-and-ui-strings",
+      "title": "Replace the entire current editable app-root implementation by overwriting `frontend/src/AppV1.jsx` with the exact user-provided “STUDIO PRO ULTIMATE (V3.0)” code block, preserving it verbatim (components, data, styles, imports, and UI strings).",
+      "reqIds": [
+        "REQ-44"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-overwrite-the-current-editable-app-root-implementation-by-replacing-the-entire-contents-of-frontend-src-appv1-jsx-with-the-exact-v5-business-suite-code-block-provided-by-the-user-preserve-it-verbatim-including-all-components-data-imports-styles-classes-and-ui-strings",
+      "title": "Overwrite the current editable app-root implementation by replacing the entire contents of `frontend/src/AppV1.jsx` with the exact V5 “BUSINESS SUITE” code block provided by the user (preserve it verbatim, including all components, data, imports, styles/classes, and UI strings).",
+      "reqIds": [
+        "REQ-46"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-entire-contents-of-frontend-src-appv1-jsx-with-the-exact-v8-infinity-verse-code-provided-by-the-user-preserve-components-data-imports-tailwind-classes-and-ui-strings-verbatim-so-the-app-boots-into-the-new-landing-auth-client-pro-app-flow-using-only-the-in-file-initial-swiss-data-no-backend-calls",
+      "title": "Replace the entire contents of `frontend/src/AppV1.jsx` with the exact V8 “INFINITY VERSE” code provided by the user (preserve components, data, imports, Tailwind classes, and UI strings verbatim), so the app boots into the new Landing → Auth (Client/Pro) → App flow using only the in-file `INITIAL_SWISS_DATA` (no backend calls).",
+      "reqIds": [
+        "REQ-48"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-v8-app-implementation-compiles-and-runs-resolve-any-build-breaking-issues-introduced-by-the-pasted-code-e-g-duplicate-export-default-declarations-missing-component-references-or-missing-imports-while-keeping-the-user-provided-ui-and-behavior-unchanged",
+      "title": "Ensure the V8 App implementation compiles and runs: resolve any build-breaking issues introduced by the pasted code (e.g., duplicate `export default` declarations, missing component references, or missing imports), while keeping the user-provided UI and behavior unchanged.",
+      "reqIds": [
+        "REQ-49"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-entire-current-editable-app-implementation-by-overwriting-frontend-src-appv1-jsx-with-the-exact-v10-infinity-control-code-provided-by-the-user-for-src-app-jsx-preserving-it-verbatim-components-local-swiss-seed-data-tailwind-classes-imports-and-ui-strings",
+      "title": "Replace the entire current editable app implementation by overwriting `frontend/src/AppV1.jsx` with the exact V10 “INFINITY CONTROL” code provided by the user for `src/App.jsx`, preserving it verbatim (components, local Swiss seed data, Tailwind classes, imports, and UI strings).",
+      "reqIds": [
+        "REQ-51"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-keep-frontend-src-app-tsx-as-the-thin-wrapper-that-renders-appv1-and-ensure-the-v10-app-compiles-and-runs-by-fixing-only-build-breaking-issues-introduced-by-the-pasted-code-e-g-missing-imports-for-animatepresence-motion-trash2-missing-react-hooks-imports-or-other-unresolved-symbols-without-changing-the-provided-ui-behavior",
+      "title": "Keep `frontend/src/App.tsx` as the thin wrapper that renders `AppV1` and ensure the V10 app compiles and runs by fixing only build-breaking issues introduced by the pasted code (e.g., missing imports for `AnimatePresence`/`motion`/`Trash2`, missing React hooks imports, or other unresolved symbols) without changing the provided UI behavior.",
+      "reqIds": [
+        "REQ-52"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-entire-contents-of-frontend-src-appv1-jsx-with-the-exact-v11-infinity-functional-code-provided-by-the-user-for-src-app-jsx-preserving-ui-design-and-behavior-apply-only-the-minimum-mechanical-adjustments-required-for-this-repo-s-wiring-i-e-the-code-must-live-in-frontend-src-appv1-jsx-because-frontend-src-app-tsx-renders-appv1",
+      "title": "Replace the entire contents of `frontend/src/AppV1.jsx` with the exact V11 “INFINITY FUNCTIONAL” code provided by the user for `src/App.jsx`, preserving UI/design and behavior. Apply only the minimum mechanical adjustments required for this repo’s wiring (i.e., the code must live in `frontend/src/AppV1.jsx` because `frontend/src/App.tsx` renders `AppV1`).",
+      "reqIds": [
+        "REQ-53"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-v11-app-behavior-works-end-to-end-in-local-state-exactly-as-described-pro-deploy-adds-a-new-salon-to-the-client-list-immediately-booking-flow-adds-an-item-to-the-agenda-tab-favorites-persist-in-in-memory-state-and-render-in-the-favorites-tab-dev-delete-removes-a-salon-card-immediately",
+      "title": "Ensure the V11 app behavior works end-to-end in local state exactly as described: Pro deploy adds a new salon to the Client list immediately; booking flow adds an item to the Agenda tab; favorites persist in in-memory state and render in the Favorites tab; dev delete removes a salon card immediately.",
+      "reqIds": [
+        "REQ-54"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-entire-contents-of-frontend-src-appv1-jsx-with-the-exact-v11-infinity-logic-code-provided-by-the-user-verbatim-including-all-components-local-seed-data-tailwind-classes-imports-and-ui-strings",
+      "title": "Replace the entire contents of `frontend/src/AppV1.jsx` with the exact V11 “INFINITY LOGIC” code provided by the user (verbatim), including all components, local seed data, Tailwind classes, imports, and UI strings.",
+      "reqIds": [
+        "REQ-55"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-only-the-minimum-mechanical-adjustments-needed-for-this-repo-to-build-and-run-after-the-v11-code-replacement-e-g-missing-imports-such-as-motion-animatepresence-unresolved-symbols-duplicate-exports-without-changing-the-ui-design-or-intended-demo-behavior-described-by-the-user",
+      "title": "Make only the minimum mechanical adjustments needed for this repo to build and run after the V11 code replacement (e.g., missing imports such as `motion`/`AnimatePresence`, unresolved symbols, duplicate exports), without changing the UI design or intended demo behavior described by the user.",
+      "reqIds": [
+        "REQ-56"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-v11-local-state-demo-logic-works-end-to-end-exactly-as-described-pro-deploy-injects-a-new-salon-at-the-top-of-the-client-list-immediately-clicking-a-service-opens-the-booking-modal-confirming-a-booking-adds-an-entry-to-the-agenda-tab-the-heart-button-toggles-favorites-and-favorites-render-in-the-favorites-tab-the-trash-button-deletes-a-salon-card-immediately",
+      "title": "Ensure the V11 local-state demo logic works end-to-end exactly as described: Pro deploy injects a new salon at the top of the Client list immediately; clicking a service opens the booking modal; confirming a booking adds an entry to the Agenda tab; the heart button toggles favorites and favorites render in the Favorites tab; the trash button deletes a salon card immediately.",
+      "reqIds": [
+        "REQ-57"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-entire-contents-of-frontend-src-appv1-jsx-with-the-exact-v8-infinity-code-block-provided-by-the-user-the-code-labeled-src-app-jsx-preserving-the-ui-visual-design-and-all-tailwind-classes-and-ui-strings-exactly-as-provided",
+      "title": "Replace the entire contents of `frontend/src/AppV1.jsx` with the exact V8 INFINITY code block provided by the user (the code labeled `src/App.jsx`), preserving the UI/visual design and all Tailwind classes and UI strings exactly as provided.",
+      "reqIds": [
+        "REQ-58"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-only-the-minimal-mechanical-adjustments-needed-for-this-repository-to-compile-and-run-after-the-v8-code-replacement-without-changing-the-provided-ui-or-behavior-e-g-fix-missing-imports-duplicate-exports-or-unresolved-symbols",
+      "title": "Apply only the minimal mechanical adjustments needed for this repository to compile and run after the V8 code replacement, without changing the provided UI or behavior (e.g., fix missing imports, duplicate exports, or unresolved symbols).",
+      "reqIds": [
+        "REQ-59"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-creator-flow-logic-works-end-to-end-in-local-state-when-the-user-clicks-d-ployer-l-empire-in-the-creator-prowizard-the-newly-created-salon-is-injected-immediately-at-the-top-of-the-client-home-salon-list",
+      "title": "Ensure the Creator flow logic works end-to-end in local state: when the user clicks “DÉPLOYER L'EMPIRE” in the Creator (ProWizard), the newly created salon is injected immediately at the top of the Client home salon list.",
+      "reqIds": [
+        "REQ-60"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-overwrite-the-editable-app-root-implementation-in-frontend-src-appv1-jsx-with-the-exact-v8-infinity-code-provided-by-the-user-the-code-block-labeled-src-app-jsx-preserving-the-ui-design-colors-shapes-cards-tailwind-classes-layout-and-behavior-exactly-as-provided",
+      "title": "Overwrite the editable app root implementation in `frontend/src/AppV1.jsx` with the exact V8 Infinity code provided by the user (the code block labeled `src/App.jsx`), preserving the UI design (colors, shapes, cards, Tailwind classes, layout) and behavior exactly as provided.",
+      "reqIds": [
+        "REQ-61"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-only-the-minimum-mechanical-adjustments-required-to-make-the-pasted-v8-code-compile-and-run-in-this-repository-without-changing-any-intended-ui-or-interaction-behavior-e-g-ensure-required-imports-like-motion-animatepresence-are-present-resolve-any-duplicate-export-default-and-remove-adjust-only-truly-unused-or-missing-references-if-they-break-the-build",
+      "title": "Apply only the minimum mechanical adjustments required to make the pasted V8 code compile and run in this repository, without changing any intended UI or interaction behavior (e.g., ensure required imports like `motion`/`AnimatePresence` are present, resolve any duplicate `export default`, and remove/adjust only truly unused or missing references if they break the build).",
+      "reqIds": [
+        "REQ-62"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-creator-deploy-logic-so-that-when-the-creator-clicks-d-ployer-l-empire-the-new-salon-is-saved-in-frontend-state-and-appears-immediately-at-the-top-of-the-client-home-list-strictly-local-demo-behavior-no-backend-calls-ensure-the-state-update-cannot-be-lost-due-to-stale-closures-by-using-a-functional-state-update-for-the-salons-list",
+      "title": "Fix the Creator deploy logic so that when the Creator clicks “DÉPLOYER L'EMPIRE”, the new salon is saved in frontend state and appears immediately at the top of the Client Home list (strictly local demo behavior; no backend calls). Ensure the state update cannot be lost due to stale closures by using a functional state update for the salons list.",
+      "reqIds": [
+        "REQ-63"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-persist-the-newly-deployed-salons-within-the-session-so-the-deployed-salon-remains-available-after-navigating-between-views-landing-client-creator-during-the-same-browser-session-while-keeping-this-persistence-invisible-and-not-changing-the-v8-design-use-a-simple-frontend-only-persistence-mechanism-e-g-browser-storage-that-does-not-require-backend-changes",
+      "title": "Persist the newly deployed salons within the session so the deployed salon remains available after navigating between views (Landing/Client/Creator) during the same browser session, while keeping this persistence invisible and not changing the V8 design. Use a simple frontend-only persistence mechanism (e.g., browser storage) that does not require backend changes.",
+      "reqIds": [
+        "REQ-64"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-entire-contents-of-frontend-src-appv1-jsx-with-the-user-provided-v14-divine-os-code-block-exactly-as-given-verbatim-with-a-full-overwrite-of-the-file",
+      "title": "Replace the entire contents of `frontend/src/AppV1.jsx` with the user-provided V14 “DIVINE OS” code block exactly as given (verbatim), with a full overwrite of the file.",
+      "reqIds": [
+        "REQ-65"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-application-compiles-and-runs-after-the-appv1-jsx-overwrite-while-preserving-the-injected-ui-behavior-do-not-change-any-immutable-entry-files-and-keep-frontend-src-app-tsx-as-the-thin-wrapper-that-renders-appv1",
+      "title": "Ensure the application compiles and runs after the `AppV1.jsx` overwrite while preserving the injected UI/behavior; do not change any immutable entry files and keep `frontend/src/App.tsx` as the thin wrapper that renders `AppV1`.",
+      "reqIds": [
+        "REQ-66"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -468,6 +646,36 @@
       "reqIds": [
         "REQ-40"
       ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-42",
+      "summary": "Keep `frontend/src/App.tsx` as a thin wrapper that renders `AppV1` so the Vite/React entry continues to boot the application through supported editable entry points (do not modify immutable entry files).",
+      "reqIds": [
+        "REQ-45"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-45",
+      "summary": "Keep `frontend/src/App.tsx` as the thin wrapper that renders `AppV1` and do not change any immutable entry files; ensure the application continues to mount through the existing Vite/React entrypoint while using the updated `AppV1` implementation.",
+      "reqIds": [
+        "REQ-47"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-49",
+      "summary": "Keep `frontend/src/App.tsx` as the thin wrapper that renders `AppV1` (do not change the application entry wiring), so the app continues to mount through the existing Vite/React entrypoint without modifying any immutable files.",
+      "reqIds": [
+        "REQ-50"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-53",
+      "summary": "V14 « DIVINE OS » : overwrite total de `frontend/src/AppV1.jsx` en mode 100% local (verbatim) avec StoriesRail story-first, design holographique, ProWizard Neural Engine (Rarity Score temps réel), et injection instantanée du salon déployé dans le feed + Stories + Agenda/Favoris en state local.",
+      "reqIds": [],
       "status": "pending"
     }
   ],

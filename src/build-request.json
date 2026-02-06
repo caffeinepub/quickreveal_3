@@ -1,87 +1,61 @@
 {
   "kind": "build_request",
-  "title": "Full project reset: replace backend and frontend with user-provided V1.0 files",
-  "priority": "high",
+  "title": "V14 “DIVINE OS” local-demo reset: overwrite AppV1.jsx with provided code (verbatim)",
+  "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-40",
-      "text": "Perform a complete backend reset by deleting the existing Motoko backend implementation and replacing it entirely with the user-provided `backend/main.mo` source code, treating it as the official V1.0 backend.",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "OUI, supprime l'intégralité du backend existant et remplace-le par le code backend/main.mo que je t'ai fourni.",
-          "C'est un RESET COMPLET. Considère ces fichiers comme la nouvelle V1.0 Officielle du projet."
-        ]
-      },
-      "acceptanceCriteria": [
-        "`backend/main.mo` matches the user-provided code exactly (no partial merges with the previous backend).",
-        "The backend canister compiles successfully after the replacement.",
-        "No state-migration work is implemented for the previous backend state (the reset intentionally discards old persistence)."
-      ]
-    },
-    {
-      "id": "REQ-41",
-      "text": "Perform a complete frontend reset by removing the existing frontend application code and replacing the app’s root component with the user-provided `src/App.jsx` code as the official V1.0 UI, while respecting platform constraints on immutable files by wiring the new app through editable entry points only.",
+      "id": "REQ-65",
+      "text": "Replace the entire contents of `frontend/src/AppV1.jsx` with the user-provided V14 “DIVINE OS” code block exactly as given (verbatim), with a full overwrite of the file.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-2"
+          "msg-1"
         ],
         "quotes": [
-          "OUI, supprime l'intégralité du frontend existant et remplace-le par le code src/App.jsx que je t'ai fourni.",
-          "C'est un RESET COMPLET. Considère ces fichiers comme la nouvelle V1.0 Officielle du projet."
+          "MODE D'ÉCRITURE : Copie le code ci-dessous strictement verbatim. Remplace tout le contenu existant.",
+          "CIBLE DU FICHIER : Oui, écris le code dans frontend/src/AppV1.jsx.",
+          "RESET TOTAL : ... Je veux que cette version fonctionne en mode 100% local (Démo) ..."
         ]
       },
       "acceptanceCriteria": [
-        "The root rendered UI matches the user-provided `src/App.jsx` behavior and structure as the new V1.0 baseline (not the prior multi-page app).",
-        "No edits are made to files under `frontend/src/hooks/useInternetIdentity.ts`, `frontend/src/hooks/useInternetIdentity.tsx`, `frontend/src/hooks/useActor.ts`, `frontend/src/main.tsx`, or `frontend/src/components/ui` (immutable paths); if the new app must be mounted, it is done via editable files (e.g., `frontend/src/App.tsx` and/or new files) without modifying immutable paths.",
-        "The frontend builds successfully with the current toolchain (React + TypeScript + Tailwind)."
+        "`frontend/src/AppV1.jsx` content matches the provided V14 code block exactly (full file overwrite; no partial merges).",
+        "No backend calls are introduced by the new `AppV1` implementation; all behavior is driven by local React state only.",
+        "The app renders the Landing screen first and allows switching to Client (\"Explorer\") and Pro (\"Créer\") flows per the injected code."
       ]
     },
     {
-      "id": "REQ-42",
-      "text": "Treat the reset as a hard cutover: remove/disable all previously implemented advanced features and code paths (e.g., Internet Identity auth, role-based routing, React Query data layer, bookings/availability/monopoly mode logic, on-chain image upload, loyalty/VIP dashboard, seeded premium salons logic) unless they exist in the two user-provided V1.0 files.",
-      "target": "both",
+      "id": "REQ-66",
+      "text": "Ensure the application compiles and runs after the `AppV1.jsx` overwrite while preserving the injected UI/behavior; do not change any immutable entry files and keep `frontend/src/App.tsx` as the thin wrapper that renders `AppV1`.",
+      "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-2"
+          "msg-1"
         ],
         "quotes": [
-          "Ne t'inquiète pas pour l'ancien code ou la persistance, je veux repartir sur une base saine et propre.",
-          "C'est un RESET COMPLET."
+          "Ignore le backend, l'authentification ou les drafts précédents.",
+          "Oui, écris le code dans frontend/src/AppV1.jsx. C'est le point d'entrée que je veux modifier."
         ]
       },
       "acceptanceCriteria": [
-        "The app no longer references previous feature modules/components/hooks/routes that are not part of the user-provided V1.0 files.",
-        "The repository compiles and runs end-to-end (frontend + backend) after the reset without relying on any of the previously built feature code."
+        "`frontend/src/App.tsx` remains a thin wrapper rendering `AppV1` (no entry wiring changes).",
+        "Production build/dev server succeeds without runtime errors on initial load.",
+        "In the Client view: (a) toggling a heart updates Favorites state and Favorites tab renders the favorite salons; (b) clicking the trash icon removes a salon card from the feed; (c) clicking a service adds a booking entry and navigates to the Agenda tab; (d) completing ProWizard and clicking “DÉPLOYER” injects the new salon into the Client feed and it appears in the Stories rail list during the same session."
       ]
     }
   ],
   "constraints": [
-    "Do not modify any files listed as immutable: `frontend/src/hooks/useInternetIdentity.ts`, `frontend/src/hooks/useInternetIdentity.tsx`, `frontend/src/hooks/useActor.ts`, `frontend/src/main.tsx`, and anything under `frontend/src/components/ui`.",
-    "Backend must remain a single-actor Motoko architecture with all logic in `backend/main.mo`.",
-    "Do not add `backend/migration.mo`; the reset explicitly discards old state and does not preserve prior deployed data."
+    "Do not modify any immutable frontend paths (e.g., `frontend/src/main.tsx`, `frontend/src/hooks/useInternetIdentity.ts(x)`, `frontend/src/hooks/useActor.ts`, or anything under `frontend/src/components/ui`).",
+    "Do not add or rely on backend canister methods; this V14 must be a 100% local demo driven by React state only.",
+    "Do not implement or re-enable previous advanced features (Internet Identity auth, role-based routing, React Query data layer, backend persistence, on-chain image upload, etc.) as part of this reset."
   ],
   "nonGoals": [
-    "Preserving or migrating any existing canister state, stable memory data, or previously implemented backend persistence.",
-    "Keeping Internet Identity authentication, role-based routing, React Query caching, bookings, availability slot management, monopoly mode pricing, image upload/retrieval, loyalty/XP, premium badges, or any other previously implemented features unless they are included in the user-provided V1.0 files.",
-    "Incremental refactors of the pre-reset codebase (this is a total replacement)."
+    "Migrating the V14 demo UI to use Motoko backend data or persistence.",
+    "Adding Internet Identity authentication or role-based routing.",
+    "Internationalizing or changing any of the UI strings contained in the injected V14 code block.",
+    "Adding new product features beyond what exists in the provided V14 code (e.g., search, category filtering, real booking availability)."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
   }
 }

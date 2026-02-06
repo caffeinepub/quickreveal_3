@@ -1,128 +1,72 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-06T02:58:05.890Z",
-  "summary": "Diff does not reflect a hard reset to user-provided V1.0 files. Instead, it keeps/introduces multiple advanced features (auth/authorization mixins, storage, bookings, loyalty, VIP, monopoly mode, multiple pages/components) and does not replace the frontend with an exact `src/App.jsx` baseline. No files were removed, which is inconsistent with a “complete reset/remove old app code” requirement.",
+  "generatedAt": "2026-02-06T23:24:05.860Z",
+  "summary": "Diff shows substantial new V14-style UI code added to `frontend/src/AppV1.jsx` plus additional styling/metadata changes. However, because `AppV1.jsx` is truncated and the provided V14 code block is not included in the BuildRequest payload here, the diff summary does not allow verification that the overwrite is verbatim or that all specified client/pro behaviors are implemented exactly as required. Several non-requested files were also modified (`index.css`, `frontend-file-summaries.txt`, `project_state.json`).",
   "missing_requirements": [
     {
-      "id": "REQ-40",
-      "requirement": "Replace the existing Motoko backend implementation entirely with the user-provided `backend/main.mo` (exact match; no partial merges; no old advanced features/state work).",
-      "reason": "The new `backend/main.mo` shown contains extensive functionality (authorization mixins, blob storage mixins, bookings, loyalty tiers, seeded salons, images, etc.), suggesting it is not a minimal exact replacement with a provided V1.0 file and it retains/implements advanced features explicitly called out as non-goals unless present in user-provided V1.0 files (which are not evidenced here).",
+      "id": "REQ-65",
+      "requirement": "Replace the entire contents of `frontend/src/AppV1.jsx` with the user-provided V14 “DIVINE OS” code block exactly as given (verbatim), with a full overwrite of the file.",
+      "reason": "The diff for `AppV1.jsx` is truncated and the actual user-provided V14 code block is not present in the BuildRequest text here, so there is insufficient evidence that the file matches the provided code verbatim and was fully overwritten (no partial merges).",
       "evidence": [
-        "backend/main.mo"
+        "frontend/src/AppV1.jsx (truncated in diff summary)"
       ]
     },
     {
-      "id": "REQ-41",
-      "requirement": "Replace the frontend by making the app’s root component match the user-provided `src/App.jsx` behavior/structure (wired through editable entry points without touching immutable files).",
-      "reason": "Instead of using a user-provided `src/App.jsx`, the diff adds `frontend/src/AppV1.jsx` and wires `frontend/src/App.tsx` to render `AppV1`. There is no evidence that the root component is the user-provided `src/App.jsx` or that it matches it exactly.",
+      "id": "REQ-65",
+      "requirement": "No backend calls are introduced by the new `AppV1` implementation; all behavior is driven by local React state only.",
+      "reason": "The `AppV1.jsx` diff is truncated, so the summary does not conclusively show whether any backend/canister/actor/react-query calls were added elsewhere in the file.",
       "evidence": [
-        "frontend/src/AppV1.jsx",
-        "frontend/src/App.tsx"
+        "frontend/src/AppV1.jsx (truncated in diff summary)"
       ]
     },
     {
-      "id": "REQ-42",
-      "requirement": "Hard cutover: remove/disable all previously implemented advanced features and code paths unless they exist in the two user-provided V1.0 files; app should no longer reference prior feature modules/components/hooks/routes.",
-      "reason": "Multiple advanced-feature modules/components/pages/hooks are present/modified (auth UI, VIP dashboard, monopoly mode switch, image hooks, multi-page structure, query hooks). Also, the diff reports zero removed files, which conflicts with “remove/disable” and “complete reset” expectations.",
+      "id": "REQ-65",
+      "requirement": "The app renders the Landing screen first and allows switching to Client (\"Explorer\") and Pro (\"Créer\") flows per the injected code.",
+      "reason": "The provided snippet includes only component/data definitions (e.g., `INITIAL_SALONS`, `StoriesRail`, `DivineCard`) and is truncated before showing the top-level app component, initial route/screen selection, and flow switching logic.",
       "evidence": [
-        "frontend/src/components/AuthHeader.tsx",
-        "frontend/src/components/MonopolyModeSwitch.tsx",
-        "frontend/src/components/VipDashboard.tsx",
-        "frontend/src/hooks/useQueries.ts",
-        "frontend/src/hooks/useSalonImage.ts",
-        "frontend/src/pages/LoginPage.tsx",
-        "frontend/src/pages/ClientDashboardPage.tsx",
-        "frontend/src/pages/ProDashboardPage.tsx",
-        "backend/main.mo"
+        "frontend/src/AppV1.jsx (truncated in diff summary)"
+      ]
+    },
+    {
+      "id": "REQ-66",
+      "requirement": "Ensure the application compiles and runs after the `AppV1.jsx` overwrite while preserving the injected UI/behavior; keep `frontend/src/App.tsx` as the thin wrapper that renders `AppV1`.",
+      "reason": "`frontend/src/App.tsx` is not shown as modified in the diff, but the diff summary does not include the file content, so it cannot be verified (from evidence provided) that it remains a thin wrapper rendering `AppV1` and that no wiring changes were made elsewhere that impact compilation/runtime.",
+      "evidence": [
+        "frontend-file-summaries.txt (mentions App.tsx but not authoritative code evidence)"
+      ]
+    },
+    {
+      "id": "REQ-66",
+      "requirement": "Client view behaviors: (a) heart toggles Favorites state and Favorites tab renders favorites; (b) trash removes a salon card; (c) clicking a service adds a booking entry and navigates to Agenda; (d) ProWizard “DÉPLOYER” injects new salon into Client feed and Stories rail in-session.",
+      "reason": "The diff summary does not include the relevant parts of `AppV1.jsx` (truncated) where state, tabs (Favorites/Agenda), handlers (heart/trash/service click), and ProWizard deploy injection would be implemented, so these acceptance criteria cannot be confirmed from the provided evidence.",
+      "evidence": [
+        "frontend/src/AppV1.jsx (truncated in diff summary)"
       ]
     }
   ],
   "hallucinated_features": [
     {
-      "description": "Authorization/access control mixins and related backend auth plumbing.",
-      "reason": "Not requested in the reset; explicitly called out as an advanced feature to remove/avoid unless present in user-provided V1.0 files (not evidenced).",
+      "description": "Global design token overhaul and multiple new animation utilities added to `frontend/src/index.css` (OKLCH theme variables, V8 animation classes, and slow-spin animation).",
+      "reason": "BuildRequest only asked to overwrite `frontend/src/AppV1.jsx` verbatim and keep entry wiring unchanged; it did not request changes to global CSS. These may be supportive, but they are additional scope not explicitly requested.",
       "evidence": [
-        "backend/main.mo (imports `authorization/access-control`, `authorization/MixinAuthorization`)"
+        "frontend/src/index.css"
       ]
     },
     {
-      "description": "Blob/image storage backend (Storage/MixinStorage) and frontend image hook.",
-      "reason": "On-chain image upload/retrieval and storage were explicitly listed as non-goals unless included in user-provided V1.0 files; diff implements storage and image handling.",
+      "description": "Project metadata/state and documentation-like summaries updated (`project_state.json`, `frontend-file-summaries.txt`).",
+      "reason": "BuildRequest requirements are limited to `AppV1.jsx` overwrite and ensuring compile/run while keeping immutable entry files unchanged; it does not request updating internal project state JSON or summary text files.",
       "evidence": [
-        "backend/main.mo (imports `blob-storage/Storage`, `blob-storage/Mixin`, `InternalImage`, `images` map)",
-        "frontend/src/hooks/useSalonImage.ts"
-      ]
-    },
-    {
-      "description": "Bookings/availability management and related data structures.",
-      "reason": "Bookings/availability slot management were explicitly listed as non-goals unless included in V1.0 files; backend defines `Booking`, `Availability`, and `bookings` map.",
-      "evidence": [
-        "backend/main.mo"
-      ]
-    },
-    {
-      "description": "Loyalty/XP tiers and VIP dashboard UI.",
-      "reason": "Loyalty/XP and VIP/premium features were explicitly listed as non-goals unless included in V1.0; diff includes backend `LoyaltyTier`/`UserProfile` and a VIP dashboard component.",
-      "evidence": [
-        "backend/main.mo",
-        "frontend/src/components/VipDashboard.tsx",
-        "frontend/src/components/PremiumBadge.tsx",
-        "frontend/src/components/MemberCard.tsx"
-      ]
-    },
-    {
-      "description": "Monopoly mode UI and backend variable.",
-      "reason": "Monopoly mode pricing was explicitly listed as a non-goal unless included in V1.0; diff includes `monopolyMode` on backend and a `MonopolyModeSwitch` component.",
-      "evidence": [
-        "backend/main.mo (var `monopolyMode`)",
-        "frontend/src/components/MonopolyModeSwitch.tsx"
-      ]
-    },
-    {
-      "description": "Multi-page app structure (login/client/pro dashboards) rather than a single V1.0 root UI replacement.",
-      "reason": "REQ-41 expects replacing the prior multi-page app with the user-provided `src/App.jsx` baseline; adding pages suggests continuing/introducing multi-page routing structure not requested.",
-      "evidence": [
-        "frontend/src/pages/LoginPage.tsx",
-        "frontend/src/pages/ClientDashboardPage.tsx",
-        "frontend/src/pages/ProDashboardPage.tsx"
-      ]
-    },
-    {
-      "description": "React-query-like query hook layer (`useQueries`).",
-      "reason": "React Query/data layer was explicitly listed as a non-goal unless included in V1.0; the diff adds/modifies a `useQueries` hook file.",
-      "evidence": [
-        "frontend/src/hooks/useQueries.ts"
+        "project_state.json",
+        "frontend-file-summaries.txt"
       ]
     }
   ],
-  "confidence": 0.78,
+  "confidence": 0.62,
   "changed_files": [
-    "backend/main.mo",
     "frontend-file-summaries.txt",
-    "frontend/src/App.tsx",
     "frontend/src/AppV1.jsx",
-    "frontend/src/components/AuthHeader.tsx",
-    "frontend/src/components/MemberCard.tsx",
-    "frontend/src/components/MonopolyModeSwitch.tsx",
-    "frontend/src/components/MotionButton.tsx",
-    "frontend/src/components/PremiumBadge.tsx",
-    "frontend/src/components/Pressable.tsx",
-    "frontend/src/components/ProSalonWizard.tsx",
-    "frontend/src/components/ProStudioCreator.tsx",
-    "frontend/src/components/ProfileSetupModal.tsx",
-    "frontend/src/components/RevenueChart.tsx",
-    "frontend/src/components/SalonListSection.tsx",
-    "frontend/src/components/VipDashboard.tsx",
-    "frontend/src/hooks/useQueries.ts",
-    "frontend/src/hooks/useSalonImage.ts",
     "frontend/src/index.css",
-    "frontend/src/pages/ClientDashboardPage.tsx",
-    "frontend/src/pages/LoginPage.tsx",
-    "frontend/src/pages/ProDashboardPage.tsx",
-    "frontend/src/pages/SalonDetailsPage.tsx",
-    "frontend/src/utils/currency.ts",
-    "frontend/src/utils/urlParams.ts",
     "project_state.json"
   ]
 }

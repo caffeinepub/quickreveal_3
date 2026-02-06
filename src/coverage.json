@@ -1,109 +1,47 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-06T02:58:05.894Z",
+  "generatedAt": "2026-02-06T23:24:05.865Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 3,
+    "total": 2,
     "implemented": 2,
     "items": [
       {
-        "id": "REQ-40",
-        "summary": "Perform a complete backend reset by deleting the existing Motoko backend implementation and replacing it entirely with the user-provided `backend/main.mo` source code, treating it as the official V1.0 backend.",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-41",
-        "summary": "Perform a complete frontend reset by removing the existing frontend application code and replacing the app’s root component with the user-provided `src/App.jsx` code as the official V1.0 UI, while respecting platform constraints on immutable files by wiring the new app through editable entry points only.",
+        "id": "REQ-65",
+        "summary": "Replace the entire contents of `frontend/src/AppV1.jsx` with the user-provided V14 “DIVINE OS” code block exactly as given (verbatim), with a full overwrite of the file.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/AppV1.jsx",
-          "frontend/src/App.tsx"
+          "frontend/src/AppV1.jsx"
         ],
         "matchedFiles": [
-          "frontend/src/AppV1.jsx",
-          "frontend/src/App.tsx"
+          "frontend/src/AppV1.jsx"
         ]
       },
       {
-        "id": "REQ-42",
-        "summary": "Treat the reset as a hard cutover: remove/disable all previously implemented advanced features and code paths (e.g., Internet Identity auth, role-based routing, React Query data layer, bookings/availability/monopoly mode logic, on-chain image upload, loyalty/VIP dashboard, seeded premium salons logic) unless they exist in the two user-provided V1.0 files.",
+        "id": "REQ-66",
+        "summary": "Ensure the application compiles and runs after the `AppV1.jsx` overwrite while preserving the injected UI/behavior; do not change any immutable entry files and keep `frontend/src/App.tsx` as the thin wrapper that renders `AppV1`.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/pages/LoginPage.tsx",
-          "frontend/src/pages/ClientDashboardPage.tsx",
-          "frontend/src/pages/ProDashboardPage.tsx",
-          "frontend/src/pages/SalonDetailsPage.tsx",
-          "frontend/src/components/AuthHeader.tsx",
-          "frontend/src/components/ProfileSetupModal.tsx",
-          "frontend/src/components/VipDashboard.tsx",
-          "frontend/src/components/MemberCard.tsx",
-          "frontend/src/components/SalonListSection.tsx",
-          "frontend/src/components/ProSalonWizard.tsx",
-          "frontend/src/components/ProStudioCreator.tsx",
-          "frontend/src/components/MonopolyModeSwitch.tsx",
-          "frontend/src/components/RevenueChart.tsx",
-          "frontend/src/hooks/useQueries.ts",
-          "frontend/src/hooks/useSalonImage.ts",
-          "frontend/src/utils/currency.ts",
-          "frontend/src/utils/urlParams.ts"
+          "frontend/src/App.tsx",
+          "frontend/src/AppV1.jsx"
         ],
         "matchedFiles": [
-          "frontend/src/pages/LoginPage.tsx",
-          "frontend/src/pages/ClientDashboardPage.tsx",
-          "frontend/src/pages/ProDashboardPage.tsx",
-          "frontend/src/pages/SalonDetailsPage.tsx",
-          "frontend/src/components/AuthHeader.tsx",
-          "frontend/src/components/ProfileSetupModal.tsx",
-          "frontend/src/components/VipDashboard.tsx",
-          "frontend/src/components/MemberCard.tsx",
-          "frontend/src/components/SalonListSection.tsx",
-          "frontend/src/components/ProSalonWizard.tsx",
-          "frontend/src/components/ProStudioCreator.tsx",
-          "frontend/src/components/MonopolyModeSwitch.tsx",
-          "frontend/src/components/RevenueChart.tsx",
-          "frontend/src/hooks/useQueries.ts",
-          "frontend/src/hooks/useSalonImage.ts",
-          "frontend/src/utils/currency.ts",
-          "frontend/src/utils/urlParams.ts"
+          "frontend/src/AppV1.jsx"
         ]
       }
     ]
   },
   "changedFiles": [
-    "backend/main.mo",
     "build-request.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/App.tsx",
     "frontend/src/AppV1.jsx",
-    "frontend/src/components/AuthHeader.tsx",
-    "frontend/src/components/MemberCard.tsx",
-    "frontend/src/components/MonopolyModeSwitch.tsx",
-    "frontend/src/components/MotionButton.tsx",
-    "frontend/src/components/PremiumBadge.tsx",
-    "frontend/src/components/Pressable.tsx",
-    "frontend/src/components/ProSalonWizard.tsx",
-    "frontend/src/components/ProStudioCreator.tsx",
-    "frontend/src/components/ProfileSetupModal.tsx",
-    "frontend/src/components/RevenueChart.tsx",
-    "frontend/src/components/SalonListSection.tsx",
-    "frontend/src/components/VipDashboard.tsx",
-    "frontend/src/hooks/useQueries.ts",
-    "frontend/src/hooks/useSalonImage.ts",
     "frontend/src/index.css",
-    "frontend/src/pages/ClientDashboardPage.tsx",
-    "frontend/src/pages/LoginPage.tsx",
-    "frontend/src/pages/ProDashboardPage.tsx",
-    "frontend/src/pages/SalonDetailsPage.tsx",
-    "frontend/src/utils/currency.ts",
-    "frontend/src/utils/urlParams.ts",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",
