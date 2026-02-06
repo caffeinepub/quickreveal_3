@@ -1,5 +1,5 @@
 import { useInternetIdentity } from '../hooks/useInternetIdentity';
-import { Button } from '@/components/ui/button';
+import MotionButton from '../components/MotionButton';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Sparkles, ArrowRight, Loader2 } from 'lucide-react';
 
@@ -39,7 +39,7 @@ export default function LoginPage() {
             <CardDescription className="text-slate-400">Connectez-vous pour accéder au club.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <Button
+            <MotionButton
               onClick={login}
               disabled={isLoggingIn}
               className="w-full bg-white text-black font-bold hover:bg-slate-100 group"
@@ -56,7 +56,7 @@ export default function LoginPage() {
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </>
               )}
-            </Button>
+            </MotionButton>
 
             {isLoginError && (
               <p className="text-sm text-red-400 text-center">{loginError?.message || 'Erreur de connexion'}</p>
@@ -70,7 +70,7 @@ export default function LoginPage() {
           <img
             src="https://images.unsplash.com/photo-1560066984-138dadb4c035?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
             className="rounded-t-3xl border-t border-x border-white/10 opacity-60 w-full"
-            alt="App Preview"
+            alt="Aperçu de l'application"
           />
         </div>
       </main>

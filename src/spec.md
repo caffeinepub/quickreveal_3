@@ -1,14 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Ensure the app always has premium salons to browse, upgrade Pro salon creation to a 3-step wizard, and add a persistent client loyalty XP system with premium badging.
+**Goal:** Restore a fully French/Swiss Client experience by fixing Swiss-only seeded data, reinstating category filters, and removing remaining Paris/English UI regressions.
 
 **Planned changes:**
-- Backend: Auto-seed 5 premium/luxury salons when the salon store is empty (on init/upgrade or first read), each with real photo URLs, neighborhood, description, services, and bookable availability for today and tomorrow.
-- Backend: Extend salon and booking models to include neighborhood, description, photoUrl, isPremium, services (label, durationMinutes, price), and date-specific availability; update booking to reserve a specific date+time slot and mark only that slot unavailable.
-- Frontend (Pro): Replace the single-input “Create salon” UI with a 3-step wizard (Info → Services → Planning) and submit the full configuration to create a salon with generated availability for today and tomorrow (English UI strings).
-- Frontend (Client): Update salon list cards to use backend-driven photoUrl, description, neighborhood, and premium status; avoid showing an empty state under normal conditions due to seeding (English UI strings; neutral recovery message only for unexpected empty/error states).
-- Loyalty (Both): Add persistent XP to the backend user profile (default 0), increment XP on successful booking confirmation, and show a Profile “Member Card” with tier label and VIP progress bar populated from backend data (English UI strings).
-- Frontend: Add a data-driven “Premium” badge in salon list and salon details when salon.isPremium is true.
+- Update backend salon seeding so it only creates salons in Lausanne, Genève, and Montreux, with services/categories strictly limited to: "Coiffure", "Barbier", "Spa", "Onglerie" (no Paris, no English).
+- Restore the Client salon list category filter bar and filtering logic with buttons in this order: "Tout", "Coiffure", "Barbier", "Spa", "Onglerie".
+- Replace specific Client UI strings: "PARIS 11e" → "Suisse Romande", "Recommended for you" → "Les meilleures adresses", and ensure the welcome header shows "Bienvenue".
+- Remove remaining obvious English strings in the Client salon list and salon details flows (notably empty/error states and primary actions) so the overall Client journey is consistently French.
 
-**User-visible outcome:** Clients always see premium salons with real photos and can book specific date/time slots; Pros can create a salon via a guided 3-step setup; clients earn XP for confirmed bookings and see their tier/progress on their profile, and premium salons are clearly labeled.
+**User-visible outcome:** Client users see Swiss (Lausanne/Genève/Montreux) salons and French-only categories, can filter salons by "Coiffure/Barbier/Spa/Onglerie" via a restored top filter bar, and no longer encounter Paris/English labels across key Client screens.

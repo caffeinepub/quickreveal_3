@@ -1,18 +1,17 @@
 import Map "mo:core/Map";
-import Text "mo:core/Text";
-import Array "mo:core/Array";
 import Nat "mo:core/Nat";
+import Blob "mo:core/Blob";
 import Principal "mo:core/Principal";
 
 module {
-  type MigrationClient = Principal;
+  // Data Types (from main.mo)
+  type Client = Principal;
 
-  type OldAvailability = {
-    day : Text;
-    time : Nat;
-    isNight : Bool;
-    isSunday : Bool;
-    isAvailable : Bool;
+  type Service = {
+    name : Text;
+    durationMinutes : Nat;
+    price : Nat;
+    category : Text;
   };
 
   type Availability = {
@@ -24,10 +23,9 @@ module {
     date : Text;
   };
 
-  type Service = {
-    name : Text;
-    durationMinutes : Nat;
-    price : Nat;
+  type InternalImage = {
+    blob : Blob;
+    contentType : Text;
   };
 
   type Salon = {
@@ -39,10 +37,11 @@ module {
     photoUrls : [Text];
     isPremium : Bool;
     services : [Service];
+    imageIds : [Text];
   };
 
   type Booking = {
-    client : MigrationClient;
+    client : Principal;
     salonName : Text;
     time : Int;
     isNight : Bool;
@@ -52,7 +51,7 @@ module {
     service : Service;
   };
 
-  public type LoyaltyTier = {
+  type LoyaltyTier = {
     tierName : Text;
     requiredXP : Nat;
   };
@@ -64,91 +63,23 @@ module {
     tier : LoyaltyTier;
   };
 
-  type OldBooking = {
-    client : MigrationClient;
-    salonName : Text;
-    time : Int;
-    isNight : Bool;
-    isSunday : Bool;
-    price : Int;
-  };
-
-  type OldSalon = {
-    name : Text;
-    owner : Principal;
-    availabilities : [OldAvailability];
-  };
-
-  type OldUserProfile = {
-    name : Text;
-    role : Text;
-  };
-
   type OldActor = {
-    salons : Map.Map<Text, OldSalon>;
-    bookings : Map.Map<Text, OldBooking>;
-    userProfiles : Map.Map<Principal, OldUserProfile>;
-  };
-
-  public type NewActor = {
     salons : Map.Map<Text, Salon>;
     bookings : Map.Map<Text, Booking>;
+    images : Map.Map<Text, InternalImage>;
     userProfiles : Map.Map<Principal, UserProfile>;
+    monopolyMode : Bool;
+  };
+
+  type NewActor = {
+    salons : Map.Map<Text, Salon>;
+    bookings : Map.Map<Text, Booking>;
+    images : Map.Map<Text, InternalImage>;
+    userProfiles : Map.Map<Principal, UserProfile>;
+    monopolyMode : Bool;
   };
 
   public func run(old : OldActor) : NewActor {
-    let newSalons = old.salons.map<Text, OldSalon, Salon>(
-      func(_name, oldSalon) {
-        {
-          oldSalon with
-          availabilities = oldSalon.availabilities.map(
-            func(oldAvailability) {
-              {
-                oldAvailability with
-                date = "2024-01-15";
-              };
-            }
-          );
-          neighborhood = "Unknown";
-          description = "No description available";
-          photoUrls = Array.empty<Text>();
-          isPremium = false;
-          services = Array.empty<Service>();
-        };
-      }
-    );
-
-    let newBookings = old.bookings.map<Text, OldBooking, Booking>(
-      func(_name, oldBooking) {
-        {
-          oldBooking with
-          date = "2024-01-15";
-          service = {
-            name = "Haircut";
-            durationMinutes = 30;
-            price = 100;
-          };
-        };
-      }
-    );
-
-    let newUserProfiles = old.userProfiles.map<Principal, OldUserProfile, UserProfile>(
-      func(_user, oldProfile) {
-        {
-          oldProfile with
-          xp = 0;
-          tier = {
-            tierName = "Bronze";
-            requiredXP = 0;
-          };
-        };
-      }
-    );
-
-    {
-      salons = newSalons;
-      bookings = newBookings;
-      userProfiles = newUserProfiles;
-    };
+    { old with monopolyMode = false };
   };
 };

@@ -1,115 +1,69 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "3-step Pro salon wizard, premium salon metadata UI, and client loyalty member card (frontend)",
+  "title": "Restore Swiss-French client UI: category filter bar + remove English/Paris strings",
   "requirements": [
     {
-      "id": "REQ-14",
-      "summary": "Replace the Pro single-field salon creation with a 3-step wizard (Info → Services → Planning) that submits the full configuration and refreshes salons via React Query.",
+      "id": "REQ-29",
+      "summary": "Restore the Client salon-list category filter bar with fixed French categories and correct filtering behavior.",
       "acceptanceCriteria": [
-        "The Pro dashboard no longer shows the single ‘Salon name’ input-only creation UI; it shows a 3-step wizard.",
-        "Step 2 supports adding at least one service (example: “Men’s haircut”, 30 minutes, €35) and removing/editing services before submission.",
-        "Step 3 captures opening hours in a way that the backend can generate availability slots for today and tomorrow (within those hours).",
-        "Submitting the wizard creates a salon persisted in the canister and the salons list updates via React Query invalidation/refetch.",
-        "All new and modified user-facing text in this wizard is in English."
+        "The salon list screen renders a visible horizontal filter bar at the top with labels exactly: \"Tout\", \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\".",
+        "Default selected filter is \"Tout\" and shows all salons.",
+        "Selecting \"Barbier\" shows only salons that have at least one service with category === \"Barbier\"; switching back to \"Tout\" restores the full list.",
+        "The filter bar remains present after navigation within the Client dashboard (as long as the salon list is displayed)."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/ProSalonWizard.tsx",
-          "operation": "create",
-          "description": "Create a 3-step Pro salon configuration wizard UI (Step 1: name/neighborhood/description/photo URL(s) optional; Step 2: add/edit/remove services with label, durationMinutes, price; Step 3: opening hours inputs) and submit via the existing React Query mutation. Use shadcn-ui form components (e.g., Button/Input/Label and any existing textarea/select components) for consistent UI. Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/hooks/useQueries.ts",
+          "path": "frontend/src/components/SalonListSection.tsx",
           "operation": "modify",
-          "description": "Update the salon creation mutation to match the current backend interface (createSalon(name, neighborhood, description, photoUrls, services, isPremium)) and accept the wizard payload. Keep React Query invalidation for ['salons'] after success."
-        },
-        {
-          "path": "frontend/src/pages/ProDashboardPage.tsx",
-          "operation": "modify",
-          "description": "Replace CreateSalonForm with the new ProSalonWizard and update the related Pro create-salon section text to English (wizard-specific text must be English). Ensure the wizard is reachable from the existing Pro dashboard flow (no orphan component)."
-        },
-        {
-          "path": "frontend/src/components/CreateSalonForm.tsx",
-          "operation": "delete",
-          "description": "Remove the legacy single-input Pro salon creation form to ensure it is no longer used in the Pro dashboard."
+          "description": "Replace the current dynamic category list (\"All\" + backend categories) with the fixed French filter buttons in the required order [\"Tout\", \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\"]. Update state/default selection to \"Tout\" and ensure salon filtering is driven by salon.services[].category matching the selected category, with \"Tout\" showing all salons."
         }
       ]
     },
     {
-      "id": "REQ-15",
-      "summary": "Update the client salon list UI to display data-driven salon photo, description, neighborhood, and premium status; avoid showing an empty-state under normal conditions by ensuring seeding is triggered from the client fetch path.",
+      "id": "REQ-30",
+      "summary": "Remove specified Paris/English UI regressions on Client surfaces (badge, section title, welcome header).",
       "acceptanceCriteria": [
-        "Salon cards use the salon’s photoUrl field instead of a hardcoded image URL.",
-        "Salon cards display the salon’s description and neighborhood (or equivalent fields) from the backend.",
-        "When salons is empty due to unexpected conditions, show a neutral recovery message in English (error state remains), but normal startup should show the seeded salons.",
-        "All modified user-facing strings in the salon list section are in English."
+        "When logged in as a Client, the header badge shows \"Suisse Romande\" (and never \"PARIS 11e\").",
+        "On the salon list screen, the section title uses \"Les meilleures adresses\" where it previously showed \"Recommended for you\".",
+        "No UI surface in the login or client header displays \"Welcome\"; it displays \"Bienvenue\"."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/hooks/useQueries.ts",
+          "path": "frontend/src/components/AuthHeader.tsx",
           "operation": "modify",
-          "description": "Harden salon loading by calling the backend capability ensureSalonsSeeded() before reading salons (best-effort) and keep the query returning getSalons(). This supports the requirement that the UI does not normally show an empty list. Also keep all query enabling logic consistent with actor availability."
+          "description": "Update the client badge text to display \"Suisse Romande\" instead of \"PARIS 11e\" (keep the pro badge unchanged)."
         },
         {
           "path": "frontend/src/components/SalonListSection.tsx",
           "operation": "modify",
-          "description": "Render salon cards using backend salon metadata: use salon.photoUrls[0] (or first available photo) for images, show salon.description and salon.neighborhood, and remove hardcoded placeholder copy. Update loading/error/empty messaging to English (empty state should be a neutral recovery message)."
+          "description": "Replace the salon list section title string \"Recommended for you\" with \"Les meilleures adresses\" while preserving the existing conditional title behavior when no salons match the selected filter."
+        },
+        {
+          "path": "frontend/src/pages/LoginPage.tsx",
+          "operation": "modify",
+          "description": "Verify the login welcome header is consistently \"Bienvenue\" (and not \"Welcome\") and adjust any remaining login-facing welcome text if present."
         }
       ]
     },
     {
-      "id": "REQ-16",
-      "summary": "Display a loyalty ‘Member Card’ on the client Profile tab driven by backend user profile XP/tier, and refresh XP after a successful booking confirmation.",
+      "id": "REQ-31",
+      "summary": "Eliminate remaining obvious English strings in Client salon list and salon details flows (errors, empty states, labels, and primary actions) to ensure consistent French UX.",
       "acceptanceCriteria": [
-        "Backend UserProfile includes an XP field (defaulting to 0 for existing/new users).",
-        "After a successful booking confirmation, the user’s XP increases by a defined amount and remains increased after refresh/re-login.",
-        "Client Profile tab displays a member card with current tier name and total XP, plus a progress bar toward the next tier.",
-        "The member card UI is populated from backend profile data (no hardcoded demo user name/XP).",
-        "All loyalty-related user-facing text is in English."
+        "Salon list: error and empty states do not show English (e.g., replace \"Error loading salons\", \"Coming Soon\", \"Opening near you soon...\", \"No salons found\", \"View all\").",
+        "Salon details: slot/confirmation UI does not show English (e.g., replace \"Available Slots\", \"Total\", \"Confirm\", \"Confirming...\").",
+        "After these changes, a spot-check of ClientDashboardPage, SalonListSection, SalonDetailsPage, AuthHeader, and LoginPage shows no visible English phrases in normal usage."
       ],
       "file_operations": [
-        {
-          "path": "frontend/src/components/MemberCard.tsx",
-          "operation": "create",
-          "description": "Create a reusable ‘Member Card’ UI component that takes backend UserProfile (xp, tier) and renders: tier label (e.g., “Silver — 300 XP”) plus a progress bar toward next tier. Use shadcn-ui primitives where appropriate (e.g., Card/Progress if available). Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/pages/ClientDashboardPage.tsx",
-          "operation": "modify",
-          "description": "Replace the hardcoded profile display in the Profile tab with backend-driven data (via existing useGetCallerUserProfile hook): show the user’s name and include the new MemberCard component. Ensure loyalty/member-card user-facing strings are in English."
-        },
-        {
-          "path": "frontend/src/hooks/useQueries.ts",
-          "operation": "modify",
-          "description": "Update booking mutation success handling to also invalidate/refetch the current user profile query (e.g., ['currentUserProfile']) so XP updates appear immediately after a confirmed booking. Keep React Query invalidation/refetch approach (no realtime)."
-        }
-      ]
-    },
-    {
-      "id": "REQ-17",
-      "summary": "Add a data-driven Premium badge for salons where isPremium is true, shown in both salon list cards and salon details header/hero.",
-      "acceptanceCriteria": [
-        "If salon.isPremium is true, a Premium badge is displayed on that salon’s card and in its details header/hero area.",
-        "If salon.isPremium is false, the badge is not rendered.",
-        "Premium badge rendering works for seeded salons and for newly created salons (as applicable).",
-        "All user-facing text related to the badge is in English."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/PremiumBadge.tsx",
-          "operation": "create",
-          "description": "Create a small PremiumBadge component that renders an English “Premium” label with consistent styling and can be conditionally shown based on salon.isPremium. Prefer shadcn-ui components (e.g., Badge) if present. Verify the component's usage instructions before implementing."
-        },
         {
           "path": "frontend/src/components/SalonListSection.tsx",
           "operation": "modify",
-          "description": "Update salon list UI to conditionally render PremiumBadge for each salon where salon.isPremium is true (including any featured/hero salon and list items). Remove any hardcoded premium label logic."
+          "description": "Translate remaining English strings in loading/error/empty states and list UI to French, including: \"Error loading salons\", \"Coming Soon\", \"Opening near you soon...\", \"No salons found\", \"No salons in this category.\", \"View all\", and other visible English labels (e.g., featured badge \"Night\", rating text containing \"reviews\", and service count label \"services\" where displayed in English context)."
         },
         {
           "path": "frontend/src/pages/SalonDetailsPage.tsx",
           "operation": "modify",
-          "description": "Update salon details header/hero area to use salon.photoUrls[0] for the hero image and conditionally render PremiumBadge when salon.isPremium is true. Ensure any newly introduced/modified badge-related text is English."
+          "description": "Translate remaining English UI strings to French, including: \"Available Slots\", \"Total\", \"Confirm\", and \"Confirming...\". Also replace any obviously English date/day abbreviations shown in DATE_OPTIONS with French equivalents to keep the booking flow fully French."
         }
       ]
     }

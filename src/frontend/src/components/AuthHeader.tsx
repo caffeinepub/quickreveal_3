@@ -19,10 +19,15 @@ export default function AuthHeader({ userType }: { userType: 'client' | 'pro' })
       </div>
       <div className="flex gap-4 items-center">
         <div className="bg-zinc-900 px-3 py-1 rounded-full text-xs font-bold text-zinc-400 border border-zinc-800">
-          {userType === 'pro' ? 'COMPTE PRO' : 'PARIS 11e'}
+          {userType === 'pro' ? 'COMPTE PRO' : 'Suisse Romande'}
         </div>
         <Bell className="text-white" size={20} />
-        <Button variant="ghost" size="icon" onClick={handleLogout} className="text-white hover:text-red-400">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={handleLogout}
+          className="text-white hover:text-red-400 active:scale-95 transition-transform"
+        >
           <LogOut size={18} />
         </Button>
       </div>

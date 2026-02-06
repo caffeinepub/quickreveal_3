@@ -21,7 +21,7 @@ export default function MonopolyModeSwitch() {
         </div>
         <div
           onClick={() => setMonopolyMode(!monopolyMode)}
-          className={`w-12 h-7 rounded-full p-1 cursor-pointer transition-colors duration-300 ${
+          className={`w-12 h-7 rounded-full p-1 cursor-pointer transition-colors duration-300 active:scale-95 ${
             monopolyMode ? 'bg-amber-500' : 'bg-zinc-700'
           }`}
         >

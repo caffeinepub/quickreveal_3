@@ -37,12 +37,14 @@ export interface Salon {
   'neighborhood' : string,
   'name' : string,
   'description' : string,
+  'imageIds' : Array<string>,
   'availabilities' : Array<Availability>,
   'services' : Array<Service>,
 }
 export interface Service {
   'name' : string,
   'durationMinutes' : bigint,
+  'category' : string,
   'price' : bigint,
 }
 export interface UserProfile {
@@ -54,7 +56,33 @@ export interface UserProfile {
 export type UserRole = { 'admin' : null } |
   { 'user' : null } |
   { 'guest' : null };
+export interface _CaffeineStorageCreateCertificateResult {
+  'method' : string,
+  'blob_hash' : string,
+}
+export interface _CaffeineStorageRefillInformation {
+  'proposed_top_up_amount' : [] | [bigint],
+}
+export interface _CaffeineStorageRefillResult {
+  'success' : [] | [boolean],
+  'topped_up_amount' : [] | [bigint],
+}
 export interface _SERVICE {
+  '_caffeineStorageBlobIsLive' : ActorMethod<[Uint8Array], boolean>,
+  '_caffeineStorageBlobsToDelete' : ActorMethod<[], Array<Uint8Array>>,
+  '_caffeineStorageConfirmBlobDeletion' : ActorMethod<
+    [Array<Uint8Array>],
+    undefined
+  >,
+  '_caffeineStorageCreateCertificate' : ActorMethod<
+    [string],
+    _CaffeineStorageCreateCertificateResult
+  >,
+  '_caffeineStorageRefillCashier' : ActorMethod<
+    [[] | [_CaffeineStorageRefillInformation]],
+    _CaffeineStorageRefillResult
+  >,
+  '_caffeineStorageUpdateGatewayPrincipals' : ActorMethod<[], undefined>,
   '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
   'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
   'bookSalon' : ActorMethod<[string, bigint, string, string], undefined>,
@@ -62,18 +90,26 @@ export interface _SERVICE {
     [string, string, string, Array<string>, Array<Service>, boolean],
     undefined
   >,
+  'deleteBooking' : ActorMethod<[string], undefined>,
   'ensureSalonsSeeded' : ActorMethod<[], undefined>,
   'getBookings' : ActorMethod<[string], Array<Booking>>,
   'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
   'getCallerUserRole' : ActorMethod<[], UserRole>,
+  'getCategories' : ActorMethod<[], Array<string>>,
   'getLoyaltyProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
   'getMyBookings' : ActorMethod<[], Array<Booking>>,
   'getSalon' : ActorMethod<[string], Salon>,
+  'getSalonImage' : ActorMethod<[string], [Uint8Array, string]>,
   'getSalons' : ActorMethod<[], Array<Salon>>,
   'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
   'isCallerAdmin' : ActorMethod<[], boolean>,
   'resetLoyaltyProfiles' : ActorMethod<[], undefined>,
   'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
+  'setMonopolyMode' : ActorMethod<[boolean], undefined>,
+  'uploadSalonImage' : ActorMethod<
+    [string, string, Uint8Array, string],
+    undefined
+  >,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

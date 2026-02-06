@@ -7,6 +7,10 @@ export interface None {
     __kind__: "None";
 }
 export type Option<T> = Some<T> | None;
+export interface LoyaltyTier {
+    tierName: string;
+    requiredXP: bigint;
+}
 export interface Availability {
     day: string;
     isNight: boolean;
@@ -22,12 +26,14 @@ export interface Salon {
     neighborhood: string;
     name: string;
     description: string;
+    imageIds: Array<string>;
     availabilities: Array<Availability>;
     services: Array<Service>;
 }
 export interface Service {
     name: string;
     durationMinutes: bigint;
+    category: string;
     price: bigint;
 }
 export interface Booking {
@@ -47,10 +53,6 @@ export interface UserProfile {
     role: string;
     tier: LoyaltyTier;
 }
-export interface LoyaltyTier {
-    tierName: string;
-    requiredXP: bigint;
-}
 export enum UserRole {
     admin = "admin",
     user = "user",
@@ -60,16 +62,21 @@ export interface backendInterface {
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
     bookSalon(salonName: string, time: bigint, date: string, _serviceName: string): Promise<void>;
     createSalon(name: string, neighborhood: string, description: string, photoUrls: Array<string>, services: Array<Service>, isPremium: boolean): Promise<void>;
+    deleteBooking(bookingKey: string): Promise<void>;
     ensureSalonsSeeded(): Promise<void>;
     getBookings(salonName: string): Promise<Array<Booking>>;
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
+    getCategories(): Promise<Array<string>>;
     getLoyaltyProfile(user: Principal): Promise<UserProfile | null>;
     getMyBookings(): Promise<Array<Booking>>;
     getSalon(name: string): Promise<Salon>;
+    getSalonImage(imageId: string): Promise<[Uint8Array, string]>;
     getSalons(): Promise<Array<Salon>>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
     isCallerAdmin(): Promise<boolean>;
     resetLoyaltyProfiles(): Promise<void>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
+    setMonopolyMode(enabled: boolean): Promise<void>;
+    uploadSalonImage(salonName: string, imageId: string, imageBytes: Uint8Array, contentType: string): Promise<void>;
 }

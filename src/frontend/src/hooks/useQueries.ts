@@ -52,6 +52,19 @@ export function useGetSalons() {
   });
 }
 
+export function useGetCategories() {
+  const { actor, isFetching } = useActor();
+
+  return useQuery<string[]>({
+    queryKey: ['categories'],
+    queryFn: async () => {
+      if (!actor) return [];
+      return actor.getCategories();
+    },
+    enabled: !!actor && !isFetching
+  });
+}
+
 export function useCreateSalon() {
   const { actor } = useActor();
   const queryClient = useQueryClient();
@@ -77,7 +90,48 @@ export function useCreateSalon() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['salons'] });
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
     }
+  });
+}
+
+export function useUploadSalonImage() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({
+      salonName,
+      imageId,
+      imageBytes,
+      contentType
+    }: {
+      salonName: string;
+      imageId: string;
+      imageBytes: Uint8Array;
+      contentType: string;
+    }) => {
+      if (!actor) throw new Error('Actor not available');
+      return actor.uploadSalonImage(salonName, imageId, imageBytes, contentType);
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['salons'] });
+      queryClient.invalidateQueries({ queryKey: ['salonImage', variables.imageId] });
+    }
+  });
+}
+
+export function useGetSalonImage(imageId: string | null) {
+  const { actor, isFetching } = useActor();
+
+  return useQuery<[Uint8Array, string] | null>({
+    queryKey: ['salonImage', imageId],
+    queryFn: async () => {
+      if (!actor || !imageId) return null;
+      return actor.getSalonImage(imageId);
+    },
+    enabled: !!actor && !isFetching && !!imageId,
+    staleTime: 1000 * 60 * 10 // Cache for 10 minutes
   });
 }
 

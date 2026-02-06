@@ -3,7 +3,10 @@ import AuthHeader from '../components/AuthHeader';
 import MonopolyModeSwitch from '../components/MonopolyModeSwitch';
 import RevenueChart from '../components/RevenueChart';
 import ProSalonWizard from '../components/ProSalonWizard';
-import { LayoutDashboard, Calendar, Settings } from 'lucide-react';
+import Pressable from '../components/Pressable';
+import MotionButton from '../components/MotionButton';
+import { formatCHF } from '../utils/currency';
+import { LayoutDashboard, Calendar, Settings, Sparkles } from 'lucide-react';
 
 type Tab = 'dashboard' | 'bookings' | 'profile';
 
@@ -19,7 +22,7 @@ export default function ProDashboardPage() {
     switch (activeTab) {
       case 'dashboard':
         return (
-          <div className="p-6 space-y-6">
+          <div className="p-6 space-y-6 animate-in fade-in duration-300">
             <h2 className="text-2xl font-bold text-white">Dashboard</h2>
 
             <MonopolyModeSwitch />
@@ -28,7 +31,7 @@ export default function ProDashboardPage() {
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-zinc-900 p-4 rounded-2xl border border-zinc-800">
                 <div className="text-zinc-500 text-xs font-bold uppercase mb-1">Weekly Revenue</div>
-                <div className="text-2xl font-bold text-white">€2,100</div>
+                <div className="text-2xl font-bold text-white">{formatCHF(2100)}</div>
               </div>
               <div className="bg-zinc-900 p-4 rounded-2xl border border-zinc-800">
                 <div className="text-zinc-500 text-xs font-bold uppercase mb-1">Bookings</div>
@@ -39,9 +42,10 @@ export default function ProDashboardPage() {
             <h3 className="font-bold text-white mt-8">My Team</h3>
             <div className="space-y-3">
               {TEAM_MEMBERS.map((m) => (
-                <div
+                <Pressable
                   key={m.id}
-                  className="flex items-center justify-between bg-zinc-900/50 p-3 rounded-xl border border-zinc-800"
+                  asDiv
+                  className="flex items-center justify-between bg-zinc-900/50 p-3 rounded-xl border border-zinc-800 cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
                     <img src={m.img} className="w-10 h-10 rounded-full" alt={m.name} />
@@ -51,31 +55,38 @@ export default function ProDashboardPage() {
                     </div>
                   </div>
                   <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                </div>
+                </Pressable>
               ))}
             </div>
 
             <div className="mt-8">
-              <h3 className="font-bold text-white mb-4">Create a Salon</h3>
+              <h3 className="font-bold text-white mb-4">Open a Salon</h3>
               <ProSalonWizard />
             </div>
           </div>
         );
       case 'bookings':
         return (
-          <div className="p-6 flex flex-col items-center justify-center min-h-[60vh] text-center">
-            <div className="w-20 h-20 bg-zinc-900 rounded-full flex items-center justify-center mb-6">
-              <Calendar size={30} className="text-zinc-500" />
+          <div className="p-6 flex flex-col items-center justify-center min-h-[60vh] text-center animate-in fade-in duration-300">
+            <div className="w-24 h-24 bg-gradient-to-br from-violet-900/40 to-fuchsia-900/40 rounded-full flex items-center justify-center mb-6 border border-violet-500/30">
+              <Calendar size={36} className="text-violet-400" />
             </div>
-            <h3 className="text-xl font-bold text-white mb-2">No Bookings</h3>
-            <p className="text-zinc-500 text-sm max-w-xs">
-              Your upcoming appointments will appear here. Time to get busy!
+            <h3 className="text-2xl font-bold text-white mb-2">Empty Schedule</h3>
+            <p className="text-zinc-400 text-sm max-w-xs mb-6">
+              Your upcoming appointments will appear here. Ready to welcome your clients!
             </p>
+            <MotionButton
+              onClick={() => setActiveTab('dashboard')}
+              className="bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 text-white font-bold px-6 py-3 rounded-xl"
+            >
+              <Sparkles className="mr-2 h-4 w-4" />
+              View Dashboard
+            </MotionButton>
           </div>
         );
       case 'profile':
         return (
-          <div className="p-6 space-y-6">
+          <div className="p-6 space-y-6 animate-in fade-in duration-300">
             <div className="flex items-center gap-4 mb-8">
               <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-violet-500 to-fuchsia-500 flex items-center justify-center text-2xl font-black text-white">
                 SA
@@ -98,7 +109,9 @@ export default function ProDashboardPage() {
         <AuthHeader userType="pro" />
 
         <div className="flex-1 overflow-y-auto pb-24">
-          <div className="h-full animate-in fade-in duration-300">{renderContent()}</div>
+          <div key={activeTab} className="h-full">
+            {renderContent()}
+          </div>
         </div>
 
         <nav className="absolute bottom-0 w-full bg-black/90 backdrop-blur-xl border-t border-white/10 h-20 px-6 flex justify-around items-center z-50">
@@ -138,12 +151,12 @@ function NavBtn({
   onClick: () => void;
 }) {
   return (
-    <button
+    <Pressable
       onClick={onClick}
       className={`flex flex-col items-center gap-1 transition-colors ${active ? 'text-violet-400' : 'text-zinc-600'}`}
     >
       <Icon size={22} strokeWidth={active ? 2.5 : 2} />
       <span className="text-[10px] font-medium">{label}</span>
-    </button>
+    </Pressable>
   );
 }

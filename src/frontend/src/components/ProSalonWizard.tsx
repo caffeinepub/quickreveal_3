@@ -1,12 +1,13 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { useState, useRef } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Plus, Trash2, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useCreateSalon } from '../hooks/useQueries';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Plus, Trash2, ChevronLeft, ChevronRight, Upload, X } from 'lucide-react';
+import { useCreateSalon, useUploadSalonImage, useGetCategories } from '../hooks/useQueries';
+import MotionButton from './MotionButton';
 import type { Service } from '../backend';
 
 type Step = 1 | 2 | 3;
@@ -15,6 +16,7 @@ interface ServiceForm {
   name: string;
   durationMinutes: number;
   price: number;
+  category: string;
 }
 
 interface OpeningHours {
@@ -31,11 +33,36 @@ export default function ProSalonWizard() {
   const [isPremium, setIsPremium] = useState(false);
   const [services, setServices] = useState<ServiceForm[]>([]);
   const [openingHours, setOpeningHours] = useState<OpeningHours>({ openTime: 9, closeTime: 18 });
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { mutate: createSalon, isPending, isSuccess } = useCreateSalon();
+  const { mutate: uploadImage, isPending: isUploadingImage } = useUploadSalonImage();
+  const { data: categories = [] } = useGetCategories();
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+      const url = URL.createObjectURL(file);
+      setPreviewUrl(url);
+    }
+  };
+
+  const clearImage = () => {
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
+    }
+    setSelectedFile(null);
+    setPreviewUrl(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
 
   const addService = () => {
-    setServices([...services, { name: '', durationMinutes: 30, price: 0 }]);
+    setServices([...services, { name: '', durationMinutes: 30, price: 0, category: categories[0] || 'Hairdresser' }]);
   };
 
   const removeService = (index: number) => {
@@ -49,16 +76,17 @@ export default function ProSalonWizard() {
   };
 
   const canProceedStep1 = name.trim() && neighborhood.trim() && description.trim();
-  const canProceedStep2 = services.length > 0 && services.every(s => s.name.trim() && s.price > 0);
+  const canProceedStep2 = services.length > 0 && services.every((s) => s.name.trim() && s.price > 0 && s.category);
   const canSubmit = canProceedStep1 && canProceedStep2;
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!canSubmit) return;
 
-    const backendServices: Service[] = services.map(s => ({
+    const backendServices: Service[] = services.map((s) => ({
       name: s.name,
       durationMinutes: BigInt(s.durationMinutes),
-      price: BigInt(s.price)
+      price: BigInt(s.price),
+      category: s.category
     }));
 
     const photoUrls = photoUrl.trim() ? [photoUrl.trim()] : [];
@@ -73,7 +101,21 @@ export default function ProSalonWizard() {
         isPremium
       },
       {
-        onSuccess: () => {
+        onSuccess: async () => {
+          // Upload image if selected
+          if (selectedFile) {
+            const imageId = crypto.randomUUID();
+            const arrayBuffer = await selectedFile.arrayBuffer();
+            const imageBytes = new Uint8Array(arrayBuffer);
+
+            uploadImage({
+              salonName: name.trim(),
+              imageId,
+              imageBytes,
+              contentType: selectedFile.type
+            });
+          }
+
           // Reset form
           setStep(1);
           setName('');
@@ -83,6 +125,7 @@ export default function ProSalonWizard() {
           setIsPremium(false);
           setServices([]);
           setOpeningHours({ openTime: 9, closeTime: 18 });
+          clearImage();
         }
       }
     );
@@ -101,7 +144,7 @@ export default function ProSalonWizard() {
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="e.g., The Night Studio"
+                placeholder="e.g., Le Studio de Nuit"
                 className="bg-zinc-800 border-zinc-700 text-white"
                 required
               />
@@ -115,7 +158,7 @@ export default function ProSalonWizard() {
                 id="neighborhood"
                 value={neighborhood}
                 onChange={(e) => setNeighborhood(e.target.value)}
-                placeholder="e.g., Downtown"
+                placeholder="e.g., Lausanne Centre"
                 className="bg-zinc-800 border-zinc-700 text-white"
                 required
               />
@@ -129,15 +172,48 @@ export default function ProSalonWizard() {
                 id="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="Describe your salon's unique atmosphere and services..."
+                placeholder="Describe your salon's unique atmosphere..."
                 className="bg-zinc-800 border-zinc-700 text-white min-h-[100px]"
                 required
               />
             </div>
 
             <div className="space-y-2">
+              <Label className="text-white">Salon Image</Label>
+              {previewUrl ? (
+                <div className="relative h-48 rounded-2xl overflow-hidden border-2 border-zinc-700">
+                  <img src={previewUrl} className="w-full h-full object-cover" alt="Preview" />
+                  <button
+                    onClick={clearImage}
+                    className="absolute top-2 right-2 w-8 h-8 bg-black/60 backdrop-blur rounded-full flex items-center justify-center text-white hover:bg-black/80 transition"
+                  >
+                    <X size={16} />
+                  </button>
+                </div>
+              ) : (
+                <div
+                  onClick={() => fileInputRef.current?.click()}
+                  className="h-48 rounded-2xl border-2 border-dashed border-zinc-700 flex flex-col items-center justify-center cursor-pointer hover:border-zinc-600 transition"
+                >
+                  <div className="w-12 h-12 bg-zinc-800 rounded-full flex items-center justify-center mb-3">
+                    <Upload size={20} className="text-zinc-400" />
+                  </div>
+                  <span className="text-sm text-zinc-400 font-medium">Upload an image</span>
+                  <span className="text-xs text-zinc-600 mt-1">JPG, PNG max 5MB</span>
+                </div>
+              )}
+              <input
+                ref={fileInputRef}
+                type="file"
+                onChange={handleFileSelect}
+                className="hidden"
+                accept="image/*"
+              />
+            </div>
+
+            <div className="space-y-2">
               <Label htmlFor="photoUrl" className="text-white">
-                Photo URL (optional)
+                Or Image URL (optional)
               </Label>
               <Input
                 id="photoUrl"
@@ -160,13 +236,9 @@ export default function ProSalonWizard() {
               </Label>
             </div>
 
-            <Button
-              onClick={() => setStep(2)}
-              disabled={!canProceedStep1}
-              className="w-full"
-            >
+            <MotionButton onClick={() => setStep(2)} disabled={!canProceedStep1} className="w-full">
               Next: Add Services <ChevronRight className="ml-2 h-4 w-4" />
-            </Button>
+            </MotionButton>
           </div>
         );
 
@@ -179,14 +251,14 @@ export default function ProSalonWizard() {
                   <CardContent className="pt-4 space-y-3">
                     <div className="flex justify-between items-start">
                       <Label className="text-white text-sm">Service {index + 1}</Label>
-                      <Button
+                      <MotionButton
                         variant="ghost"
                         size="sm"
                         onClick={() => removeService(index)}
                         className="h-8 w-8 p-0 text-red-400 hover:text-red-300"
                       >
                         <Trash2 className="h-4 w-4" />
-                      </Button>
+                      </MotionButton>
                     </div>
                     <Input
                       value={service.name}
@@ -194,6 +266,24 @@ export default function ProSalonWizard() {
                       placeholder="Service name (e.g., Men's Haircut)"
                       className="bg-zinc-900 border-zinc-700 text-white"
                     />
+                    <div className="space-y-2">
+                      <Label className="text-zinc-400 text-xs">Category</Label>
+                      <Select
+                        value={service.category}
+                        onValueChange={(value) => updateService(index, 'category', value)}
+                      >
+                        <SelectTrigger className="bg-zinc-900 border-zinc-700 text-white">
+                          <SelectValue placeholder="Select category" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-zinc-900 border-zinc-700">
+                          {categories.map((cat) => (
+                            <SelectItem key={cat} value={cat} className="text-white">
+                              {cat}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
                     <div className="grid grid-cols-2 gap-2">
                       <div>
                         <Label className="text-zinc-400 text-xs">Duration (min)</Label>
@@ -206,7 +296,7 @@ export default function ProSalonWizard() {
                         />
                       </div>
                       <div>
-                        <Label className="text-zinc-400 text-xs">Price (€)</Label>
+                        <Label className="text-zinc-400 text-xs">Price (CHF)</Label>
                         <Input
                           type="number"
                           value={service.price}
@@ -221,29 +311,25 @@ export default function ProSalonWizard() {
               ))}
             </div>
 
-            <Button
+            <MotionButton
               onClick={addService}
               variant="outline"
               className="w-full border-zinc-700 text-white hover:bg-zinc-800"
             >
               <Plus className="mr-2 h-4 w-4" /> Add Service
-            </Button>
+            </MotionButton>
 
             <div className="flex gap-2">
-              <Button
+              <MotionButton
                 onClick={() => setStep(1)}
                 variant="outline"
                 className="flex-1 border-zinc-700 text-white hover:bg-zinc-800"
               >
                 <ChevronLeft className="mr-2 h-4 w-4" /> Back
-              </Button>
-              <Button
-                onClick={() => setStep(3)}
-                disabled={!canProceedStep2}
-                className="flex-1"
-              >
-                Next: Opening Hours <ChevronRight className="ml-2 h-4 w-4" />
-              </Button>
+              </MotionButton>
+              <MotionButton onClick={() => setStep(3)} disabled={!canProceedStep2} className="flex-1">
+                Next: Hours <ChevronRight className="ml-2 h-4 w-4" />
+              </MotionButton>
             </div>
           </div>
         );
@@ -255,7 +341,7 @@ export default function ProSalonWizard() {
               <Label className="text-white">Opening Hours</Label>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label className="text-zinc-400 text-xs">Opens at</Label>
+                  <Label className="text-zinc-400 text-xs">Opening</Label>
                   <Input
                     type="number"
                     value={openingHours.openTime}
@@ -266,7 +352,7 @@ export default function ProSalonWizard() {
                   />
                 </div>
                 <div>
-                  <Label className="text-zinc-400 text-xs">Closes at</Label>
+                  <Label className="text-zinc-400 text-xs">Closing</Label>
                   <Input
                     type="number"
                     value={openingHours.closeTime}
@@ -283,27 +369,19 @@ export default function ProSalonWizard() {
             </div>
 
             <div className="flex gap-2">
-              <Button
+              <MotionButton
                 onClick={() => setStep(2)}
                 variant="outline"
                 className="flex-1 border-zinc-700 text-white hover:bg-zinc-800"
               >
                 <ChevronLeft className="mr-2 h-4 w-4" /> Back
-              </Button>
-              <Button
-                onClick={handleSubmit}
-                disabled={isPending || !canSubmit}
-                className="flex-1"
-              >
-                {isPending ? 'Creating...' : 'Create Salon'}
-              </Button>
+              </MotionButton>
+              <MotionButton onClick={handleSubmit} disabled={isPending || isUploadingImage || !canSubmit} className="flex-1">
+                {isPending || isUploadingImage ? 'Creating...' : 'Create Salon'}
+              </MotionButton>
             </div>
 
-            {isSuccess && (
-              <p className="text-sm text-green-400 text-center">
-                Salon created successfully!
-              </p>
-            )}
+            {isSuccess && <p className="text-sm text-green-400 text-center">Salon created successfully!</p>}
           </div>
         );
     }
@@ -313,16 +391,14 @@ export default function ProSalonWizard() {
     <Card className="bg-zinc-900/50 border-zinc-800">
       <CardHeader>
         <CardTitle className="text-white flex items-center justify-between">
-          <span>Create New Salon</span>
+          <span>Open a Salon</span>
           <span className="text-sm font-normal text-zinc-500">Step {step} of 3</span>
         </CardTitle>
         <div className="flex gap-1 mt-2">
           {[1, 2, 3].map((s) => (
             <div
               key={s}
-              className={`h-1 flex-1 rounded-full transition ${
-                s <= step ? 'bg-violet-500' : 'bg-zinc-800'
-              }`}
+              className={`h-1 flex-1 rounded-full transition ${s <= step ? 'bg-violet-500' : 'bg-zinc-800'}`}
             />
           ))}
         </div>

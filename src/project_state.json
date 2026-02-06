@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 5,
-  "summary": "Étendre le MVP full‑stack (React « Midnight Glass » + backend Motoko sur Internet Computer avec Internet Identity) pour offrir une expérience immédiatement riche : auto‑seeding de salons premium avec photos/services/créneaux pour aujourd’hui/demain, création de salon avancée via wizard SaaS (infos/services/planning), et système de fidélité client (carte membre, XP/niveaux, progression) avec badge « Premium » sur les salons.",
+  "projectStateVersion": 11,
+  "summary": "Refonte frontend \"LUXE V3\" visant une expérience premium, 100% francisée, plus fluide (animations type app native), plus addictive (VIP gamification), et avec des états vides transformés en CTA utiles.",
   "architectural_notes": [
     "Architecture IC : backend Motoko en single canister (monolithe) pour le MVP.",
     "Authentification via Internet Identity; le rôle (client/pro) détermine la redirection vers l’interface appropriée.",
@@ -15,9 +15,12 @@
     "Le flux Pro de création de salon devient un wizard en 3 étapes incluant la configuration des heures d’ouverture et la génération de créneaux associée."
   ],
   "known_issues": [
-    "Risque de confusion dans le périmètre « temps réel » : l’actualisation du graphique doit se faire après actions utilisateur (pas de push serveur)."
+    "Risque de confusion dans le périmètre « temps réel » : l’actualisation du graphique doit se faire après actions utilisateur (pas de push serveur).",
+    "Incohérence de spécification à résoudre : une feature existante demande de garder les textes UI en anglais (REQ-11) alors que la direction produit impose désormais une traduction intégrale 100% français.",
+    "L’application côté Client est cassée : présence de textes/données en anglais (ex: catégories Hairdresser/Haircut, Paris) au lieu de 100% FR + contexte Suisse (Lausanne/Genève/Montreux, CHF).",
+    "Régression UI/UX : la barre de filtres en haut a disparu et/ou la logique de filtrage par catégorie ne fonctionne plus (ex: clic 'Barbier' n’isole pas les salons 'Barbier')."
   ],
-  "isFixRequest": false,
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-implement-internet-identity-authentication-and-replace-the-existing-fake-login-screen-with-the-internet-identity-login-flow",
@@ -112,6 +115,94 @@
       "title": "Add a visual ‘Premium’ badge on salons marked as premium by the backend (in both the salon list and salon details surfaces). The badge must be data-driven (based on the backend isPremium field), not hardcoded to the first salon.",
       "reqIds": [
         "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fully-localize-the-entire-frontend-ui-to-french-zero-remaining-english-replacing-all-user-facing-strings-across-pages-components-tabs-buttons-labels-placeholders-empty-states-loading-states-and-error-messages-with-elegant-french-wording",
+      "title": "Fully localize the entire frontend UI to French (zero remaining English), replacing all user-facing strings across pages, components, tabs, buttons, labels, placeholders, empty states, loading states, and error messages with elegant French wording.",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-native-like-page-screen-transitions-using-framer-motion-by-wrapping-the-app-s-screen-level-rendering-with-animatepresence-mode-wait-and-applying-a-consistent-slide-in-slide-out-animation-between-screen-changes-e-g-login-profile-setup-client-dashboard-pro-dashboard-and-within-dashboards-when-switching-between-major-views-like-salon-list-salon-details",
+      "title": "Add native-like page/screen transitions using Framer Motion by wrapping the app’s screen-level rendering with <AnimatePresence mode=\"wait\"> and applying a consistent slide-in/slide-out animation between screen changes (e.g., Login ↔ Profile setup ↔ Client dashboard ↔ Pro dashboard, and within dashboards when switching between major views like Salon list ↔ Salon details).",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-tactile-press-feedback-to-all-clickable-buttons-and-clickable-cards-by-applying-whiletap-scale-0-96-or-equivalent-framer-motion-press-interaction-consistently-across-the-app-including-shadcn-button-native-button-and-div-based-clickable-cards-used-for-salon-selection-and-service-selection",
+      "title": "Add tactile press feedback to all clickable buttons and clickable cards by applying whileTap={{ scale: 0.96 }} (or equivalent Framer Motion press interaction) consistently across the app, including Shadcn <Button>, native <button>, and div-based clickable cards used for salon selection and service selection.",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-client-profile-tab-s-current-simple-profile-content-with-a-vip-dashboard-layout-that-includes-1-an-animated-circular-progress-indicator-showing-the-user-s-current-status-and-percent-completion-e-g-statut-gold-75-and-2-a-next-reward-section-that-displays-r-compense-prochaine-20-dans-2-r-sas-keep-it-data-driven-where-possible-using-the-existing-user-profile-tier-xp-already-loaded-in-the-client-dashboard",
+      "title": "Replace the Client Profile tab’s current simple profile content with a “VIP Dashboard” layout that includes: (1) an animated circular progress indicator showing the user’s current status and percent completion (e.g., “Statut Gold — 75%”), and (2) a “Next reward” section that displays “Récompense prochaine : -20% dans 2 résas”. Keep it data-driven where possible using the existing user profile (tier/xp) already loaded in the Client dashboard.",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-improve-empty-states-so-the-app-never-shows-an-empty-screen-with-only-text-1-when-the-bookings-agenda-view-is-empty-show-a-clear-call-to-action-button-labeled-trouver-une-dispo-ce-soir-that-navigates-back-to-the-home-explore-tab-2-when-no-salons-are-returned-show-the-french-message-on-ouvre-bient-t-pr-s-de-chez-vous-and-ensure-the-layout-still-includes-a-visually-rich-empty-state-block-icon-illustration-style-container-cta-where-appropriate",
+      "title": "Improve empty states so the app never shows an empty screen with only text: (1) when the bookings/agenda view is empty, show a clear call-to-action button labeled “Trouver une dispo ce soir” that navigates back to the Home/Explore tab; (2) when no salons are returned, show the French message “On ouvre bientôt près de chez vous...” and ensure the layout still includes a visually rich empty-state block (icon/illustration-style container + CTA where appropriate).",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-on-chain-salon-image-upload-and-retrieval-extend-the-backend-to-store-salon-images-as-persistent-blob-data-stable-and-expose-actor-methods-to-a-upload-an-image-for-a-salon-b-associate-uploaded-image-s-with-the-salon-and-c-retrieve-image-bytes-and-content-type-by-an-image-identifier-so-the-frontend-can-render-the-real-uploaded-image",
+      "title": "Add on-chain salon image upload and retrieval: extend the backend to store salon images as persistent Blob data (stable) and expose actor methods to (a) upload an image for a salon, (b) associate uploaded image(s) with the salon, and (c) retrieve image bytes (and content type) by an image identifier so the frontend can render the real uploaded image.",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-maintain-swiss-market-context-in-data-and-pricing-displays-update-seeded-salons-and-any-default-location-strings-in-the-backend-to-use-french-speaking-swiss-cities-neighborhoods-and-update-frontend-price-rendering-to-display-chf-not-wherever-service-price-surge-or-totals-are-shown",
+      "title": "Maintain Swiss market context in data and pricing displays: update seeded salons and any default location strings in the backend to use French-speaking Swiss cities/neighborhoods, and update frontend price rendering to display CHF (not €) wherever service price, surge, or totals are shown.",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-the-category-filtering-ui-e-g-hairdresser-barber-etc-load-its-category-values-from-backend-driven-data-rather-than-hardcoded-frontend-constants-provide-a-backend-query-that-returns-the-available-categories-either-explicit-salon-categories-or-derived-from-services-and-update-the-frontend-to-use-it-via-react-query",
+      "title": "Make the category filtering UI (e.g., Hairdresser/Barber/etc.) load its category values from backend-driven data rather than hardcoded frontend constants. Provide a backend query that returns the available categories (either explicit salon categories or derived from services) and update the frontend to use it via React Query.",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-restore-the-client-category-filter-bar-at-the-top-of-the-salon-list-and-make-filtering-work-exactly-with-the-french-categories-show-buttons-in-this-order-tout-coiffure-barbier-spa-onglerie-and-when-a-category-is-selected-e-g-barbier-display-only-salons-that-match-that-category-based-on-salon-services-category-data",
+      "title": "Restore the Client category filter bar at the top of the salon list and make filtering work exactly with the French categories: show buttons in this order [\"Tout\", \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\"], and when a category is selected (e.g., \"Barbier\"), display only salons that match that category (based on salon services category data).",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-remaining-paris-english-ui-regressions-on-the-client-surfaces-explicitly-called-out-by-the-user-replace-the-authheader-badge-text-paris-11e-with-suisse-romande-client-user-type-replace-the-salon-list-section-title-recommended-for-you-with-les-meilleures-adresses-and-ensure-the-welcome-header-text-reads-bienvenue",
+      "title": "Remove remaining Paris/English UI regressions on the Client surfaces explicitly called out by the user: replace the AuthHeader badge text \"PARIS 11e\" with \"Suisse Romande\" (Client user type), replace the salon list section title \"Recommended for you\" with \"Les meilleures adresses\", and ensure the welcome header text reads \"Bienvenue\".",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-eliminate-obvious-remaining-english-strings-on-the-client-salon-list-and-salon-details-flows-that-contribute-to-the-app-feeling-partially-broken-including-error-empty-state-labels-and-primary-action-buttons-so-the-client-experience-is-consistently-french",
+      "title": "Eliminate obvious remaining English strings on the Client salon list and salon details flows that contribute to the app feeling partially broken, including error/empty-state labels and primary action buttons, so the Client experience is consistently French.",
+      "reqIds": [
+        "REQ-31"
       ],
       "version": 1
     }
@@ -220,6 +311,60 @@
       "summary": "Extend the backend salon and booking data model to support the new SaaS creation flow and seeded content: salons must store neighborhood, description, photo URL, premium flag, and a list of services (label, durationMinutes, price). Availability must support bookable slots for specific dates (today/tomorrow), not only a weekday label. Update booking logic to book a specific date+time slot and to correctly mark that exact slot as unavailable after booking.",
       "reqIds": [
         "REQ-13"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-22",
+      "summary": "Traduction intégrale du frontend (zéro anglais) : scanner tout le code UI et remplacer tous les libellés/termes anglais restants par un français élégant (ex: Create New Salon→Ouvrir un Établissement, Neighborhood→Quartier, Bookings→Mon Agenda).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-23",
+      "summary": "Fluidité & animations type \"app native\" : ajouter <AnimatePresence mode='wait'> autour du routeur pour transitions Slide In/Out entre pages + whileTap { scale: 0.96 } sur tous les boutons et cartes cliquables.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-24",
+      "summary": "Gamification Profil : remplacer la liste du profil par un \"Dashboard VIP\" avec cercle de progression animé (ex: \"Statut Gold - 75%\") + section \"Récompense prochaine : -20% dans 2 résas\".",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-25",
+      "summary": "Gestion des états vides par CTA : ne jamais laisser un écran vide; si agenda vide afficher bouton \"Trouver une dispo ce soir\" (redirige accueil); si aucun salon trouvé afficher \"On ouvre bientôt près de chez vous...\".",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-26",
+      "summary": "Support upload et stockage on-chain des images de salons : côté frontend, uploader une image réelle dans le flow Pro « Créer un salon » et l’envoyer au backend; côté backend Motoko, stocker l’image (Blob) de manière persistante (Stable Memory) et la servir ensuite au frontend.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-27",
+      "summary": "Implement true stable-memory persistence for all core backend data so it survives refresh/upgrade: user profiles (keyed by Principal and including role), salons (including metadata and availability), and bookings (linked to user and salon). Use the Internet Computer upgrade hooks (preupgrade/postupgrade) to serialize/restore state, and add a conditional backend migration (backend/migration.mo) only if required to preserve existing deployed state.",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-29",
+      "summary": "Align booking pricing logic with the Swiss Monopoly Mode business rule strictly on the backend: when Monopoly Mode is enabled for the salon’s Pro, apply an automatic +20% markup to the final booking price for Night slots (time > 19:00) and/or Sunday slots, based on the booked slot’s stored classification (isNight/isSunday). Remove any incorrect hardcoding (e.g., always-false Sunday) and ensure the chosen slot’s flags drive pricing.",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-30",
+      "summary": "Update the backend salon seeding data so it is 100% French + Swiss and does not introduce English categories/services into the Client app: seed salons only in Lausanne, Genève, and Montreux; ensure seeded services use only the categories \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\" (no \"Hairdresser\", no \"Physiotherapist\", no English service names).",
+      "reqIds": [
+        "REQ-28"
       ],
       "status": "pending"
     }

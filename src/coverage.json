@@ -1,85 +1,56 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-05T21:03:32.082Z",
+  "generatedAt": "2026-02-06T00:12:39.459Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 6,
-    "implemented": 4,
+    "total": 4,
+    "implemented": 3,
     "items": [
       {
-        "id": "REQ-12",
-        "summary": "Implement backend auto-seeding so the app always starts with at least 5 premium/luxury salons (never an empty salon list). On canister init and post-upgrade (or on the first getSalons call), if there are zero salons stored, automatically create 5 salons with: (1) premium flag, (2) photo URL(s) pointing to real photos, (3) neighborhood and description, (4) a non-empty services list, and (5) bookable availability time slots for today and tomorrow.",
+        "id": "REQ-28",
+        "summary": "Update the backend salon seeding data so it is 100% French + Swiss and does not introduce English categories/services into the Client app: seed salons only in Lausanne, Genève, and Montreux; ensure seeded services use only the categories \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\" (no \"Hairdresser\", no \"Physiotherapist\", no English service names).",
         "status": "unknown",
         "plannedFiles": [],
         "matchedFiles": []
       },
       {
-        "id": "REQ-13",
-        "summary": "Extend the backend salon and booking data model to support the new SaaS creation flow and seeded content: salons must store neighborhood, description, photo URL, premium flag, and a list of services (label, durationMinutes, price). Availability must support bookable slots for specific dates (today/tomorrow), not only a weekday label. Update booking logic to book a specific date+time slot and to correctly mark that exact slot as unavailable after booking.",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-14",
-        "summary": "Replace the current Pro ‘Create salon’ single-input form with a 3-step configuration wizard: Step 1 Salon info (Name, Neighborhood, Description, optional Photo URL), Step 2 Services (add/remove services with Label, Duration (minutes), Price), Step 3 Planning (define opening hours used to generate availability). On completion, submit the full configuration to the backend and create the salon with generated availability for today and tomorrow.",
+        "id": "REQ-29",
+        "summary": "Restore the Client category filter bar at the top of the salon list and make filtering work exactly with the French categories: show buttons in this order [\"Tout\", \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\"], and when a category is selected (e.g., \"Barbier\"), display only salons that match that category (based on salon services category data).",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/ProSalonWizard.tsx",
-          "frontend/src/hooks/useQueries.ts",
-          "frontend/src/pages/ProDashboardPage.tsx",
-          "frontend/src/components/CreateSalonForm.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/ProSalonWizard.tsx",
-          "frontend/src/hooks/useQueries.ts",
-          "frontend/src/pages/ProDashboardPage.tsx",
-          "frontend/src/components/CreateSalonForm.tsx"
-        ]
-      },
-      {
-        "id": "REQ-15",
-        "summary": "Update the client home salon list UI to be driven by backend salon metadata: display each salon’s real photo (from salon.photoUrl), description, neighborhood, and premium status. Ensure the UI does not show an ‘No salons available’ empty state under normal conditions because the backend auto-seeds salons when empty.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/hooks/useQueries.ts",
           "frontend/src/components/SalonListSection.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/hooks/useQueries.ts",
           "frontend/src/components/SalonListSection.tsx"
         ]
       },
       {
-        "id": "REQ-16",
-        "summary": "Implement a loyalty system: add XP to the client profile, show a ‘Member Card’ on the client Profile tab with a VIP progress bar and tier label (e.g., “Silver — 300 XP”), and grant XP whenever a booking is successfully confirmed. Store XP in the backend user profile so it persists across refresh/login.",
+        "id": "REQ-30",
+        "summary": "Remove remaining Paris/English UI regressions on the Client surfaces explicitly called out by the user: replace the AuthHeader badge text \"PARIS 11e\" with \"Suisse Romande\" (Client user type), replace the salon list section title \"Recommended for you\" with \"Les meilleures adresses\", and ensure the welcome header text reads \"Bienvenue\".",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/MemberCard.tsx",
-          "frontend/src/pages/ClientDashboardPage.tsx",
-          "frontend/src/hooks/useQueries.ts"
+          "frontend/src/components/AuthHeader.tsx",
+          "frontend/src/components/SalonListSection.tsx",
+          "frontend/src/pages/LoginPage.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/MemberCard.tsx",
-          "frontend/src/pages/ClientDashboardPage.tsx",
-          "frontend/src/hooks/useQueries.ts"
+          "frontend/src/components/AuthHeader.tsx",
+          "frontend/src/components/SalonListSection.tsx"
         ]
       },
       {
-        "id": "REQ-17",
-        "summary": "Add a visual ‘Premium’ badge on salons marked as premium by the backend (in both the salon list and salon details surfaces). The badge must be data-driven (based on the backend isPremium field), not hardcoded to the first salon.",
+        "id": "REQ-31",
+        "summary": "Eliminate obvious remaining English strings on the Client salon list and salon details flows that contribute to the app feeling partially broken, including error/empty-state labels and primary action buttons, so the Client experience is consistently French.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/PremiumBadge.tsx",
           "frontend/src/components/SalonListSection.tsx",
           "frontend/src/pages/SalonDetailsPage.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/PremiumBadge.tsx",
           "frontend/src/components/SalonListSection.tsx",
           "frontend/src/pages/SalonDetailsPage.tsx"
         ]
@@ -90,23 +61,11 @@
     "backend/main.mo",
     "backend/migration.mo",
     "build-request.json",
-    "build-template/README.md",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/backend.d.ts",
-    "frontend/src/backend.ts",
-    "frontend/src/components/CreateSalonForm.tsx",
-    "frontend/src/components/MemberCard.tsx",
-    "frontend/src/components/PremiumBadge.tsx",
-    "frontend/src/components/ProSalonWizard.tsx",
-    "frontend/src/components/ProfileSetupModal.tsx",
+    "frontend/src/components/AuthHeader.tsx",
     "frontend/src/components/SalonListSection.tsx",
-    "frontend/src/declarations/backend.did.d.ts",
-    "frontend/src/declarations/backend.did.js",
-    "frontend/src/hooks/useQueries.ts",
-    "frontend/src/pages/ClientDashboardPage.tsx",
-    "frontend/src/pages/ProDashboardPage.tsx",
     "frontend/src/pages/SalonDetailsPage.tsx",
     "project_state.json",
     "scratch/component-selection.json",

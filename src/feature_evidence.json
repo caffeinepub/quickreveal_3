@@ -2,13 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-replace-the-current-pro-create-salon-single-input-form-with-a-3-step-configuration-wizard-step-1-salon-info-name-neighborhood-description-optional-photo-url-step-2-services-add-remove-services-with-label-duration-minutes-price-step-3-planning-define-opening-hours-used-to-generate-availability-on-completion-submit-the-full-configuration-to-the-backend-and-create-the-salon-with-generated-availability-for-today-and-tomorrow",
-      "featureTitle": "Replace the current Pro ‘Create salon’ single-input form with a 3-step configuration wizard: Step 1 Salon info (Name, Neighborhood, Description, optional Photo URL), Step 2 Services (add/remove services with Label, Duration (minutes), Price), Step 3 Planning (define opening hours used to generate availability). On completion, submit the full configuration to the backend and create the salon with generated availability for today and tomorrow.",
+      "featureId": "feature-restore-the-client-category-filter-bar-at-the-top-of-the-salon-list-and-make-filtering-work-exactly-with-the-french-categories-show-buttons-in-this-order-tout-coiffure-barbier-spa-onglerie-and-when-a-category-is-selected-e-g-barbier-display-only-salons-that-match-that-category-based-on-salon-services-category-data",
+      "featureTitle": "Restore the Client category filter bar at the top of the salon list and make filtering work exactly with the French categories: show buttons in this order [\"Tout\", \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\"], and when a category is selected (e.g., \"Barbier\"), display only salons that match that category (based on salon services category data).",
       "files": [
-        "frontend/src/components/CreateSalonForm.tsx",
-        "frontend/src/components/ProSalonWizard.tsx",
-        "frontend/src/hooks/useQueries.ts",
-        "frontend/src/pages/ProDashboardPage.tsx"
+        "frontend/src/components/SalonListSection.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -16,19 +13,20 @@
         "shadcn-ui@1.0.0",
         "build-template-react@1.0.0",
         "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-14"
+        "REQ-29"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-update-the-client-home-salon-list-ui-to-be-driven-by-backend-salon-metadata-display-each-salon-s-real-photo-from-salon-photourl-description-neighborhood-and-premium-status-ensure-the-ui-does-not-show-an-no-salons-available-empty-state-under-normal-conditions-because-the-backend-auto-seeds-salons-when-empty",
-      "featureTitle": "Update the client home salon list UI to be driven by backend salon metadata: display each salon’s real photo (from salon.photoUrl), description, neighborhood, and premium status. Ensure the UI does not show an ‘No salons available’ empty state under normal conditions because the backend auto-seeds salons when empty.",
+      "featureId": "feature-remove-remaining-paris-english-ui-regressions-on-the-client-surfaces-explicitly-called-out-by-the-user-replace-the-authheader-badge-text-paris-11e-with-suisse-romande-client-user-type-replace-the-salon-list-section-title-recommended-for-you-with-les-meilleures-adresses-and-ensure-the-welcome-header-text-reads-bienvenue",
+      "featureTitle": "Remove remaining Paris/English UI regressions on the Client surfaces explicitly called out by the user: replace the AuthHeader badge text \"PARIS 11e\" with \"Suisse Romande\" (Client user type), replace the salon list section title \"Recommended for you\" with \"Les meilleures adresses\", and ensure the welcome header text reads \"Bienvenue\".",
       "files": [
-        "frontend/src/components/SalonListSection.tsx",
-        "frontend/src/hooks/useQueries.ts"
+        "frontend/src/components/AuthHeader.tsx",
+        "frontend/src/components/SalonListSection.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -36,39 +34,18 @@
         "shadcn-ui@1.0.0",
         "build-template-react@1.0.0",
         "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-15"
+        "REQ-30"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-implement-a-loyalty-system-add-xp-to-the-client-profile-show-a-member-card-on-the-client-profile-tab-with-a-vip-progress-bar-and-tier-label-e-g-silver-300-xp-and-grant-xp-whenever-a-booking-is-successfully-confirmed-store-xp-in-the-backend-user-profile-so-it-persists-across-refresh-login",
-      "featureTitle": "Implement a loyalty system: add XP to the client profile, show a ‘Member Card’ on the client Profile tab with a VIP progress bar and tier label (e.g., “Silver — 300 XP”), and grant XP whenever a booking is successfully confirmed. Store XP in the backend user profile so it persists across refresh/login.",
+      "featureId": "feature-eliminate-obvious-remaining-english-strings-on-the-client-salon-list-and-salon-details-flows-that-contribute-to-the-app-feeling-partially-broken-including-error-empty-state-labels-and-primary-action-buttons-so-the-client-experience-is-consistently-french",
+      "featureTitle": "Eliminate obvious remaining English strings on the Client salon list and salon details flows that contribute to the app feeling partially broken, including error/empty-state labels and primary action buttons, so the Client experience is consistently French.",
       "files": [
-        "frontend/src/components/MemberCard.tsx",
-        "frontend/src/hooks/useQueries.ts",
-        "frontend/src/pages/ClientDashboardPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-16"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-a-visual-premium-badge-on-salons-marked-as-premium-by-the-backend-in-both-the-salon-list-and-salon-details-surfaces-the-badge-must-be-data-driven-based-on-the-backend-ispremium-field-not-hardcoded-to-the-first-salon",
-      "featureTitle": "Add a visual ‘Premium’ badge on salons marked as premium by the backend (in both the salon list and salon details surfaces). The badge must be data-driven (based on the backend isPremium field), not hardcoded to the first salon.",
-      "files": [
-        "frontend/src/components/PremiumBadge.tsx",
         "frontend/src/components/SalonListSection.tsx",
         "frontend/src/pages/SalonDetailsPage.tsx"
       ],
@@ -78,10 +55,11 @@
         "shadcn-ui@1.0.0",
         "build-template-react@1.0.0",
         "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-17"
+        "REQ-31"
       ],
       "confidence": "high"
     }

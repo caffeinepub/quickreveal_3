@@ -1,154 +1,95 @@
 {
   "kind": "build_request",
-  "title": "Auto-seed premium salons, add 3-step Pro salon wizard, and implement client loyalty XP",
+  "title": "Urgent fix: restore French/Swiss client UI and category filters (remove English/Paris)",
   "priority": "high",
   "requirements": [
     {
-      "id": "REQ-12",
-      "text": "Implement backend auto-seeding so the app always starts with at least 5 premium/luxury salons (never an empty salon list). On canister init and post-upgrade (or on the first getSalons call), if there are zero salons stored, automatically create 5 salons with: (1) premium flag, (2) photo URL(s) pointing to real photos, (3) neighborhood and description, (4) a non-empty services list, and (5) bookable availability time slots for today and tomorrow.",
+      "id": "REQ-28",
+      "text": "Update the backend salon seeding data so it is 100% French + Swiss and does not introduce English categories/services into the Client app: seed salons only in Lausanne, Genève, and Montreux; ensure seeded services use only the categories \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\" (no \"Hairdresser\", no \"Physiotherapist\", no English service names).",
       "target": "backend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "msg-4"
         ],
         "quotes": [
-          "1. DONNÉES PRÉ-REMPLIES (AUTO-SEEDING) : * Ne montre plus jamais \"Aucun salon disponible\". * Au démarrage, le backend doit générer automatiquement 5 salons de luxe avec de vraies photos, des descriptions, et une liste de services et de créneaux réservables pour aujourd'hui et demain."
+          "1. DONNÉES EN DUR (100% FRANÇAIS & SUISSE) :\n * ...\n * BANNIS l'anglais : Pas de \"Hairdresser\", pas de \"Haircut\", pas de \"Paris\".\n * IMPOSE le Français : Utilise uniquement les catégories : \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\".\n * LOCALISATION : Villes = Lausanne, Genève, Montreux. Devise = CHF."
         ]
       },
       "acceptanceCriteria": [
-        "When the canister has no salons, calling getSalons returns at least 5 salons without any manual setup.",
-        "Each seeded salon includes a non-empty description, a neighborhood field, at least 1 service, at least 1 availability slot for today, and at least 1 availability slot for tomorrow.",
-        "Each seeded salon includes a photoUrl (or equivalent field) with an externally-hosted real image (e.g., Unsplash URL), and seeded salons are marked as premium.",
-        "Seeding runs only when the salon store is empty; it does not duplicate salons on subsequent calls/refreshes."
+        "Calling the existing salon seeding flow (ensureSalonsSeeded + getSalons) returns salons whose neighborhood/location strings reference Lausanne/Genève/Montreux (and not Paris).",
+        "The seeded salons’ services contain only the categories exactly: \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\".",
+        "No seeded service name or category contains English terms such as \"Hairdresser\" or \"Haircut\".",
+        "The categories returned by getCategories are a subset of: \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\" (no English categories)."
       ]
     },
     {
-      "id": "REQ-13",
-      "text": "Extend the backend salon and booking data model to support the new SaaS creation flow and seeded content: salons must store neighborhood, description, photo URL, premium flag, and a list of services (label, durationMinutes, price). Availability must support bookable slots for specific dates (today/tomorrow), not only a weekday label. Update booking logic to book a specific date+time slot and to correctly mark that exact slot as unavailable after booking.",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-6"
-        ],
-        "quotes": [
-          "2. CRÉATION DE SALON AVANCÉE (MODE SAAS) : * Remplace le simple champ \"Nom du salon\" par un véritable Wizard de Configuration en 3 étapes",
-          "* ... une liste de services et de créneaux réservables pour aujourd'hui et demain."
-        ]
-      },
-      "acceptanceCriteria": [
-        "A Salon returned by getSalons/getSalon includes: name, neighborhood, description, photoUrl, isPremium, services[], availabilities[].",
-        "A Service includes: label (Text), durationMinutes (Nat), price (Int or Nat) in a consistent unit.",
-        "An Availability slot includes a date identifier (e.g., YYYY-MM-DD Text or epoch-day Int) plus time and availability flags; the backend can generate slots for today and tomorrow.",
-        "bookSalon books a specific slot (date + time) and marks only that slot unavailable for future reads.",
-        "Any required state upgrade is handled via the platform’s conditional migration policy (only add backend/migration.mo if persistent state already exists and needs upgrade)."
-      ]
-    },
-    {
-      "id": "REQ-14",
-      "text": "Replace the current Pro ‘Create salon’ single-input form with a 3-step configuration wizard: Step 1 Salon info (Name, Neighborhood, Description, optional Photo URL), Step 2 Services (add/remove services with Label, Duration (minutes), Price), Step 3 Planning (define opening hours used to generate availability). On completion, submit the full configuration to the backend and create the salon with generated availability for today and tomorrow.",
+      "id": "REQ-29",
+      "text": "Restore the Client category filter bar at the top of the salon list and make filtering work exactly with the French categories: show buttons in this order [\"Tout\", \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\"], and when a category is selected (e.g., \"Barbier\"), display only salons that match that category (based on salon services category data).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "msg-4"
         ],
         "quotes": [
-          "2. CRÉATION DE SALON AVANCÉE (MODE SAAS) : * Remplace le simple champ \"Nom du salon\" par un véritable Wizard de Configuration en 3 étapes : * Étape 1 : Infos Salon (Nom, Quartier, Description). * Étape 2 : Services ... * Étape 3 : Planning (Le Pro définit ses heures d'ouverture)."
+          "2. RÉPARATION DES FILTRES :\n * Rétablis la barre de filtres en haut : [\"Tout\", \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\"].\n * La logique de filtrage doit fonctionner : Si je clique sur \"Barbier\", affiche uniquement les salons dont la catégorie est \"Barbier\"."
         ]
       },
       "acceptanceCriteria": [
-        "The Pro dashboard no longer shows the single ‘Salon name’ input-only creation UI; it shows a 3-step wizard.",
-        "Step 2 supports adding at least one service (example: “Men’s haircut”, 30 minutes, €35) and removing/editing services before submission.",
-        "Step 3 captures opening hours in a way that the backend can generate availability slots for today and tomorrow (within those hours).",
-        "Submitting the wizard creates a salon persisted in the canister and the salons list updates via React Query invalidation/refetch.",
-        "All new and modified user-facing text in this wizard is in English."
+        "The salon list screen renders a visible horizontal filter bar at the top with labels exactly: \"Tout\", \"Coiffure\", \"Barbier\", \"Spa\", \"Onglerie\".",
+        "Default selected filter is \"Tout\" and shows all salons.",
+        "Selecting \"Barbier\" shows only salons that have at least one service with category === \"Barbier\"; switching back to \"Tout\" restores the full list.",
+        "The filter bar remains present after navigation within the Client dashboard (as long as the salon list is displayed)."
       ]
     },
     {
-      "id": "REQ-15",
-      "text": "Update the client home salon list UI to be driven by backend salon metadata: display each salon’s real photo (from salon.photoUrl), description, neighborhood, and premium status. Ensure the UI does not show an ‘No salons available’ empty state under normal conditions because the backend auto-seeds salons when empty.",
+      "id": "REQ-30",
+      "text": "Remove remaining Paris/English UI regressions on the Client surfaces explicitly called out by the user: replace the AuthHeader badge text \"PARIS 11e\" with \"Suisse Romande\" (Client user type), replace the salon list section title \"Recommended for you\" with \"Les meilleures adresses\", and ensure the welcome header text reads \"Bienvenue\".",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "msg-4"
         ],
         "quotes": [
-          "* Ne montre plus jamais \"Aucun salon disponible\".",
-          "... 5 salons de luxe avec de vraies photos, des descriptions ..."
+          "3. NETTOYAGE UI :\n * Remplace le badge \"Paris 11e\" par \"Suisse Romande\".\n * Remplace \"Recommended for you\" par \"Les meilleures adresses\".\n * Remplace \"Welcome\" par \"Bienvenue\"."
         ]
       },
       "acceptanceCriteria": [
-        "Salon cards use the salon’s photoUrl field instead of a hardcoded image URL.",
-        "Salon cards display the salon’s description and neighborhood (or equivalent fields) from the backend.",
-        "When salons is empty due to unexpected conditions, show a neutral recovery message in English (error state remains), but normal startup should show the seeded salons.",
-        "All modified user-facing strings in the salon list section are in English."
+        "When logged in as a Client, the header badge shows \"Suisse Romande\" (and never \"PARIS 11e\").",
+        "On the salon list screen, the section title uses \"Les meilleures adresses\" where it previously showed \"Recommended for you\".",
+        "No UI surface in the login or client header displays \"Welcome\"; it displays \"Bienvenue\"."
       ]
     },
     {
-      "id": "REQ-16",
-      "text": "Implement a loyalty system: add XP to the client profile, show a ‘Member Card’ on the client Profile tab with a VIP progress bar and tier label (e.g., “Silver — 300 XP”), and grant XP whenever a booking is successfully confirmed. Store XP in the backend user profile so it persists across refresh/login.",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-6"
-        ],
-        "quotes": [
-          "3. SYSTÈME DE FIDÉLITÉ (ADDICTIVITÉ) : * Ajoute une Carte de Membre dans le profil Client. * Affiche une Barre de Progression VIP (ex: \"Membre Silver - 300 XP\"). * Chaque réservation confirmée ajoute des points."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Backend UserProfile includes an XP field (defaulting to 0 for existing/new users).",
-        "After a successful booking confirmation, the user’s XP increases by a defined amount and remains increased after refresh/re-login.",
-        "Client Profile tab displays a member card with current tier name and total XP, plus a progress bar toward the next tier.",
-        "The member card UI is populated from backend profile data (no hardcoded demo user name/XP).",
-        "All loyalty-related user-facing text is in English."
-      ]
-    },
-    {
-      "id": "REQ-17",
-      "text": "Add a visual ‘Premium’ badge on salons marked as premium by the backend (in both the salon list and salon details surfaces). The badge must be data-driven (based on the backend isPremium field), not hardcoded to the first salon.",
+      "id": "REQ-31",
+      "text": "Eliminate obvious remaining English strings on the Client salon list and salon details flows that contribute to the app feeling partially broken, including error/empty-state labels and primary action buttons, so the Client experience is consistently French.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "msg-4"
         ],
         "quotes": [
-          "* Ajoute un badge visuel sur les salons \"Premium\"."
+          "URGENCE : L'application est cassée côté Client (Anglais + Filtres disparus)."
         ]
       },
       "acceptanceCriteria": [
-        "If salon.isPremium is true, a Premium badge is displayed on that salon’s card and in its details header/hero area.",
-        "If salon.isPremium is false, the badge is not rendered.",
-        "Premium badge rendering works for seeded salons and for newly created salons (as applicable).",
-        "All user-facing text related to the badge is in English."
+        "Salon list: error and empty states do not show English (e.g., replace \"Error loading salons\", \"Coming Soon\", \"Opening near you soon...\", \"No salons found\", \"View all\").",
+        "Salon details: slot/confirmation UI does not show English (e.g., replace \"Available Slots\", \"Total\", \"Confirm\", \"Confirming...\").",
+        "After these changes, a spot-check of ClientDashboardPage, SalonListSection, SalonDetailsPage, AuthHeader, and LoginPage shows no visible English phrases in normal usage."
       ]
     }
   ],
   "constraints": [
-    "Backend must remain a single Motoko actor in backend/main.mo (no multi-canister or additional backend services).",
-    "Follow the platform migration policy: only create/update backend/migration.mo if an upgrade is required to preserve existing stable state.",
-    "Do not edit any frontend immutable paths (frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui). Compose them instead.",
-    "No real-time sockets/push updates; UI refresh must continue to rely on React Query invalidation/refetch after user actions."
+    "Do not edit files under frontend/src/components/ui (shadcn) or any other paths listed as immutable in SYSTEM_CONTEXT.",
+    "Keep the backend as a single Motoko actor in backend/main.mo; only introduce/modify backend/migration.mo if a stable-state upgrade requires it.",
+    "Do not introduce real-time mechanisms (no WebSockets/server push) as part of this fix."
   ],
   "nonGoals": [
-    "Implementing third-party auth providers (only Internet Identity).",
-    "Adding external databases or non-IC storage.",
-    "Implementing notifications, email, SMS, or real-time chat.",
-    "Building a full analytics/admin system beyond the requested XP/tier display and premium badge."
+    "Do not add new product features beyond restoring the category filters and fixing the specified localization/Swiss-context regressions.",
+    "Do not change the authentication flow (Internet Identity) as part of this fix.",
+    "Do not add external databases or third-party services."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [
-      "Keep all user-facing UI strings in English for the new/modified flows (salon seeding surfaces, Pro wizard, loyalty UI)."
-    ],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
   }
 }
