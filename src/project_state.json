@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 49,
-  "summary": "V24 « OMEGA SINGULARITY » : remplacer intégralement `frontend/src/AppV1.jsx` par le code V24 fourni (verbatim). Ruptures UX/UI : morphing liquide via Framer Motion `layoutId` (carte → plein écran sans nouvelle page), navigation « Core » orbitale (orbe flottant + menu circulaire), filtrage catégories via « haptic slider » magnétique en haut, esthétique « Vantablack » (noir absolu + contraste blanc + typo suisse moderne). App 100% state local (dataset DATA), booking mock (alert) et Pro wizard GenesisEngine (3 étapes, upload image locale via `URL.createObjectURL`, ajout services).",
+  "projectStateVersion": 51,
+  "summary": "V25 « AETHER GENESIS » : remplacer intégralement `frontend/src/AppV1.jsx` par le code V25 fourni (verbatim). Nouvelle direction UX/UI : navigation supérieure « HELIX » service-first (filtre par ADN service), cartes « LIVING MATTER » avec galerie swipe + bio/contact magazine + disponibilités en pulsations, et mode Pro « CREATOR COCKPIT » avec live preview (split desktop / modal mobile) + bouton IA Assist pour générer une « Aura » (description marketing). App 100% state local (dataset V25), booking mock (alert), favoris en mémoire, morphing Framer Motion (layoutId) pour la vue détaillée.",
   "architectural_notes": [
     "RESET complet : écrasement total du backend et du frontend, considéré comme nouvelle V1.0 officielle.",
     "Backend Motoko réduit à un modèle Salon/Service/Socials avec `stable var salons` et endpoints `getSalons` (query) + `createSalon` (shared); seed de 4 salons suisses au démarrage (si salons vide).",
@@ -588,6 +588,54 @@
         "REQ-87"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-fully-replace-overwrite-frontend-src-appv1-jsx-with-the-exact-user-provided-v25-aether-genesis-code-block-as-the-new-app-ui-landing-client-creator-preserving-the-intended-layout-styling-and-interaction-behavior",
+      "title": "Fully replace (overwrite) `frontend/src/AppV1.jsx` with the exact user-provided V25 “AETHER GENESIS” code block as the new app UI (Landing → Client → Creator), preserving the intended layout, styling, and interaction behavior.",
+      "reqIds": [
+        "REQ-88"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-only-the-minimal-mechanical-fixes-required-for-this-repository-to-compile-and-run-with-the-pasted-v25-code-without-altering-the-intended-v25-ui-ux-behavior",
+      "title": "Apply only the minimal mechanical fixes required for this repository to compile and run with the pasted V25 code, without altering the intended V25 UI/UX behavior.",
+      "reqIds": [
+        "REQ-89"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-v25-helix-navigation-service-first-top-bar-correctly-filters-the-salon-feed-instantly-by-category-selection-including-the-tout-category-showing-all-salons",
+      "title": "Ensure the V25 Helix navigation (service-first top bar) correctly filters the salon feed instantly by category selection, including the “Tout” category showing all salons.",
+      "reqIds": [
+        "REQ-90"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-missing-living-matter-card-behaviors-described-by-the-user-while-preserving-the-v25-aesthetic-1-an-integrated-swipe-gallery-experience-2-a-fused-fashion-magazine-style-bio-contact-presentation-and-3-availability-rendered-as-pulsing-heartbeat-dots-on-the-salon-surfaces",
+      "title": "Implement the missing “Living Matter” card behaviors described by the user while preserving the V25 aesthetic: (1) an integrated swipe gallery experience, (2) a fused fashion-magazine-style bio + contact presentation, and (3) availability rendered as pulsing ‘heartbeat’ dots on the salon surfaces.",
+      "reqIds": [
+        "REQ-91"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-upgrade-the-creator-cockpit-to-match-the-specified-v25-requirements-provide-live-preview-split-view-on-large-screens-modal-preview-on-mobile-and-an-ai-assist-button-that-generates-an-aura-marketing-description-locally-no-external-ai-services",
+      "title": "Upgrade the Creator Cockpit to match the specified V25 requirements: provide Live Preview (split view on large screens, modal preview on mobile) and an “AI Assist” button that generates an ‘Aura’ marketing description locally (no external AI services).",
+      "reqIds": [
+        "REQ-92"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-the-creator-deploy-state-update-robust-against-stale-closures-when-adding-a-newly-deployed-salon-update-salons-using-a-functional-state-update-so-the-new-salon-always-appears-immediately-at-the-top-of-the-client-list",
+      "title": "Make the Creator “deploy” state update robust against stale closures: when adding a newly deployed salon, update `salons` using a functional state update so the new salon always appears immediately at the top of the Client list.",
+      "reqIds": [
+        "REQ-93"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -872,6 +920,12 @@
     {
       "id": "AR-59",
       "summary": "V24 « OMEGA SINGULARITY » : overwrite total de `frontend/src/AppV1.jsx` avec le code V24 fourni (verbatim) + appliquer uniquement les ajustements mécaniques nécessaires pour compiler. Inclut morphing liquide via `layoutId`, navigation orbitale (Core), CatSlider magnétique, esthétique Vantablack, wizard Pro GenesisEngine et logique locale (dataset DATA).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-60",
+      "summary": "V25 « AETHER GENESIS » : overwrite total de `frontend/src/AppV1.jsx` avec le code V25 fourni (verbatim) + appliquer uniquement les ajustements mécaniques nécessaires pour compiler, sans changer design/UX/logic. Inclut HelixNav service-first, cartes Living Matter (galerie, bio+contact, disponibilités pulsantes), Creator Cockpit avec live preview et bouton IA Assist.",
       "reqIds": [],
       "status": "pending"
     }

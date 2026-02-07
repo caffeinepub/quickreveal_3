@@ -1,11 +1,11 @@
 {
   "kind": "build_request",
-  "title": "Overwrite AppV1 with V24 OMEGA SINGULARITY UI (morphing cards + orbital core nav)",
-  "priority": "normal",
+  "title": "V25 AETHER GENESIS: overwrite AppV1 and implement Helix/Living Matter/Creator Cockpit pillars",
+  "priority": "high",
   "requirements": [
     {
-      "id": "REQ-86",
-      "text": "Completely replace the contents of `frontend/src/AppV1.jsx` with the exact V24 “OMEGA SINGULARITY” code provided by the user, treating it as the full application UI (Landing → Client → Pro/GenesisEngine) and preserving the provided components, local `DATA`, Tailwind classes, imports, and interaction logic (including Framer Motion `layoutId` morphing, the orbital CoreNav, the category slider, and the Vantablack aesthetic).",
+      "id": "REQ-88",
+      "text": "Fully replace (overwrite) `frontend/src/AppV1.jsx` with the exact user-provided V25 “AETHER GENESIS” code block as the new app UI (Landing → Client → Creator), preserving the intended layout, styling, and interaction behavior.",
       "target": "frontend",
       "source": {
         "messageIds": [
@@ -13,47 +13,121 @@
         ],
         "quotes": [
           "INSTRUCTION : Remplace INTÉGRALEMENT le code de `frontend/src/AppV1.jsx`.",
-          "LES 4 RUPTURES DE LA SINGULARITÉ : 1. MORPHING LIQUIDE ... via `layoutId` ... 2. ... Orbe Flottant ... menu circulaire ... 3. FILTRAGE \"HAPTIC SLIDER\" ... 4. ESTHÉTIQUE \"VANTABLACK\" ...",
-          "CODE V24 :"
+          "CODE V25 :"
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` is a full overwrite containing the V24 code as provided (no refactors or feature additions).",
-        "The app still boots via the existing `frontend/src/App.tsx` wrapper rendering `AppV1` (no entry wiring changes).",
-        "In the Client Home tab, clicking a salon compact card morphs into the full-screen expanded view using Framer Motion shared `layoutId` (no route/page navigation).",
-        "The bottom orbital CoreNav is the primary navigation (Home/Agenda/Favorites) and expands/collapses into a circular menu from a central orb button.",
-        "The top category slider controls filtering immediately and the UI remains predominantly pure black with high-contrast white typography per the provided styling."
+        "`frontend/src/AppV1.jsx` no longer contains the previous V24 implementation and instead contains the V25 code as the app root.",
+        "`frontend/src/App.tsx` continues to render `AppV1` as the root component (no entrypoint rewiring).",
+        "The app boots and shows the V25 landing screen with actions to enter Client mode and Creator mode."
       ]
     },
     {
-      "id": "REQ-87",
-      "text": "Ensure the project compiles and runs after the V24 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved symbols, invalid JSX, duplicate `export default`), without changing the intended UI design, copy, or interaction behavior from the provided V24 code.",
+      "id": "REQ-89",
+      "text": "Apply only the minimal mechanical fixes required for this repository to compile and run with the pasted V25 code, without altering the intended V25 UI/UX behavior.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "Remplace INTÉGRALEMENT le code de `frontend/src/AppV1.jsx`."
+          "appliquant uniquement les corrections mécaniques nécessaires pour que le projet compile dans ce dépôt sans modifier le design ni la logique prévue.",
+          "const [salons, setSalons] = useState(INITIAL_SALONS);"
         ]
       },
       "acceptanceCriteria": [
-        "`npm`/Vite build succeeds with no unresolved symbol/import errors originating from `frontend/src/AppV1.jsx`.",
-        "No changes are made to any frontend immutable entry files (including `frontend/src/main.tsx` and Internet Identity hooks).",
-        "Only mechanical build-breaking issues are fixed; the visible UI/animations/flows remain consistent with the provided V24 implementation."
+        "No unresolved identifiers remain after the overwrite (e.g., fix the `INITIAL_SALONS` reference so it correctly initializes from the V25 `DATA` constant, or define `INITIAL_SALONS` accordingly).",
+        "All referenced imports exist and the build succeeds (Vite/React app renders without runtime crash).",
+        "Any unused imports that break the build (if the repo enforces no-unused-vars as errors) are removed or used, while keeping visible behavior unchanged."
+      ]
+    },
+    {
+      "id": "REQ-90",
+      "text": "Ensure the V25 Helix navigation (service-first top bar) correctly filters the salon feed instantly by category selection, including the “Tout” category showing all salons.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "NAVIGATION \"HELIX\" (SERVICE-FIRST) : Une barre de navigation supérieure qui agit comme un filtre biologique. On sélectionne l'ADN du service (Ciseaux, Pinceau, Main) et l'interface mute instantanément."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Selecting each HelixNav category updates the visible salon list immediately without requiring navigation or refresh.",
+        "Selecting “Tout” shows all salons.",
+        "If no salons match, an explicit empty state is shown (as in the provided code), and the screen does not crash."
+      ]
+    },
+    {
+      "id": "REQ-91",
+      "text": "Implement the missing “Living Matter” card behaviors described by the user while preserving the V25 aesthetic: (1) an integrated swipe gallery experience, (2) a fused fashion-magazine-style bio + contact presentation, and (3) availability rendered as pulsing ‘heartbeat’ dots on the salon surfaces.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "CARTES \"LIVING MATTER\" : Les salons ne sont pas des images statiques. Ce sont des fenêtres vivantes.",
+          "Swipe Galery intégré sans effort.",
+          "Bio & Contact fusionnés dans un design de magazine de mode.",
+          "Disponibilités affichées comme des \"Battements de cœur\" (Pulsing dots)."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Each salon card (and/or expanded view) exposes a swipeable gallery interaction (drag/swipe) when a salon has multiple images; on desktop, an equivalent mouse drag interaction works.",
+        "The expanded salon view shows bio and contact details in a single composed ‘editorial’ block (not separated into disjoint sections) consistent with the V25 design language.",
+        "A set of pulsing dot indicators is rendered to represent availability; the dots visibly pulse (CSS or motion) and are data-driven from a local in-file slot list (no backend calls required)."
+      ]
+    },
+    {
+      "id": "REQ-92",
+      "text": "Upgrade the Creator Cockpit to match the specified V25 requirements: provide Live Preview (split view on large screens, modal preview on mobile) and an “AI Assist” button that generates an ‘Aura’ marketing description locally (no external AI services).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "LE \"CREATOR COCKPIT\" : ... Live Preview : L'écran est divisé (sur grand écran) ou modal (mobile). On voit le résultat pendant qu'on tape.",
+          "IA Assist : Un bouton qui génère une \"Aura\" (Description marketing) automatiquement."
+        ]
+      },
+      "acceptanceCriteria": [
+        "On large screens, the Creator Cockpit shows an always-visible preview panel that updates live as the user edits name/category/city/type/tags/images/bio.",
+        "On small screens, the preview is accessible via a modal/sheet that can be opened while editing, and reflects changes live.",
+        "The “AI Assist” action generates a plausible marketing ‘Aura’ text locally (template/heuristic-based) and inserts it into the bio/description field without calling any external API.",
+        "The deploy/publish action still creates a new salon in local state and returns to landing/client flow as intended."
+      ]
+    },
+    {
+      "id": "REQ-93",
+      "text": "Make the Creator “deploy” state update robust against stale closures: when adding a newly deployed salon, update `salons` using a functional state update so the new salon always appears immediately at the top of the Client list.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "setSalons([{ id: Date.now(), ...newSalon, images, rating: \"5.0\", location: newSalon.city, services: newSalon.services }, ...salons]);"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Clicking the V25 deploy action always inserts the newly created salon at the top of the salons feed on the next Client view, even after multiple deploys in a single session.",
+        "No race/stale state behavior occurs if deploy is triggered quickly multiple times (the list order remains correct with newest on top)."
       ]
     }
   ],
   "constraints": [
-    "Do not modify any frontend immutable paths (notably `frontend/src/main.tsx`, `frontend/src/hooks/useInternetIdentity.ts(x)`, `frontend/src/hooks/useActor.ts`, and anything under `frontend/src/components/ui`).",
-    "Keep `frontend/src/App.tsx` as the thin wrapper that renders `AppV1` and do not change the app entry mounting.",
-    "Do not introduce backend calls or React Query-driven data flows into the V24 UI; keep the app’s behavior strictly local-state as in the provided code.",
-    "Use English for any user-facing text in this build request document (implementation may remain as provided by the user)."
+    "Do not modify any frontend immutable entry files (including `frontend/src/main.tsx` and the immutable hooks/UI component sources).",
+    "Keep `frontend/src/App.tsx` as the thin wrapper that renders `AppV1`.",
+    "Do not add backend calls; keep the V25 experience strictly local/in-memory as implied by the provided code.",
+    "Preserve user-provided URLs and seed data exactly as given in the V25 code block unless a change is strictly required to fix a build-breaking error."
   ],
   "nonGoals": [
-    "Backend/Motoko changes of any kind (no schema, persistence, seeding, booking logic, image upload, or auth changes).",
-    "Re-introducing previously implemented advanced features (Internet Identity login UX, role routing, React Query salon fetching, on-chain image storage, loyalty, bookings persistence, monopoly mode).",
-    "Design changes beyond what is strictly required to make the pasted V24 code compile in this repository."
+    "Do not (re)introduce Internet Identity authentication, role-based routing, or React Query data loading for V25.",
+    "Do not implement real backend persistence, bookings persistence, image upload to Motoko, or any canister schema changes as part of this V25 frontend overwrite.",
+    "Do not refactor the V25 code for architecture/cleanliness beyond minimal mechanical compile fixes."
   ],
   "imageRequirements": {
     "required": [],

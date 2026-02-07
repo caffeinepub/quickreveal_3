@@ -1,44 +1,121 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "V24 OMEGA SINGULARITY UI overwrite for AppV1",
+  "title": "V25 AETHER GENESIS (frontend-only): overwrite AppV1 and implement Helix/Living Matter/Creator Cockpit pillars",
   "requirements": [
     {
-      "id": "REQ-86",
-      "summary": "Fully overwrite AppV1.jsx with the user-provided V24 “OMEGA SINGULARITY” UI (morphing cards + orbital CoreNav + category slider) as the complete local-state app.",
+      "id": "REQ-88",
+      "summary": "Overwrite frontend/src/AppV1.jsx with the exact user-provided V25 “AETHER GENESIS” code as the new root UI (Landing → Client → Creator).",
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` is a full overwrite containing the V24 code as provided (no refactors or feature additions).",
-        "The app still boots via the existing `frontend/src/App.tsx` wrapper rendering `AppV1` (no entry wiring changes).",
-        "In the Client Home tab, clicking a salon compact card morphs into the full-screen expanded view using Framer Motion shared `layoutId` (no route/page navigation).",
-        "The bottom orbital CoreNav is the primary navigation (Home/Agenda/Favorites) and expands/collapses into a circular menu from a central orb button.",
-        "The top category slider controls filtering immediately and the UI remains predominantly pure black with high-contrast white typography per the provided styling."
+        "`frontend/src/AppV1.jsx` no longer contains the previous V24 implementation and instead contains the V25 code as the app root.",
+        "`frontend/src/App.tsx` continues to render `AppV1` as the root component (no entrypoint rewiring).",
+        "The app boots and shows the V25 landing screen with actions to enter Client mode and Creator mode."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Replace the entire file contents with the exact V24 “OMEGA SINGULARITY” code provided by the user, preserving its components, local DATA, Tailwind classes, imports, and interaction logic (Framer Motion layoutId morphing, orbital CoreNav, category slider filtering, Vantablack aesthetic)."
+          "description": "Replace the entire file contents with the exact V25 “AETHER GENESIS” code block provided by the user (no partial merges). Preserve the intended layout, styling (Tailwind/classes), seed data, and interactions exactly as given."
         }
       ]
     },
     {
-      "id": "REQ-87",
-      "summary": "Apply only minimal mechanical fixes needed for this repo so the V24 AppV1.jsx compiles and runs without altering intended UI/animations/flows.",
+      "id": "REQ-89",
+      "summary": "Apply only minimal mechanical fixes so the pasted V25 code compiles/runs in this repo without changing intended V25 UI/UX.",
       "acceptanceCriteria": [
-        "`npm`/Vite build succeeds with no unresolved symbol/import errors originating from `frontend/src/AppV1.jsx`.",
-        "No changes are made to any frontend immutable entry files (including `frontend/src/main.tsx` and Internet Identity hooks).",
-        "Only mechanical build-breaking issues are fixed; the visible UI/animations/flows remain consistent with the provided V24 implementation."
+        "No unresolved identifiers remain after the overwrite (e.g., fix the `INITIAL_SALONS` reference so it correctly initializes from the V25 `DATA` constant, or define `INITIAL_SALONS` accordingly).",
+        "All referenced imports exist and the build succeeds (Vite/React app renders without runtime crash).",
+        "Any unused imports that break the build (if the repo enforces no-unused-vars as errors) are removed or used, while keeping visible behavior unchanged."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "After the V24 paste, make only mechanical, build-blocking fixes required by this repository (e.g., correct missing/incorrect imports, remove unused imports if they break lint/build, fix invalid JSX/TSX interop issues, resolve duplicate exports) while keeping the V24 UI design, copy, and interaction behavior unchanged."
+          "description": "Make mechanical compile fixes only: ensure any referenced constants (e.g., `INITIAL_SALONS`) are correctly defined/derived from V25 in-file seed data; ensure all imports are valid for this repo and remove/adjust unused imports only when required to pass build/lint, keeping V25 UI/UX behavior unchanged."
         },
         {
           "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "If (and only if) the V24 code references custom utility class names/keyframes not currently defined (e.g., scrollbar hiding or specific animation names), add minimal compatible CSS utilities/keyframes here to restore intended visuals without changing the V24 component structure or behavior."
+          "description": "If the V25 code references animation/utility classnames that do not exist in the repo, add the minimal missing keyframes/utility classes here (using the existing global CSS entry point) without changing existing theme/behavior."
+        }
+      ]
+    },
+    {
+      "id": "REQ-90",
+      "summary": "Ensure V25 Helix (service-first top bar) filters the salon feed instantly, including “Tout” showing all salons and a safe empty state.",
+      "acceptanceCriteria": [
+        "Selecting each HelixNav category updates the visible salon list immediately without requiring navigation or refresh.",
+        "Selecting “Tout” shows all salons.",
+        "If no salons match, an explicit empty state is shown (as in the provided code), and the screen does not crash."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/AppV1.jsx",
+          "operation": "modify",
+          "description": "Implement/verify Helix navigation state and derived filtered salons list so category selection updates the feed immediately. Ensure “Tout” bypasses filtering and ensure an explicit empty-state render when the filtered list is empty (no crashes)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-91",
+      "summary": "Implement missing Living Matter behaviors: swipe gallery, fused editorial bio+contact block, and pulsing heartbeat availability dots (local-only).",
+      "acceptanceCriteria": [
+        "Each salon card (and/or expanded view) exposes a swipeable gallery interaction (drag/swipe) when a salon has multiple images; on desktop, an equivalent mouse drag interaction works.",
+        "The expanded salon view shows bio and contact details in a single composed ‘editorial’ block (not separated into disjoint sections) consistent with the V25 design language.",
+        "A set of pulsing dot indicators is rendered to represent availability; the dots visibly pulse (CSS or motion) and are data-driven from a local in-file slot list (no backend calls required)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/AppV1.jsx",
+          "operation": "modify",
+          "description": "Add Living Matter interactions to the V25 salon surfaces: implement a swipe/drag gallery for multi-image salons (touch + mouse), render an editorial-style fused bio+contact block in the expanded view, and render availability as pulsing heartbeat dots driven by a local in-file slot/availability list (no backend calls)."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Add minimal CSS keyframes/utilities to support the heartbeat pulsing-dot animation and any swipe/drag affordances required by the V25 Living Matter cards (keep changes additive and consistent with existing animation utilities)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-92",
+      "summary": "Upgrade Creator Cockpit with live preview (split on large screens, modal/sheet on mobile) and a local-only “AI Assist” Aura generator.",
+      "acceptanceCriteria": [
+        "On large screens, the Creator Cockpit shows an always-visible preview panel that updates live as the user edits name/category/city/type/tags/images/bio.",
+        "On small screens, the preview is accessible via a modal/sheet that can be opened while editing, and reflects changes live.",
+        "The “AI Assist” action generates a plausible marketing ‘Aura’ text locally (template/heuristic-based) and inserts it into the bio/description field without calling any external API.",
+        "The deploy/publish action still creates a new salon in local state and returns to landing/client flow as intended."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/utils/auraGenerator.ts",
+          "operation": "create",
+          "description": "Create a small local-only Aura text generator (template/heuristic-based) that takes the current Creator form fields (e.g., name/category/city/type/tags/services) and returns a marketing description string. No external API calls."
+        },
+        {
+          "path": "frontend/src/AppV1.jsx",
+          "operation": "modify",
+          "description": "Implement the V25 Creator Cockpit live preview: on large screens render an always-visible preview panel next to the editor; on small screens provide a modal/sheet preview that can be opened while editing, both bound to the same in-memory draft state for live updates. Wire the “AI Assist” button to call the local aura generator and insert the result into the bio/description field. Preserve the V25 deploy/publish flow and keep everything local/in-memory."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "If needed for V25 preview modal/split-view visuals, add minimal additive global styles/animations here (prefer Tailwind classes in JSX; only add CSS when strictly necessary to match V25 behavior)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-93",
+      "summary": "Make Creator deploy insertion robust (functional state update) so newly deployed salons always appear immediately at the top without stale-closure issues.",
+      "acceptanceCriteria": [
+        "Clicking the V25 deploy action always inserts the newly created salon at the top of the salons feed on the next Client view, even after multiple deploys in a single session.",
+        "No race/stale state behavior occurs if deploy is triggered quickly multiple times (the list order remains correct with newest on top)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/AppV1.jsx",
+          "operation": "modify",
+          "description": "Update the deploy/publish handler to use a functional `setSalons(prev => [newSalon, ...prev])` update (and any related state updates) to eliminate stale closures and ensure new salons appear immediately at the top after each deploy."
         }
       ]
     }

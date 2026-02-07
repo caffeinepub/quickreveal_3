@@ -1,65 +1,76 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-07T01:31:08.058Z",
-  "summary": "The diff shows a partial overwrite of `frontend/src/AppV1.jsx` with new UI code (including a `DATA` constant and an orbital-style `CoreNav` component) plus significant updates to `frontend/src/index.css` (adding animation keyframes/utilities). However, due to truncation and missing evidence (notably no visible Framer Motion imports/`layoutId` usage, no visible category slider/filtering logic, and no visible Landing→Client→Pro/GenesisEngine flow), multiple REQ-86 acceptance criteria cannot be verified and may be missing.",
+  "generatedAt": "2026-02-07T01:39:17.991Z",
+  "summary": "Diff adds a local Aura generator utility and updates AppV1.jsx and global CSS with multiple new animations (including heartbeat). However, due to truncation of AppV1.jsx and absence of explicit evidence for several behaviors, multiple V25 pillar requirements cannot be verified as implemented from the provided diff summary.",
   "missing_requirements": [
     {
-      "id": "REQ-86",
-      "requirement": "Use Framer Motion shared `layoutId` to morph a compact salon card into a full-screen expanded view in the Client Home tab (no route/page navigation).",
-      "reason": "In the visible portion of `AppV1.jsx`, there is no import from `framer-motion` and no evidence of `layoutId` usage; truncation prevents confirming it exists later in the file.",
+      "id": "REQ-88",
+      "requirement": "Fully replace (overwrite) `frontend/src/AppV1.jsx` with the exact user-provided V25 “AETHER GENESIS” code block.",
+      "reason": "The diff shows `AppV1.jsx` was modified, but the content is truncated and includes an added import (`generateAura`) that makes it impossible to verify the file is an exact verbatim overwrite of the user-provided V25 code block.",
       "evidence": [
-        "frontend/src/AppV1.jsx (truncated snippet shows imports from `lucide-react` only; no `framer-motion` import or `layoutId` visible)"
+        "frontend/src/AppV1.jsx"
       ]
     },
     {
-      "id": "REQ-86",
-      "requirement": "Include the top category slider that controls filtering immediately, per the provided V24 styling/behavior.",
-      "reason": "The truncated snippet shows `DATA` and `CoreNav`, but no category slider UI or filtering logic is visible; cannot confirm it was implemented.",
+      "id": "REQ-89",
+      "requirement": "Apply only minimal mechanical fixes required to compile and run with the pasted V25 code (no unresolved identifiers/imports).",
+      "reason": "The diff summary does not provide enough information to confirm all referenced identifiers/imports resolve and that the build succeeds (AppV1.jsx is truncated; no build/tsconfig/eslint evidence shown).",
       "evidence": [
-        "frontend/src/AppV1.jsx (truncated; no category slider/filtering shown)"
+        "frontend/src/AppV1.jsx"
       ]
     },
     {
-      "id": "REQ-86",
-      "requirement": "Completely replace `frontend/src/AppV1.jsx` with the exact V24 “OMEGA SINGULARITY” code provided by the user (verbatim, no refactors/additions), including the full Landing → Client → Pro/GenesisEngine flow.",
-      "reason": "The file is truncated, so it is not possible to verify it is an exact full overwrite or that the full multi-stage flow (Landing/Client/Pro/GenesisEngine) is present and matches the provided V24 code exactly.",
+      "id": "REQ-90",
+      "requirement": "Helix navigation filters salon feed instantly by category selection, including “Tout”, and shows an explicit empty state when no match.",
+      "reason": "HelixNav buttons and categories are shown, but the actual filtering logic, salon feed rendering, and empty-state rendering are not visible in the truncated AppV1.jsx snippet.",
       "evidence": [
-        "frontend/src/AppV1.jsx (content truncated; only partial components/data visible)"
+        "frontend/src/AppV1.jsx"
       ]
     },
     {
-      "id": "REQ-87",
-      "requirement": "Ensure the project compiles after the overwrite with only minimal mechanical fixes (e.g., fix missing imports/unresolved symbols) without changing intended behavior.",
-      "reason": "Because `AppV1.jsx` is truncated and shows no Framer Motion import despite REQ-86 requiring it, there is insufficient evidence that all required imports/symbols are resolved and that the build succeeds.",
+      "id": "REQ-91",
+      "requirement": "Living Matter card behaviors: (1) swipe/drag gallery, (2) fused magazine-style bio+contact block, (3) pulsing availability dots driven by local slot list.",
+      "reason": "The CSS includes a heartbeat animation and the DATA includes `availabilities`, but the diff summary does not show (a) swipe/drag gallery implementation, (b) the composed editorial bio+contact presentation in expanded view, or (c) actual rendering of pulsing dot indicators bound to availability data.",
       "evidence": [
-        "frontend/src/AppV1.jsx (truncated; no `framer-motion` import visible)",
-        "frontend/src/AppV1.jsx (truncated at a `<b` tag, suggesting incomplete visibility of JSX correctness)"
+        "frontend/src/AppV1.jsx",
+        "frontend/src/index.css"
+      ]
+    },
+    {
+      "id": "REQ-92",
+      "requirement": "Creator Cockpit upgrades: Live Preview (split view desktop, modal/sheet mobile) and an AI Assist button generating Aura locally.",
+      "reason": "A local Aura generator was added, but the diff summary does not show Creator Cockpit UI changes for live preview (split view/modal) or a wired “AI Assist” button inserting generated text into the form field.",
+      "evidence": [
+        "frontend/src/utils/auraGenerator.ts",
+        "frontend/src/AppV1.jsx"
+      ]
+    },
+    {
+      "id": "REQ-93",
+      "requirement": "Deploy uses functional state update to avoid stale closures and inserts new salon at top reliably.",
+      "reason": "The diff summary does not show the deploy handler or state update code for `salons`, so it cannot be verified that a functional state update (`setSalons(prev => ...)`) is used and that new salons are inserted at the top.",
+      "evidence": [
+        "frontend/src/AppV1.jsx"
       ]
     }
   ],
   "hallucinated_features": [
     {
-      "description": "Added/expanded global CSS animation utilities and keyframes (fade/scale/slide/breathing/orbital-expand etc.) beyond the explicit requirement to overwrite `AppV1.jsx`.",
-      "reason": "REQ-86/REQ-87 focus on overwriting `frontend/src/AppV1.jsx` and only making minimal mechanical fixes; a large update to `frontend/src/index.css` is not explicitly requested in the BuildRequest diff-scoped requirements.",
-      "evidence": [
-        "frontend/src/index.css"
-      ]
-    },
-    {
-      "description": "Updated repository metadata/summary files (`frontend-file-summaries.txt`, `project_state.json`).",
-      "reason": "The BuildRequest requirements are specific to `frontend/src/AppV1.jsx` (and minimal compile fixes). Changing these summary/metadata files is not requested.",
+      "description": "Introduced/updated repository meta documentation/state files (`frontend-file-summaries.txt`, `project_state.json`) not requested by the BuildRequest requirements.",
+      "reason": "The BuildRequest focuses on overwriting AppV1.jsx and implementing specific UI behaviors; it does not request adding/updating meta summary/state files.",
       "evidence": [
         "frontend-file-summaries.txt",
         "project_state.json"
       ]
     }
   ],
-  "confidence": 0.62,
+  "confidence": 0.56,
   "changed_files": [
     "frontend-file-summaries.txt",
     "frontend/src/AppV1.jsx",
     "frontend/src/index.css",
+    "frontend/src/utils/auraGenerator.ts",
     "project_state.json"
   ]
 }
