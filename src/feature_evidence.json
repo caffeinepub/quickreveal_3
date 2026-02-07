@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-replace-the-entire-contents-of-frontend-src-appv1-jsx-with-the-user-provided-v14-divine-os-code-block-exactly-as-given-verbatim-with-a-full-overwrite-of-the-file",
-      "featureTitle": "Replace the entire contents of `frontend/src/AppV1.jsx` with the user-provided V14 “DIVINE OS” code block exactly as given (verbatim), with a full overwrite of the file.",
+      "featureId": "feature-completely-replace-the-contents-of-frontend-src-appv1-jsx-with-the-exact-v24-omega-singularity-code-provided-by-the-user-treating-it-as-the-full-application-ui-landing-client-pro-genesisengine-and-preserving-the-provided-components-local-data-tailwind-classes-imports-and-interaction-logic-including-framer-motion-layoutid-morphing-the-orbital-corenav-the-category-slider-and-the-vantablack-aesthetic",
+      "featureTitle": "Completely replace the contents of `frontend/src/AppV1.jsx` with the exact V24 “OMEGA SINGULARITY” code provided by the user, treating it as the full application UI (Landing → Client → Pro/GenesisEngine) and preserving the provided components, local `DATA`, Tailwind classes, imports, and interaction logic (including Framer Motion `layoutId` morphing, the orbital CoreNav, the category slider, and the Vantablack aesthetic).",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -17,15 +17,16 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-65"
+        "REQ-86"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-application-compiles-and-runs-after-the-appv1-jsx-overwrite-while-preserving-the-injected-ui-behavior-do-not-change-any-immutable-entry-files-and-keep-frontend-src-app-tsx-as-the-thin-wrapper-that-renders-appv1",
-      "featureTitle": "Ensure the application compiles and runs after the `AppV1.jsx` overwrite while preserving the injected UI/behavior; do not change any immutable entry files and keep `frontend/src/App.tsx` as the thin wrapper that renders `AppV1`.",
+      "featureId": "feature-ensure-the-project-compiles-and-runs-after-the-v24-appv1-jsx-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-unresolved-symbols-invalid-jsx-duplicate-export-default-without-changing-the-intended-ui-design-copy-or-interaction-behavior-from-the-provided-v24-code",
+      "featureTitle": "Ensure the project compiles and runs after the V24 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved symbols, invalid JSX, duplicate `export default`), without changing the intended UI design, copy, or interaction behavior from the provided V24 code.",
       "files": [
-        "frontend/src/AppV1.jsx"
+        "frontend/src/AppV1.jsx",
+        "frontend/src/index.css"
       ],
       "components": [
         "authorization@4.0.0",
@@ -37,7 +38,7 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-66"
+        "REQ-87"
       ],
       "confidence": "high"
     }

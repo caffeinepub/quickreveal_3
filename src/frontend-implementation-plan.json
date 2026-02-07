@@ -1,42 +1,44 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "V14 “DIVINE OS” local-demo reset (AppV1.jsx verbatim overwrite)",
+  "title": "V24 OMEGA SINGULARITY UI overwrite for AppV1",
   "requirements": [
     {
-      "id": "REQ-65",
-      "summary": "Fully overwrite frontend/src/AppV1.jsx with the provided V14 “DIVINE OS” code block verbatim (local React state only).",
+      "id": "REQ-86",
+      "summary": "Fully overwrite AppV1.jsx with the user-provided V24 “OMEGA SINGULARITY” UI (morphing cards + orbital CoreNav + category slider) as the complete local-state app.",
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` content matches the provided V14 code block exactly (full file overwrite; no partial merges).",
-        "No backend calls are introduced by the new `AppV1` implementation; all behavior is driven by local React state only.",
-        "The app renders the Landing screen first and allows switching to Client (\"Explorer\") and Pro (\"Créer\") flows per the injected code."
+        "`frontend/src/AppV1.jsx` is a full overwrite containing the V24 code as provided (no refactors or feature additions).",
+        "The app still boots via the existing `frontend/src/App.tsx` wrapper rendering `AppV1` (no entry wiring changes).",
+        "In the Client Home tab, clicking a salon compact card morphs into the full-screen expanded view using Framer Motion shared `layoutId` (no route/page navigation).",
+        "The bottom orbital CoreNav is the primary navigation (Home/Agenda/Favorites) and expands/collapses into a circular menu from a central orb button.",
+        "The top category slider controls filtering immediately and the UI remains predominantly pure black with high-contrast white typography per the provided styling."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Replace the entire file contents with the user-provided V14 “DIVINE OS” code block exactly as given (verbatim), ensuring it remains a 100% local demo (no actor/hooks/backend imports or calls)."
+          "description": "Replace the entire file contents with the exact V24 “OMEGA SINGULARITY” code provided by the user, preserving its components, local DATA, Tailwind classes, imports, and interaction logic (Framer Motion layoutId morphing, orbital CoreNav, category slider filtering, Vantablack aesthetic)."
         }
       ]
     },
     {
-      "id": "REQ-66",
-      "summary": "Ensure the app still compiles/runs with App.tsx remaining a thin wrapper that renders AppV1, and preserve the injected UI behaviors across Client/Pro flows.",
+      "id": "REQ-87",
+      "summary": "Apply only minimal mechanical fixes needed for this repo so the V24 AppV1.jsx compiles and runs without altering intended UI/animations/flows.",
       "acceptanceCriteria": [
-        "`frontend/src/App.tsx` remains a thin wrapper rendering `AppV1` (no entry wiring changes).",
-        "Production build/dev server succeeds without runtime errors on initial load.",
-        "In the Client view: (a) toggling a heart updates Favorites state and Favorites tab renders the favorite salons; (b) clicking the trash icon removes a salon card from the feed; (c) clicking a service adds a booking entry and navigates to the Agenda tab; (d) completing ProWizard and clicking “DÉPLOYER” injects the new salon into the Client feed and it appears in the Stories rail list during the same session."
+        "`npm`/Vite build succeeds with no unresolved symbol/import errors originating from `frontend/src/AppV1.jsx`.",
+        "No changes are made to any frontend immutable entry files (including `frontend/src/main.tsx` and Internet Identity hooks).",
+        "Only mechanical build-breaking issues are fixed; the visible UI/animations/flows remain consistent with the provided V24 implementation."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Keep App.tsx as the thin wrapper that only renders <AppV1 />; make no functional entry/wiring changes beyond what is required to compile."
-        },
-        {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "After the verbatim overwrite, validate the injected V14 UI compiles under the existing Vite/React/Tailwind setup and that all required in-session behaviors (favorites, delete from feed, booking->agenda navigation, Pro deploy injecting salon into feed/stories) work without introducing backend calls; if any compile-only fixes are necessary, they must be reconciled with the requirement that the file match the provided code verbatim."
+          "description": "After the V24 paste, make only mechanical, build-blocking fixes required by this repository (e.g., correct missing/incorrect imports, remove unused imports if they break lint/build, fix invalid JSX/TSX interop issues, resolve duplicate exports) while keeping the V24 UI design, copy, and interaction behavior unchanged."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "If (and only if) the V24 code references custom utility class names/keyframes not currently defined (e.g., scrollbar hiding or specific animation names), add minimal compatible CSS utilities/keyframes here to restore intended visuals without changing the V24 component structure or behavior."
         }
       ]
     }

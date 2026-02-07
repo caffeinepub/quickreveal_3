@@ -1,58 +1,59 @@
 {
   "kind": "build_request",
-  "title": "V14 “DIVINE OS” local-demo reset: overwrite AppV1.jsx with provided code (verbatim)",
+  "title": "Overwrite AppV1 with V24 OMEGA SINGULARITY UI (morphing cards + orbital core nav)",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-65",
-      "text": "Replace the entire contents of `frontend/src/AppV1.jsx` with the user-provided V14 “DIVINE OS” code block exactly as given (verbatim), with a full overwrite of the file.",
+      "id": "REQ-86",
+      "text": "Completely replace the contents of `frontend/src/AppV1.jsx` with the exact V24 “OMEGA SINGULARITY” code provided by the user, treating it as the full application UI (Landing → Client → Pro/GenesisEngine) and preserving the provided components, local `DATA`, Tailwind classes, imports, and interaction logic (including Framer Motion `layoutId` morphing, the orbital CoreNav, the category slider, and the Vantablack aesthetic).",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "MODE D'ÉCRITURE : Copie le code ci-dessous strictement verbatim. Remplace tout le contenu existant.",
-          "CIBLE DU FICHIER : Oui, écris le code dans frontend/src/AppV1.jsx.",
-          "RESET TOTAL : ... Je veux que cette version fonctionne en mode 100% local (Démo) ..."
+          "INSTRUCTION : Remplace INTÉGRALEMENT le code de `frontend/src/AppV1.jsx`.",
+          "LES 4 RUPTURES DE LA SINGULARITÉ : 1. MORPHING LIQUIDE ... via `layoutId` ... 2. ... Orbe Flottant ... menu circulaire ... 3. FILTRAGE \"HAPTIC SLIDER\" ... 4. ESTHÉTIQUE \"VANTABLACK\" ...",
+          "CODE V24 :"
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` content matches the provided V14 code block exactly (full file overwrite; no partial merges).",
-        "No backend calls are introduced by the new `AppV1` implementation; all behavior is driven by local React state only.",
-        "The app renders the Landing screen first and allows switching to Client (\"Explorer\") and Pro (\"Créer\") flows per the injected code."
+        "`frontend/src/AppV1.jsx` is a full overwrite containing the V24 code as provided (no refactors or feature additions).",
+        "The app still boots via the existing `frontend/src/App.tsx` wrapper rendering `AppV1` (no entry wiring changes).",
+        "In the Client Home tab, clicking a salon compact card morphs into the full-screen expanded view using Framer Motion shared `layoutId` (no route/page navigation).",
+        "The bottom orbital CoreNav is the primary navigation (Home/Agenda/Favorites) and expands/collapses into a circular menu from a central orb button.",
+        "The top category slider controls filtering immediately and the UI remains predominantly pure black with high-contrast white typography per the provided styling."
       ]
     },
     {
-      "id": "REQ-66",
-      "text": "Ensure the application compiles and runs after the `AppV1.jsx` overwrite while preserving the injected UI/behavior; do not change any immutable entry files and keep `frontend/src/App.tsx` as the thin wrapper that renders `AppV1`.",
+      "id": "REQ-87",
+      "text": "Ensure the project compiles and runs after the V24 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved symbols, invalid JSX, duplicate `export default`), without changing the intended UI design, copy, or interaction behavior from the provided V24 code.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "Ignore le backend, l'authentification ou les drafts précédents.",
-          "Oui, écris le code dans frontend/src/AppV1.jsx. C'est le point d'entrée que je veux modifier."
+          "Remplace INTÉGRALEMENT le code de `frontend/src/AppV1.jsx`."
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/src/App.tsx` remains a thin wrapper rendering `AppV1` (no entry wiring changes).",
-        "Production build/dev server succeeds without runtime errors on initial load.",
-        "In the Client view: (a) toggling a heart updates Favorites state and Favorites tab renders the favorite salons; (b) clicking the trash icon removes a salon card from the feed; (c) clicking a service adds a booking entry and navigates to the Agenda tab; (d) completing ProWizard and clicking “DÉPLOYER” injects the new salon into the Client feed and it appears in the Stories rail list during the same session."
+        "`npm`/Vite build succeeds with no unresolved symbol/import errors originating from `frontend/src/AppV1.jsx`.",
+        "No changes are made to any frontend immutable entry files (including `frontend/src/main.tsx` and Internet Identity hooks).",
+        "Only mechanical build-breaking issues are fixed; the visible UI/animations/flows remain consistent with the provided V24 implementation."
       ]
     }
   ],
   "constraints": [
-    "Do not modify any immutable frontend paths (e.g., `frontend/src/main.tsx`, `frontend/src/hooks/useInternetIdentity.ts(x)`, `frontend/src/hooks/useActor.ts`, or anything under `frontend/src/components/ui`).",
-    "Do not add or rely on backend canister methods; this V14 must be a 100% local demo driven by React state only.",
-    "Do not implement or re-enable previous advanced features (Internet Identity auth, role-based routing, React Query data layer, backend persistence, on-chain image upload, etc.) as part of this reset."
+    "Do not modify any frontend immutable paths (notably `frontend/src/main.tsx`, `frontend/src/hooks/useInternetIdentity.ts(x)`, `frontend/src/hooks/useActor.ts`, and anything under `frontend/src/components/ui`).",
+    "Keep `frontend/src/App.tsx` as the thin wrapper that renders `AppV1` and do not change the app entry mounting.",
+    "Do not introduce backend calls or React Query-driven data flows into the V24 UI; keep the app’s behavior strictly local-state as in the provided code.",
+    "Use English for any user-facing text in this build request document (implementation may remain as provided by the user)."
   ],
   "nonGoals": [
-    "Migrating the V14 demo UI to use Motoko backend data or persistence.",
-    "Adding Internet Identity authentication or role-based routing.",
-    "Internationalizing or changing any of the UI strings contained in the injected V14 code block.",
-    "Adding new product features beyond what exists in the provided V14 code (e.g., search, category filtering, real booking availability)."
+    "Backend/Motoko changes of any kind (no schema, persistence, seeding, booking logic, image upload, or auth changes).",
+    "Re-introducing previously implemented advanced features (Internet Identity login UX, role routing, React Query salon fetching, on-chain image storage, loyalty, bookings persistence, monopoly mode).",
+    "Design changes beyond what is strictly required to make the pasted V24 code compile in this repository."
   ],
   "imageRequirements": {
     "required": [],

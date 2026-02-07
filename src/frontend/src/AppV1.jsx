@@ -1,336 +1,331 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
-  Search, Calendar, LayoutDashboard, MapPin, Star, 
-  Sparkles, Upload, LogOut, Scissors, Eye, ArrowRight, 
-  Check, Heart, Plus, X, Clock, DollarSign, Zap, 
-  Shield, Play, Crown, TrendingUp, Flame, Lock, Trash2, 
-  Activity, Bell, Menu, User
+  Search, Calendar, MapPin, Star, Upload, LogOut, 
+  Scissors, ArrowRight, Heart, Plus, X, Phone, 
+  Home, Moon, Sun, ChevronLeft, Play, Sparkles, 
+  Zap, User, Feather, Menu, Clock, Grid
 } from 'lucide-react';
 
-// --- DATA INITIALE ---
-const INITIAL_SALONS = [
+// --- DATA ---
+const DATA = [
   {
-    id: 1, name: "BlackBlade", category: "Barbier", rating: 4.9,
-    image: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80",
-    badges: ["Elite"], location: "Payerne",
-    description: "Le repère des gentlemen.",
-    drop: { active: true, label: "DROP VENDREDI", slots: 3 },
-    services: [{ id: 101, name: "Fade Master", price: 45, duration: 45, desc: "Dégradé chirurgical.", videoMode: true, image: "https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=400&q=60" }]
+    id: 1, name: "MIDNIGHT BARBER", category: "Barber", rating: "5.0",
+    cover: "https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=800&q=80",
+    images: [
+        "https://images.unsplash.com/photo-1503951914875-befbb7135952?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=80"
+    ],
+    location: "Lausanne", type: "Domicile",
+    tags: ["Soir", "Dimanche"],
+    bio: "L'excellence ne dort jamais. Service de nuit exclusif pour gentlemen.",
+    services: [{ id: 101, name: "Prestige Cut", price: 80, time: "1h" }, { id: 102, name: "Beard Sculpt", price: 40, time: "30m" }]
   },
   {
-    id: 2, name: "Le Studio", category: "Coiffure", rating: 5.0,
-    image: "https://images.unsplash.com/photo-1600948836101-f9ffda59d250?auto=format&fit=crop&w=800&q=80",
-    badges: ["L'Oréal"], location: "Lausanne",
-    description: "Expertise couleur.",
-    drop: { active: false },
-    services: [{ id: 201, name: "Blond Polaire", price: 220, duration: 180, desc: "Transformation.", videoMode: true, image: "https://images.unsplash.com/photo-1617391767668-45452d9c0228?auto=format&fit=crop&w=400&q=60" }]
+    id: 2, name: "ATELIER NUIT", category: "Onglerie", rating: "4.9",
+    cover: "https://images.unsplash.com/photo-1600948836101-f9ffda59d250?auto=format&fit=crop&w=800&q=80",
+    images: ["https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=800&q=80"],
+    location: "Genève", type: "Salon",
+    tags: ["Lundi"],
+    bio: "Sanctuaire privé. Nail art russe haute précision.",
+    services: [{ id: 201, name: "Russe Complète", price: 120, time: "1h30" }]
+  },
+  {
+    id: 3, name: "SUZY GLOW", category: "Esthétique", rating: "5.0",
+    cover: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80",
+    images: ["https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&w=800&q=80"],
+    location: "Montreux", type: "Salon",
+    tags: ["Dimanche"],
+    bio: "Soins visage technologiques face au lac.",
+    services: [{ id: 301, name: "HydraFacial", price: 150, time: "1h" }]
   }
 ];
 
-// --- STORIES RAIL (L'ADDICTION VISUELLE) ---
-const StoriesRail = ({ salons, onSelect }) => (
-  <div className="flex gap-4 overflow-x-auto hide-scrollbar px-4 pt-2 pb-6">
-    <div className="flex flex-col items-center gap-2 flex-shrink-0">
-        <div className="w-16 h-16 rounded-full border-2 border-dashed border-zinc-700 flex items-center justify-center bg-zinc-900/50 backdrop-blur">
-            <Plus size={24} className="text-zinc-500"/>
-        </div>
-        <span className="text-[10px] text-zinc-500 font-medium">Recherche</span>
-    </div>
-    
-    {salons.map((s, i) => (
-      <div key={s.id} onClick={() => onSelect(s)} className="flex flex-col items-center gap-2 flex-shrink-0 cursor-pointer group">
-        <div className={`w-16 h-16 rounded-full p-[2px] ${s.drop?.active ? 'bg-gradient-to-tr from-amber-500 via-red-500 to-purple-600 animate-spin-slow' : 'bg-gradient-to-tr from-zinc-700 to-zinc-900'}`}>
-            <div className="w-full h-full rounded-full border-[2px] border-black overflow-hidden relative">
-                <img src={s.image} className="w-full h-full object-cover group-hover:scale-110 transition duration-700"/>
-                {s.drop?.active && <div className="absolute inset-0 bg-red-500/20 backdrop-blur-[1px]"/>}
+// --- COMPOSANTS ATOMIQUES ---
+
+// LE "CORE" (Navigation Orbitale)
+const CoreNav = ({ activeTab, onChange }) => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    return (
+        <div className="fixed bottom-8 left-0 right-0 flex justify-center items-center z-50 pointer-events-none">
+            <div className="relative pointer-events-auto">
+                {/* MENU EXPANDED */}
+                {isOpen && (
+                    <>
+                        <button 
+                            onClick={() => {onChange('home'); setIsOpen(false)}} 
+                            className="absolute w-12 h-12 bg-black border border-zinc-800 rounded-full flex items-center justify-center text-white shadow-xl animate-orbital-1"
+                            style={{ '--orbital-x': '-50px', '--orbital-y': '-60px' }}
+                        >
+                            <Grid size={20}/>
+                        </button>
+                        <button 
+                            onClick={() => {onChange('agenda'); setIsOpen(false)}} 
+                            className="absolute w-12 h-12 bg-black border border-zinc-800 rounded-full flex items-center justify-center text-white shadow-xl animate-orbital-2"
+                            style={{ '--orbital-x': '0px', '--orbital-y': '-80px' }}
+                        >
+                            <Calendar size={20}/>
+                        </button>
+                        <button 
+                            onClick={() => {onChange('likes'); setIsOpen(false)}} 
+                            className="absolute w-12 h-12 bg-black border border-zinc-800 rounded-full flex items-center justify-center text-white shadow-xl animate-orbital-3"
+                            style={{ '--orbital-x': '50px', '--orbital-y': '-60px' }}
+                        >
+                            <Heart size={20}/>
+                        </button>
+                    </>
+                )}
+
+                {/* BOUTON CENTRAL (PULSAR) */}
+                <button 
+                    onClick={() => setIsOpen(!isOpen)}
+                    className={`w-16 h-16 rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-all duration-500 z-50 active:scale-90 ${isOpen ? 'bg-white text-black rotate-45' : 'bg-black border border-zinc-700 text-white'}`}
+                >
+                    <Plus size={28} strokeWidth={isOpen ? 3 : 1.5}/>
+                </button>
             </div>
         </div>
-        <span className="text-[10px] text-white font-medium truncate w-16 text-center">{s.name}</span>
-      </div>
-    ))}
-  </div>
-);
-
-// --- DIVINE CARD (HOLOGRAPHIQUE) ---
-const DivineCard = ({ salon, onBook, isFavorite, onToggleFavorite, onDelete }) => (
-  <div className="relative w-full rounded-[32px] overflow-hidden mb-8 bg-zinc-900/60 border border-white/5 backdrop-blur-md shadow-2xl animate-scale-in">
-    {/* Image Principale */}
-    <div className="relative aspect-[4/3]">
-      <img src={salon.image} className="absolute inset-0 w-full h-full object-cover" />
-      <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent" />
-      
-      {/* Header Flottant */}
-      <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
-         <div className="flex gap-2">
-            {salon.badges && salon.badges.map(b => <span key={b} className="px-3 py-1 bg-black/40 backdrop-blur-md border border-white/10 rounded-full text-[10px] font-bold text-white uppercase">{b}</span>)}
-            {salon.drop?.active && <span className="px-3 py-1 bg-red-600 text-white rounded-full text-[10px] font-bold uppercase flex items-center gap-1 shadow-[0_0_15px_rgba(220,38,38,0.5)] animate-pulse"><Flame size={10}/> {salon.drop.label}</span>}
-         </div>
-         <div className="flex gap-2">
-            <button onClick={(e) => {e.stopPropagation(); onToggleFavorite(salon.id)}} className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center border border-white/10 text-white hover:bg-white/20 transition"><Heart size={18} className={isFavorite ? "fill-red-500 text-red-500" : ""}/></button>
-            <button onClick={(e) => {e.stopPropagation(); onDelete(salon.id)}} className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center border border-white/10 text-zinc-400 hover:text-red-500 transition"><Trash2 size={16}/></button>
-         </div>
-      </div>
-
-      <div className="absolute bottom-0 left-0 right-0 p-6">
-         <h2 className="text-4xl font-black text-white leading-none tracking-tighter mb-1">{salon.name}</h2>
-         <p className="text-zinc-400 text-xs font-bold uppercase tracking-widest flex items-center gap-1"><MapPin size={12}/> {salon.location}</p>
-      </div>
-    </div>
-
-    {/* Section Services Holographique */}
-    <div className="p-4 pt-0">
-       <div className="flex gap-3 overflow-x-auto hide-scrollbar pb-2">
-          {salon.services.map(s => (
-             <div key={s.id} onClick={() => onBook(salon, s)} className="flex-shrink-0 w-64 bg-white/5 border border-white/5 rounded-2xl p-3 flex gap-3 cursor-pointer hover:bg-white/10 transition group">
-                <div className="w-16 h-16 rounded-xl bg-black overflow-hidden relative shadow-lg">
-                   <img src={s.image || salon.image} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition"/>
-                   {s.videoMode && <div className="absolute inset-0 flex items-center justify-center"><Play size={12} fill="white" className="text-white"/></div>}
-                </div>
-                <div className="flex flex-col justify-center">
-                   <div className="text-white font-bold text-sm leading-tight">{s.name}</div>
-                   <div className="text-indigo-400 font-mono text-xs mt-1">{s.price} CHF • {s.duration} min</div>
-                </div>
-                <div className="ml-auto flex items-center justify-center w-8 h-8 rounded-full bg-white text-black self-center opacity-0 group-hover:opacity-100 transition transform scale-0 group-hover:scale-100"><Plus size={16}/></div>
-             </div>
-          ))}
-       </div>
-    </div>
-  </div>
-);
-
-// --- CREATOR STUDIO (NEURAL ENGINE) ---
-const ProWizard = ({ onFinish }) => {
-  const [step, setStep] = useState(1);
-  const [data, setData] = useState({ name: '', city: '', category: 'Coiffure', description: '', image: null, services: [] });
-  const [tempService, setTempService] = useState({ name: '', price: '', duration: '30' });
-  const [rarityScore, setRarityScore] = useState(0); // NEURAL METRIC
-  const fileRef = useRef(null);
-
-  // Calcul du score de rareté en temps réel
-  useEffect(() => {
-    let score = 20;
-    if (data.name.length > 5) score += 10;
-    if (data.image) score += 30;
-    if (data.services.length > 0) score += 20;
-    if (data.services.some(s => Number(s.price) > 100)) score += 20; 
-    setRarityScore(Math.min(score, 99));
-  }, [data]);
-
-  const handleImage = (e) => {
-    if (e.target.files[0]) setData({ ...data, image: URL.createObjectURL(e.target.files[0]) });
-  };
-
-  const addService = () => {
-    if (tempService.name) {
-      setData({ ...data, services: [...data.services, { ...tempService, id: Date.now() }] });
-      setTempService({ name: '', price: '', duration: '30' });
-    }
-  };
-
-  const handleDeploy = () => {
-      const newSalon = {
-          ...data,
-          drop: { active: true, label: "NEW ARRIVAL" }, // Auto-Drop
-          badges: ["Trendy"],
-          services: data.services.map(s => ({ ...s, videoMode: false, image: data.image }))
-      };
-      onFinish(newSalon);
-  };
-
-  return (
-    <div className="h-full flex flex-col bg-black font-sans relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/40 via-black to-black" />
-      
-      <div className="relative z-10 p-6 flex justify-between items-center">
-         <div className="flex items-center gap-2">
-            <Activity size={16} className="text-green-500 animate-pulse"/>
-            <span className="text-xs font-bold text-white uppercase tracking-widest">Neural Engine</span>
-         </div>
-         <button onClick={() => onFinish(null)} className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white"><X size={16}/></button>
-      </div>
-
-      <div className="flex-1 relative z-10 px-6 pt-10 pb-24 overflow-y-auto hide-scrollbar">
-        {step === 1 && (
-          <div className="space-y-8 animate-fade-in">
-            <h2 className="text-5xl font-black text-white leading-tight tracking-tighter">Créons<br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">l'Impossible.</span></h2>
-            
-            <div className="space-y-6">
-                <div className="relative group">
-                    <input placeholder="Nom de l'Empire" value={data.name} onChange={e => setData({...data, name: e.target.value})} className="w-full bg-transparent border-b border-zinc-800 py-4 text-3xl font-bold text-white outline-none focus:border-white transition-colors placeholder:text-zinc-800"/>
-                </div>
-                <div className="relative group">
-                    <input placeholder="Ville (QG)" value={data.city} onChange={e => setData({...data, city: e.target.value})} className="w-full bg-transparent border-b border-zinc-800 py-4 text-xl font-bold text-white outline-none focus:border-white transition-colors placeholder:text-zinc-800"/>
-                </div>
-            </div>
-
-            <div onClick={() => fileRef.current.click()} className="relative w-full aspect-video rounded-3xl border border-zinc-800 bg-zinc-900/50 flex flex-col items-center justify-center cursor-pointer overflow-hidden group hover:border-indigo-500 transition duration-500">
-               {data.image ? <img src={data.image} className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition duration-700"/> : <div className="text-center group-hover:scale-110 transition"><Upload className="mx-auto mb-2 text-zinc-600 group-hover:text-white"/><span className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest group-hover:text-white">Upload Cover</span></div>}
-               <input type="file" ref={fileRef} onChange={handleImage} className="hidden" />
-            </div>
-            
-            <div className="flex justify-end">
-                <button onClick={() => setStep(2)} disabled={!data.name} className="w-20 h-20 rounded-full bg-white text-black flex items-center justify-center shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:scale-110 transition disabled:opacity-20 disabled:scale-100"><ArrowRight size={32}/></button>
-            </div>
-          </div>
-        )}
-
-        {step === 2 && (
-          <div className="space-y-8 animate-fade-in">
-             <div className="flex justify-between items-end">
-                <h2 className="text-4xl font-black text-white leading-none">Design<br/>Services.</h2>
-                <div className="text-right">
-                    <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Rarity Score</div>
-                    <div className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">{rarityScore}</div>
-                </div>
-             </div>
-
-             <div className="bg-zinc-900/80 backdrop-blur-xl border border-white/10 p-6 rounded-3xl space-y-4">
-                <input placeholder="Nom du Service" value={tempService.name} onChange={e => setTempService({...tempService, name: e.target.value})} className="w-full bg-transparent border-b border-zinc-700 py-2 text-white font-bold outline-none focus:border-white"/>
-                <div className="flex gap-4">
-                    <input type="number" placeholder="Prix" value={tempService.price} onChange={e => setTempService({...tempService, price: e.target.value})} className="w-1/2 bg-transparent border-b border-zinc-700 py-2 text-white font-mono outline-none focus:border-white"/>
-                    <button onClick={addService} className="flex-1 bg-white text-black rounded-xl font-bold uppercase text-xs tracking-widest hover:bg-indigo-400 hover:text-white transition">Ajouter</button>
-                </div>
-             </div>
-
-             <div className="space-y-2">
-                {data.services.map(s => (
-                    <div key={s.id} className="flex items-center justify-between p-4 bg-zinc-900 rounded-2xl border border-zinc-800">
-                        <span className="font-bold text-white">{s.name}</span>
-                        <span className="font-mono text-indigo-400">{s.price}.-</span>
-                    </div>
-                ))}
-             </div>
-
-             <button onClick={handleDeploy} className="w-full py-6 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-2xl font-black uppercase tracking-[0.2em] shadow-[0_0_50px_rgba(79,70,229,0.4)] hover:scale-[1.02] transition active:scale-95">
-                DÉPLOYER
-             </button>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+    );
 };
 
-// --- APP SHELL ---
+// CATEGORY SLIDER
+const CatSlider = ({ active, onSelect }) => (
+    <div className="flex gap-2 overflow-x-auto hide-scrollbar px-6 py-4 sticky top-0 z-30 bg-gradient-to-b from-black via-black/95 to-transparent">
+        {[{id:'Tout', i:Sparkles}, {id:'Barber', i:Scissors}, {id:'Coiffure', i:User}, {id:'Onglerie', i:Feather}, {id:'Soin', i:Zap}].map(c => (
+            <button key={c.id} onClick={() => onSelect(c.id)} className={`flex items-center gap-2 px-5 py-2.5 rounded-full border transition-all duration-300 ${active === c.id ? 'bg-white text-black border-white scale-105 shadow-lg' : 'bg-zinc-900/50 border-white/5 text-zinc-500 hover:text-white backdrop-blur-md'}`}>
+                <c.i size={14}/> <span className="text-xs font-black uppercase tracking-wider">{c.id}</span>
+            </button>
+        ))}
+    </div>
+);
+
+// CARTE COMPACTE (VUE LISTE)
+const CompactCard = ({ salon, onExpand }) => (
+    <div 
+        onClick={() => onExpand(salon)}
+        className="w-full aspect-[4/5] bg-zinc-900 rounded-[32px] relative overflow-hidden mb-6 cursor-pointer group animate-scale-in"
+    >
+        <img src={salon.cover} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80"/>
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"/>
+        
+        <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+            {salon.type === 'Domicile' && <span className="px-3 py-1 bg-emerald-500/20 backdrop-blur border border-emerald-500/30 text-emerald-300 rounded-full text-[10px] font-black uppercase flex items-center gap-1"><Home size={10}/> Mobile</span>}
+            {salon.tags.includes('Soir') && <span className="px-3 py-1 bg-indigo-500/20 backdrop-blur border border-indigo-500/30 text-indigo-300 rounded-full text-[10px] font-black uppercase flex items-center gap-1"><Moon size={10}/> Night</span>}
+        </div>
+
+        <div className="absolute bottom-6 left-6 right-6">
+            <h3 className="text-4xl font-black text-white leading-none tracking-tighter mb-2">{salon.name}</h3>
+            <div className="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-widest"><MapPin size={12}/> {salon.location}</div>
+        </div>
+    </div>
+);
+
+// VUE EXPANDED (DETAILS EN PLEIN ECRAN)
+const ExpandedCard = ({ salon, onClose, onBook }) => {
+    return (
+        <div className="fixed inset-0 z-40 bg-black flex flex-col overflow-y-auto animate-slide-up">
+            {/* HERO IMAGE EXPANDED */}
+            <div className="relative h-[50vh] w-full flex-shrink-0">
+                <img src={salon.cover} className="absolute inset-0 w-full h-full object-cover"/>
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/60"/>
+                
+                <button onClick={onClose} className="absolute top-6 left-6 w-12 h-12 rounded-full bg-black/20 backdrop-blur-md border border-white/10 flex items-center justify-center text-white z-50 hover:bg-white hover:text-black transition"><ChevronLeft/></button>
+                <div className="absolute bottom-0 left-0 right-0 p-8 pt-20 bg-gradient-to-t from-black to-transparent">
+                    <h2 className="text-5xl font-black text-white leading-none tracking-tighter mb-2">{salon.name}</h2>
+                    <div className="flex items-center gap-4 text-xs font-bold text-zinc-400 uppercase tracking-widest">
+                        <span className="flex items-center gap-1 text-white"><MapPin size={12}/> {salon.location}</span>
+                        <span className="flex items-center gap-1"><Star size={12} className="text-yellow-500 fill-yellow-500"/> {salon.rating}</span>
+                    </div>
+                </div>
+            </div>
+
+            {/* CONTENT SCROLLABLE */}
+            <div className="flex-1 px-8 pb-32 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+                <div className="py-6 border-b border-zinc-800">
+                    <p className="text-lg text-zinc-300 font-medium leading-relaxed">"{salon.bio}"</p>
+                </div>
+
+                {/* SERVICES */}
+                <div className="py-8 space-y-6">
+                    <div className="text-xs font-black text-zinc-500 uppercase tracking-widest mb-4">Services Signature</div>
+                    {salon.services.map(s => (
+                        <div key={s.id} className="flex items-center justify-between group cursor-pointer" onClick={() => onBook(s)}>
+                            <div className="flex items-center gap-4">
+                                <div className="w-12 h-12 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-500 group-hover:border-white group-hover:text-white transition"><Scissors size={18}/></div>
+                                <div>
+                                    <div className="font-bold text-white text-lg">{s.name}</div>
+                                    <div className="text-xs text-zinc-500 font-mono">{s.time}</div>
+                                </div>
+                            </div>
+                            <div className="text-xl font-black text-white">{s.price}.-</div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* GALERIE SECONDAIRE */}
+                {salon.images.length > 0 && (
+                    <div className="py-4">
+                        <div className="text-xs font-black text-zinc-500 uppercase tracking-widest mb-4">Portfolio</div>
+                        <div className="flex gap-3 overflow-x-auto hide-scrollbar">
+                            {salon.images.map((img, i) => (
+                                <img key={i} src={img} className="w-40 h-56 object-cover rounded-2xl border border-zinc-800 flex-shrink-0"/>
+                            ))}
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            {/* BOUTON FLOTTANT FIXE */}
+            <div className="fixed bottom-8 left-8 right-8 z-50">
+                <button onClick={() => onBook(salon.services[0])} className="w-full py-5 bg-white text-black rounded-2xl font-black uppercase tracking-widest text-sm shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:scale-[1.02] transition active:scale-95">Réserver maintenant</button>
+            </div>
+        </div>
+    );
+};
+
+// --- GENESIS WIZARD (PRO V24) ---
+const GenesisEngine = ({ onFinish }) => {
+    const [step, setStep] = useState(1);
+    const [data, setData] = useState({ name: '', city: '', category: 'Barber', bio: '', type: 'Salon', tags: [], services: [], cover: null });
+    const fileRef = useRef(null);
+
+    const handleImage = (e) => { if (e.target.files[0]) setData({ ...data, cover: URL.createObjectURL(e.target.files[0]) }); };
+    const addService = () => { setData({...data, services: [...data.services, {id: Date.now(), name: "Service Base", price: "50", time: "1h"}]}) };
+
+    return (
+        <div className="h-full bg-black text-white font-sans flex flex-col p-8 overflow-hidden relative">
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"/>
+            <div className="relative z-10 flex justify-between items-center mb-10">
+                <span className="text-[10px] font-black tracking-[0.4em] text-zinc-600 uppercase">System OMEGA</span>
+                <button onClick={() => onFinish(null)}><X/></button>
+            </div>
+
+            <div className="flex-1 relative z-10 overflow-y-auto hide-scrollbar pb-20">
+                {step === 1 && (
+                    <div className="space-y-8 animate-slide-up">
+                        <div onClick={() => fileRef.current.click()} className="w-full aspect-[4/3] bg-zinc-900 border border-zinc-800 rounded-3xl flex items-center justify-center cursor-pointer hover:border-white transition overflow-hidden">
+                            {data.cover ? <img src={data.cover} className="w-full h-full object-cover"/> : <span className="text-xs font-bold uppercase text-zinc-600">Cover Image</span>}
+                            <input type="file" ref={fileRef} onChange={handleImage} className="hidden"/>
+                        </div>
+                        <input value={data.name} onChange={e=>setData({...data, name: e.target.value})} className="w-full bg-transparent border-b border-zinc-800 py-4 text-4xl font-black text-white outline-none placeholder:text-zinc-800" placeholder="NOM DU PROJET"/>
+                        <div className="flex gap-2 flex-wrap">
+                            {['Barber', 'Coiffure', 'Nails', 'Skin'].map(c => <button key={c} onClick={()=>setData({...data, category: c})} className={`px-4 py-2 border rounded-full text-xs font-bold ${data.category === c ? 'bg-white text-black border-white' : 'border-zinc-800 text-zinc-500'}`}>{c}</button>)}
+                        </div>
+                        <button onClick={() => setStep(2)} className="w-full py-6 bg-white text-black rounded-full font-black uppercase tracking-widest">Suivant</button>
+                    </div>
+                )}
+                
+                {step === 2 && (
+                    <div className="space-y-8 animate-slide-up">
+                        <div className="flex gap-4">
+                            <button onClick={()=>setData({...data, type:'Salon'})} className={`flex-1 py-6 border rounded-2xl font-black uppercase text-xs ${data.type === 'Salon' ? 'bg-white text-black' : 'border-zinc-800 text-zinc-500'}`}>Salon</button>
+                            <button onClick={()=>setData({...data, type:'Domicile'})} className={`flex-1 py-6 border rounded-2xl font-black uppercase text-xs ${data.type === 'Domicile' ? 'bg-emerald-500 text-black border-emerald-500' : 'border-zinc-800 text-zinc-500'}`}>Domicile</button>
+                        </div>
+                        <textarea value={data.bio} onChange={e=>setData({...data, bio: e.target.value})} className="w-full h-32 bg-transparent border border-zinc-800 rounded-2xl p-4 text-white outline-none resize-none" placeholder="Votre manifeste..."/>
+                        <div className="space-y-3">
+                            <label className="text-xs font-bold text-zinc-600 uppercase">Golden Hours</label>
+                            <div className="flex gap-2">
+                                {['Soir', 'Dimanche', 'Lundi'].map(t => <button key={t} onClick={()=>{setData({...data, tags: data.tags.includes(t) ? data.tags.filter(x=>x!==t) : [...data.tags, t]})}} className={`px-4 py-2 border rounded-full text-xs font-bold ${data.tags.includes(t) ? 'bg-indigo-600 border-indigo-600 text-white' : 'border-zinc-800 text-zinc-500'}`}>{t}</button>)}
+                            </div>
+                        </div>
+                        <button onClick={() => setStep(3)} className="w-full py-6 bg-white text-black rounded-full font-black uppercase tracking-widest">Dernière étape</button>
+                    </div>
+                )}
+
+                {step === 3 && (
+                    <div className="space-y-8 animate-slide-up">
+                        <div className="border border-zinc-800 rounded-3xl p-6 space-y-4">
+                            <h3 className="text-2xl font-black">Services</h3>
+                            {data.services.map((s, i) => <div key={i} className="text-zinc-400 border-b border-zinc-900 pb-2">{s.name} - {s.price}.-</div>)}
+                            <button onClick={addService} className="w-full py-3 bg-zinc-900 rounded-xl text-xs font-bold uppercase hover:bg-white hover:text-black transition">Ajouter Service</button>
+                        </div>
+                        <button onClick={() => onFinish(data)} className="w-full py-6 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full font-black uppercase tracking-widest shadow-[0_0_50px_rgba(79,70,229,0.5)]">LANCER OMEGA</button>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+};
+
+// --- ROOT APP ---
 export default function App() {
   const [view, setView] = useState('landing');
   const [activeTab, setActiveTab] = useState('home');
-  const [salons, setSalons] = useState(INITIAL_SALONS);
-  const [favorites, setFavorites] = useState([]);
-  const [bookings, setBookings] = useState([]); // Agenda state
+  const [salons, setSalons] = useState(DATA);
+  const [selectedSalon, setSelectedSalon] = useState(null);
+  const [catFilter, setCatFilter] = useState('Tout');
 
-  // --- LOGIQUE CŒUR ---
-  const handleDeploy = (newSalon) => {
-    if (newSalon) {
-      setSalons([{ ...newSalon, id: Date.now() }, ...salons]);
-    }
-    setView('landing'); // On retourne voir le résultat
+  // DEPLOY
+  const handleDeploy = (newOne) => {
+      if (newOne) {
+          const s = { 
+              id: Date.now(), 
+              ...newOne, 
+              images: newOne.cover ? [newOne.cover] : [], 
+              cover: newOne.cover || "https://images.unsplash.com/photo-1596462502278-27bfdd403348?auto=format&fit=crop&w=1000&q=80",
+              rating: "5.0", 
+              location: newOne.city || "Lausanne",
+              services: newOne.services.length > 0 ? newOne.services : [{id: Date.now(), name: "Signature Service", price: 80, time: "1h"}]
+          };
+          setSalons([s, ...salons]);
+          setView('landing');
+      } else {
+          setView('landing');
+      }
   };
 
-  const toggleFavorite = (id) => {
-    if (favorites.includes(id)) setFavorites(favorites.filter(i => i !== id));
-    else setFavorites([...favorites, id]);
-  };
-
-  const handleDelete = (id) => {
-    setSalons(salons.filter(s => s.id !== id));
-  };
-
-  // Pseudo-booking pour la démo
-  const handleBook = (salon, service) => {
-      const date = "Demain 14h"; // Simplification pour la démo V14
-      setBookings([...bookings, { salon, service, date }]);
-      setActiveTab('agenda');
-  };
+  // BOOKING MOCK
+  const handleBook = () => { alert("Réservation confirmée via OMEGA."); setSelectedSalon(null); };
 
   if (view === 'landing') return (
-    <div className="min-h-screen bg-black flex flex-col justify-end p-8 pb-16 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80')] bg-cover bg-center opacity-40 mix-blend-overlay"/>
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent"/>
-      <div className="relative z-10 animate-fade-in">
-        <h1 className="text-8xl font-black text-white mb-2 tracking-tighter">DIVINE<span className="text-indigo-500">.</span></h1>
-        <p className="text-zinc-400 font-medium text-lg mb-8 max-w-xs">L'OS de la beauté. Plus intelligent. Plus rapide. Plus beau.</p>
-        <div className="flex gap-4">
-            <button onClick={() => setView('client')} className="flex-1 h-16 bg-white text-black rounded-2xl font-black uppercase tracking-widest hover:scale-105 transition">Explorer</button>
-            <button onClick={() => setView('pro')} className="flex-1 h-16 bg-zinc-900/80 backdrop-blur border border-zinc-700 text-white rounded-2xl font-black uppercase tracking-widest hover:bg-zinc-800 transition">Créer</button>
-        </div>
+      <div className="h-screen bg-black flex flex-col justify-center items-center relative overflow-hidden font-sans">
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1596462502278-27bfdd403348?auto=format&fit=crop&w=1000&q=80')] bg-cover opacity-20 animate-pulse-slow"/>
+          <h1 className="text-9xl font-black text-white tracking-tighter mix-blend-difference z-10">OMEGA<span className="text-indigo-500">.</span></h1>
+          <div className="flex gap-6 mt-12 z-10">
+              <button onClick={() => setView('client')} className="px-10 py-4 bg-white text-black font-black rounded-full hover:scale-110 transition active:scale-95">ENTRER</button>
+              <button onClick={() => setView('pro')} className="px-10 py-4 border border-zinc-700 text-white font-black rounded-full hover:bg-white hover:text-black transition active:scale-95">STUDIO</button>
+          </div>
       </div>
-    </div>
   );
 
-  if (view === 'pro') return <ProWizard onFinish={handleDeploy} />;
+  if (view === 'pro') return <GenesisEngine onFinish={handleDeploy} />;
 
-  // VUE CLIENT V14
+  const filtered = salons.filter(s => catFilter === 'Tout' || s.category === catFilter);
+
   return (
-    <div className="bg-black min-h-screen flex justify-center text-white font-sans selection:bg-indigo-500">
-      <div className="w-full max-w-md bg-black relative shadow-2xl min-h-screen flex flex-col border-x border-zinc-900">
+    <div className="bg-black min-h-screen text-white font-sans selection:bg-indigo-500">
+      <div className="w-full max-w-md mx-auto bg-black relative min-h-screen border-x border-zinc-900 shadow-2xl flex flex-col">
         
-        {/* HEADER FLOTTANT */}
-        <div className="fixed top-0 w-full max-w-md z-40 p-4 pointer-events-none">
-            <div className="bg-black/50 backdrop-blur-xl border border-white/5 rounded-full px-6 py-3 flex justify-between items-center shadow-2xl pointer-events-auto">
-                <div className="font-black text-xl tracking-tighter">QR<span className="text-indigo-500">.</span></div>
-                <div className="flex gap-4">
-                    <Bell size={20} className="text-zinc-400"/>
-                    <button onClick={() => setView('landing')}><LogOut size={20} className="text-zinc-400 hover:text-white"/></button>
+        {/* HEADER */}
+        <div className="px-6 py-6 flex justify-between items-center bg-black sticky top-0 z-20">
+            <span className="font-black text-xl tracking-tighter">OMEGA.</span>
+            <button onClick={() => setView('landing')}><LogOut size={20} className="text-zinc-600 hover:text-white"/></button>
+        </div>
+
+        {/* CONTENU */}
+        <div className="flex-1">
+            {activeTab === 'home' && (
+                <>
+                    <CatSlider active={catFilter} onSelect={setCatFilter} />
+                    <div className="px-4 mt-6 pb-32">
+                        {filtered.map(s => <CompactCard key={s.id} salon={s} onExpand={setSelectedSalon} />)}
+                    </div>
+                </>
+            )}
+            {activeTab === 'likes' && (
+                <div className="px-4 mt-6">
+                    <h2 className="text-4xl font-black mb-8">Collection.</h2>
+                    {salons.slice(0,1).map(s => <CompactCard key={s.id} salon={s} onExpand={setSelectedSalon} />)}
                 </div>
-            </div>
+            )}
+            {activeTab === 'agenda' && <div className="px-4 mt-6 text-center text-zinc-500 py-20">Aucun rendez-vous futur.</div>}
         </div>
 
-        <div className="flex-1 overflow-y-auto hide-scrollbar pt-24 pb-32">
-          {activeTab === 'home' && (
-            <>
-              {/* STORIES RAIL (La Nouveauté) */}
-              <div className="mb-6">
-                 <h3 className="px-6 text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4">À la une</h3>
-                 <StoriesRail salons={salons} onSelect={() => {}} />
-              </div>
+        {/* CORE NAVIGATION */}
+        <CoreNav activeTab={activeTab} onChange={setActiveTab} />
 
-              {/* FEED DIVIN */}
-              <div className="px-4 space-y-2">
-                 <h3 className="px-2 text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4">Découvrir</h3>
-                 {salons.map(s => (
-                    <DivineCard 
-                        key={s.id} 
-                        salon={s} 
-                        isFavorite={favorites.includes(s.id)}
-                        onToggleFavorite={toggleFavorite}
-                        onDelete={handleDelete}
-                        onBook={handleBook}
-                    />
-                 ))}
-              </div>
-            </>
-          )}
-
-          {activeTab === 'agenda' && (
-              <div className="px-6 pt-4">
-                  <h2 className="text-3xl font-black mb-8">Agenda.</h2>
-                  {bookings.map((b, i) => (
-                      <div key={i} className="mb-4 bg-zinc-900 p-4 rounded-2xl border border-zinc-800 flex gap-4 items-center">
-                          <div className="w-12 h-12 bg-indigo-900/20 rounded-full flex items-center justify-center text-indigo-400"><Calendar size={20}/></div>
-                          <div><div className="font-bold text-white">{b.service.name}</div><div className="text-xs text-zinc-500">{b.salon.name} • {b.date}</div></div>
-                      </div>
-                  ))}
-                  {bookings.length === 0 && <div className="text-zinc-600 text-center mt-10">Vide. Réservez quelque chose.</div>}
-              </div>
-          )}
-
-          {activeTab === 'likes' && (
-              <div className="px-4 pt-4">
-                  <h2 className="px-2 text-3xl font-black mb-8">Favoris.</h2>
-                  {salons.filter(s => favorites.includes(s.id)).map(s => <DivineCard key={s.id} salon={s} isFavorite={true} onToggleFavorite={toggleFavorite} onDelete={handleDelete} onBook={handleBook}/>)}
-              </div>
-          )}
-        </div>
-
-        {/* NAVIGATION DOCK (Flottant) */}
-        <div className="fixed bottom-8 w-full max-w-md px-6 z-50 flex justify-center pointer-events-none">
-          <div className="bg-black/80 backdrop-blur-xl border border-white/10 rounded-2xl px-2 py-2 flex items-center gap-2 shadow-2xl pointer-events-auto">
-            <button onClick={() => setActiveTab('home')} className={`p-4 rounded-xl transition ${activeTab === 'home' ? 'bg-white text-black' : 'text-zinc-500 hover:text-white'}`}><Search size={24}/></button>
-            <button onClick={() => setActiveTab('agenda')} className={`p-4 rounded-xl transition ${activeTab === 'agenda' ? 'bg-white text-black' : 'text-zinc-500 hover:text-white'}`}><Calendar size={24}/></button>
-            <button onClick={() => setActiveTab('likes')} className={`p-4 rounded-xl transition ${activeTab === 'likes' ? 'bg-white text-black' : 'text-zinc-500 hover:text-white'}`}><Heart size={24}/></button>
-          </div>
-        </div>
+        {/* EXPANDED VIEW */}
+        {selectedSalon && <ExpandedCard salon={selectedSalon} onClose={() => setSelectedSalon(null)} onBook={handleBook} />}
 
       </div>
     </div>

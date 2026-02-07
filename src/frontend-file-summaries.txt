@@ -11,7 +11,7 @@
   "frontend/src/components/MonopolyModeSwitch.tsx": "Monopoly mode toggle with active:scale CSS feedback on the switch element and French labels.",
   "frontend/src/components/RevenueChart.tsx": "Revenue area chart component displaying weekly data with French day labels (Lun/Mar/Mer/Jeu/Ven/Sam/Dim) using Recharts.",
   "frontend/src/hooks/useQueries.ts": "React Query hooks for backend operations including user profiles, salons with auto-seeding, bookings, categories, and on-chain image upload/retrieval with proper cache invalidation and socialLinks support in createSalon.",
-  "frontend/src/index.css": "Global styles with OKLCH color system for light/dark themes, hide-scrollbar utility, V8 INFINITY UI animations (fade-in-right, scale-in, fade-in, slide-up), and V14 slow-spin animation for Stories rail.",
+  "frontend/src/index.css": "Global styles with OKLCH color system for light/dark themes, hide-scrollbar utility, and animation keyframes including fade-in, scale-in, slide-up, slow-pulse, breathing, slow-spin, and orbital-expand for V24 OMEGA SINGULARITY immersive UI transitions.",
   "frontend/src/components/ProSalonWizard.tsx": "Three-step salon creation wizard with file upload support for on-chain images, backend-driven category selection for services, CHF price labels, English UI text, and proper socialLinks parameter passed to createSalon mutation.",
   "frontend/src/components/MemberCard.tsx": "Loyalty member card with French labels (Membre/Progression vers/Niveau Maximum Atteint/XP restants/Gagnez XP par réservation confirmée) and tier-specific gradient styling.",
   "frontend/src/components/PremiumBadge.tsx": "A small reusable badge component with crown icon that displays \"Premium\" label for premium salons.",
@@ -22,6 +22,6 @@
   "frontend/src/utils/currency.ts": "Utility functions for formatting prices in CHF currency (formatCHF and formatCHFCompact).",
   "frontend/src/components/ProStudioCreator.tsx": "Midnight-themed gamified salon creation wizard with completion gauge, multi-step form (identity/services/team), backend-wired publish flow with non-blocking image upload using CSS animations instead of Framer Motion, and proper error handling for upload failures.",
   "backend/main.mo": "Complete reset to V1.0 - minimal Motoko backend with Swiss salon seed data (4 salons), basic getSalons/createSalon functions, and stable memory storage without authentication, bookings, or advanced features.",
-  "frontend/src/AppV1.jsx": "Complete V14 \"DIVINE OS\" local-state demo with Stories rail, holographic salon cards, Neural Engine creator wizard with rarity scoring, and functional booking/favorites/agenda system using CSS animations instead of framer-motion (100% local React state, no backend).",
+  "frontend/src/AppV1.jsx": "V24 \"OMEGA SINGULARITY\" full-screen salon discovery app with orbital CoreNav (floating bottom menu), category slider filtering, CSS-animated card morphing to full-screen detail views, and VANTABLACK aesthetic with pure black backgrounds and high-contrast white typography (100% local React state, no backend integration).",
   "frontend/src/utils/urlParams.ts": "Utility function to extract URL query parameters, specifically used by useActor.ts to retrieve the caffeineAdminToken for access control initialization."
 }

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 37,
-  "summary": "V14 « DIVINE OS » : reset total en mode démo 100% local. Remplacer intégralement `frontend/src/AppV1.jsx` (point d’entrée éditable) par le code V14 fourni, copié strictement verbatim. UX cible : navigation Client « story-first » (StoriesRail en haut), design holographique (backdrop-blur/verre), ProWizard avec calcul temps réel d’un « Rarity Score », et bouton « DÉPLOYER » qui injecte instantanément le nouveau salon dans le feed + la barre de Stories (via l’état React local).",
+  "projectStateVersion": 49,
+  "summary": "V24 « OMEGA SINGULARITY » : remplacer intégralement `frontend/src/AppV1.jsx` par le code V24 fourni (verbatim). Ruptures UX/UI : morphing liquide via Framer Motion `layoutId` (carte → plein écran sans nouvelle page), navigation « Core » orbitale (orbe flottant + menu circulaire), filtrage catégories via « haptic slider » magnétique en haut, esthétique « Vantablack » (noir absolu + contraste blanc + typo suisse moderne). App 100% state local (dataset DATA), booking mock (alert) et Pro wizard GenesisEngine (3 étapes, upload image locale via `URL.createObjectURL`, ajout services).",
   "architectural_notes": [
     "RESET complet : écrasement total du backend et du frontend, considéré comme nouvelle V1.0 officielle.",
     "Backend Motoko réduit à un modèle Salon/Service/Socials avec `stable var salons` et endpoints `getSalons` (query) + `createSalon` (shared); seed de 4 salons suisses au démarrage (si salons vide).",
@@ -427,6 +427,167 @@
         "REQ-66"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-fully-replace-the-entire-contents-of-frontend-src-appv1-jsx-with-the-provided-v18-venom-infrastructure-code-block-preserving-it-verbatim-components-local-seed-data-tailwind-classes-imports-ui-strings-and-interaction-logic",
+      "title": "Fully replace the entire contents of `frontend/src/AppV1.jsx` with the provided V18 “VENOM INFRASTRUCTURE” code block, preserving it verbatim (components, local seed data, Tailwind classes, imports, UI strings, and interaction logic).",
+      "reqIds": [
+        "REQ-67"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-v18-app-compiles-and-runs-in-this-repository-by-applying-only-minimal-mechanical-adjustments-that-resolve-build-breaking-issues-e-g-missing-incorrect-imports-unresolved-symbols-invalid-jsx-duplicate-exports-without-changing-the-provided-ui-design-or-intended-behavior",
+      "title": "Ensure the V18 App compiles and runs in this repository by applying only minimal mechanical adjustments that resolve build-breaking issues (e.g., missing/incorrect imports, unresolved symbols, invalid JSX, duplicate exports) without changing the provided UI design or intended behavior.",
+      "reqIds": [
+        "REQ-68"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-the-creator-deploy-action-reliably-update-the-client-salon-list-instantly-by-ensuring-the-salons-state-update-cannot-be-lost-due-to-stale-closures-use-a-functional-state-update-for-setsalons-in-the-v18-deploy-path-while-keeping-the-visible-behavior-identical-new-salon-appears-at-the-top-and-the-view-returns-to-landing-immediately",
+      "title": "Make the Creator “deploy” action reliably update the Client salon list instantly by ensuring the salons state update cannot be lost due to stale closures (use a functional state update for `setSalons` in the V18 deploy path) while keeping the visible behavior identical (new salon appears at the top and the view returns to Landing immediately).",
+      "reqIds": [
+        "REQ-69"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fully-replace-the-entire-contents-of-frontend-src-appv1-jsx-with-the-user-provided-v19-visual-dominance-code-block-preserving-the-ui-layout-tailwind-classes-local-seed-data-including-multi-image-galleries-and-interaction-logic-exactly-as-provided",
+      "title": "Fully replace the entire contents of `frontend/src/AppV1.jsx` with the user-provided V19 “VISUAL DOMINANCE” code block, preserving the UI, layout, Tailwind classes, local seed data (including multi-image galleries), and interaction logic exactly as provided.",
+      "reqIds": [
+        "REQ-70"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-application-compiles-and-runs-after-the-v19-overwrite-by-applying-only-minimal-mechanical-adjustments-required-by-this-repository-e-g-missing-imports-for-referenced-icons-components-like-trash2-missing-unused-react-hooks-imports-or-other-unresolved-symbols-without-changing-the-provided-ui-design-or-intended-behavior",
+      "title": "Ensure the application compiles and runs after the V19 overwrite by applying only minimal mechanical adjustments required by this repository (e.g., missing imports for referenced icons/components like `Trash2`, missing/unused React hooks imports, or other unresolved symbols), without changing the provided UI design or intended behavior.",
+      "reqIds": [
+        "REQ-71"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-keep-frontend-src-app-tsx-as-the-thin-wrapper-that-renders-appv1-and-do-not-modify-any-frontend-immutable-entry-files-the-app-must-continue-to-mount-through-the-existing-vite-react-entry-wiring",
+      "title": "Keep `frontend/src/App.tsx` as the thin wrapper that renders `AppV1` and do not modify any frontend immutable entry files; the app must continue to mount through the existing Vite/React entry wiring.",
+      "reqIds": [
+        "REQ-72",
+        "REQ-75"
+      ],
+      "version": 2
+    },
+    {
+      "id": "feature-fully-replace-the-contents-of-frontend-src-appv1-jsx-with-the-user-provided-v20-eclipse-code-block-preserving-components-local-seed-data-tailwind-classes-ui-strings-and-interaction-logic-exactly-as-provided-landing-planetary-entry-terminology-using-professional-pro-wizard-live-mirror-eclipse-card-design-local-only-state-for-salons-favorites-bookings",
+      "title": "Fully replace the contents of `frontend/src/AppV1.jsx` with the user-provided V20 \"ECLIPSE\" code block, preserving components, local seed data, Tailwind classes, UI strings, and interaction logic exactly as provided (Landing \"Planetary Entry\", terminology using \"Professional\", Pro Wizard \"Live Mirror\", Eclipse card design, local-only state for salons/favorites/bookings).",
+      "reqIds": [
+        "REQ-73"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-only-the-minimal-mechanical-fixes-required-to-make-the-pasted-v20-code-compile-and-run-in-this-repository-without-changing-any-intended-ui-or-behavior-e-g-fix-missing-incorrect-imports-such-as-icons-referenced-in-jsx-resolve-undefined-symbols-and-remove-only-truly-unused-imports-if-they-cause-build-failures",
+      "title": "Apply only the minimal mechanical fixes required to make the pasted V20 code compile and run in this repository, without changing any intended UI or behavior (e.g., fix missing/incorrect imports such as icons referenced in JSX, resolve undefined symbols, and remove only truly unused imports if they cause build failures).",
+      "reqIds": [
+        "REQ-74"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fully-overwrite-frontend-src-appv1-jsx-with-the-user-provided-v21-nebula-code-block-treating-it-as-the-entire-app-ui-landing-pro-wizard-client-feed-and-keep-it-verbatim-no-refactors-optimizations-feature-additions",
+      "title": "Fully overwrite `frontend/src/AppV1.jsx` with the user-provided V21 “NEBULA” code block, treating it as the entire app UI (Landing → Pro wizard → Client feed), and keep it verbatim (no refactors/optimizations/feature additions).",
+      "reqIds": [
+        "REQ-76"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-only-the-minimum-mechanical-adjustments-required-for-this-repository-to-compile-and-run-after-the-v21-code-overwrite-without-changing-intended-ui-interaction-behavior-or-visual-design",
+      "title": "Apply only the minimum mechanical adjustments required for this repository to compile and run after the V21 code overwrite, without changing intended UI/interaction behavior or visual design.",
+      "reqIds": [
+        "REQ-77"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-v21-client-experience-matches-the-full-screen-cinema-requirements-one-salon-per-full-viewport-vertical-snap-scroll-to-advance-with-image-first-presentation",
+      "title": "Ensure the V21 Client experience matches the ‘full-screen cinema’ requirements: one salon per full viewport, vertical snap-scroll to advance, with image-first presentation.",
+      "reqIds": [
+        "REQ-78"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-v21-floating-glass-ui-navigation-remove-any-bottom-nav-bar-and-render-floating-icons-over-the-content-using-a-glass-backdrop-blur-treatment-search-home-and-agenda-favorites-action-remains-on-screen-per-salon",
+      "title": "Implement the V21 ‘floating glass UI’ navigation: remove any bottom nav bar and render floating icons over the content using a glass/backdrop-blur treatment (Search/Home and Agenda; favorites action remains on-screen per salon).",
+      "reqIds": [
+        "REQ-79"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-v21-immediate-actions-booking-flow-the-primary-book-call-to-action-is-a-large-glass-button-on-the-salon-screen-tapping-it-opens-a-bottom-drawer-bottom-sheet-without-navigating-to-a-new-page-confirming-a-slot-adds-an-item-to-the-agenda-list-and-closes-the-drawer",
+      "title": "Implement the V21 ‘immediate actions’ booking flow: the primary ‘Book’ call-to-action is a large glass button on the salon screen; tapping it opens a bottom drawer (bottom sheet) without navigating to a new page; confirming a slot adds an item to the Agenda list and closes the drawer.",
+      "reqIds": [
+        "REQ-80"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fully-replace-overwrite-the-entire-contents-of-frontend-src-appv1-jsx-with-the-exact-user-provided-v22-apex-prestige-code-block-verbatim-treating-it-as-the-complete-app-ui-landing-client-pro-studio-with-no-refactors-or-feature-additions",
+      "title": "Fully replace (overwrite) the entire contents of `frontend/src/AppV1.jsx` with the exact user-provided V22 “APEX PRESTIGE” code block (verbatim), treating it as the complete app UI (Landing → Client → Pro Studio), with no refactors or feature additions.",
+      "reqIds": [
+        "REQ-81"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-only-the-minimum-mechanical-adjustments-required-for-this-repository-to-compile-and-run-after-the-v22-overwrite-without-changing-the-intended-ui-layout-styling-copy-or-interaction-behavior-from-the-provided-code",
+      "title": "Apply only the minimum mechanical adjustments required for this repository to compile and run after the V22 overwrite, without changing the intended UI, layout, styling, copy, or interaction behavior from the provided code.",
+      "reqIds": [
+        "REQ-82"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-client-home-experience-uses-a-top-horizontal-service-filter-navigation-bar-with-minimalist-icons-as-the-primary-navigation-and-filters-salons-by-service-category-selection-not-by-time",
+      "title": "Ensure the Client Home experience uses a top horizontal service-filter navigation bar with minimalist icons as the primary navigation and filters salons by service/category selection (not by time).",
+      "reqIds": [
+        "REQ-83"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-the-v22-apex-ultra-lux-design-characteristics-as-provided-deep-black-base-with-subtle-aurora-like-gradient-reflection-treatment-realistic-frosted-glass-cards-using-backdrop-blur-2xl-and-fashion-editorial-typography-large-type-wide-tracking",
+      "title": "Preserve the V22 “APEX” ultra-lux design characteristics as provided: deep black base with subtle aurora-like gradient/reflection treatment, realistic frosted-glass cards using `backdrop-blur-2xl`, and fashion-editorial typography (large type, wide tracking).",
+      "reqIds": [
+        "REQ-84"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-the-v22-vogue-creator-studio-experience-a-minimal-image-and-text-centered-pro-creation-wizard-not-the-previous-dark-form-and-ensure-the-deploy-publish-action-injects-the-newly-created-salon-into-the-in-memory-salon-list-immediately-local-only-demo-behavior-no-backend-calls",
+      "title": "Preserve the V22 “VOGUE” creator studio experience: a minimal, image- and text-centered Pro creation wizard (not the previous dark form), and ensure the deploy/publish action injects the newly created salon into the in-memory salon list immediately (local-only demo behavior; no backend calls).",
+      "reqIds": [
+        "REQ-85"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-completely-replace-the-contents-of-frontend-src-appv1-jsx-with-the-exact-v24-omega-singularity-code-provided-by-the-user-treating-it-as-the-full-application-ui-landing-client-pro-genesisengine-and-preserving-the-provided-components-local-data-tailwind-classes-imports-and-interaction-logic-including-framer-motion-layoutid-morphing-the-orbital-corenav-the-category-slider-and-the-vantablack-aesthetic",
+      "title": "Completely replace the contents of `frontend/src/AppV1.jsx` with the exact V24 “OMEGA SINGULARITY” code provided by the user, treating it as the full application UI (Landing → Client → Pro/GenesisEngine) and preserving the provided components, local `DATA`, Tailwind classes, imports, and interaction logic (including Framer Motion `layoutId` morphing, the orbital CoreNav, the category slider, and the Vantablack aesthetic).",
+      "reqIds": [
+        "REQ-86"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v24-appv1-jsx-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-unresolved-symbols-invalid-jsx-duplicate-export-default-without-changing-the-intended-ui-design-copy-or-interaction-behavior-from-the-provided-v24-code",
+      "title": "Ensure the project compiles and runs after the V24 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved symbols, invalid JSX, duplicate `export default`), without changing the intended UI design, copy, or interaction behavior from the provided V24 code.",
+      "reqIds": [
+        "REQ-87"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -677,8 +838,45 @@
       "summary": "V14 « DIVINE OS » : overwrite total de `frontend/src/AppV1.jsx` en mode 100% local (verbatim) avec StoriesRail story-first, design holographique, ProWizard Neural Engine (Rarity Score temps réel), et injection instantanée du salon déployé dans le feed + Stories + Agenda/Favoris en state local.",
       "reqIds": [],
       "status": "pending"
+    },
+    {
+      "id": "AR-54",
+      "summary": "V18 « VENOM INFRASTRUCTURE » : overwrite total de `frontend/src/AppV1.jsx` avec le code V18 fourni (verbatim) + appliquer uniquement les ajustements mécaniques nécessaires pour que ça compile (imports/dépendances, classes utilitaires) sans changer le design ni la logique (ProWizard: bio/type/specialHours/contact/services; Client: filtres Soir/Dimanche/Domicile, favoris, booking modal, injection instantanée du salon déployé).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-55",
+      "summary": "V19 « VISUAL DOMINANCE » : overwrite total de `frontend/src/AppV1.jsx` avec le code V19 fourni (verbatim) + appliquer uniquement les ajustements mécaniques nécessaires pour compiler (imports/dépendances/classes), sans changer design ni logique. Inclut Landing \"PORTAL\" cinématique, ProWizard multi-photos (jusqu’à 3), et cartes Client en carrousel interactif.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-56",
+      "summary": "V20 « ECLIPSE » : overwrite total de `frontend/src/AppV1.jsx` avec le code V20 fourni (verbatim) + appliquer uniquement les ajustements mécaniques nécessaires pour compiler (imports/dépendances/classes), sans changer design ni logique. Inclut Landing « PLANETARY ENTRY », terminologie « PROFESSIONNEL » et ProWizard « LIVE MIRROR » (aperçu carte en temps réel).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-57",
+      "summary": "V21 « NEBULA » : overwrite total de `frontend/src/AppV1.jsx` avec le code V21 fourni (verbatim) + appliquer uniquement les ajustements mécaniques nécessaires pour compiler. Pivot UX Client en « FULL SCREEN CINÉMA » (snap scroll vertical), UI flottante glass (recherche/agenda/cœur), et réservation via Drawer bottom sheet (sans changement de page).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-58",
+      "summary": "V22 « APEX PRESTIGE » : overwrite total de `frontend/src/AppV1.jsx` avec le code V22 fourni (verbatim) + appliquer uniquement les ajustements mécaniques nécessaires pour compiler. Ruptures : filtrage/navigations par service via CategoryNav à icônes (Coupe/Barbe/Ongles/Soin), design APEX ultra-luxe (Aurora, verre dépoli), et Studio Créateur « VOGUE » minimaliste (ProWizard 2 étapes).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-59",
+      "summary": "V24 « OMEGA SINGULARITY » : overwrite total de `frontend/src/AppV1.jsx` avec le code V24 fourni (verbatim) + appliquer uniquement les ajustements mécaniques nécessaires pour compiler. Inclut morphing liquide via `layoutId`, navigation orbitale (Core), CatSlider magnétique, esthétique Vantablack, wizard Pro GenesisEngine et logique locale (dataset DATA).",
+      "reqIds": [],
+      "status": "pending"
     }
   ],
+  "gameProjectType": "none",
   "projectName": "QuickReveal",
   "clarification_mode": "instant",
   "clarification_rounds": 0

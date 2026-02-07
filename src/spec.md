@@ -1,11 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Reset the V14 “DIVINE OS” local demo by fully overwriting `frontend/src/AppV1.jsx` with the user-provided code verbatim, ensuring it runs as a 100% local React-state-driven demo.
+**Goal:** Replace the current AppV1 UI with the provided V24 “OMEGA SINGULARITY” single-file UI while keeping the app entry wiring unchanged and ensuring the project still compiles.
 
 **Planned changes:**
-- Fully replace the contents of `frontend/src/AppV1.jsx` with the provided V14 “DIVINE OS” code block exactly as given (full overwrite; no merges).
-- Keep `frontend/src/App.tsx` as a thin wrapper rendering `AppV1` (no entry wiring changes) and ensure the frontend compiles/runs with the injected UI and behavior.
-- Ensure all demo behaviors remain local-only (no backend calls), including Landing → Client (“Explorer”) / Pro (“Créer”) flow switching, Client favorites, card removal, service-to-agenda booking navigation, and Pro wizard “DÉPLOYER” injecting a new salon into the Client feed and Stories during the same session.
+- Fully overwrite `frontend/src/AppV1.jsx` with the user-provided V24 “OMEGA SINGULARITY” code, preserving its components, local `DATA`, Tailwind styling, imports, and interaction logic (Framer Motion `layoutId` morphing cards, orbital CoreNav, category slider filtering, Vantablack aesthetic).
+- Apply only minimal mechanical fixes required for this repository to compile/run (e.g., missing/incorrect imports, unresolved symbols, invalid JSX, duplicate exports) without changing intended UI/animations/copy/flows.
+- Keep `frontend/src/App.tsx` as the thin wrapper rendering `AppV1` and avoid any changes to immutable entry/hooks/ui paths.
 
-**User-visible outcome:** The app launches into the Landing screen and users can navigate between Client and Pro demo flows; in Client they can favorite salons, remove salons from the feed, add bookings by selecting services (which navigates to Agenda), and in Pro they can complete the wizard and deploy a new salon that immediately appears in the Client feed and Stories—all without any backend dependency.
+**User-visible outcome:** The app boots into the V24 OMEGA SINGULARITY UI where users can filter via the top category slider, open a salon card into a full-screen morphing view (shared `layoutId`), and navigate primarily via the expandable/collapsible bottom orbital CoreNav (Home/Agenda/Favorites) in a predominantly pure-black, high-contrast style.
