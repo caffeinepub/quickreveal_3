@@ -1,121 +1,115 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "V25 AETHER GENESIS (frontend-only): overwrite AppV1 and implement Helix/Living Matter/Creator Cockpit pillars",
+  "title": "V26 QUANTUM REALITY frontend overwrite (Singularity entry, Hyper-Reality feed, HUD overlays, Architect mode)",
   "requirements": [
     {
-      "id": "REQ-88",
-      "summary": "Overwrite frontend/src/AppV1.jsx with the exact user-provided V25 “AETHER GENESIS” code as the new root UI (Landing → Client → Creator).",
+      "id": "REQ-94",
+      "summary": "Fully overwrite AppV1.jsx with the user-provided V26 QUANTUM REALITY app UI implementation.",
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` no longer contains the previous V24 implementation and instead contains the V25 code as the app root.",
-        "`frontend/src/App.tsx` continues to render `AppV1` as the root component (no entrypoint rewiring).",
-        "The app boots and shows the V25 landing screen with actions to enter Client mode and Creator mode."
+        "`frontend/src/AppV1.jsx` content is replaced in full by the user-provided V26 code (not merged into the old V25 code).",
+        "The application boots through the existing `frontend/src/App.tsx` wrapper and renders the V26 UI."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Replace the entire file contents with the exact V25 “AETHER GENESIS” code block provided by the user (no partial merges). Preserve the intended layout, styling (Tailwind/classes), seed data, and interactions exactly as given."
+          "description": "Replace the entire file contents with the exact V26 “QUANTUM REALITY” code provided by the user (full overwrite; no partial merge). Ensure the exported component remains compatible with the existing `frontend/src/App.tsx` thin wrapper."
         }
       ]
     },
     {
-      "id": "REQ-89",
-      "summary": "Apply only minimal mechanical fixes so the pasted V25 code compiles/runs in this repo without changing intended V25 UI/UX.",
+      "id": "REQ-95",
+      "summary": "Apply minimal mechanical fixes so the V26 overwrite compiles and runs in this repository without changing intended UX.",
       "acceptanceCriteria": [
-        "No unresolved identifiers remain after the overwrite (e.g., fix the `INITIAL_SALONS` reference so it correctly initializes from the V25 `DATA` constant, or define `INITIAL_SALONS` accordingly).",
-        "All referenced imports exist and the build succeeds (Vite/React app renders without runtime crash).",
-        "Any unused imports that break the build (if the repo enforces no-unused-vars as errors) are removed or used, while keeping visible behavior unchanged."
+        "`npm run build` (or equivalent CI build) succeeds without TypeScript/ESLint blocking errors introduced by the pasted code.",
+        "All referenced symbols in `AppV1.jsx` resolve (e.g., any dataset constant used to initialize state such as `INITIAL_SALONS` is defined consistently with the provided `DATA`).",
+        "No changes are made to immutable frontend entry files; `frontend/src/App.tsx` remains a thin wrapper rendering `AppV1`."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Make mechanical compile fixes only: ensure any referenced constants (e.g., `INITIAL_SALONS`) are correctly defined/derived from V25 in-file seed data; ensure all imports are valid for this repo and remove/adjust unused imports only when required to pass build/lint, keeping V25 UI/UX behavior unchanged."
+          "description": "Fix only mechanical/runtime issues introduced by the pasted V26 code (e.g., missing imports, undefined identifiers/constants, invalid JSX, event handler typings/guards, missing default exports) while preserving the intended V26 layout, styling, copy, and interaction behavior."
         },
         {
           "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "If the V25 code references animation/utility classnames that do not exist in the repo, add the minimal missing keyframes/utility classes here (using the existing global CSS entry point) without changing existing theme/behavior."
+          "description": "Add/adjust only the minimal global CSS utilities/animations required by the V26 code to compile and render correctly (e.g., any referenced animation class names or keyframes) without altering intended visuals beyond what the V26 code expects."
         }
       ]
     },
     {
-      "id": "REQ-90",
-      "summary": "Ensure V25 Helix (service-first top bar) filters the salon feed instantly, including “Tout” showing all salons and a safe empty state.",
+      "id": "REQ-96",
+      "summary": "Implement/verify the V26 Singularity Entry long-press gate with aspiration-style transition into the experience.",
       "acceptanceCriteria": [
-        "Selecting each HelixNav category updates the visible salon list immediately without requiring navigation or refresh.",
-        "Selecting “Tout” shows all salons.",
-        "If no salons match, an explicit empty state is shown (as in the provided code), and the screen does not crash."
+        "On desktop: holding mouse down charges progress; releasing early resets progress to 0.",
+        "On mobile: holding touch charges progress; releasing early resets progress to 0.",
+        "When progress reaches 100%, the UI transitions into the next view with a clear ‘aspiration’/pull-in animation (not an abrupt cut)."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Implement/verify Helix navigation state and derived filtered salons list so category selection updates the feed immediately. Ensure “Tout” bypasses filtering and ensure an explicit empty-state render when the filtered list is empty (no crashes)."
-        }
-      ]
-    },
-    {
-      "id": "REQ-91",
-      "summary": "Implement missing Living Matter behaviors: swipe gallery, fused editorial bio+contact block, and pulsing heartbeat availability dots (local-only).",
-      "acceptanceCriteria": [
-        "Each salon card (and/or expanded view) exposes a swipeable gallery interaction (drag/swipe) when a salon has multiple images; on desktop, an equivalent mouse drag interaction works.",
-        "The expanded salon view shows bio and contact details in a single composed ‘editorial’ block (not separated into disjoint sections) consistent with the V25 design language.",
-        "A set of pulsing dot indicators is rendered to represent availability; the dots visibly pulse (CSS or motion) and are data-driven from a local in-file slot list (no backend calls required)."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/AppV1.jsx",
-          "operation": "modify",
-          "description": "Add Living Matter interactions to the V25 salon surfaces: implement a swipe/drag gallery for multi-image salons (touch + mouse), render an editorial-style fused bio+contact block in the expanded view, and render availability as pulsing heartbeat dots driven by a local in-file slot/availability list (no backend calls)."
+          "description": "Ensure the V26 Singularity Entry screen supports sustained press for both mouse and touch (press-to-charge, release-to-reset), and triggers a non-abrupt aspiration/pull-in transition when the progress completes."
         },
         {
           "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Add minimal CSS keyframes/utilities to support the heartbeat pulsing-dot animation and any swipe/drag affordances required by the V25 Living Matter cards (keep changes additive and consistent with existing animation utilities)."
+          "description": "Add/adjust any required animation utilities used by the V26 Singularity Entry aspiration transition (e.g., keyframes/classes referenced by the V26 UI) to ensure the transition is visibly animated rather than a hard cut."
         }
       ]
     },
     {
-      "id": "REQ-92",
-      "summary": "Upgrade Creator Cockpit with live preview (split on large screens, modal/sheet on mobile) and a local-only “AI Assist” Aura generator.",
+      "id": "REQ-97",
+      "summary": "Implement/verify the V26 Hyper-Reality full-screen feed with spring-like transitions and scroll-tied image zoom.",
       "acceptanceCriteria": [
-        "On large screens, the Creator Cockpit shows an always-visible preview panel that updates live as the user edits name/category/city/type/tags/images/bio.",
-        "On small screens, the preview is accessible via a modal/sheet that can be opened while editing, and reflects changes live.",
-        "The “AI Assist” action generates a plausible marketing ‘Aura’ text locally (template/heuristic-based) and inserts it into the bio/description field without calling any external API.",
-        "The deploy/publish action still creates a new salon in local state and returns to landing/client flow as intended."
+        "In the client feed, each salon card occupies a full viewport presentation (one salon per screen, scroll to advance).",
+        "Transitions/scroll between items feel spring-based (Framer Motion spring config is used for the primary movement).",
+        "As the user scrolls through the feed, the active salon image applies a slight zoom effect tied to scroll (not just hover)."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/utils/auraGenerator.ts",
-          "operation": "create",
-          "description": "Create a small local-only Aura text generator (template/heuristic-based) that takes the current Creator form fields (e.g., name/category/city/type/tags/services) and returns a marketing description string. No external API calls."
-        },
+          "path": "frontend/src/AppV1.jsx",
+          "operation": "modify",
+          "description": "Ensure the V26 feed renders salons as full-viewport windows and that navigation/scroll progression uses spring-like motion (using a spring configuration for primary movement as per V26 intent). Tie active salon image zoom subtly to scroll/progress (not hover-only)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-98",
+      "summary": "Implement/verify the V26 HUD frosted-glass overlays with hover reaction on desktop and touch-friendly usability.",
+      "acceptanceCriteria": [
+        "HUD information panels use a frosted-glass style (backdrop blur + translucent fill + subtle border).",
+        "On hover-capable devices, panels show a noticeable hover reaction (e.g., opacity/brightness/border accent/blur shift).",
+        "On touch devices, the HUD remains readable and does not require hover to access essential info."
+      ],
+      "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Implement the V25 Creator Cockpit live preview: on large screens render an always-visible preview panel next to the editor; on small screens provide a modal/sheet preview that can be opened while editing, both bound to the same in-memory draft state for live updates. Wire the “AI Assist” button to call the local aura generator and insert the result into the bio/description field. Preserve the V25 deploy/publish flow and keep everything local/in-memory."
+          "description": "Ensure the V26 HUD overlay panels (bio/price/contact) render as frosted-glass surfaces, include a clear hover reaction where supported, and remain fully readable/usable on touch devices without relying on hover-only interactions."
         },
         {
           "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "If needed for V25 preview modal/split-view visuals, add minimal additive global styles/animations here (prefer Tailwind classes in JSX; only add CSS when strictly necessary to match V25 behavior)."
+          "description": "Add/adjust any global CSS utilities needed for the V26 HUD frosted-glass effect and hover reactions (e.g., subtle borders, blur helpers, transitions) if referenced by the V26 code."
         }
       ]
     },
     {
-      "id": "REQ-93",
-      "summary": "Make Creator deploy insertion robust (functional state update) so newly deployed salons always appear immediately at the top without stale-closure issues.",
+      "id": "REQ-99",
+      "summary": "Implement/verify the V26 Architect (Creator) mode: cyber-futuristic creator UI with live revenue simulation and instant Setup/Preview dimension switch.",
       "acceptanceCriteria": [
-        "Clicking the V25 deploy action always inserts the newly created salon at the top of the salons feed on the next Client view, even after multiple deploys in a single session.",
-        "No race/stale state behavior occurs if deploy is triggered quickly multiple times (the list order remains correct with newest on top)."
+        "Revenue simulation updates immediately when services are added/edited (no manual refresh).",
+        "A visible Setup/Preview toggle exists and switches instantly between editing and previewing the created salon experience.",
+        "Publishing/finishing the creator flow injects the new salon into the in-memory salon list immediately (local-only demo behavior; no backend calls)."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Update the deploy/publish handler to use a functional `setSalons(prev => [newSalon, ...prev])` update (and any related state updates) to eliminate stale closures and ensure new salons appear immediately at the top after each deploy."
+          "description": "Ensure the V26 creator flow provides: (1) a cyber-futuristic creator UI, (2) a real-time revenue simulator that updates immediately as services change, (3) an instant Setup ↔ Preview dimension toggle, and (4) a local-only publish/finish action that injects the new salon into the in-memory list without any backend calls."
         }
       ]
     }

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 51,
-  "summary": "V25 « AETHER GENESIS » : remplacer intégralement `frontend/src/AppV1.jsx` par le code V25 fourni (verbatim). Nouvelle direction UX/UI : navigation supérieure « HELIX » service-first (filtre par ADN service), cartes « LIVING MATTER » avec galerie swipe + bio/contact magazine + disponibilités en pulsations, et mode Pro « CREATOR COCKPIT » avec live preview (split desktop / modal mobile) + bouton IA Assist pour générer une « Aura » (description marketing). App 100% state local (dataset V25), booking mock (alert), favoris en mémoire, morphing Framer Motion (layoutId) pour la vue détaillée.",
+  "projectStateVersion": 53,
+  "summary": "V26 « QUANTUM REALITY » : remplacer intégralement `frontend/src/AppV1.jsx` par le code V26 fourni (verbatim). Nouvelle direction UX/UI « Niveau Divin » : entrée « SINGULARITÉ » (long press, aspiration), feed « HYPER-REALITY » plein écran avec spring physics + léger zoom des images au scroll, interface HUD (panneaux verre givré réactifs au survol), et mode Créateur « ARCHITECT OS » cyber-futuriste avec simulateur de revenus (jauge/valeur en temps réel) + switch de dimension Setup ↔ Preview instantané. App en state local (dataset V26), favoris en mémoire, booking mock (alert) via modal.",
   "architectural_notes": [
     "RESET complet : écrasement total du backend et du frontend, considéré comme nouvelle V1.0 officielle.",
     "Backend Motoko réduit à un modèle Salon/Service/Socials avec `stable var salons` et endpoints `getSalons` (query) + `createSalon` (shared); seed de 4 salons suisses au démarrage (si salons vide).",
@@ -636,6 +636,54 @@
         "REQ-93"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-completely-overwrite-frontend-src-appv1-jsx-with-the-exact-v26-quantum-reality-code-provided-by-the-user-treating-it-as-the-full-app-ui-implementation",
+      "title": "Completely overwrite `frontend/src/AppV1.jsx` with the exact V26 “QUANTUM REALITY” code provided by the user, treating it as the full app UI implementation.",
+      "reqIds": [
+        "REQ-94"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v26-overwrite-by-applying-only-minimal-mechanical-fixes-required-for-this-repository-e-g-missing-incorrect-imports-undefined-identifiers-invalid-jsx-without-changing-the-intended-ui-layout-styling-copy-or-interaction-behavior-of-the-provided-v26-code",
+      "title": "Ensure the project compiles and runs after the V26 overwrite by applying only minimal mechanical fixes required for this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX), without changing the intended UI layout, styling, copy, or interaction behavior of the provided V26 code.",
+      "reqIds": [
+        "REQ-95"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-verify-the-v26-singularity-entry-experience-a-black-entry-screen-with-a-pulsing-orb-that-requires-a-sustained-press-mouse-or-touch-to-enter-and-triggers-an-aspiration-transition-when-entry-completes",
+      "title": "Implement/verify the V26 “Singularity Entry” experience: a black entry screen with a pulsing orb that requires a sustained press (mouse or touch) to enter, and triggers an “aspiration” transition when entry completes.",
+      "reqIds": [
+        "REQ-96"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-verify-the-v26-hyper-reality-feed-behavior-salons-render-as-full-screen-windows-scrolling-between-them-uses-spring-like-motion-and-images-subtly-zoom-in-response-to-scroll-progression",
+      "title": "Implement/verify the V26 “Hyper-Reality Feed” behavior: salons render as full-screen windows, scrolling between them uses spring-like motion, and images subtly zoom in response to scroll progression.",
+      "reqIds": [
+        "REQ-97"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-verify-the-v26-hud-heads-up-display-overlays-floating-bio-price-contact-surfaces-are-presented-as-frosted-glass-panels-and-visually-react-on-hover-desktop-while-remaining-usable-on-touch-devices",
+      "title": "Implement/verify the V26 HUD (Heads-Up Display) overlays: floating bio/price/contact surfaces are presented as frosted-glass panels and visually react on hover (desktop) while remaining usable on touch devices.",
+      "reqIds": [
+        "REQ-98"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-verify-the-v26-architect-mode-creator-requirements-cyber-futuristic-creator-ui-with-a-real-time-revenue-simulator-that-increases-as-services-are-added-and-a-dimension-switch-to-instantly-toggle-setup-preview",
+      "title": "Implement/verify the V26 Architect Mode (Creator) requirements: cyber-futuristic creator UI with a real-time revenue simulator that increases as services are added, and a “Dimension” switch to instantly toggle Setup ↔ Preview.",
+      "reqIds": [
+        "REQ-99"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -926,6 +974,12 @@
     {
       "id": "AR-60",
       "summary": "V25 « AETHER GENESIS » : overwrite total de `frontend/src/AppV1.jsx` avec le code V25 fourni (verbatim) + appliquer uniquement les ajustements mécaniques nécessaires pour compiler, sans changer design/UX/logic. Inclut HelixNav service-first, cartes Living Matter (galerie, bio+contact, disponibilités pulsantes), Creator Cockpit avec live preview et bouton IA Assist.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-61",
+      "summary": "V26 « QUANTUM REALITY » : overwrite total de `frontend/src/AppV1.jsx` avec le code V26 fourni (verbatim) + appliquer uniquement les ajustements mécaniques nécessaires pour compiler/exécuter, sans changer design/UX/logic. Inclut entrée Singularity (long press), feed Hyper-Reality plein écran avec spring physics/zoom scroll, HUD verre givré, et mode Créateur Architect OS avec simulateur de revenus + switch Setup/Preview.",
       "reqIds": [],
       "status": "pending"
     }

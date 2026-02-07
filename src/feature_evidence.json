@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-fully-replace-overwrite-frontend-src-appv1-jsx-with-the-exact-user-provided-v25-aether-genesis-code-block-as-the-new-app-ui-landing-client-creator-preserving-the-intended-layout-styling-and-interaction-behavior",
-      "featureTitle": "Fully replace (overwrite) `frontend/src/AppV1.jsx` with the exact user-provided V25 “AETHER GENESIS” code block as the new app UI (Landing → Client → Creator), preserving the intended layout, styling, and interaction behavior.",
+      "featureId": "feature-completely-overwrite-frontend-src-appv1-jsx-with-the-exact-v26-quantum-reality-code-provided-by-the-user-treating-it-as-the-full-app-ui-implementation",
+      "featureTitle": "Completely overwrite `frontend/src/AppV1.jsx` with the exact V26 “QUANTUM REALITY” code provided by the user, treating it as the full app UI implementation.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -17,34 +17,13 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-88"
+        "REQ-94"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-apply-only-the-minimal-mechanical-fixes-required-for-this-repository-to-compile-and-run-with-the-pasted-v25-code-without-altering-the-intended-v25-ui-ux-behavior",
-      "featureTitle": "Apply only the minimal mechanical fixes required for this repository to compile and run with the pasted V25 code, without altering the intended V25 UI/UX behavior.",
-      "files": [
-        "frontend/src/AppV1.jsx",
-        "frontend/src/index.css"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-89"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-ensure-the-v25-helix-navigation-service-first-top-bar-correctly-filters-the-salon-feed-instantly-by-category-selection-including-the-tout-category-showing-all-salons",
-      "featureTitle": "Ensure the V25 Helix navigation (service-first top bar) correctly filters the salon feed instantly by category selection, including the “Tout” category showing all salons.",
+      "featureId": "feature-ensure-the-project-compiles-and-runs-after-the-v26-overwrite-by-applying-only-minimal-mechanical-fixes-required-for-this-repository-e-g-missing-incorrect-imports-undefined-identifiers-invalid-jsx-without-changing-the-intended-ui-layout-styling-copy-or-interaction-behavior-of-the-provided-v26-code",
+      "featureTitle": "Ensure the project compiles and runs after the V26 overwrite by applying only minimal mechanical fixes required for this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX), without changing the intended UI layout, styling, copy, or interaction behavior of the provided V26 code.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -58,56 +37,13 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-90"
+        "REQ-95"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-implement-the-missing-living-matter-card-behaviors-described-by-the-user-while-preserving-the-v25-aesthetic-1-an-integrated-swipe-gallery-experience-2-a-fused-fashion-magazine-style-bio-contact-presentation-and-3-availability-rendered-as-pulsing-heartbeat-dots-on-the-salon-surfaces",
-      "featureTitle": "Implement the missing “Living Matter” card behaviors described by the user while preserving the V25 aesthetic: (1) an integrated swipe gallery experience, (2) a fused fashion-magazine-style bio + contact presentation, and (3) availability rendered as pulsing ‘heartbeat’ dots on the salon surfaces.",
-      "files": [
-        "frontend/src/AppV1.jsx",
-        "frontend/src/index.css"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-91"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-upgrade-the-creator-cockpit-to-match-the-specified-v25-requirements-provide-live-preview-split-view-on-large-screens-modal-preview-on-mobile-and-an-ai-assist-button-that-generates-an-aura-marketing-description-locally-no-external-ai-services",
-      "featureTitle": "Upgrade the Creator Cockpit to match the specified V25 requirements: provide Live Preview (split view on large screens, modal preview on mobile) and an “AI Assist” button that generates an ‘Aura’ marketing description locally (no external AI services).",
-      "files": [
-        "frontend/src/AppV1.jsx",
-        "frontend/src/index.css",
-        "frontend/src/utils/auraGenerator.ts"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-92"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-make-the-creator-deploy-state-update-robust-against-stale-closures-when-adding-a-newly-deployed-salon-update-salons-using-a-functional-state-update-so-the-new-salon-always-appears-immediately-at-the-top-of-the-client-list",
-      "featureTitle": "Make the Creator “deploy” state update robust against stale closures: when adding a newly deployed salon, update `salons` using a functional state update so the new salon always appears immediately at the top of the Client list.",
+      "featureId": "feature-implement-verify-the-v26-singularity-entry-experience-a-black-entry-screen-with-a-pulsing-orb-that-requires-a-sustained-press-mouse-or-touch-to-enter-and-triggers-an-aspiration-transition-when-entry-completes",
+      "featureTitle": "Implement/verify the V26 “Singularity Entry” experience: a black entry screen with a pulsing orb that requires a sustained press (mouse or touch) to enter, and triggers an “aspiration” transition when entry completes.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -121,7 +57,67 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-93"
+        "REQ-96"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-verify-the-v26-hyper-reality-feed-behavior-salons-render-as-full-screen-windows-scrolling-between-them-uses-spring-like-motion-and-images-subtly-zoom-in-response-to-scroll-progression",
+      "featureTitle": "Implement/verify the V26 “Hyper-Reality Feed” behavior: salons render as full-screen windows, scrolling between them uses spring-like motion, and images subtly zoom in response to scroll progression.",
+      "files": [
+        "frontend/src/AppV1.jsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
+      ],
+      "testIds": [
+        "REQ-97"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-verify-the-v26-hud-heads-up-display-overlays-floating-bio-price-contact-surfaces-are-presented-as-frosted-glass-panels-and-visually-react-on-hover-desktop-while-remaining-usable-on-touch-devices",
+      "featureTitle": "Implement/verify the V26 HUD (Heads-Up Display) overlays: floating bio/price/contact surfaces are presented as frosted-glass panels and visually react on hover (desktop) while remaining usable on touch devices.",
+      "files": [
+        "frontend/src/AppV1.jsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
+      ],
+      "testIds": [
+        "REQ-98"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-verify-the-v26-architect-mode-creator-requirements-cyber-futuristic-creator-ui-with-a-real-time-revenue-simulator-that-increases-as-services-are-added-and-a-dimension-switch-to-instantly-toggle-setup-preview",
+      "featureTitle": "Implement/verify the V26 Architect Mode (Creator) requirements: cyber-futuristic creator UI with a real-time revenue simulator that increases as services are added, and a “Dimension” switch to instantly toggle Setup ↔ Preview.",
+      "files": [
+        "frontend/src/AppV1.jsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
+      ],
+      "testIds": [
+        "REQ-99"
       ],
       "confidence": "high"
     }
