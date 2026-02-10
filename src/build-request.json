@@ -1,93 +1,73 @@
 {
   "kind": "build_request",
-  "title": "V35 “NEXUS PRIME” full AppV1 overwrite (utility/performance-focused UI)",
+  "title": "V37 “NEXUS PRO MAX”: Full overwrite AppV1 with Service Architect + Multi-service Cart + Schedule Matrix",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-113",
-      "text": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the user-provided V35 “NEXUS PRIME” code block, preserving the code’s UI, layout, styling (Tailwind classes), local seed data (`INITIAL_SALONS`), imports, and interaction logic exactly as provided.",
+      "id": "REQ-117",
+      "text": "Fully replace (overwrite) the entire contents of `frontend/src/AppV1.jsx` with the exact V37 “NEXUS PRO MAX” code block provided by the user, treating it as the complete application UI (Landing → Client → Pro Studio) and preserving its components, local seed data (`INITIAL_SALONS`), Tailwind classes, imports, UI strings, and interaction logic as provided.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "Efface tout le contenu actuel de `frontend/src/AppV1.jsx` et remplace-le par le code ci-dessous."
+          "INSTRUCTION : Remplace INTÉGRALEMENT le code de `frontend/src/AppV1.jsx`.",
+          "CODE V37 : (full code block)"
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` is a full overwrite and contains the V35 code as provided (no refactors or feature additions).",
-        "The app boots into the V35 flow (Landing → Client search/feed → Pro studio) via the existing wrapper `frontend/src/App.tsx`."
+        "`frontend/src/AppV1.jsx` is a full overwrite of the user-provided V37 code block (no partial merges).",
+        "The app boots via the existing `frontend/src/App.tsx` wrapper and shows the V37 Landing screen.",
+        "The V37 Client flow works: selecting a salon opens details; selecting multiple services updates the sticky cart totals (price and duration) in real time; clicking the cart CTA closes the detail view as in the provided code.",
+        "The V37 Pro flow works: opening “Pro” shows the TitanStudio with Identity/Services/Availability tabs; adding services supports photo, technical description, duration, and price; publishing injects the new salon into the client list as in the provided code.",
+        "The Schedule/Availability selections in Pro (e.g., Nocturne/Dimanche/Lundi tags) appear as availability/tag badges on the salon card in the client list, consistent with the provided code."
       ]
     },
     {
-      "id": "REQ-114",
-      "text": "Ensure the project compiles and runs after the V35 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate exports), without changing the intended V35 UI, copy, or interaction behavior.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-2"
-        ],
-        "quotes": [
-          "en appliquant uniquement les ajustements mécaniques nécessaires pour que le projet compile sans modifier le design, la logique ou les interactions."
-        ]
-      },
-      "acceptanceCriteria": [
-        "`npm`/Vite build succeeds with no unresolved symbol/import errors related to `framer-motion` or `lucide-react` usage in the V35 file.",
-        "Any required CSS utilities used by V35 (e.g., existing `.hide-scrollbar`) remain available; add only missing utilities if the build/UI would otherwise break.",
-        "No changes are made to immutable frontend entry files."
-      ]
-    },
-    {
-      "id": "REQ-115",
-      "text": "Preserve and verify the three V35 pillars in the running app (as implemented by the provided code): (1) real-time search filtering by salon name, city/location, and service name; (2) conversion-first cards showing an entry price (“À partir de”) and next available slot without opening details; (3) gamified Pro Studio with a visible “Profile quality” completion gauge driven by filled fields (name, bio, services, image) and a desktop split-screen preview.",
+      "id": "REQ-118",
+      "text": "Ensure the V37 app compiles and runs in this repository by applying only minimal mechanical adjustments required by this codebase (e.g., missing/incorrect imports, unresolved symbols, invalid JSX, duplicate exports), without changing the intended V37 UI design, copy, or interaction behavior. Additionally, make the Pro “Publish” salon injection robust against stale React state closures by using a functional `setSalons(prev => [newSalon, ...prev])` update while preserving identical visible behavior.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "LES 3 PILIERS DE LA V35 :\n1.  **INTELLIGENCE INSTANTANÉE (CLIENT)** : Ajout d'une vraie barre de recherche (Search) qui filtre en temps réel par nom, ville ou service. Ajout de badges \"Vérifié\" et de la distance réelle.\n2.  **CONVERSION OPTIMISÉE** : Les cartes affichent le prix d'appel et le prochain créneau sans avoir besoin de cliquer. Le tunnel de réservation est fluide et rassurant.\n3.  **STUDIO PRO GAMIFIÉ** : L'interface créateur inclut une jauge de \"Qualité du Profil\" pour inciter les pros à remplir toutes les infos (Bio, Photo, Services)."
+          "appliquer uniquement les ajustements mécaniques nécessaires pour compiler, sans changer le design ni la logique",
+          "const handleDeploy = (data) => { ... setSalons([newS, ...salons]); ... }"
         ]
       },
       "acceptanceCriteria": [
-        "Typing into the search input filters the salon list immediately by matching salon name OR salon location OR any service name (case-insensitive).",
-        "Each salon card shows: verified badge when `salon.verified === true`, a distance string from `salon.distance`, a visible next-slot badge from `salon.nextSlot`, and an entry price computed from the minimum service price.",
-        "Pro Studio shows a completion/quality gauge that updates as the user fills name, bio, adds at least one service, and sets an image; on desktop, a right-side preview panel renders the card preview."
-      ]
-    },
-    {
-      "id": "REQ-116",
-      "text": "Make the Pro “Deploy/Mettre en Ligne” injection into the in-memory salon list reliable against stale React state closures while preserving visible behavior (new salon appears immediately at the top and the view switches to Client). If the provided V35 code uses a non-functional `setSalons([newS, ...salons])` update, convert it to an equivalent functional update form without changing the user-visible outcome.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "const handleDeploy = (data) => {\n      if(data) {\n          const newS = { ...data, id: Date.now(), verified: true };\n          setSalons([newS, ...salons]);\n          setView('client');\n      }\n  };"
-        ]
-      },
-      "acceptanceCriteria": [
-        "After deploying a new salon from Pro Studio, the salon appears at the top of the Client results list immediately without requiring a refresh.",
-        "Repeated rapid deploy actions do not intermittently lose newly created salons due to stale state.",
-        "The post-deploy navigation remains identical (switches to Client view)."
+        "`npm run build` (or the project’s equivalent build) succeeds without runtime errors caused by missing imports or undefined identifiers introduced by the V37 paste.",
+        "No refactors/feature additions are introduced beyond what is necessary to make the pasted V37 code compile and run in this repo.",
+        "Publishing a salon from the Pro studio always injects the new salon at the top of the client list, even after rapid successive publishes/navigation, with the same visible behavior (new salon on top and view switches to Client)."
       ]
     }
   ],
   "constraints": [
     "Do not modify `frontend/src/App.tsx`; it must remain the thin wrapper that renders `AppV1`.",
-    "Do not modify any frontend immutable entry files listed in SYSTEM_CONTEXT.",
-    "Keep the V35 code’s UI/UX/design and interaction behavior unchanged; only apply minimal mechanical fixes needed to compile/run and the minimal reliability fix for stale state closures in the deploy path if applicable.",
-    "No backend changes are required or requested for this V35 local-state UI update."
+    "Do not modify any frontend immutable entry files or any paths listed as immutable in SYSTEM_CONTEXT.",
+    "Implement this as a frontend-only, local-state demo flow (no new backend calls added as part of this V37 overwrite)."
   ],
   "nonGoals": [
-    "Do not wire the V35 UI to Motoko backend APIs, React Query, Internet Identity, or any persistence layer.",
-    "Do not translate or rewrite the V35 UI strings provided in the code block (the request is to paste the code as-is).",
-    "Do not add new features beyond what exists in the provided V35 code (e.g., real geolocation, server-side search, or real booking persistence)."
+    "Do not implement or restore Internet Identity authentication, role-based routing, React Query data loading, or Motoko backend integration as part of this V37 overwrite.",
+    "Do not add persistence beyond what is already present in the provided V37 code (e.g., no new localStorage/sessionStorage unless required for a build fix).",
+    "Do not change V37 UI text/copy to English; preserve the user-provided UI strings in the pasted code."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [
+      "Use English for any user-facing text in build requests/specs."
+    ],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }

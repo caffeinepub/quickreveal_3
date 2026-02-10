@@ -1,73 +1,39 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "V35 “NEXUS PRIME” AppV1 full overwrite + compile-safe mechanical fixes (frontend-only)",
+  "title": "V37 NEXUS PRO MAX overwrite of AppV1 (frontend-only local-state demo)",
   "requirements": [
     {
-      "id": "REQ-113",
-      "summary": "Fully overwrite frontend/src/AppV1.jsx with the provided V35 “NEXUS PRIME” code so the app boots into the V35 flow via the existing App.tsx wrapper.",
+      "id": "REQ-117",
+      "summary": "Overwrite frontend/src/AppV1.jsx with the user-provided V37 “NEXUS PRO MAX” code block as the complete UI and interaction flow (Landing → Client → Pro Studio), preserving seed data, Tailwind classes, imports, strings, and logic.",
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` is a full overwrite and contains the V35 code as provided (no refactors or feature additions).",
-        "The app boots into the V35 flow (Landing → Client search/feed → Pro studio) via the existing wrapper `frontend/src/App.tsx`."
+        "`frontend/src/AppV1.jsx` is a full overwrite of the user-provided V37 code block (no partial merges).",
+        "The app boots via the existing `frontend/src/App.tsx` wrapper and shows the V37 Landing screen.",
+        "The V37 Client flow works: selecting a salon opens details; selecting multiple services updates the sticky cart totals (price and duration) in real time; clicking the cart CTA closes the detail view as in the provided code.",
+        "The V37 Pro flow works: opening “Pro” shows the TitanStudio with Identity/Services/Availability tabs; adding services supports photo, technical description, duration, and price; publishing injects the new salon into the client list as in the provided code.",
+        "The Schedule/Availability selections in Pro (e.g., Nocturne/Dimanche/Lundi tags) appear as availability/tag badges on the salon card in the client list, consistent with the provided code."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Completely replace the current file contents with the user-provided V35 “NEXUS PRIME” code block exactly as provided (preserve UI/layout/styling Tailwind classes, imports, local seed data like `INITIAL_SALONS`, and interaction logic). Ensure the default export remains the AppV1 component expected by `frontend/src/App.tsx` without modifying `frontend/src/App.tsx`."
+          "description": "Replace the entire file contents with the exact V37 “NEXUS PRO MAX” code block provided by the user (full paste, no merging). Keep all V37 components, local seed data (INITIAL_SALONS), Tailwind classes, imports, French UI strings, and interaction logic exactly as provided, so the existing frontend/src/App.tsx wrapper continues to render AppV1 and the first view is the V37 Landing screen."
         }
       ]
     },
     {
-      "id": "REQ-114",
-      "summary": "Apply only minimal mechanical fixes required for this repo so V35 compiles/runs, without changing V35 UI copy or behaviors and without touching immutable entry files.",
+      "id": "REQ-118",
+      "summary": "Apply minimal mechanical compile/run fixes for the V37 paste (without changing intended UI/copy/behavior) and make Pro Publish injection robust via functional setSalons update to avoid stale state closures.",
       "acceptanceCriteria": [
-        "`npm`/Vite build succeeds with no unresolved symbol/import errors related to `framer-motion` or `lucide-react` usage in the V35 file.",
-        "Any required CSS utilities used by V35 (e.g., existing `.hide-scrollbar`) remain available; add only missing utilities if the build/UI would otherwise break.",
-        "No changes are made to immutable frontend entry files."
+        "`npm run build` (or the project’s equivalent build) succeeds without runtime errors caused by missing imports or undefined identifiers introduced by the V37 paste.",
+        "No refactors/feature additions are introduced beyond what is necessary to make the pasted V37 code compile and run in this repo.",
+        "Publishing a salon from the Pro studio always injects the new salon at the top of the client list, even after rapid successive publishes/navigation, with the same visible behavior (new salon on top and view switches to Client)."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Make minimal, mechanical, compilation-only adjustments after the V35 paste as needed for this repository (e.g., fix missing/incorrect imports, resolve undefined identifiers, correct invalid JSX, remove duplicate exports). Do not alter intended V35 UI text, layout, styling, or interactions."
-        },
-        {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "If the pasted V35 code depends on any custom Tailwind utilities beyond what already exists (e.g., `.hide-scrollbar`), add only the missing minimal utility definitions needed to prevent broken UI/behavior; keep existing utilities intact."
-        }
-      ]
-    },
-    {
-      "id": "REQ-115",
-      "summary": "Ensure the three V35 pillars work as implemented by the provided code (instant search, conversion-first cards, and gamified Pro Studio with quality gauge + desktop split preview).",
-      "acceptanceCriteria": [
-        "Typing into the search input filters the salon list immediately by matching salon name OR salon location OR any service name (case-insensitive).",
-        "Each salon card shows: verified badge when `salon.verified === true`, a distance string from `salon.distance`, a visible next-slot badge from `salon.nextSlot`, and an entry price computed from the minimum service price.",
-        "Pro Studio shows a completion/quality gauge that updates as the user fills name, bio, adds at least one service, and sets an image; on desktop, a right-side preview panel renders the card preview."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/AppV1.jsx",
-          "operation": "modify",
-          "description": "Verify the pasted V35 implementations of: (1) real-time case-insensitive search across salon name, location/city, and service names; (2) card UI showing verified badge, distance, next-slot, and an entry price derived from min service price; (3) Pro Studio profile-quality gauge driven by filled fields and a desktop split-screen preview. Apply only minimal correctness fixes if any of these behaviors break due to wiring/identifier/import issues introduced during the overwrite—no feature additions or UX changes."
-        }
-      ]
-    },
-    {
-      "id": "REQ-116",
-      "summary": "Prevent stale React state closures in the Pro Deploy/Mettre en Ligne path while preserving visible behavior (prepend new salon, then switch to Client view).",
-      "acceptanceCriteria": [
-        "After deploying a new salon from Pro Studio, the salon appears at the top of the Client results list immediately without requiring a refresh.",
-        "Repeated rapid deploy actions do not intermittently lose newly created salons due to stale state.",
-        "The post-deploy navigation remains identical (switches to Client view)."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/AppV1.jsx",
-          "operation": "modify",
-          "description": "In the V35 deploy handler, ensure salon insertion uses a functional state update (e.g., `setSalons(prev => [newSalon, ...prev])`) if the provided code uses a closure-prone pattern like `setSalons([newS, ...salons])`. Keep the user-visible outcome identical: the new salon appears immediately at the top and the view switches to Client."
+          "description": "After the V37 overwrite, make only repository-compatibility fixes required to compile (e.g., adjust React/lucide imports, resolve undefined symbols, fix invalid JSX, remove duplicate exports) while preserving V37 design, copy, and interaction behavior. Update the Pro “Publish/Deploy” salon injection to use a functional state update `setSalons(prev => [newSalon, ...prev])` to prevent stale closure issues, keeping identical visible behavior (new salon appears first and app navigates back to Client)."
         }
       ]
     }

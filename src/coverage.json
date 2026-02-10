@@ -1,18 +1,18 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-10T22:48:06.817Z",
+  "generatedAt": "2026-02-10T23:06:10.441Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 4,
-    "implemented": 4,
+    "total": 2,
+    "implemented": 2,
     "items": [
       {
-        "id": "REQ-113",
-        "summary": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the user-provided V35 “NEXUS PRIME” code block, preserving the code’s UI, layout, styling (Tailwind classes), local seed data (`INITIAL_SALONS`), imports, and interaction logic exactly as provided.",
+        "id": "REQ-117",
+        "summary": "Fully replace (overwrite) the entire contents of `frontend/src/AppV1.jsx` with the exact V37 “NEXUS PRO MAX” code block provided by the user, treating it as the complete application UI (Landing → Client → Pro Studio) and preserving its components, local seed data (`INITIAL_SALONS`), Tailwind classes, imports, UI strings, and interaction logic as provided.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx"
@@ -22,31 +22,8 @@
         ]
       },
       {
-        "id": "REQ-114",
-        "summary": "Ensure the project compiles and runs after the V35 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate exports), without changing the intended V35 UI, copy, or interaction behavior.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/AppV1.jsx",
-          "frontend/src/index.css"
-        ],
-        "matchedFiles": [
-          "frontend/src/AppV1.jsx"
-        ]
-      },
-      {
-        "id": "REQ-115",
-        "summary": "Preserve and verify the three V35 pillars in the running app (as implemented by the provided code): (1) real-time search filtering by salon name, city/location, and service name; (2) conversion-first cards showing an entry price (“À partir de”) and next available slot without opening details; (3) gamified Pro Studio with a visible “Profile quality” completion gauge driven by filled fields (name, bio, services, image) and a desktop split-screen preview.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/AppV1.jsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/AppV1.jsx"
-        ]
-      },
-      {
-        "id": "REQ-116",
-        "summary": "Make the Pro “Deploy/Mettre en Ligne” injection into the in-memory salon list reliable against stale React state closures while preserving visible behavior (new salon appears immediately at the top and the view switches to Client). If the provided V35 code uses a non-functional `setSalons([newS, ...salons])` update, convert it to an equivalent functional update form without changing the user-visible outcome.",
+        "id": "REQ-118",
+        "summary": "Ensure the V37 app compiles and runs in this repository by applying only minimal mechanical adjustments required by this codebase (e.g., missing/incorrect imports, unresolved symbols, invalid JSX, duplicate exports), without changing the intended V37 UI design, copy, or interaction behavior. Additionally, make the Pro “Publish” salon injection robust against stale React state closures by using a functional `setSalons(prev => [newSalon, ...prev])` update while preserving identical visible behavior.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx"

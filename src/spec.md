@@ -1,12 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Replace `frontend/src/AppV1.jsx` with the provided V35 “NEXUS PRIME” UI code and ensure it compiles/runs while preserving the intended UX and interactions.
+**Goal:** Overwrite the app UI by fully replacing `frontend/src/AppV1.jsx` with the user-provided V37 “NEXUS PRO MAX” implementation, ensuring it compiles and runs in this repo with minimal mechanical fixes while preserving the provided UI, copy, and interaction behavior.
 
 **Planned changes:**
-- Fully overwrite `frontend/src/AppV1.jsx` with the user-provided V35 code block (preserving layout, Tailwind classes, seed data, imports, and interaction logic as provided).
-- Apply only minimal mechanical fixes required for the repository to compile and run (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX), without changing V35 UI/copy/behavior.
-- Preserve and verify the V35 behaviors: real-time client search filtering (name/location/service), conversion-first salon cards (entry price + next slot + verified/distance), and the gamified Pro Studio with profile-quality gauge and desktop preview.
-- If present in the provided code, adjust the Pro “Deploy/Mettre en Ligne” salon insertion to use a functional state update to avoid stale React closure issues while keeping the same visible behavior (new salon appears at top; navigate back to Client).
+- Fully overwrite `frontend/src/AppV1.jsx` with the exact V37 code block provided by the user (no partial merges), keeping its components, local seed data (`INITIAL_SALONS`), Tailwind classes, strings, and interaction logic intact.
+- Apply only minimal mechanical adjustments needed for this repository to compile and run (e.g., missing/incorrect imports, unresolved symbols, invalid JSX, duplicate exports) without changing V37 design/copy/behavior.
+- Make Pro “Publish” salon injection robust by switching to a functional state update (`setSalons(prev => [newSalon, ...prev])`) while preserving identical visible behavior.
 
-**User-visible outcome:** The app boots into the V35 flow (Landing → Client search/feed → Pro studio); users can search/filter salons instantly, see optimized cards with price/next slot/verified info, and pros can edit a studio profile with a live completion gauge and deploy a new salon reliably to the top of the client list.
+**User-visible outcome:** The app boots into the V37 Landing screen and supports the full V37 flow: clients can browse salons, select multiple services with a sticky cart updating totals in real time, and pros can manage a studio (Identity/Services/Availability), publish a salon into the client list (appearing at the top), with availability selections displayed as badges on salon cards.

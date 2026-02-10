@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 61,
-  "summary": "V35 « NEXUS PRIME » : remplacer intégralement `frontend/src/AppV1.jsx` par le code V35 fourni (verbatim). Objectif : refonte totale orientée utilité/performance/sophistication avec (1) recherche temps réel nom/ville/service + badges Vérifié/distance, (2) cartes conversion (prix d’appel + prochain créneau visibles) + tunnel réservation fluide, (3) Studio Pro gamifié avec jauge « Qualité du Profil » et preview split-screen.",
+  "projectStateVersion": 63,
+  "summary": "V37 « NEXUS PRO MAX » : remplacer intégralement `frontend/src/AppV1.jsx` par le code V37 fourni (verbatim). Focus utilité/précision/facilité de déploiement avec 3 moteurs : (1) Service Architect Pro (création de services détaillés avec photo + description technique + durée + prix), (2) Panier dynamique Client multi-services avec total prix + durée en barre sticky, (3) Schedule Matrix Pro (Golden Hours soir/dimanche/etc.) générant des badges de dispo/tags sur les cartes.",
   "architectural_notes": [
     "RESET complet : écrasement total du backend et du frontend, considéré comme nouvelle V1.0 officielle.",
     "Backend Motoko réduit à un modèle Salon/Service/Socials avec `stable var salons` et endpoints `getSalons` (query) + `createSalon` (shared); seed de 4 salons suisses au démarrage (si salons vide).",
@@ -820,6 +820,22 @@
         "REQ-116"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-fully-replace-overwrite-the-entire-contents-of-frontend-src-appv1-jsx-with-the-exact-v37-nexus-pro-max-code-block-provided-by-the-user-treating-it-as-the-complete-application-ui-landing-client-pro-studio-and-preserving-its-components-local-seed-data-initial-salons-tailwind-classes-imports-ui-strings-and-interaction-logic-as-provided",
+      "title": "Fully replace (overwrite) the entire contents of `frontend/src/AppV1.jsx` with the exact V37 “NEXUS PRO MAX” code block provided by the user, treating it as the complete application UI (Landing → Client → Pro Studio) and preserving its components, local seed data (`INITIAL_SALONS`), Tailwind classes, imports, UI strings, and interaction logic as provided.",
+      "reqIds": [
+        "REQ-117"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-v37-app-compiles-and-runs-in-this-repository-by-applying-only-minimal-mechanical-adjustments-required-by-this-codebase-e-g-missing-incorrect-imports-unresolved-symbols-invalid-jsx-duplicate-exports-without-changing-the-intended-v37-ui-design-copy-or-interaction-behavior-additionally-make-the-pro-publish-salon-injection-robust-against-stale-react-state-closures-by-using-a-functional-setsalons-prev-newsalon-prev-update-while-preserving-identical-visible-behavior",
+      "title": "Ensure the V37 app compiles and runs in this repository by applying only minimal mechanical adjustments required by this codebase (e.g., missing/incorrect imports, unresolved symbols, invalid JSX, duplicate exports), without changing the intended V37 UI design, copy, or interaction behavior. Additionally, make the Pro “Publish” salon injection robust against stale React state closures by using a functional `setSalons(prev => [newSalon, ...prev])` update while preserving identical visible behavior.",
+      "reqIds": [
+        "REQ-118"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -1146,6 +1162,12 @@
     {
       "id": "AR-66",
       "summary": "V35 « NEXUS PRIME » : overwrite total de `frontend/src/AppV1.jsx` avec le code V35 fourni (verbatim) + appliquer uniquement les ajustements mécaniques nécessaires pour compiler, sans changer design/UX/logic. Inclut recherche temps réel (nom/ville/service), cartes avec prix d’appel + prochain créneau, badges Vérifié/distance, modal détail + CTA Réserver, et Studio Pro gamifié (jauge Qualité du Profil) avec preview split-screen.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-67",
+      "summary": "V37 « NEXUS PRO MAX » : overwrite total de `frontend/src/AppV1.jsx` avec le code V37 fourni (verbatim) + appliquer uniquement les ajustements mécaniques nécessaires pour compiler, sans changer design/UX/logique. Inclut Service Architect (services avec photo + desc technique + durée + prix), panier client multi-services avec total sticky, et Schedule Matrix/Golden Hours générant des badges de disponibilité.",
       "reqIds": [],
       "status": "pending"
     }
