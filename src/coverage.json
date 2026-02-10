@@ -1,7 +1,7 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-10T22:21:58.466Z",
+  "generatedAt": "2026-02-10T22:48:06.817Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
@@ -11,8 +11,8 @@
     "implemented": 4,
     "items": [
       {
-        "id": "REQ-109",
-        "summary": "Fully overwrite `frontend/src/AppV1.jsx` with the user-provided V34 “ETHEREAL FLOW” code block, treating it as the complete app UI and preserving the provided layout, styling (Tailwind classes), local seed data (`DATA`), and interaction logic (Landing → Client feed → Pro studio) as given.",
+        "id": "REQ-113",
+        "summary": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the user-provided V35 “NEXUS PRIME” code block, preserving the code’s UI, layout, styling (Tailwind classes), local seed data (`INITIAL_SALONS`), imports, and interaction logic exactly as provided.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx"
@@ -22,21 +22,20 @@
         ]
       },
       {
-        "id": "REQ-110",
-        "summary": "Ensure the project compiles and runs after the V34 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved symbols, invalid JSX, duplicate exports) without changing the intended V34 UI, copy, or interaction behavior.",
+        "id": "REQ-114",
+        "summary": "Ensure the project compiles and runs after the V35 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate exports), without changing the intended V35 UI, copy, or interaction behavior.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx",
           "frontend/src/index.css"
         ],
         "matchedFiles": [
-          "frontend/src/AppV1.jsx",
-          "frontend/src/index.css"
+          "frontend/src/AppV1.jsx"
         ]
       },
       {
-        "id": "REQ-111",
-        "summary": "Make the Pro “Deploy” action reliably inject the newly created salon at the top of the in-memory `salons` list by preventing stale state closures in the V34 `handleDeploy` path (use a functional `setSalons(prev => [newSalon, ...prev])` update) while keeping the visible behavior identical (new salon appears at the top and the view switches to Client immediately).",
+        "id": "REQ-115",
+        "summary": "Preserve and verify the three V35 pillars in the running app (as implemented by the provided code): (1) real-time search filtering by salon name, city/location, and service name; (2) conversion-first cards showing an entry price (“À partir de”) and next available slot without opening details; (3) gamified Pro Studio with a visible “Profile quality” completion gauge driven by filled fields (name, bio, services, image) and a desktop split-screen preview.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx"
@@ -46,8 +45,8 @@
         ]
       },
       {
-        "id": "REQ-112",
-        "summary": "Do not modify `frontend/src/App.tsx` (it must remain the thin wrapper that renders `AppV1`) and do not change any frontend immutable entry files; the app must continue to mount through the existing Vite/React entry wiring.",
+        "id": "REQ-116",
+        "summary": "Make the Pro “Deploy/Mettre en Ligne” injection into the in-memory salon list reliable against stale React state closures while preserving visible behavior (new salon appears immediately at the top and the view switches to Client). If the provided V35 code uses a non-functional `setSalons([newS, ...salons])` update, convert it to an equivalent functional update form without changing the user-visible outcome.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx"
@@ -64,7 +63,6 @@
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
     "frontend/src/AppV1.jsx",
-    "frontend/src/index.css",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

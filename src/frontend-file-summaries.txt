@@ -22,7 +22,7 @@
   "frontend/src/utils/currency.ts": "Utility functions for formatting prices in CHF currency (formatCHF and formatCHFCompact).",
   "frontend/src/components/ProStudioCreator.tsx": "Midnight-themed gamified salon creation wizard with completion gauge, multi-step form (identity/services/team), backend-wired publish flow with non-blocking image upload using CSS animations instead of Framer Motion, and proper error handling for upload failures.",
   "backend/main.mo": "Complete reset to V1.0 - minimal Motoko backend with Swiss salon seed data (4 salons), basic getSalons/createSalon functions, and stable memory storage without authentication, bookings, or advanced features.",
-  "frontend/src/AppV1.jsx": "V34 \"ETHEREAL FLOW\" complete app with glass morphism design, magnetic navigation capsules, floating island bottom menu, and expandable salon cards using CSS animations instead of Framer Motion for compatibility with the existing package dependencies.",
+  "frontend/src/AppV1.jsx": "V35 \"NEXUS PRIME\" complete app with real-time search filtering by name/location/service, conversion-optimized salon cards showing verified badges, distance, next-slot, and entry price, plus gamified Pro Studio with profile quality gauge and desktop split-screen preview using functional state updates to prevent stale closures.",
   "frontend/src/utils/urlParams.ts": "Utility function to extract URL query parameters, specifically used by useActor.ts to retrieve the caffeineAdminToken for access control initialization.",
   "frontend/src/utils/auraGenerator.ts": "Local-only marketing text generator that creates salon \"Aura\" descriptions based on category, type, tags, and location using template-based heuristics without external API calls."
 }

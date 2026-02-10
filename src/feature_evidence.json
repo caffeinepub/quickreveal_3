@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-fully-overwrite-frontend-src-appv1-jsx-with-the-user-provided-v34-ethereal-flow-code-block-treating-it-as-the-complete-app-ui-and-preserving-the-provided-layout-styling-tailwind-classes-local-seed-data-data-and-interaction-logic-landing-client-feed-pro-studio-as-given",
-      "featureTitle": "Fully overwrite `frontend/src/AppV1.jsx` with the user-provided V34 “ETHEREAL FLOW” code block, treating it as the complete app UI and preserving the provided layout, styling (Tailwind classes), local seed data (`DATA`), and interaction logic (Landing → Client feed → Pro studio) as given.",
+      "featureId": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-user-provided-v35-nexus-prime-code-block-preserving-the-code-s-ui-layout-styling-tailwind-classes-local-seed-data-initial-salons-imports-and-interaction-logic-exactly-as-provided",
+      "featureTitle": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the user-provided V35 “NEXUS PRIME” code block, preserving the code’s UI, layout, styling (Tailwind classes), local seed data (`INITIAL_SALONS`), imports, and interaction logic exactly as provided.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -17,34 +17,13 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-109"
+        "REQ-113"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-project-compiles-and-runs-after-the-v34-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-unresolved-symbols-invalid-jsx-duplicate-exports-without-changing-the-intended-v34-ui-copy-or-interaction-behavior",
-      "featureTitle": "Ensure the project compiles and runs after the V34 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved symbols, invalid JSX, duplicate exports) without changing the intended V34 UI, copy, or interaction behavior.",
-      "files": [
-        "frontend/src/AppV1.jsx",
-        "frontend/src/index.css"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-110"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-make-the-pro-deploy-action-reliably-inject-the-newly-created-salon-at-the-top-of-the-in-memory-salons-list-by-preventing-stale-state-closures-in-the-v34-handledeploy-path-use-a-functional-setsalons-prev-newsalon-prev-update-while-keeping-the-visible-behavior-identical-new-salon-appears-at-the-top-and-the-view-switches-to-client-immediately",
-      "featureTitle": "Make the Pro “Deploy” action reliably inject the newly created salon at the top of the in-memory `salons` list by preventing stale state closures in the V34 `handleDeploy` path (use a functional `setSalons(prev => [newSalon, ...prev])` update) while keeping the visible behavior identical (new salon appears at the top and the view switches to Client immediately).",
+      "featureId": "feature-ensure-the-project-compiles-and-runs-after-the-v35-appv1-jsx-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-unresolved-identifiers-invalid-jsx-duplicate-exports-without-changing-the-intended-v35-ui-copy-or-interaction-behavior",
+      "featureTitle": "Ensure the project compiles and runs after the V35 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate exports), without changing the intended V35 UI, copy, or interaction behavior.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -58,13 +37,13 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-111"
+        "REQ-114"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-do-not-modify-frontend-src-app-tsx-it-must-remain-the-thin-wrapper-that-renders-appv1-and-do-not-change-any-frontend-immutable-entry-files-the-app-must-continue-to-mount-through-the-existing-vite-react-entry-wiring",
-      "featureTitle": "Do not modify `frontend/src/App.tsx` (it must remain the thin wrapper that renders `AppV1`) and do not change any frontend immutable entry files; the app must continue to mount through the existing Vite/React entry wiring.",
+      "featureId": "feature-preserve-and-verify-the-three-v35-pillars-in-the-running-app-as-implemented-by-the-provided-code-1-real-time-search-filtering-by-salon-name-city-location-and-service-name-2-conversion-first-cards-showing-an-entry-price-partir-de-and-next-available-slot-without-opening-details-3-gamified-pro-studio-with-a-visible-profile-quality-completion-gauge-driven-by-filled-fields-name-bio-services-image-and-a-desktop-split-screen-preview",
+      "featureTitle": "Preserve and verify the three V35 pillars in the running app (as implemented by the provided code): (1) real-time search filtering by salon name, city/location, and service name; (2) conversion-first cards showing an entry price (“À partir de”) and next available slot without opening details; (3) gamified Pro Studio with a visible “Profile quality” completion gauge driven by filled fields (name, bio, services, image) and a desktop split-screen preview.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -78,7 +57,27 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-112"
+        "REQ-115"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-make-the-pro-deploy-mettre-en-ligne-injection-into-the-in-memory-salon-list-reliable-against-stale-react-state-closures-while-preserving-visible-behavior-new-salon-appears-immediately-at-the-top-and-the-view-switches-to-client-if-the-provided-v35-code-uses-a-non-functional-setsalons-news-salons-update-convert-it-to-an-equivalent-functional-update-form-without-changing-the-user-visible-outcome",
+      "featureTitle": "Make the Pro “Deploy/Mettre en Ligne” injection into the in-memory salon list reliable against stale React state closures while preserving visible behavior (new salon appears immediately at the top and the view switches to Client). If the provided V35 code uses a non-functional `setSalons([newS, ...salons])` update, convert it to an equivalent functional update form without changing the user-visible outcome.",
+      "files": [
+        "frontend/src/AppV1.jsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
+      ],
+      "testIds": [
+        "REQ-116"
       ],
       "confidence": "high"
     }

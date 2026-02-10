@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 59,
-  "summary": "V34 « ETHEREAL FLOW » : remplacer intégralement `frontend/src/AppV1.jsx` par le code V34 fourni (verbatim). Objectif : sophistication conceptuelle maximale + facilité d’utilisation absolue avec design « Glass & Air » (transparence/blur/espace négatif), navigation capsules sticky + île flottante en bas, interactions « soft touch » (carte qui s’épanouit en modal full-screen, CTA réservation toujours sous le pouce) et Studio Pro en split-screen avec preview client.",
+  "projectStateVersion": 61,
+  "summary": "V35 « NEXUS PRIME » : remplacer intégralement `frontend/src/AppV1.jsx` par le code V35 fourni (verbatim). Objectif : refonte totale orientée utilité/performance/sophistication avec (1) recherche temps réel nom/ville/service + badges Vérifié/distance, (2) cartes conversion (prix d’appel + prochain créneau visibles) + tunnel réservation fluide, (3) Studio Pro gamifié avec jauge « Qualité du Profil » et preview split-screen.",
   "architectural_notes": [
     "RESET complet : écrasement total du backend et du frontend, considéré comme nouvelle V1.0 officielle.",
     "Backend Motoko réduit à un modèle Salon/Service/Socials avec `stable var salons` et endpoints `getSalons` (query) + `createSalon` (shared); seed de 4 salons suisses au démarrage (si salons vide).",
@@ -788,6 +788,38 @@
         "REQ-112"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-user-provided-v35-nexus-prime-code-block-preserving-the-code-s-ui-layout-styling-tailwind-classes-local-seed-data-initial-salons-imports-and-interaction-logic-exactly-as-provided",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the user-provided V35 “NEXUS PRIME” code block, preserving the code’s UI, layout, styling (Tailwind classes), local seed data (`INITIAL_SALONS`), imports, and interaction logic exactly as provided.",
+      "reqIds": [
+        "REQ-113"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v35-appv1-jsx-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-unresolved-identifiers-invalid-jsx-duplicate-exports-without-changing-the-intended-v35-ui-copy-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V35 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate exports), without changing the intended V35 UI, copy, or interaction behavior.",
+      "reqIds": [
+        "REQ-114"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-three-v35-pillars-in-the-running-app-as-implemented-by-the-provided-code-1-real-time-search-filtering-by-salon-name-city-location-and-service-name-2-conversion-first-cards-showing-an-entry-price-partir-de-and-next-available-slot-without-opening-details-3-gamified-pro-studio-with-a-visible-profile-quality-completion-gauge-driven-by-filled-fields-name-bio-services-image-and-a-desktop-split-screen-preview",
+      "title": "Preserve and verify the three V35 pillars in the running app (as implemented by the provided code): (1) real-time search filtering by salon name, city/location, and service name; (2) conversion-first cards showing an entry price (“À partir de”) and next available slot without opening details; (3) gamified Pro Studio with a visible “Profile quality” completion gauge driven by filled fields (name, bio, services, image) and a desktop split-screen preview.",
+      "reqIds": [
+        "REQ-115"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-the-pro-deploy-mettre-en-ligne-injection-into-the-in-memory-salon-list-reliable-against-stale-react-state-closures-while-preserving-visible-behavior-new-salon-appears-immediately-at-the-top-and-the-view-switches-to-client-if-the-provided-v35-code-uses-a-non-functional-setsalons-news-salons-update-convert-it-to-an-equivalent-functional-update-form-without-changing-the-user-visible-outcome",
+      "title": "Make the Pro “Deploy/Mettre en Ligne” injection into the in-memory salon list reliable against stale React state closures while preserving visible behavior (new salon appears immediately at the top and the view switches to Client). If the provided V35 code uses a non-functional `setSalons([newS, ...salons])` update, convert it to an equivalent functional update form without changing the user-visible outcome.",
+      "reqIds": [
+        "REQ-116"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -1108,6 +1140,12 @@
     {
       "id": "AR-65",
       "summary": "V34 « ETHEREAL FLOW » : overwrite total de `frontend/src/AppV1.jsx` avec le code V34 fourni (verbatim) — design « Glass & Air », filtres en capsules en haut, navigation « Floating Island » en bas, cartes qui expand en modal, CTA « Réserver » sticky, Studio Pro split-screen avec preview.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-66",
+      "summary": "V35 « NEXUS PRIME » : overwrite total de `frontend/src/AppV1.jsx` avec le code V35 fourni (verbatim) + appliquer uniquement les ajustements mécaniques nécessaires pour compiler, sans changer design/UX/logic. Inclut recherche temps réel (nom/ville/service), cartes avec prix d’appel + prochain créneau, badges Vérifié/distance, modal détail + CTA Réserver, et Studio Pro gamifié (jauge Qualité du Profil) avec preview split-screen.",
       "reqIds": [],
       "status": "pending"
     }

@@ -1,54 +1,14 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-10T22:21:58.459Z",
-  "summary": "Diff shows a large replacement of `frontend/src/AppV1.jsx` consistent with an “ETHEREAL” UI and updates to global CSS utilities/animations. However, because `AppV1.jsx` is truncated in the diff, key acceptance-criteria behaviors (full flow, overlays, Pro deploy stale-closure fix) cannot be verified from the provided evidence. Two non-requested metadata/state files were also modified.",
-  "missing_requirements": [
-    {
-      "id": "REQ-109",
-      "requirement": "Fully overwrite `frontend/src/AppV1.jsx` with the user-provided V34 code block end-to-end (not partial merge) and preserve the full V34 flow/behaviors (Landing → Client feed with sticky capsules + floating island → detail overlay with shared layoutId transitions + reachable booking CTA → Pro split studio).",
-      "reason": "`frontend/src/AppV1.jsx` is truncated in the diff, so it is not possible to confirm end-to-end overwrite nor the presence of the specified V34 flow elements (landing boot view, capsule filters + floating island nav, shared `layoutId` transitions, booking CTA placement, and split Pro studio behavior).",
-      "evidence": [
-        "frontend/src/AppV1.jsx (truncated)"
-      ]
-    },
-    {
-      "id": "REQ-111",
-      "requirement": "Fix Pro “Deploy” to use functional state update `setSalons(prev => [newSalon, ...prev])` to prevent stale closures, while switching view to Client immediately.",
-      "reason": "The diff excerpt does not include the Pro studio `handleDeploy` implementation or any `setSalons(prev => ...)` evidence, so the stale-closure prevention cannot be verified.",
-      "evidence": [
-        "frontend/src/AppV1.jsx (truncated)"
-      ]
-    }
-  ],
-  "hallucinated_features": [
-    {
-      "description": "Modified `frontend-file-summaries.txt` (repository documentation/summary file) even though the BuildRequest only specified UI replacement and minimal mechanical compile fixes.",
-      "reason": "No requirement requests updating file summary documentation; it is outside the specified target (`AppV1.jsx`) and minimal compile/run fixes.",
-      "evidence": [
-        "frontend-file-summaries.txt"
-      ]
-    },
-    {
-      "description": "Modified `project_state.json` even though the BuildRequest did not request changes to project state metadata.",
-      "reason": "Not part of requested UI overwrite/compile fixes; appears to be internal tracking metadata.",
-      "evidence": [
-        "project_state.json"
-      ]
-    },
-    {
-      "description": "Added/expanded extensive global theme tokens (OKLCH variables) and multiple animation keyframes/utility classes in `frontend/src/index.css` beyond the explicitly mentioned `.hide-scrollbar` continuity requirement.",
-      "reason": "BuildRequest did not ask to redesign global theming or add new animations; only required that `.hide-scrollbar` continues to work. These CSS additions may be unrequested unless they were explicitly part of the provided V34 code (not shown in the diff context).",
-      "evidence": [
-        "frontend/src/index.css"
-      ]
-    }
-  ],
-  "confidence": 0.62,
+  "generatedAt": "2026-02-10T22:48:06.811Z",
+  "summary": "Diff shows modifications to `frontend/src/AppV1.jsx` introducing V35-style local seed data (`INITIAL_SALONS`) and new UI components (e.g., `StatusBadge`, `NexusCard`) with `lucide-react` icons. However, the `AppV1.jsx` diff is truncated, so the full V35 flow, search behavior, Pro Studio deploy logic, and stale-closure fix cannot be verified from the provided evidence.",
+  "missing_requirements": [],
+  "hallucinated_features": [],
+  "confidence": 0.46,
   "changed_files": [
     "frontend-file-summaries.txt",
     "frontend/src/AppV1.jsx",
-    "frontend/src/index.css",
     "project_state.json"
   ]
 }

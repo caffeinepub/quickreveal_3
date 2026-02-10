@@ -1,93 +1,90 @@
 {
   "kind": "build_request",
-  "title": "Replace AppV1.jsx with V34 “ETHEREAL FLOW” UI (Glass & Air, capsules + floating island, soft-touch expand, Pro split studio)",
+  "title": "V35 “NEXUS PRIME” full AppV1 overwrite (utility/performance-focused UI)",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-109",
-      "text": "Fully overwrite `frontend/src/AppV1.jsx` with the user-provided V34 “ETHEREAL FLOW” code block, treating it as the complete app UI and preserving the provided layout, styling (Tailwind classes), local seed data (`DATA`), and interaction logic (Landing → Client feed → Pro studio) as given.",
+      "id": "REQ-113",
+      "text": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the user-provided V35 “NEXUS PRIME” code block, preserving the code’s UI, layout, styling (Tailwind classes), local seed data (`INITIAL_SALONS`), imports, and interaction logic exactly as provided.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "INSTRUCTION : Remplace INTÉGRALEMENT le code de `frontend/src/AppV1.jsx`.\n\nCODE V34 :\n\nimport React, { useState, useEffect, useRef } from 'react';\n..."
+          "Efface tout le contenu actuel de `frontend/src/AppV1.jsx` et remplace-le par le code ci-dessous."
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` contents are replaced end-to-end with the provided V34 code (not a partial merge).",
-        "The app boots into the V34 flow (landing view visible first, with actions to enter Client or Pro).",
-        "The Client view shows the top sticky capsule filters and the bottom floating island navigation as implemented in V34.",
-        "Clicking a salon card expands into the full-screen detail overlay with shared `layoutId` transitions, and the booking CTA remains reachable at the bottom as implemented in V34.",
-        "The Pro studio view renders the split editor/preview experience on desktop and behaves as provided in V34."
+        "`frontend/src/AppV1.jsx` is a full overwrite and contains the V35 code as provided (no refactors or feature additions).",
+        "The app boots into the V35 flow (Landing → Client search/feed → Pro studio) via the existing wrapper `frontend/src/App.tsx`."
       ]
     },
     {
-      "id": "REQ-110",
-      "text": "Ensure the project compiles and runs after the V34 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved symbols, invalid JSX, duplicate exports) without changing the intended V34 UI, copy, or interaction behavior.",
+      "id": "REQ-114",
+      "text": "Ensure the project compiles and runs after the V35 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate exports), without changing the intended V35 UI, copy, or interaction behavior.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-2"
         ],
         "quotes": [
-          "Use this as the entire app UI and replace `frontend/src/AppV1.jsx`."
+          "en appliquant uniquement les ajustements mécaniques nécessaires pour que le projet compile sans modifier le design, la logique ou les interactions."
         ]
       },
       "acceptanceCriteria": [
-        "`npm run build` (or the repository’s standard build) succeeds without code changes outside minimal mechanical fixes.",
-        "No runtime errors occur on initial load (Landing → Client → Pro navigation is usable).",
-        "The existing `.hide-scrollbar` utility continues to work for the horizontal capsule scroller (no visible scrollbars in supported browsers)."
+        "`npm`/Vite build succeeds with no unresolved symbol/import errors related to `framer-motion` or `lucide-react` usage in the V35 file.",
+        "Any required CSS utilities used by V35 (e.g., existing `.hide-scrollbar`) remain available; add only missing utilities if the build/UI would otherwise break.",
+        "No changes are made to immutable frontend entry files."
       ]
     },
     {
-      "id": "REQ-111",
-      "text": "Make the Pro “Deploy” action reliably inject the newly created salon at the top of the in-memory `salons` list by preventing stale state closures in the V34 `handleDeploy` path (use a functional `setSalons(prev => [newSalon, ...prev])` update) while keeping the visible behavior identical (new salon appears at the top and the view switches to Client immediately).",
+      "id": "REQ-115",
+      "text": "Preserve and verify the three V35 pillars in the running app (as implemented by the provided code): (1) real-time search filtering by salon name, city/location, and service name; (2) conversion-first cards showing an entry price (“À partir de”) and next available slot without opening details; (3) gamified Pro Studio with a visible “Profile quality” completion gauge driven by filled fields (name, bio, services, image) and a desktop split-screen preview.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "const handleDeploy = (data) => {\n      if(data) {\n          const s = { ...data, id: Date.now(), rating: \"5.0\", reviews: 0 };\n          setSalons([s, ...salons]);\n          setView('client');\n      }\n  };"
+          "LES 3 PILIERS DE LA V35 :\n1.  **INTELLIGENCE INSTANTANÉE (CLIENT)** : Ajout d'une vraie barre de recherche (Search) qui filtre en temps réel par nom, ville ou service. Ajout de badges \"Vérifié\" et de la distance réelle.\n2.  **CONVERSION OPTIMISÉE** : Les cartes affichent le prix d'appel et le prochain créneau sans avoir besoin de cliquer. Le tunnel de réservation est fluide et rassurant.\n3.  **STUDIO PRO GAMIFIÉ** : L'interface créateur inclut une jauge de \"Qualité du Profil\" pour inciter les pros à remplir toutes les infos (Bio, Photo, Services)."
         ]
       },
       "acceptanceCriteria": [
-        "After clicking “Deploy” in Pro studio, the new salon appears immediately at the top of the Client feed without requiring refresh.",
-        "Repeated deploys in a single session do not intermittently lose previously deployed salons due to stale state.",
-        "The view still switches to Client immediately after deploy, matching V34 behavior."
+        "Typing into the search input filters the salon list immediately by matching salon name OR salon location OR any service name (case-insensitive).",
+        "Each salon card shows: verified badge when `salon.verified === true`, a distance string from `salon.distance`, a visible next-slot badge from `salon.nextSlot`, and an entry price computed from the minimum service price.",
+        "Pro Studio shows a completion/quality gauge that updates as the user fills name, bio, adds at least one service, and sets an image; on desktop, a right-side preview panel renders the card preview."
       ]
     },
     {
-      "id": "REQ-112",
-      "text": "Do not modify `frontend/src/App.tsx` (it must remain the thin wrapper that renders `AppV1`) and do not change any frontend immutable entry files; the app must continue to mount through the existing Vite/React entry wiring.",
+      "id": "REQ-116",
+      "text": "Make the Pro “Deploy/Mettre en Ligne” injection into the in-memory salon list reliable against stale React state closures while preserving visible behavior (new salon appears immediately at the top and the view switches to Client). If the provided V35 code uses a non-functional `setSalons([newS, ...salons])` update, convert it to an equivalent functional update form without changing the user-visible outcome.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "Remplace INTÉGRALEMENT le code de `frontend/src/AppV1.jsx`."
+          "const handleDeploy = (data) => {\n      if(data) {\n          const newS = { ...data, id: Date.now(), verified: true };\n          setSalons([newS, ...salons]);\n          setView('client');\n      }\n  };"
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/src/App.tsx` remains a simple wrapper that renders `AppV1` and is unchanged.",
-        "No files under the platform’s immutable frontend paths are modified.",
-        "The application still mounts and renders through the existing entrypoint setup."
+        "After deploying a new salon from Pro Studio, the salon appears at the top of the Client results list immediately without requiring a refresh.",
+        "Repeated rapid deploy actions do not intermittently lose newly created salons due to stale state.",
+        "The post-deploy navigation remains identical (switches to Client view)."
       ]
     }
   ],
   "constraints": [
-    "Frontend immutable paths must not be edited: `frontend/src/hooks/useInternetIdentity.ts`, `frontend/src/hooks/useInternetIdentity.tsx`, `frontend/src/hooks/useActor.ts`, `frontend/src/main.tsx`, and anything under `frontend/src/components/ui`.",
-    "Keep `frontend/src/App.tsx` as the thin wrapper that renders `AppV1`.",
-    "Apply only minimal mechanical adjustments needed to compile/run; do not refactor or redesign the provided V34 UI."
+    "Do not modify `frontend/src/App.tsx`; it must remain the thin wrapper that renders `AppV1`.",
+    "Do not modify any frontend immutable entry files listed in SYSTEM_CONTEXT.",
+    "Keep the V35 code’s UI/UX/design and interaction behavior unchanged; only apply minimal mechanical fixes needed to compile/run and the minimal reliability fix for stale state closures in the deploy path if applicable.",
+    "No backend changes are required or requested for this V35 local-state UI update."
   ],
   "nonGoals": [
-    "Do not add or re-enable backend integration, React Query data loading, or Internet Identity authentication unless it exists in the provided V34 code.",
-    "Do not implement persistence beyond in-memory state (no backend calls, no local/session storage) unless explicitly present in V34.",
-    "Do not change product copy/text from the V34 code (even if it is not English).",
-    "Do not introduce new features beyond what is present in the V34 code block (e.g., real bookings backend, payments, notifications)."
+    "Do not wire the V35 UI to Motoko backend APIs, React Query, Internet Identity, or any persistence layer.",
+    "Do not translate or rewrite the V35 UI strings provided in the code block (the request is to paste the code as-is).",
+    "Do not add new features beyond what exists in the provided V35 code (e.g., real geolocation, server-side search, or real booking persistence)."
   ],
   "imageRequirements": {
     "required": [],

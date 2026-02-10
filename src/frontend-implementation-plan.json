@@ -1,76 +1,73 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Overwrite AppV1 with V34 “ETHEREAL FLOW” UI and ensure it compiles",
+  "title": "V35 “NEXUS PRIME” AppV1 full overwrite + compile-safe mechanical fixes (frontend-only)",
   "requirements": [
     {
-      "id": "REQ-109",
-      "summary": "Fully overwrite frontend/src/AppV1.jsx with the provided V34 “ETHEREAL FLOW” UI code (layout, Tailwind styling, local DATA, and Landing→Client→Pro flow).",
+      "id": "REQ-113",
+      "summary": "Fully overwrite frontend/src/AppV1.jsx with the provided V35 “NEXUS PRIME” code so the app boots into the V35 flow via the existing App.tsx wrapper.",
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` contents are replaced end-to-end with the provided V34 code (not a partial merge).",
-        "The app boots into the V34 flow (landing view visible first, with actions to enter Client or Pro).",
-        "The Client view shows the top sticky capsule filters and the bottom floating island navigation as implemented in V34.",
-        "Clicking a salon card expands into the full-screen detail overlay with shared `layoutId` transitions, and the booking CTA remains reachable at the bottom as implemented in V34.",
-        "The Pro studio view renders the split editor/preview experience on desktop and behaves as provided in V34."
+        "`frontend/src/AppV1.jsx` is a full overwrite and contains the V35 code as provided (no refactors or feature additions).",
+        "The app boots into the V35 flow (Landing → Client search/feed → Pro studio) via the existing wrapper `frontend/src/App.tsx`."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Replace the file contents entirely by pasting the user-provided V34 “ETHEREAL FLOW” code block as-is (preserve its Tailwind classes, local seed data/DATA, and interaction logic for Landing→Client feed→Pro studio)."
+          "description": "Completely replace the current file contents with the user-provided V35 “NEXUS PRIME” code block exactly as provided (preserve UI/layout/styling Tailwind classes, imports, local seed data like `INITIAL_SALONS`, and interaction logic). Ensure the default export remains the AppV1 component expected by `frontend/src/App.tsx` without modifying `frontend/src/App.tsx`."
         }
       ]
     },
     {
-      "id": "REQ-110",
-      "summary": "Apply only minimal mechanical fixes required for this repo so the V34 overwrite compiles/runs without altering intended UI/copy/behavior, and keep the existing .hide-scrollbar utility working.",
+      "id": "REQ-114",
+      "summary": "Apply only minimal mechanical fixes required for this repo so V35 compiles/runs, without changing V35 UI copy or behaviors and without touching immutable entry files.",
       "acceptanceCriteria": [
-        "`npm run build` (or the repository’s standard build) succeeds without code changes outside minimal mechanical fixes.",
-        "No runtime errors occur on initial load (Landing → Client → Pro navigation is usable).",
-        "The existing `.hide-scrollbar` utility continues to work for the horizontal capsule scroller (no visible scrollbars in supported browsers)."
+        "`npm`/Vite build succeeds with no unresolved symbol/import errors related to `framer-motion` or `lucide-react` usage in the V35 file.",
+        "Any required CSS utilities used by V35 (e.g., existing `.hide-scrollbar`) remain available; add only missing utilities if the build/UI would otherwise break.",
+        "No changes are made to immutable frontend entry files."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Make minimal mechanical adjustments needed for this repository to compile and run (e.g., fix/import missing symbols, resolve invalid JSX, remove duplicate exports, ensure required dependencies are imported) while keeping the intended V34 UI, copy, and interactions unchanged."
+          "description": "Make minimal, mechanical, compilation-only adjustments after the V35 paste as needed for this repository (e.g., fix missing/incorrect imports, resolve undefined identifiers, correct invalid JSX, remove duplicate exports). Do not alter intended V35 UI text, layout, styling, or interactions."
         },
         {
           "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Verify `.hide-scrollbar` remains present and compatible with the V34 capsule scroller usage; if V34 introduces any required global utility classes that are purely mechanical for rendering (not redesign), add them here without changing the visual intent."
+          "description": "If the pasted V35 code depends on any custom Tailwind utilities beyond what already exists (e.g., `.hide-scrollbar`), add only the missing minimal utility definitions needed to prevent broken UI/behavior; keep existing utilities intact."
         }
       ]
     },
     {
-      "id": "REQ-111",
-      "summary": "Prevent stale state closures in the V34 Pro “Deploy” action so newly created salons reliably prepend to the in-memory salons list and switch back to Client immediately.",
+      "id": "REQ-115",
+      "summary": "Ensure the three V35 pillars work as implemented by the provided code (instant search, conversion-first cards, and gamified Pro Studio with quality gauge + desktop split preview).",
       "acceptanceCriteria": [
-        "After clicking “Deploy” in Pro studio, the new salon appears immediately at the top of the Client feed without requiring refresh.",
-        "Repeated deploys in a single session do not intermittently lose previously deployed salons due to stale state.",
-        "The view still switches to Client immediately after deploy, matching V34 behavior."
+        "Typing into the search input filters the salon list immediately by matching salon name OR salon location OR any service name (case-insensitive).",
+        "Each salon card shows: verified badge when `salon.verified === true`, a distance string from `salon.distance`, a visible next-slot badge from `salon.nextSlot`, and an entry price computed from the minimum service price.",
+        "Pro Studio shows a completion/quality gauge that updates as the user fills name, bio, adds at least one service, and sets an image; on desktop, a right-side preview panel renders the card preview."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Update the V34 `handleDeploy` path to use a functional state update (`setSalons(prev => [newSalon, ...prev])`) to avoid stale closures, while preserving identical visible behavior (prepend new salon + immediate switch to Client)."
+          "description": "Verify the pasted V35 implementations of: (1) real-time case-insensitive search across salon name, location/city, and service names; (2) card UI showing verified badge, distance, next-slot, and an entry price derived from min service price; (3) Pro Studio profile-quality gauge driven by filled fields and a desktop split-screen preview. Apply only minimal correctness fixes if any of these behaviors break due to wiring/identifier/import issues introduced during the overwrite—no feature additions or UX changes."
         }
       ]
     },
     {
-      "id": "REQ-112",
-      "summary": "Keep App.tsx and immutable frontend entry/hook/ui paths unchanged; ensure V34 continues to mount via existing Vite/React wiring through App.tsx rendering AppV1.",
+      "id": "REQ-116",
+      "summary": "Prevent stale React state closures in the Pro Deploy/Mettre en Ligne path while preserving visible behavior (prepend new salon, then switch to Client view).",
       "acceptanceCriteria": [
-        "`frontend/src/App.tsx` remains a simple wrapper that renders `AppV1` and is unchanged.",
-        "No files under the platform’s immutable frontend paths are modified.",
-        "The application still mounts and renders through the existing entrypoint setup."
+        "After deploying a new salon from Pro Studio, the salon appears at the top of the Client results list immediately without requiring a refresh.",
+        "Repeated rapid deploy actions do not intermittently lose newly created salons due to stale state.",
+        "The post-deploy navigation remains identical (switches to Client view)."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Ensure the overwritten V34 file continues to export the AppV1-compatible default React component expected by `frontend/src/App.tsx` (do not modify App.tsx or any immutable entry/hook/ui files)."
+          "description": "In the V35 deploy handler, ensure salon insertion uses a functional state update (e.g., `setSalons(prev => [newSalon, ...prev])`) if the provided code uses a closure-prone pattern like `setSalons([newS, ...salons])`. Keep the user-visible outcome identical: the new salon appears immediately at the top and the view switches to Client."
         }
       ]
     }
