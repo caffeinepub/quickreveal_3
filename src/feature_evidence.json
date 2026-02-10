@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-completely-overwrite-frontend-src-appv1-jsx-with-the-exact-v26-quantum-reality-code-provided-by-the-user-treating-it-as-the-full-app-ui-implementation",
-      "featureTitle": "Completely overwrite `frontend/src/AppV1.jsx` with the exact V26 “QUANTUM REALITY” code provided by the user, treating it as the full app UI implementation.",
+      "featureId": "feature-fully-overwrite-frontend-src-appv1-jsx-with-the-user-provided-v34-ethereal-flow-code-block-treating-it-as-the-complete-app-ui-and-preserving-the-provided-layout-styling-tailwind-classes-local-seed-data-data-and-interaction-logic-landing-client-feed-pro-studio-as-given",
+      "featureTitle": "Fully overwrite `frontend/src/AppV1.jsx` with the user-provided V34 “ETHEREAL FLOW” code block, treating it as the complete app UI and preserving the provided layout, styling (Tailwind classes), local seed data (`DATA`), and interaction logic (Landing → Client feed → Pro studio) as given.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -17,15 +17,16 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-94"
+        "REQ-109"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-project-compiles-and-runs-after-the-v26-overwrite-by-applying-only-minimal-mechanical-fixes-required-for-this-repository-e-g-missing-incorrect-imports-undefined-identifiers-invalid-jsx-without-changing-the-intended-ui-layout-styling-copy-or-interaction-behavior-of-the-provided-v26-code",
-      "featureTitle": "Ensure the project compiles and runs after the V26 overwrite by applying only minimal mechanical fixes required for this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX), without changing the intended UI layout, styling, copy, or interaction behavior of the provided V26 code.",
+      "featureId": "feature-ensure-the-project-compiles-and-runs-after-the-v34-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-unresolved-symbols-invalid-jsx-duplicate-exports-without-changing-the-intended-v34-ui-copy-or-interaction-behavior",
+      "featureTitle": "Ensure the project compiles and runs after the V34 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved symbols, invalid JSX, duplicate exports) without changing the intended V34 UI, copy, or interaction behavior.",
       "files": [
-        "frontend/src/AppV1.jsx"
+        "frontend/src/AppV1.jsx",
+        "frontend/src/index.css"
       ],
       "components": [
         "authorization@4.0.0",
@@ -37,13 +38,13 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-95"
+        "REQ-110"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-implement-verify-the-v26-singularity-entry-experience-a-black-entry-screen-with-a-pulsing-orb-that-requires-a-sustained-press-mouse-or-touch-to-enter-and-triggers-an-aspiration-transition-when-entry-completes",
-      "featureTitle": "Implement/verify the V26 “Singularity Entry” experience: a black entry screen with a pulsing orb that requires a sustained press (mouse or touch) to enter, and triggers an “aspiration” transition when entry completes.",
+      "featureId": "feature-make-the-pro-deploy-action-reliably-inject-the-newly-created-salon-at-the-top-of-the-in-memory-salons-list-by-preventing-stale-state-closures-in-the-v34-handledeploy-path-use-a-functional-setsalons-prev-newsalon-prev-update-while-keeping-the-visible-behavior-identical-new-salon-appears-at-the-top-and-the-view-switches-to-client-immediately",
+      "featureTitle": "Make the Pro “Deploy” action reliably inject the newly created salon at the top of the in-memory `salons` list by preventing stale state closures in the V34 `handleDeploy` path (use a functional `setSalons(prev => [newSalon, ...prev])` update) while keeping the visible behavior identical (new salon appears at the top and the view switches to Client immediately).",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -57,13 +58,13 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-96"
+        "REQ-111"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-implement-verify-the-v26-hyper-reality-feed-behavior-salons-render-as-full-screen-windows-scrolling-between-them-uses-spring-like-motion-and-images-subtly-zoom-in-response-to-scroll-progression",
-      "featureTitle": "Implement/verify the V26 “Hyper-Reality Feed” behavior: salons render as full-screen windows, scrolling between them uses spring-like motion, and images subtly zoom in response to scroll progression.",
+      "featureId": "feature-do-not-modify-frontend-src-app-tsx-it-must-remain-the-thin-wrapper-that-renders-appv1-and-do-not-change-any-frontend-immutable-entry-files-the-app-must-continue-to-mount-through-the-existing-vite-react-entry-wiring",
+      "featureTitle": "Do not modify `frontend/src/App.tsx` (it must remain the thin wrapper that renders `AppV1`) and do not change any frontend immutable entry files; the app must continue to mount through the existing Vite/React entry wiring.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -77,47 +78,7 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-97"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-verify-the-v26-hud-heads-up-display-overlays-floating-bio-price-contact-surfaces-are-presented-as-frosted-glass-panels-and-visually-react-on-hover-desktop-while-remaining-usable-on-touch-devices",
-      "featureTitle": "Implement/verify the V26 HUD (Heads-Up Display) overlays: floating bio/price/contact surfaces are presented as frosted-glass panels and visually react on hover (desktop) while remaining usable on touch devices.",
-      "files": [
-        "frontend/src/AppV1.jsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-98"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-implement-verify-the-v26-architect-mode-creator-requirements-cyber-futuristic-creator-ui-with-a-real-time-revenue-simulator-that-increases-as-services-are-added-and-a-dimension-switch-to-instantly-toggle-setup-preview",
-      "featureTitle": "Implement/verify the V26 Architect Mode (Creator) requirements: cyber-futuristic creator UI with a real-time revenue simulator that increases as services are added, and a “Dimension” switch to instantly toggle Setup ↔ Preview.",
-      "files": [
-        "frontend/src/AppV1.jsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-99"
+        "REQ-112"
       ],
       "confidence": "high"
     }

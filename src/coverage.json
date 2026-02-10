@@ -1,18 +1,18 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-07T01:59:59.204Z",
+  "generatedAt": "2026-02-10T22:21:58.466Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 6,
-    "implemented": 6,
+    "total": 4,
+    "implemented": 4,
     "items": [
       {
-        "id": "REQ-94",
-        "summary": "Completely overwrite `frontend/src/AppV1.jsx` with the exact V26 “QUANTUM REALITY” code provided by the user, treating it as the full app UI implementation.",
+        "id": "REQ-109",
+        "summary": "Fully overwrite `frontend/src/AppV1.jsx` with the user-provided V34 “ETHEREAL FLOW” code block, treating it as the complete app UI and preserving the provided layout, styling (Tailwind classes), local seed data (`DATA`), and interaction logic (Landing → Client feed → Pro studio) as given.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx"
@@ -22,55 +22,32 @@
         ]
       },
       {
-        "id": "REQ-95",
-        "summary": "Ensure the project compiles and runs after the V26 overwrite by applying only minimal mechanical fixes required for this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX), without changing the intended UI layout, styling, copy, or interaction behavior of the provided V26 code.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/AppV1.jsx",
-          "frontend/src/index.css"
-        ],
-        "matchedFiles": [
-          "frontend/src/AppV1.jsx"
-        ]
-      },
-      {
-        "id": "REQ-96",
-        "summary": "Implement/verify the V26 “Singularity Entry” experience: a black entry screen with a pulsing orb that requires a sustained press (mouse or touch) to enter, and triggers an “aspiration” transition when entry completes.",
+        "id": "REQ-110",
+        "summary": "Ensure the project compiles and runs after the V34 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved symbols, invalid JSX, duplicate exports) without changing the intended V34 UI, copy, or interaction behavior.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx",
           "frontend/src/index.css"
         ],
         "matchedFiles": [
-          "frontend/src/AppV1.jsx"
-        ]
-      },
-      {
-        "id": "REQ-97",
-        "summary": "Implement/verify the V26 “Hyper-Reality Feed” behavior: salons render as full-screen windows, scrolling between them uses spring-like motion, and images subtly zoom in response to scroll progression.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/AppV1.jsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/AppV1.jsx"
-        ]
-      },
-      {
-        "id": "REQ-98",
-        "summary": "Implement/verify the V26 HUD (Heads-Up Display) overlays: floating bio/price/contact surfaces are presented as frosted-glass panels and visually react on hover (desktop) while remaining usable on touch devices.",
-        "status": "implemented",
-        "plannedFiles": [
           "frontend/src/AppV1.jsx",
           "frontend/src/index.css"
+        ]
+      },
+      {
+        "id": "REQ-111",
+        "summary": "Make the Pro “Deploy” action reliably inject the newly created salon at the top of the in-memory `salons` list by preventing stale state closures in the V34 `handleDeploy` path (use a functional `setSalons(prev => [newSalon, ...prev])` update) while keeping the visible behavior identical (new salon appears at the top and the view switches to Client immediately).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/AppV1.jsx"
         ],
         "matchedFiles": [
           "frontend/src/AppV1.jsx"
         ]
       },
       {
-        "id": "REQ-99",
-        "summary": "Implement/verify the V26 Architect Mode (Creator) requirements: cyber-futuristic creator UI with a real-time revenue simulator that increases as services are added, and a “Dimension” switch to instantly toggle Setup ↔ Preview.",
+        "id": "REQ-112",
+        "summary": "Do not modify `frontend/src/App.tsx` (it must remain the thin wrapper that renders `AppV1`) and do not change any frontend immutable entry files; the app must continue to mount through the existing Vite/React entry wiring.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx"
@@ -87,6 +64,7 @@
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
     "frontend/src/AppV1.jsx",
+    "frontend/src/index.css",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

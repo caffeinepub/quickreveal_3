@@ -1,14 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Fully replace the current `AppV1` UI with the user-provided V26 “QUANTUM REALITY” experience, ensuring it compiles and runs as a local-state demo.
+**Goal:** Replace the current `AppV1.jsx` UI with the provided V34 “ETHEREAL FLOW” experience while keeping the app compiling/running and preserving the existing mount/wrapper setup.
 
 **Planned changes:**
-- Overwrite `frontend/src/AppV1.jsx` entirely with the user-provided V26 code as the full UI implementation (not merged with prior versions).
-- Apply only minimal mechanical fixes needed for this repository so the V26 code compiles/runs (e.g., imports, undefined identifiers, JSX validity) without altering intended UI/layout/styling/copy/behavior.
-- Implement/verify the V26 “Singularity Entry” flow: black screen with pulsing orb, sustained press to charge entry, release resets, and an aspiration-style transition on completion.
-- Implement/verify the V26 “Hyper-Reality Feed”: full-screen salon windows, spring-like transitions between salons, and subtle image zoom tied to scroll progression.
-- Implement/verify the V26 HUD overlays: frosted-glass floating panels (bio/price/contact) with hover reaction on desktop while remaining readable/usable on touch devices.
-- Implement/verify V26 Architect (Creator) Mode: cyber-futuristic creator UI with real-time revenue simulation, a Dimension switch for instant Setup ↔ Preview toggling, and local-only publishing that injects the new salon into the in-memory list.
+- Fully overwrite `frontend/src/AppV1.jsx` with the user-provided V34 “ETHEREAL FLOW” code, preserving its layout, Tailwind styling, local `DATA`, and Landing → Client feed → Pro studio interactions.
+- Apply only minimal mechanical fixes required for this repo so the frontend builds and runs without altering V34’s intended UI/copy/behavior.
+- Fix the Pro “Deploy” flow to prevent stale state by updating salons with a functional state update so newly deployed salons reliably appear at the top and the view switches to Client.
+- Keep `frontend/src/App.tsx` unchanged as the thin wrapper that renders `AppV1`, and avoid editing immutable frontend paths.
 
-**User-visible outcome:** The app boots through the existing `App.tsx` wrapper into the V26 QUANTUM REALITY UI, featuring a long-press singularity entry, a spring-scrolling full-screen salon feed with scroll-zoom, HUD glass overlays, and an Architect creator mode that previews instantly and updates the feed locally when publishing.
+**User-visible outcome:** The app launches into the V34 landing screen and allows navigating to the Client feed (capsule filters + floating island nav, expandable salon detail overlay) and the Pro studio (split editor/preview), with “Deploy” reliably adding the new salon to the top of the Client list.

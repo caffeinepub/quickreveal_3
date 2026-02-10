@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 53,
-  "summary": "V26 « QUANTUM REALITY » : remplacer intégralement `frontend/src/AppV1.jsx` par le code V26 fourni (verbatim). Nouvelle direction UX/UI « Niveau Divin » : entrée « SINGULARITÉ » (long press, aspiration), feed « HYPER-REALITY » plein écran avec spring physics + léger zoom des images au scroll, interface HUD (panneaux verre givré réactifs au survol), et mode Créateur « ARCHITECT OS » cyber-futuriste avec simulateur de revenus (jauge/valeur en temps réel) + switch de dimension Setup ↔ Preview instantané. App en state local (dataset V26), favoris en mémoire, booking mock (alert) via modal.",
+  "projectStateVersion": 59,
+  "summary": "V34 « ETHEREAL FLOW » : remplacer intégralement `frontend/src/AppV1.jsx` par le code V34 fourni (verbatim). Objectif : sophistication conceptuelle maximale + facilité d’utilisation absolue avec design « Glass & Air » (transparence/blur/espace négatif), navigation capsules sticky + île flottante en bas, interactions « soft touch » (carte qui s’épanouit en modal full-screen, CTA réservation toujours sous le pouce) et Studio Pro en split-screen avec preview client.",
   "architectural_notes": [
     "RESET complet : écrasement total du backend et du frontend, considéré comme nouvelle V1.0 officielle.",
     "Backend Motoko réduit à un modèle Salon/Service/Socials avec `stable var salons` et endpoints `getSalons` (query) + `createSalon` (shared); seed de 4 salons suisses au démarrage (si salons vide).",
@@ -20,11 +20,11 @@
     "L’application côté Client est cassée : présence de textes/données en anglais (ex: catégories Hairdresser/Haircut, Paris) au lieu de 100% FR + contexte Suisse (Lausanne/Genève/Montreux, CHF).",
     "Régression UI/UX : la barre de filtres en haut a disparu et/ou la logique de filtrage par catégorie ne fonctionne plus (ex: clic 'Barbier' n’isole pas les salons 'Barbier').",
     "Le RESET supprime explicitement des fonctionnalités précédemment prévues/implémentées (Internet Identity, rôles backend, persistance complète pré/post-upgrade, créneaux datés, réservations, Monopoly Mode, upload d’images on-chain, React Query).",
-    "Le code backend fourni utilise `public func init()` pour l’initialisation; sur IC, l’initialisation standard se fait via le hook système `system func init()` (risque que le seed ne s’exécute pas automatiquement).",
     "Les champs `image` contiennent des liens au format Markdown `[url](url)` au lieu d’une URL brute, ce qui peut casser l’affichage `<img src=...>` côté React.",
-    "Risque de build : le code V5 fourni semble contenir une duplication de `export default function App()` (à vérifier/retirer si présent dans `src/App.jsx`).",
-    "Le code V8 fourni contient une duplication de `export default function App()` (défini deux fois), ce qui cassera le build si copié tel quel dans `src/App.jsx`.",
-    "Le code V8 utilise des classes Tailwind utilitaires (ex: `hide-scrollbar`) et des composants/animations (Framer Motion, lucide-react) : vérifier que ces dépendances/utilitaires existent dans le projet sinon risque de build/UI cassée."
+    "Le code V8 utilise des classes Tailwind utilitaires (ex: `hide-scrollbar`) et des composants/animations (Framer Motion, lucide-react) : vérifier que ces dépendances/utilitaires existent dans le projet sinon risque de build/UI cassée.",
+    "Risque de régression V29 : `handleDeploy` fait `setSalons([s, ...salons])` (capture potentielle d’état obsolète). Utiliser une mise à jour fonctionnelle peut être nécessaire si des déploiements multiples/navigations rapides provoquent une perte d’injection dans la liste.",
+    "Risque de build V32 : l’icône `Eye` est utilisée dans `LiveStudio` mais n’est pas importée depuis `lucide-react` (unresolved symbol).",
+    "Risque de régression V32 : `handleDeploy` fait `setSalons([newS, ...salons])` (capture potentielle d’état obsolète). Utiliser une mise à jour fonctionnelle peut être nécessaire si des déploiements multiples/navigations rapides provoquent une perte d’injection dans la liste."
   ],
   "isFixRequest": false,
   "existing_features": [
@@ -684,6 +684,110 @@
         "REQ-99"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-completely-overwrite-frontend-src-appv1-jsx-with-the-exact-v29-god-particle-code-provided-by-the-user-treating-it-as-the-full-app-ui-implementation-landing-client-feed-pro-creator-the-forge",
+      "title": "Completely overwrite `frontend/src/AppV1.jsx` with the exact V29 “GOD PARTICLE” code provided by the user, treating it as the full app UI implementation (Landing → Client feed → Pro Creator/The Forge).",
+      "reqIds": [
+        "REQ-100"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v29-overwrite-by-applying-only-minimal-mechanical-adjustments-required-by-this-repository-e-g-missing-incorrect-imports-undefined-identifiers-invalid-jsx-without-changing-the-intended-v29-ui-layout-styling-copy-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V29 overwrite by applying only minimal mechanical adjustments required by this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX), without changing the intended V29 UI layout, styling, copy, or interaction behavior.",
+      "reqIds": [
+        "REQ-101"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-verify-the-v29-organic-mercury-service-navigation-so-the-selected-category-is-highlighted-by-a-liquid-like-bubble-that-physically-moves-under-the-selected-item-using-framer-motion-shared-layout-animation-layoutid-with-spring-like-motion",
+      "title": "Implement/verify the V29 “Organic / Mercury” service navigation so the selected category is highlighted by a liquid-like bubble that physically moves under the selected item using Framer Motion shared layout animation (`layoutId`) with spring-like motion.",
+      "reqIds": [
+        "REQ-102"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-verify-the-v29-cinema-8k-card-behavior-image-first-immersive-presentation-with-informational-overlays-price-bio-details-hidden-by-default-and-revealed-only-via-user-interaction-specifically-supporting-long-press-mouse-or-touch-to-reveal-details",
+      "title": "Implement/verify the V29 “Cinema 8K” card behavior: image-first immersive presentation with informational overlays (price/bio/details) hidden by default and revealed only via user interaction, specifically supporting long-press (mouse or touch) to reveal details.",
+      "reqIds": [
+        "REQ-103"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-verify-the-v29-creator-experience-the-forge-a-radical-single-screen-creator-interface-no-next-previous-steps-that-uses-heavy-feeling-scroll-physics-and-includes-a-chf-wealth-simulator-gauge-that-reacts-strongly-on-each-service-add",
+      "title": "Implement/verify the V29 Creator experience “The Forge”: a radical single-screen creator interface (no next/previous steps) that uses heavy-feeling scroll/physics and includes a CHF “Wealth Simulator” gauge that reacts strongly on each service add.",
+      "reqIds": [
+        "REQ-104"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-the-v29-deploy-injection-logic-reliable-by-preventing-stale-state-closures-when-adding-a-newly-created-salon-to-the-list-use-a-functional-state-update-for-setsalons-while-keeping-the-visible-behavior-identical",
+      "title": "Make the V29 deploy/injection logic reliable by preventing stale state closures when adding a newly created salon to the list (use a functional state update for `setSalons`), while keeping the visible behavior identical.",
+      "reqIds": [
+        "REQ-105"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fully-replace-overwrite-the-entire-contents-of-frontend-src-appv1-jsx-with-the-exact-user-provided-v32-nexus-utility-code-block-treating-it-as-the-complete-app-ui-landing-client-pro-studio-and-preserving-the-provided-components-local-seed-data-initial-salons-tailwind-classes-imports-ui-strings-and-interaction-logic-as-given",
+      "title": "Fully replace (overwrite) the entire contents of `frontend/src/AppV1.jsx` with the exact user-provided V32 “NEXUS UTILITY” code block, treating it as the complete app UI (Landing → Client → Pro Studio) and preserving the provided components, local seed data (`INITIAL_SALONS`), Tailwind classes, imports, UI strings, and interaction logic as given.",
+      "reqIds": [
+        "REQ-106"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v32-overwrite-by-applying-only-minimal-mechanical-adjustments-required-by-this-repository-e-g-missing-incorrect-imports-undefined-identifiers-invalid-jsx-without-changing-the-intended-v32-ui-layout-styling-copy-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V32 overwrite by applying only minimal mechanical adjustments required by this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX), without changing the intended V32 UI layout, styling, copy, or interaction behavior.",
+      "reqIds": [
+        "REQ-107"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-the-pro-deploy-action-reliably-inject-the-newly-created-salon-into-the-client-list-immediately-while-preserving-the-v32-visible-behavior-new-salon-appears-at-the-top-and-the-view-switches-to-client-preventing-lost-updates-due-to-stale-state-closures",
+      "title": "Make the Pro “Deploy” action reliably inject the newly created salon into the Client list immediately while preserving the V32 visible behavior (new salon appears at the top and the view switches to Client), preventing lost updates due to stale state closures.",
+      "reqIds": [
+        "REQ-108"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fully-overwrite-frontend-src-appv1-jsx-with-the-user-provided-v34-ethereal-flow-code-block-treating-it-as-the-complete-app-ui-and-preserving-the-provided-layout-styling-tailwind-classes-local-seed-data-data-and-interaction-logic-landing-client-feed-pro-studio-as-given",
+      "title": "Fully overwrite `frontend/src/AppV1.jsx` with the user-provided V34 “ETHEREAL FLOW” code block, treating it as the complete app UI and preserving the provided layout, styling (Tailwind classes), local seed data (`DATA`), and interaction logic (Landing → Client feed → Pro studio) as given.",
+      "reqIds": [
+        "REQ-109"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v34-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-unresolved-symbols-invalid-jsx-duplicate-exports-without-changing-the-intended-v34-ui-copy-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V34 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved symbols, invalid JSX, duplicate exports) without changing the intended V34 UI, copy, or interaction behavior.",
+      "reqIds": [
+        "REQ-110"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-the-pro-deploy-action-reliably-inject-the-newly-created-salon-at-the-top-of-the-in-memory-salons-list-by-preventing-stale-state-closures-in-the-v34-handledeploy-path-use-a-functional-setsalons-prev-newsalon-prev-update-while-keeping-the-visible-behavior-identical-new-salon-appears-at-the-top-and-the-view-switches-to-client-immediately",
+      "title": "Make the Pro “Deploy” action reliably inject the newly created salon at the top of the in-memory `salons` list by preventing stale state closures in the V34 `handleDeploy` path (use a functional `setSalons(prev => [newSalon, ...prev])` update) while keeping the visible behavior identical (new salon appears at the top and the view switches to Client immediately).",
+      "reqIds": [
+        "REQ-111"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-do-not-modify-frontend-src-app-tsx-it-must-remain-the-thin-wrapper-that-renders-appv1-and-do-not-change-any-frontend-immutable-entry-files-the-app-must-continue-to-mount-through-the-existing-vite-react-entry-wiring",
+      "title": "Do not modify `frontend/src/App.tsx` (it must remain the thin wrapper that renders `AppV1`) and do not change any frontend immutable entry files; the app must continue to mount through the existing Vite/React entry wiring.",
+      "reqIds": [
+        "REQ-112"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -980,6 +1084,30 @@
     {
       "id": "AR-61",
       "summary": "V26 « QUANTUM REALITY » : overwrite total de `frontend/src/AppV1.jsx` avec le code V26 fourni (verbatim) + appliquer uniquement les ajustements mécaniques nécessaires pour compiler/exécuter, sans changer design/UX/logic. Inclut entrée Singularity (long press), feed Hyper-Reality plein écran avec spring physics/zoom scroll, HUD verre givré, et mode Créateur Architect OS avec simulateur de revenus + switch Setup/Preview.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-62",
+      "summary": "V29 « GOD PARTICLE » : overwrite total de `frontend/src/AppV1.jsx` avec le code V29 fourni (verbatim), en le traitant comme l’implémentation complète de l’app (Landing → Client → Forge).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-63",
+      "summary": "Assurer que la V29 compile et s’exécute dans ce repo en appliquant uniquement les ajustements mécaniques nécessaires (imports/dépendances/symboles manquants/JSX invalide) sans changer le design, les textes, ni la logique du code V29 fourni.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-64",
+      "summary": "V32 « NEXUS UTILITY » : overwrite total de `frontend/src/AppV1.jsx` avec le code V32 fourni (verbatim), orienté performance & conversion (navigation catégories sticky + smart tags, prochain créneau visible, booking en modal, Studio Pro Mirror avec preview live).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-65",
+      "summary": "V34 « ETHEREAL FLOW » : overwrite total de `frontend/src/AppV1.jsx` avec le code V34 fourni (verbatim) — design « Glass & Air », filtres en capsules en haut, navigation « Floating Island » en bas, cartes qui expand en modal, CTA « Réserver » sticky, Studio Pro split-screen avec preview.",
       "reqIds": [],
       "status": "pending"
     }

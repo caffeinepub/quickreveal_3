@@ -1,115 +1,76 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "V26 QUANTUM REALITY frontend overwrite (Singularity entry, Hyper-Reality feed, HUD overlays, Architect mode)",
+  "title": "Overwrite AppV1 with V34 “ETHEREAL FLOW” UI and ensure it compiles",
   "requirements": [
     {
-      "id": "REQ-94",
-      "summary": "Fully overwrite AppV1.jsx with the user-provided V26 QUANTUM REALITY app UI implementation.",
+      "id": "REQ-109",
+      "summary": "Fully overwrite frontend/src/AppV1.jsx with the provided V34 “ETHEREAL FLOW” UI code (layout, Tailwind styling, local DATA, and Landing→Client→Pro flow).",
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` content is replaced in full by the user-provided V26 code (not merged into the old V25 code).",
-        "The application boots through the existing `frontend/src/App.tsx` wrapper and renders the V26 UI."
+        "`frontend/src/AppV1.jsx` contents are replaced end-to-end with the provided V34 code (not a partial merge).",
+        "The app boots into the V34 flow (landing view visible first, with actions to enter Client or Pro).",
+        "The Client view shows the top sticky capsule filters and the bottom floating island navigation as implemented in V34.",
+        "Clicking a salon card expands into the full-screen detail overlay with shared `layoutId` transitions, and the booking CTA remains reachable at the bottom as implemented in V34.",
+        "The Pro studio view renders the split editor/preview experience on desktop and behaves as provided in V34."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Replace the entire file contents with the exact V26 “QUANTUM REALITY” code provided by the user (full overwrite; no partial merge). Ensure the exported component remains compatible with the existing `frontend/src/App.tsx` thin wrapper."
+          "description": "Replace the file contents entirely by pasting the user-provided V34 “ETHEREAL FLOW” code block as-is (preserve its Tailwind classes, local seed data/DATA, and interaction logic for Landing→Client feed→Pro studio)."
         }
       ]
     },
     {
-      "id": "REQ-95",
-      "summary": "Apply minimal mechanical fixes so the V26 overwrite compiles and runs in this repository without changing intended UX.",
+      "id": "REQ-110",
+      "summary": "Apply only minimal mechanical fixes required for this repo so the V34 overwrite compiles/runs without altering intended UI/copy/behavior, and keep the existing .hide-scrollbar utility working.",
       "acceptanceCriteria": [
-        "`npm run build` (or equivalent CI build) succeeds without TypeScript/ESLint blocking errors introduced by the pasted code.",
-        "All referenced symbols in `AppV1.jsx` resolve (e.g., any dataset constant used to initialize state such as `INITIAL_SALONS` is defined consistently with the provided `DATA`).",
-        "No changes are made to immutable frontend entry files; `frontend/src/App.tsx` remains a thin wrapper rendering `AppV1`."
+        "`npm run build` (or the repository’s standard build) succeeds without code changes outside minimal mechanical fixes.",
+        "No runtime errors occur on initial load (Landing → Client → Pro navigation is usable).",
+        "The existing `.hide-scrollbar` utility continues to work for the horizontal capsule scroller (no visible scrollbars in supported browsers)."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Fix only mechanical/runtime issues introduced by the pasted V26 code (e.g., missing imports, undefined identifiers/constants, invalid JSX, event handler typings/guards, missing default exports) while preserving the intended V26 layout, styling, copy, and interaction behavior."
+          "description": "Make minimal mechanical adjustments needed for this repository to compile and run (e.g., fix/import missing symbols, resolve invalid JSX, remove duplicate exports, ensure required dependencies are imported) while keeping the intended V34 UI, copy, and interactions unchanged."
         },
         {
           "path": "frontend/src/index.css",
           "operation": "modify",
-          "description": "Add/adjust only the minimal global CSS utilities/animations required by the V26 code to compile and render correctly (e.g., any referenced animation class names or keyframes) without altering intended visuals beyond what the V26 code expects."
+          "description": "Verify `.hide-scrollbar` remains present and compatible with the V34 capsule scroller usage; if V34 introduces any required global utility classes that are purely mechanical for rendering (not redesign), add them here without changing the visual intent."
         }
       ]
     },
     {
-      "id": "REQ-96",
-      "summary": "Implement/verify the V26 Singularity Entry long-press gate with aspiration-style transition into the experience.",
+      "id": "REQ-111",
+      "summary": "Prevent stale state closures in the V34 Pro “Deploy” action so newly created salons reliably prepend to the in-memory salons list and switch back to Client immediately.",
       "acceptanceCriteria": [
-        "On desktop: holding mouse down charges progress; releasing early resets progress to 0.",
-        "On mobile: holding touch charges progress; releasing early resets progress to 0.",
-        "When progress reaches 100%, the UI transitions into the next view with a clear ‘aspiration’/pull-in animation (not an abrupt cut)."
+        "After clicking “Deploy” in Pro studio, the new salon appears immediately at the top of the Client feed without requiring refresh.",
+        "Repeated deploys in a single session do not intermittently lose previously deployed salons due to stale state.",
+        "The view still switches to Client immediately after deploy, matching V34 behavior."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Ensure the V26 Singularity Entry screen supports sustained press for both mouse and touch (press-to-charge, release-to-reset), and triggers a non-abrupt aspiration/pull-in transition when the progress completes."
-        },
-        {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Add/adjust any required animation utilities used by the V26 Singularity Entry aspiration transition (e.g., keyframes/classes referenced by the V26 UI) to ensure the transition is visibly animated rather than a hard cut."
+          "description": "Update the V34 `handleDeploy` path to use a functional state update (`setSalons(prev => [newSalon, ...prev])`) to avoid stale closures, while preserving identical visible behavior (prepend new salon + immediate switch to Client)."
         }
       ]
     },
     {
-      "id": "REQ-97",
-      "summary": "Implement/verify the V26 Hyper-Reality full-screen feed with spring-like transitions and scroll-tied image zoom.",
+      "id": "REQ-112",
+      "summary": "Keep App.tsx and immutable frontend entry/hook/ui paths unchanged; ensure V34 continues to mount via existing Vite/React wiring through App.tsx rendering AppV1.",
       "acceptanceCriteria": [
-        "In the client feed, each salon card occupies a full viewport presentation (one salon per screen, scroll to advance).",
-        "Transitions/scroll between items feel spring-based (Framer Motion spring config is used for the primary movement).",
-        "As the user scrolls through the feed, the active salon image applies a slight zoom effect tied to scroll (not just hover)."
+        "`frontend/src/App.tsx` remains a simple wrapper that renders `AppV1` and is unchanged.",
+        "No files under the platform’s immutable frontend paths are modified.",
+        "The application still mounts and renders through the existing entrypoint setup."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Ensure the V26 feed renders salons as full-viewport windows and that navigation/scroll progression uses spring-like motion (using a spring configuration for primary movement as per V26 intent). Tie active salon image zoom subtly to scroll/progress (not hover-only)."
-        }
-      ]
-    },
-    {
-      "id": "REQ-98",
-      "summary": "Implement/verify the V26 HUD frosted-glass overlays with hover reaction on desktop and touch-friendly usability.",
-      "acceptanceCriteria": [
-        "HUD information panels use a frosted-glass style (backdrop blur + translucent fill + subtle border).",
-        "On hover-capable devices, panels show a noticeable hover reaction (e.g., opacity/brightness/border accent/blur shift).",
-        "On touch devices, the HUD remains readable and does not require hover to access essential info."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/AppV1.jsx",
-          "operation": "modify",
-          "description": "Ensure the V26 HUD overlay panels (bio/price/contact) render as frosted-glass surfaces, include a clear hover reaction where supported, and remain fully readable/usable on touch devices without relying on hover-only interactions."
-        },
-        {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Add/adjust any global CSS utilities needed for the V26 HUD frosted-glass effect and hover reactions (e.g., subtle borders, blur helpers, transitions) if referenced by the V26 code."
-        }
-      ]
-    },
-    {
-      "id": "REQ-99",
-      "summary": "Implement/verify the V26 Architect (Creator) mode: cyber-futuristic creator UI with live revenue simulation and instant Setup/Preview dimension switch.",
-      "acceptanceCriteria": [
-        "Revenue simulation updates immediately when services are added/edited (no manual refresh).",
-        "A visible Setup/Preview toggle exists and switches instantly between editing and previewing the created salon experience.",
-        "Publishing/finishing the creator flow injects the new salon into the in-memory salon list immediately (local-only demo behavior; no backend calls)."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/AppV1.jsx",
-          "operation": "modify",
-          "description": "Ensure the V26 creator flow provides: (1) a cyber-futuristic creator UI, (2) a real-time revenue simulator that updates immediately as services change, (3) an instant Setup ↔ Preview dimension toggle, and (4) a local-only publish/finish action that injects the new salon into the in-memory list without any backend calls."
+          "description": "Ensure the overwritten V34 file continues to export the AppV1-compatible default React component expected by `frontend/src/App.tsx` (do not modify App.tsx or any immutable entry/hook/ui files)."
         }
       ]
     }

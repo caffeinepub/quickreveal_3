@@ -1,73 +1,46 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-07T01:59:59.198Z",
-  "summary": "Diff shows a new V26-themed implementation starting in `frontend/src/AppV1.jsx` (Quantum DATA + `SingularityLoader` long-press entry mechanics). However, due to truncation and lack of evidence for key sections, several V26 requirements cannot be verified from the provided diff summary. Two non-requested metadata/documentation files were also modified.",
+  "generatedAt": "2026-02-10T22:21:58.459Z",
+  "summary": "Diff shows a large replacement of `frontend/src/AppV1.jsx` consistent with an “ETHEREAL” UI and updates to global CSS utilities/animations. However, because `AppV1.jsx` is truncated in the diff, key acceptance-criteria behaviors (full flow, overlays, Pro deploy stale-closure fix) cannot be verified from the provided evidence. Two non-requested metadata/state files were also modified.",
   "missing_requirements": [
     {
-      "id": "REQ-94",
-      "requirement": "Completely overwrite `frontend/src/AppV1.jsx` with the exact V26 “QUANTUM REALITY” code provided by the user, and boot through `frontend/src/App.tsx` thin wrapper rendering `AppV1`.",
-      "reason": "The diff for `AppV1.jsx` is truncated and does not allow verification that the file was replaced in full with the *exact* user-provided V26 code, nor does it show any evidence about `frontend/src/App.tsx` being unchanged/thin in this change set.",
+      "id": "REQ-109",
+      "requirement": "Fully overwrite `frontend/src/AppV1.jsx` with the user-provided V34 code block end-to-end (not partial merge) and preserve the full V34 flow/behaviors (Landing → Client feed with sticky capsules + floating island → detail overlay with shared layoutId transitions + reachable booking CTA → Pro split studio).",
+      "reason": "`frontend/src/AppV1.jsx` is truncated in the diff, so it is not possible to confirm end-to-end overwrite nor the presence of the specified V34 flow elements (landing boot view, capsule filters + floating island nav, shared `layoutId` transitions, booking CTA placement, and split Pro studio behavior).",
       "evidence": [
-        "frontend/src/AppV1.jsx (truncated; only partial content shown)",
-        "frontend-file-summaries.txt (only a description of App.tsx, not an actual diff of App.tsx)"
+        "frontend/src/AppV1.jsx (truncated)"
       ]
     },
     {
-      "id": "REQ-95",
-      "requirement": "Ensure the project compiles/runs after the overwrite with only minimal mechanical fixes; all referenced symbols resolve; do not change immutable entry files; `App.tsx` remains a thin wrapper rendering `AppV1`.",
-      "reason": "No build/CI output is provided, `AppV1.jsx` is truncated (cannot confirm all symbols/imports resolve across the whole file), and there is no direct diff evidence confirming immutable entry files were not modified or that `App.tsx` remains unchanged.",
+      "id": "REQ-111",
+      "requirement": "Fix Pro “Deploy” to use functional state update `setSalons(prev => [newSalon, ...prev])` to prevent stale closures, while switching view to Client immediately.",
+      "reason": "The diff excerpt does not include the Pro studio `handleDeploy` implementation or any `setSalons(prev => ...)` evidence, so the stale-closure prevention cannot be verified.",
       "evidence": [
-        "frontend/src/AppV1.jsx (truncated)",
-        "frontend-file-summaries.txt (not authoritative for compilation status or immutable-file changes)"
-      ]
-    },
-    {
-      "id": "REQ-96",
-      "requirement": "Singularity Entry: black entry screen with pulsing orb requiring sustained press (mouse/touch), release resets progress to 0, and a clear aspiration/pull-in transition when entry completes.",
-      "reason": "Hold-to-charge and release-to-reset behavior is evidenced, but the diff is truncated before showing the full orb UI and any explicit aspiration/pull-in transition implementation beyond a basic opacity/scale change.",
-      "evidence": [
-        "frontend/src/AppV1.jsx (shows `SingularityLoader` with `onMouseDown`/`onMouseUp`/`onTouchStart`/`onTouchEnd`, `setProgress(0)` on stop; transition class `opacity-0 scale-95` when entering; remainder truncated)"
-      ]
-    },
-    {
-      "id": "REQ-97",
-      "requirement": "Hyper-Reality Feed: full-screen salon windows, spring-like scrolling transitions (Framer Motion spring config), and subtle scroll-tied image zoom.",
-      "reason": "No feed implementation is visible in the truncated `AppV1.jsx` excerpt; there is no evidence of Framer Motion usage or scroll-tied image zoom behavior in the provided snippet.",
-      "evidence": [
-        "frontend/src/AppV1.jsx (only DATA + SingularityLoader portion shown; feed portion not visible)"
-      ]
-    },
-    {
-      "id": "REQ-98",
-      "requirement": "HUD overlays: frosted-glass panels with hover reaction on desktop while remaining usable on touch.",
-      "reason": "No HUD overlay/panel implementation is visible in the provided truncated excerpt.",
-      "evidence": [
-        "frontend/src/AppV1.jsx (truncated before any HUD panels are shown)"
-      ]
-    },
-    {
-      "id": "REQ-99",
-      "requirement": "Architect Mode: cyber-futuristic creator UI with real-time revenue simulation, Setup↔Preview “Dimension” switch, and publishing injects new salon into in-memory list.",
-      "reason": "No creator/architect mode code is visible in the provided truncated excerpt; cannot verify revenue simulator, dimension toggle, or in-memory injection behavior.",
-      "evidence": [
-        "frontend/src/AppV1.jsx (truncated; architect/creator mode not shown)"
+        "frontend/src/AppV1.jsx (truncated)"
       ]
     }
   ],
   "hallucinated_features": [
     {
-      "description": "Modified repository documentation/summary file `frontend-file-summaries.txt` describing many pages/hooks (e.g., React Query backend hooks) not part of the V26 local-state/no-backend-change request.",
-      "reason": "The BuildRequest only asks for V26 UI overwrite and minimal mechanical fixes; it does not request updating this summary file.",
+      "description": "Modified `frontend-file-summaries.txt` (repository documentation/summary file) even though the BuildRequest only specified UI replacement and minimal mechanical compile fixes.",
+      "reason": "No requirement requests updating file summary documentation; it is outside the specified target (`AppV1.jsx`) and minimal compile/run fixes.",
       "evidence": [
-        "frontend-file-summaries.txt (modified)"
+        "frontend-file-summaries.txt"
       ]
     },
     {
-      "description": "Updated `project_state.json` with a new V26 summary and a long list of existing features/REQs unrelated to the requested V26-only local-state UI work.",
-      "reason": "The BuildRequest does not mention changing `project_state.json`.",
+      "description": "Modified `project_state.json` even though the BuildRequest did not request changes to project state metadata.",
+      "reason": "Not part of requested UI overwrite/compile fixes; appears to be internal tracking metadata.",
       "evidence": [
-        "project_state.json (modified)"
+        "project_state.json"
+      ]
+    },
+    {
+      "description": "Added/expanded extensive global theme tokens (OKLCH variables) and multiple animation keyframes/utility classes in `frontend/src/index.css` beyond the explicitly mentioned `.hide-scrollbar` continuity requirement.",
+      "reason": "BuildRequest did not ask to redesign global theming or add new animations; only required that `.hide-scrollbar` continues to work. These CSS additions may be unrequested unless they were explicitly part of the provided V34 code (not shown in the diff context).",
+      "evidence": [
+        "frontend/src/index.css"
       ]
     }
   ],
@@ -75,6 +48,7 @@
   "changed_files": [
     "frontend-file-summaries.txt",
     "frontend/src/AppV1.jsx",
+    "frontend/src/index.css",
     "project_state.json"
   ]
 }
