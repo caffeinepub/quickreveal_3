@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 89,
-  "summary": "V51 « NEXUS VIRAL (CROISSANCE & CONVERSION) » : effacer et remplacer intégralement `frontend/src/AppV1.jsx` par le code V51 fourni (verbatim). Focus : design Cinématique validé + (1) Native Viral Engine via `navigator.share`, (2) conversion WhatsApp Deep Link (lien pré-rempli), (3) Smart Location Suisse (suggestions NPA↔Ville), (4) UI luxe sombre avec badges de confiance.",
+  "projectStateVersion": 93,
+  "summary": "V53 « NEXUS OLYMPUS (INTRO CINÉMATIQUE & VIRALITÉ) » : effacer et remplacer intégralement `frontend/src/AppV1.jsx` par le code V53 fourni (verbatim). Focus : expérience « marque de luxe » avec (1) Olympus Intro showreel plein écran (stories + grain cinéma) avant l’app, (2) Native Viral Engine via `navigator.share`, (3) WhatsApp deep link pré-rempli pour réservation, (4) Smart Location Suisse NPA↔Ville, (5) UI cinématique sombre + badges de confiance.",
   "architectural_notes": [
     "RESET complet : écrasement total du backend et du frontend, considéré comme nouvelle V1.0 officielle.",
     "Backend Motoko réduit à un modèle Salon/Service/Socials avec `stable var salons` et endpoints `getSalons` (query) + `createSalon` (shared); seed de 4 salons suisses au démarrage (si salons vide).",
@@ -1228,6 +1228,78 @@
         "REQ-169"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-delete-all-existing-content-of-frontend-src-appv1-jsx-and-replace-it-with-the-exact-v52-nexus-vision-code-provided-by-the-user-treating-it-as-the-complete-frontend-application-landing-client-pro-studio-and-keeping-the-local-only-data-model-no-backend-calls",
+      "title": "Delete all existing content of `frontend/src/AppV1.jsx` and replace it with the exact V52 “NEXUS VISION” code provided by the user, treating it as the complete frontend application (Landing → Client → Pro Studio) and keeping the local-only data model (no backend calls).",
+      "reqIds": [
+        "REQ-170"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-v52-appv1-implementation-compiles-and-runs-in-this-repository-by-applying-only-minimal-mechanical-fixes-required-by-the-codebase-wiring-and-dependencies-e-g-missing-incorrect-imports-unresolved-identifiers-invalid-jsx-duplicate-exports-without-changing-the-intended-v52-ui-layout-styling-tailwind-classes-copy-or-interaction-behavior",
+      "title": "Ensure the V52 AppV1 implementation compiles and runs in this repository by applying only minimal mechanical fixes required by the codebase wiring and dependencies (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate exports), without changing the intended V52 UI layout, styling (Tailwind classes), copy, or interaction behavior.",
+      "reqIds": [
+        "REQ-171"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-v52-vision-intro-showreel-entry-experience-on-launch-show-the-full-screen-auto-sliding-showreel-sequence-and-only-enter-the-app-after-the-user-presses-the-entry-action",
+      "title": "Preserve and verify the V52 “Vision Intro (Showreel)” entry experience: on launch, show the full-screen auto-sliding showreel sequence and only enter the app after the user presses the entry action.",
+      "reqIds": [
+        "REQ-172"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-v52-viral-sharing-behavior-the-share-partager-actions-use-the-native-web-share-api-navigator-share-when-available-and-gracefully-degrade-when-unavailable",
+      "title": "Preserve and verify the V52 viral sharing behavior: the “Share/Partager” actions use the native Web Share API (`navigator.share`) when available and gracefully degrade when unavailable.",
+      "reqIds": [
+        "REQ-173"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-v52-whatsapp-deep-link-booking-flow-confirming-a-booking-generates-a-whatsapp-wa-me-link-containing-a-prefilled-message-with-salon-name-selected-services-selected-date-time-location-details-including-domicile-address-when-applicable-and-total-price",
+      "title": "Preserve and verify the V52 WhatsApp deep-link booking flow: confirming a booking generates a WhatsApp `wa.me` link containing a prefilled message with salon name, selected services, selected date/time, location details (including domicile address when applicable), and total price.",
+      "reqIds": [
+        "REQ-174"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-v52-swiss-smart-location-search-experience-the-location-input-shows-suggestions-matching-either-npa-prefix-or-city-substring-using-the-provided-in-file-swiss-db-dataset-and-selecting-a-suggestion-fills-the-input",
+      "title": "Preserve and verify the V52 Swiss smart location search experience: the location input shows suggestions matching either NPA prefix or city substring using the provided in-file `SWISS_DB` dataset, and selecting a suggestion fills the input.",
+      "reqIds": [
+        "REQ-175"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-the-pro-deploy-publish-injection-into-the-in-memory-salons-list-robust-against-stale-react-state-closures-by-using-a-functional-state-update-for-setsalons-while-preserving-identical-visible-behavior-new-salon-appears-immediately-at-the-top-and-the-app-switches-to-client-view-immediately-after-deploy",
+      "title": "Make the Pro deploy/publish injection into the in-memory `salons` list robust against stale React state closures by using a functional state update for `setSalons`, while preserving identical visible behavior (new salon appears immediately at the top and the app switches to Client view immediately after deploy).",
+      "reqIds": [
+        "REQ-176"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-delete-all-existing-content-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v53-nexus-olympus-code-block-provided-by-the-user-full-overwrite-preserving-components-local-seed-data-swiss-db-showreel-initial-salons-professions-rich-presets-tailwind-classes-imports-ui-strings-and-interaction-logic-as-given",
+      "title": "Delete all existing content of `frontend/src/AppV1.jsx` and replace the entire file with the exact V53 “NEXUS OLYMPUS” code block provided by the user (full overwrite), preserving components, local seed data (`SWISS_DB`, `SHOWREEL`, `INITIAL_SALONS`, `PROFESSIONS`, `RICH_PRESETS`), Tailwind classes, imports, UI strings, and interaction logic as given.",
+      "reqIds": [
+        "REQ-177"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v53-overwrite-by-applying-only-minimal-mechanical-adjustments-required-by-this-repository-e-g-missing-incorrect-imports-unresolved-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v53-ui-layout-styling-copy-or-interaction-behavior-including-the-five-pillars-olympus-intro-showreel-native-share-via-navigator-share-whatsapp-wa-me-deep-link-booking-swiss-smart-location-suggestions-and-dark-cinematic-ui-with-trust-badges",
+      "title": "Ensure the project compiles and runs after the V53 overwrite by applying only minimal mechanical adjustments required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports), without changing the intended V53 UI layout, styling, copy, or interaction behavior, including the five pillars: Olympus Intro showreel, native share via `navigator.share`, WhatsApp `wa.me` deep-link booking, Swiss smart location suggestions, and dark cinematic UI with trust badges.",
+      "reqIds": [
+        "REQ-178"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -1648,6 +1720,18 @@
     {
       "id": "AR-85",
       "summary": "V51 « NEXUS VIRAL » : overwrite total de `frontend/src/AppV1.jsx` avec le code V51 fourni (verbatim) intégrant Viral Share (navigator.share), WhatsApp deep link de réservation, Smart Location Suisse NPA↔Ville, et UI Cinématique luxe.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-86",
+      "summary": "V52 « NEXUS VISION » : overwrite total de `frontend/src/AppV1.jsx` avec le code V52 fourni (verbatim) incluant Vision Intro showreel (sas de décompression) + Viral Share (navigator.share) + WhatsApp deep link + Smart Location Suisse NPA↔Ville + UI cinématique luxe.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-87",
+      "summary": "V53 « NEXUS OLYMPUS » : overwrite total de `frontend/src/AppV1.jsx` avec le code V53 fourni (verbatim) incluant Olympus Intro showreel (stories + grain cinéma) + Viral Share (navigator.share) + WhatsApp deep link + Smart Location Suisse NPA↔Ville + UI cinématique luxe.",
       "reqIds": [],
       "status": "pending"
     }

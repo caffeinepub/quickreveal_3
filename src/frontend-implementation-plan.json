@@ -1,37 +1,38 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Replace AppV1 with V51 “NEXUS VIRAL” and ensure build passes",
+  "title": "V53 “NEXUS OLYMPUS” overwrite + compile-safe mechanical fixes (frontend-only)",
   "requirements": [
     {
-      "id": "REQ-168",
-      "summary": "Overwrite AppV1.jsx with the exact user-provided V51 “NEXUS VIRAL (Growth & Conversion)” code (verbatim).",
+      "id": "REQ-177",
+      "summary": "Fully overwrite AppV1.jsx with the exact user-provided V53 “NEXUS OLYMPUS” implementation while preserving the specified local datasets, UI, styling, and logic.",
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` contains exactly the provided V51 code, with no refactors, feature additions, or copy changes.",
-        "The V51 implementation includes the four engines as coded: (1) native share via `navigator.share`, (2) WhatsApp deep-link booking, (3) Swiss ZIP↔city search suggestions, and (4) cinematic dark luxury UI styling.",
-        "The app continues to mount via `frontend/src/App.tsx` rendering `AppV1` (no entrypoint rewiring)."
+        "`frontend/src/AppV1.jsx` matches the user-provided V53 code content as the application UI implementation (intro -> landing -> client -> pro studio).",
+        "The app continues to mount via the existing `frontend/src/App.tsx` wrapper that renders `AppV1`."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Delete the entire current contents and paste the exact V51 “NEXUS VIRAL (Growth & Conversion)” code block from the user message (msg-1) as a verbatim overwrite. Do not change formatting, strings, Tailwind classes, or logic."
+          "description": "Delete all existing file content and replace it with the exact V53 “NEXUS OLYMPUS” code block supplied by the user, preserving all imports, components, Tailwind classes, UI strings, interaction logic, and the local seed data/constants explicitly called out (SWISS_DB, SHOWREEL, INITIAL_SALONS, PROFESSIONS, RICH_PRESETS)."
         }
       ]
     },
     {
-      "id": "REQ-169",
-      "summary": "Apply minimal mechanical fixes required for this repo so the V51 overwrite compiles and runs without altering V51 design/copy/behavior.",
+      "id": "REQ-178",
+      "summary": "Apply only minimal mechanical fixes needed for this repo so V53 compiles and runs without altering intended V53 UI/UX or the five pillars (intro showreel, native share, WhatsApp booking, Swiss location suggestions, cinematic dark UI).",
       "acceptanceCriteria": [
-        "`npm`/Vite build succeeds with the new `AppV1.jsx` in place.",
-        "No runtime crash occurs on initial load; the Landing screen renders and navigation to Client and Pro views works.",
-        "Any fixes made are strictly mechanical (e.g., import corrections) and do not alter visual design, strings, or flow logic in the provided V51 code."
+        "Build succeeds with no TypeScript/JSX compile errors after the overwrite.",
+        "On launch, the Olympus Intro showreel is displayed full-screen and only entering proceeds to the app.",
+        "Tapping a Share action uses `navigator.share` when available; when unavailable, the fallback path executes without crashing.",
+        "Confirming a booking generates a working WhatsApp `wa.me` link with a prefilled message that includes salon name, selected services, selected date/time, location context (including address for domicile), and total price.",
+        "The location input shows suggestions by ZIP prefix or city substring using the in-file `SWISS_DB` dataset."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "If the verbatim V51 paste is build-blocking in this repository, make only strictly mechanical adjustments inside this file (e.g., fix missing/incorrect imports, resolve undefined identifiers, correct invalid JSX/React syntax, ensure a valid default export for AppV1). Do not add features, do not change any UI/copy, do not add backend calls, and do not rewire the entrypoint (App.tsx must remain unchanged)."
+          "description": "After the V53 paste, make strictly mechanical, build-blocking fixes only (e.g., add/adjust missing imports, remove duplicate exports, fix invalid JSX/React usage, resolve undefined identifiers) while keeping the V53 layout, Tailwind styling, copy, and interaction behavior unchanged—specifically preserving: full-screen Olympus Intro gating, `navigator.share` with safe fallback, WhatsApp `wa.me` deep-link message composition, SWISS_DB-powered location suggestions, and the cinematic dark UI/trust badges."
         }
       ]
     }

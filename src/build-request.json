@@ -1,11 +1,11 @@
 {
   "kind": "build_request",
-  "title": "Replace AppV1 with V51 “NEXUS VIRAL” (share + WhatsApp conversion + Swiss smart location)",
+  "title": "Overwrite AppV1 with V53 “NEXUS OLYMPUS” cinematic intro + viral sharing + WhatsApp booking",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-168",
-      "text": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact user-provided V51 “NEXUS VIRAL (Growth & Conversion)” code block (verbatim overwrite).",
+      "id": "REQ-177",
+      "text": "Delete all existing content of `frontend/src/AppV1.jsx` and replace the entire file with the exact V53 “NEXUS OLYMPUS” code block provided by the user (full overwrite), preserving components, local seed data (`SWISS_DB`, `SHOWREEL`, `INITIAL_SALONS`, `PROFESSIONS`, `RICH_PRESETS`), Tailwind classes, imports, UI strings, and interaction logic as given.",
       "target": "frontend",
       "source": {
         "messageIds": [
@@ -16,40 +16,47 @@
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` contains exactly the provided V51 code, with no refactors, feature additions, or copy changes.",
-        "The V51 implementation includes the four engines as coded: (1) native share via `navigator.share`, (2) WhatsApp deep-link booking, (3) Swiss ZIP↔city search suggestions, and (4) cinematic dark luxury UI styling.",
-        "The app continues to mount via `frontend/src/App.tsx` rendering `AppV1` (no entrypoint rewiring)."
+        "`frontend/src/AppV1.jsx` matches the user-provided V53 code content as the application UI implementation (intro -> landing -> client -> pro studio).",
+        "The app continues to mount via the existing `frontend/src/App.tsx` wrapper that renders `AppV1`."
       ]
     },
     {
-      "id": "REQ-169",
-      "text": "Ensure the project compiles and runs after the V51 overwrite by applying only the minimum mechanical adjustments required by this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX), without changing the intended V51 UI, styling (Tailwind classes), copy, or interaction behavior.",
+      "id": "REQ-178",
+      "text": "Ensure the project compiles and runs after the V53 overwrite by applying only minimal mechanical adjustments required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports), without changing the intended V53 UI layout, styling, copy, or interaction behavior, including the five pillars: Olympus Intro showreel, native share via `navigator.share`, WhatsApp `wa.me` deep-link booking, Swiss smart location suggestions, and dark cinematic UI with trust badges.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "VOICI LE CODE V51 COMPLET À ÉCRIRE :"
+          "LES 5 PILIERS DE LA V53 :",
+          "1.  **OLYMPUS INTRO (SHOWREEL)**",
+          "2.  **NATIVE VIRAL ENGINE**",
+          "3.  **WHATSAPP DEEP LINK**",
+          "4.  **SMART LOCATION**",
+          "5.  **CINEMATIC UI**"
         ]
       },
       "acceptanceCriteria": [
-        "`npm`/Vite build succeeds with the new `AppV1.jsx` in place.",
-        "No runtime crash occurs on initial load; the Landing screen renders and navigation to Client and Pro views works.",
-        "Any fixes made are strictly mechanical (e.g., import corrections) and do not alter visual design, strings, or flow logic in the provided V51 code."
+        "Build succeeds with no TypeScript/JSX compile errors after the overwrite.",
+        "On launch, the Olympus Intro showreel is displayed full-screen and only entering proceeds to the app.",
+        "Tapping a Share action uses `navigator.share` when available; when unavailable, the fallback path executes without crashing.",
+        "Confirming a booking generates a working WhatsApp `wa.me` link with a prefilled message that includes salon name, selected services, selected date/time, location context (including address for domicile), and total price.",
+        "The location input shows suggestions by ZIP prefix or city substring using the in-file `SWISS_DB` dataset."
       ]
     }
   ],
   "constraints": [
-    "Do not modify `frontend/src/App.tsx`; it must remain the thin wrapper that renders `AppV1`.",
-    "Do not modify any frontend immutable entry files listed in the platform constraints (e.g., `frontend/src/main.tsx`, Internet Identity hooks, `frontend/src/components/ui`).",
-    "Do not add backend calls; V51 must remain a local-only frontend demo as provided.",
-    "Preserve the user-provided V51 code verbatim except for strictly build-blocking mechanical fixes."
+    "Do not modify any frontend immutable entry files (including `frontend/src/main.tsx` and the hooks in `frontend/src/hooks/*` listed as immutable by the platform).",
+    "Keep `frontend/src/App.tsx` as the thin wrapper that renders `AppV1` (no changes to app entry wiring).",
+    "Do not add backend calls; keep the V53 implementation as local-only state/data as provided.",
+    "Any changes beyond the V53 paste must be strictly limited to build-breaking mechanical fixes and must not alter intended UI/UX, styling, copy, or interaction behavior."
   ],
   "nonGoals": [
-    "Do not implement or re-enable Internet Identity authentication, role-based routing, or React Query data loading.",
-    "Do not connect booking, salons, or sharing to the Motoko backend; no persistence beyond in-memory state unless explicitly present in the provided V51 code.",
-    "Do not redesign the UI or translate/replace any in-app strings beyond what exists in the provided V51 code block."
+    "Implementing or re-enabling Internet Identity authentication, role-based routing, or React Query data loading.",
+    "Connecting the V53 UI to the Motoko backend for salons/bookings/images.",
+    "Changing V53 user-facing UI copy/language (the pasted V53 UI strings must remain as provided).",
+    "Adding new features or refactoring the provided V53 code for optimization or architecture changes."
   ],
   "imageRequirements": {
     "required": [],

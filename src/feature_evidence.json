@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-user-provided-v51-nexus-viral-growth-conversion-code-block-verbatim-overwrite",
-      "featureTitle": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact user-provided V51 “NEXUS VIRAL (Growth & Conversion)” code block (verbatim overwrite).",
+      "featureId": "feature-delete-all-existing-content-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v53-nexus-olympus-code-block-provided-by-the-user-full-overwrite-preserving-components-local-seed-data-swiss-db-showreel-initial-salons-professions-rich-presets-tailwind-classes-imports-ui-strings-and-interaction-logic-as-given",
+      "featureTitle": "Delete all existing content of `frontend/src/AppV1.jsx` and replace the entire file with the exact V53 “NEXUS OLYMPUS” code block provided by the user (full overwrite), preserving components, local seed data (`SWISS_DB`, `SHOWREEL`, `INITIAL_SALONS`, `PROFESSIONS`, `RICH_PRESETS`), Tailwind classes, imports, UI strings, and interaction logic as given.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -17,13 +17,13 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-168"
+        "REQ-177"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-project-compiles-and-runs-after-the-v51-overwrite-by-applying-only-the-minimum-mechanical-adjustments-required-by-this-repository-e-g-missing-incorrect-imports-undefined-identifiers-invalid-jsx-without-changing-the-intended-v51-ui-styling-tailwind-classes-copy-or-interaction-behavior",
-      "featureTitle": "Ensure the project compiles and runs after the V51 overwrite by applying only the minimum mechanical adjustments required by this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX), without changing the intended V51 UI, styling (Tailwind classes), copy, or interaction behavior.",
+      "featureId": "feature-ensure-the-project-compiles-and-runs-after-the-v53-overwrite-by-applying-only-minimal-mechanical-adjustments-required-by-this-repository-e-g-missing-incorrect-imports-unresolved-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v53-ui-layout-styling-copy-or-interaction-behavior-including-the-five-pillars-olympus-intro-showreel-native-share-via-navigator-share-whatsapp-wa-me-deep-link-booking-swiss-smart-location-suggestions-and-dark-cinematic-ui-with-trust-badges",
+      "featureTitle": "Ensure the project compiles and runs after the V53 overwrite by applying only minimal mechanical adjustments required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports), without changing the intended V53 UI layout, styling, copy, or interaction behavior, including the five pillars: Olympus Intro showreel, native share via `navigator.share`, WhatsApp `wa.me` deep-link booking, Swiss smart location suggestions, and dark cinematic UI with trust badges.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -37,7 +37,7 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-169"
+        "REQ-178"
       ],
       "confidence": "high"
     }
