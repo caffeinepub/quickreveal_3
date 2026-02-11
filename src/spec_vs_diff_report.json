@@ -1,13 +1,30 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-11T16:51:33.891Z",
-  "summary": "The diff clearly modifies `frontend/src/AppV1.jsx`, but due to truncation it’s not possible to verify several requested behavioral details (deploy functional state update, precise booking gating/pending screen, full Service Studio V2 functionality) from the provided excerpt alone. Two auxiliary metadata/state files were also modified, which were not requested by the BuildRequest.",
-  "missing_requirements": [],
+  "generatedAt": "2026-02-11T20:27:00.428Z",
+  "summary": "Diff shows `frontend/src/AppV1.jsx` was heavily modified and two additional non-requested project metadata files were updated. Because `AppV1.jsx` content is truncated, the diff summary does not provide enough evidence to confirm a verbatim V51 overwrite or the presence of all required V51 engines/flows, nor that only minimal mechanical fixes were applied.",
+  "missing_requirements": [
+    {
+      "id": "REQ-168",
+      "requirement": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact user-provided V51 “NEXUS VIRAL (Growth & Conversion)” code block (verbatim overwrite), including the four engines and cinematic dark luxury UI styling.",
+      "reason": "The diff summary shows only a truncated portion of `AppV1.jsx`, so it cannot be verified that the file is an exact verbatim overwrite of the user-provided V51 block, nor that all four engines (navigator.share, WhatsApp deep-link booking, Swiss ZIP↔city suggestions, dark luxury styling) are present as coded.",
+      "evidence": [
+        "frontend/src/AppV1.jsx (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-169",
+      "requirement": "Ensure the project compiles and runs after the V51 overwrite by applying only minimum mechanical adjustments required by the repository, without changing intended V51 UI/styling/copy/behavior.",
+      "reason": "The diff summary does not include build output and `AppV1.jsx` is truncated, so there is insufficient evidence that changes were strictly mechanical, that the app compiles, and that Landing/Client/Pro navigation works without runtime crash.",
+      "evidence": [
+        "frontend/src/AppV1.jsx (truncated)"
+      ]
+    }
+  ],
   "hallucinated_features": [
     {
-      "description": "Updated repository metadata/summary files (`frontend-file-summaries.txt` and `project_state.json`).",
-      "reason": "The BuildRequest requirements focus on overwriting `frontend/src/AppV1.jsx` and making minimal mechanical fixes for build stability and specific UI behaviors; it does not request changes to project metadata/state summary files.",
+      "description": "Updated/added project metadata/state documentation not requested in the BuildRequest (frontend file summaries and project state JSON).",
+      "reason": "BuildRequest only asks to overwrite `frontend/src/AppV1.jsx` with V51 code and apply minimal mechanical build fixes. It does not request updating repository summary/state files.",
       "evidence": [
         "frontend-file-summaries.txt",
         "project_state.json"

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 81,
-  "summary": "V47 « NEXUS PRO TOOLS » : remplacer intégralement `frontend/src/AppV1.jsx` par le code V47 fourni (verbatim). Focus : outils Pro ultra-flexibles (Service Studio V2 avec services riches + photo, Social Hub Instagram/WhatsApp/Site), et booking client précis (sélection date+heure + écran \"Demande envoyée\" avec timer 2h).",
+  "projectStateVersion": 89,
+  "summary": "V51 « NEXUS VIRAL (CROISSANCE & CONVERSION) » : effacer et remplacer intégralement `frontend/src/AppV1.jsx` par le code V51 fourni (verbatim). Focus : design Cinématique validé + (1) Native Viral Engine via `navigator.share`, (2) conversion WhatsApp Deep Link (lien pré-rempli), (3) Smart Location Suisse (suggestions NPA↔Ville), (4) UI luxe sombre avec badges de confiance.",
   "architectural_notes": [
     "RESET complet : écrasement total du backend et du frontend, considéré comme nouvelle V1.0 officielle.",
     "Backend Motoko réduit à un modèle Salon/Service/Socials avec `stable var salons` et endpoints `getSalons` (query) + `createSalon` (shared); seed de 4 salons suisses au démarrage (si salons vide).",
@@ -1156,6 +1156,78 @@
         "REQ-160"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-completely-overwrite-frontend-src-appv1-jsx-with-the-exact-v48-code-provided-by-the-user-treating-it-as-the-full-application-ui-and-logic-landing-client-pro-studio-and-keeping-the-local-only-data-model-no-backend-calls",
+      "title": "Completely overwrite `frontend/src/AppV1.jsx` with the exact V48 code provided by the user, treating it as the full application UI and logic (Landing → Client → Pro Studio) and keeping the local-only data model (no backend calls).",
+      "reqIds": [
+        "REQ-161"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-v48-implementation-compiles-and-runs-in-this-repository-by-applying-only-minimal-mechanical-fixes-e-g-missing-incorrect-imports-unresolved-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v48-ui-styling-tailwind-classes-copy-or-interaction-behavior",
+      "title": "Ensure the V48 implementation compiles and runs in this repository by applying only minimal mechanical fixes (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports) without changing the intended V48 UI, styling (Tailwind classes), copy, or interaction behavior.",
+      "reqIds": [
+        "REQ-162"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-three-v48-system-pillars-in-the-running-app-1-whatsapp-bridge-deep-link-generation-with-a-prefilled-order-message-and-no-message-storage-2-swiss-smart-location-search-suggestions-zip-city-simulated-db-and-3-temporal-guard-that-disables-past-time-slots-for-today",
+      "title": "Preserve and verify the three V48 system pillars in the running app: (1) WhatsApp Bridge deep link generation with a prefilled order message and no message storage, (2) Swiss Smart Location search suggestions (ZIP/city simulated DB), and (3) Temporal Guard that disables past time slots for “Today”.",
+      "reqIds": [
+        "REQ-163"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-the-pro-deploy-injection-of-a-newly-created-salon-into-the-in-memory-salons-list-robust-against-stale-react-state-closures-by-using-a-functional-setsalons-prev-news-prev-update-in-the-v48-handledeploy-path-while-preserving-identical-visible-behavior-new-salon-appears-immediately-at-the-top-and-the-view-switches-to-client",
+      "title": "Make the Pro deploy/injection of a newly created salon into the in-memory `salons` list robust against stale React state closures by using a functional `setSalons(prev => [newS, ...prev])` update in the V48 `handleDeploy` path, while preserving identical visible behavior (new salon appears immediately at the top and the view switches to Client).",
+      "reqIds": [
+        "REQ-164"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-user-provided-v50-nexus-ultimate-trust-rich-data-code-block-full-overwrite-preserving-its-components-local-seed-data-swiss-db-initial-salons-professions-rich-presets-tailwind-classes-imports-ui-strings-and-interaction-logic-as-given",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact user-provided V50 “NEXUS ULTIMATE (TRUST & RICH DATA)” code block (full overwrite), preserving its components, local seed data (`SWISS_DB`, `INITIAL_SALONS`, `PROFESSIONS`, `RICH_PRESETS`), Tailwind classes, imports, UI strings, and interaction logic as given.",
+      "reqIds": [
+        "REQ-165"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v50-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-unresolved-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v50-ui-styling-copy-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V50 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports), without changing the intended V50 UI, styling, copy, or interaction behavior.",
+      "reqIds": [
+        "REQ-166"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-the-pro-deploy-publish-injection-robust-against-stale-react-state-closures-in-the-v50-handledeploy-path-by-converting-setsalons-news-salons-to-a-functional-state-update-setsalons-prev-news-prev-while-preserving-identical-visible-behavior-the-new-salon-appears-immediately-at-the-top-and-the-view-switches-to-client-immediately",
+      "title": "Make the Pro deploy/publish injection robust against stale React state closures in the V50 `handleDeploy` path by converting `setSalons([newS, ...salons])` to a functional state update (`setSalons(prev => [newS, ...prev])`), while preserving identical visible behavior (the new salon appears immediately at the top and the view switches to Client immediately).",
+      "reqIds": [
+        "REQ-167"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-user-provided-v51-nexus-viral-growth-conversion-code-block-verbatim-overwrite",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact user-provided V51 “NEXUS VIRAL (Growth & Conversion)” code block (verbatim overwrite).",
+      "reqIds": [
+        "REQ-168"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v51-overwrite-by-applying-only-the-minimum-mechanical-adjustments-required-by-this-repository-e-g-missing-incorrect-imports-undefined-identifiers-invalid-jsx-without-changing-the-intended-v51-ui-styling-tailwind-classes-copy-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V51 overwrite by applying only the minimum mechanical adjustments required by this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX), without changing the intended V51 UI, styling (Tailwind classes), copy, or interaction behavior.",
+      "reqIds": [
+        "REQ-169"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -1564,6 +1636,18 @@
     {
       "id": "AR-82",
       "summary": "V47 « NEXUS PRO TOOLS » : overwrite total de `frontend/src/AppV1.jsx` avec le code V47 fourni (verbatim) incluant Service Studio V2 (services riches + photo), Social Hub (Instagram/WhatsApp/Site) et booking précis (créneau date+heure + attente 2h).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-83",
+      "summary": "V48 « NEXUS INTELLIGENCE » : overwrite total de `frontend/src/AppV1.jsx` avec le code V48 fourni (verbatim) incluant WhatsApp Bridge (deep link pré-rempli, pas de stockage messages), Smart Location Suisse (suggestions NPA/Villes simulées) et Temporal Guard (créneaux passés désactivés aujourd’hui).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-85",
+      "summary": "V51 « NEXUS VIRAL » : overwrite total de `frontend/src/AppV1.jsx` avec le code V51 fourni (verbatim) intégrant Viral Share (navigator.share), WhatsApp deep link de réservation, Smart Location Suisse NPA↔Ville, et UI Cinématique luxe.",
       "reqIds": [],
       "status": "pending"
     }

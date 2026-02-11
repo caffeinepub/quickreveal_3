@@ -609,4 +609,3 @@ actor {
     seedSwissSalonsIfNeeded();
   };
 };
-

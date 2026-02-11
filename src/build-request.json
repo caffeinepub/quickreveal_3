@@ -1,127 +1,68 @@
 {
   "kind": "build_request",
-  "title": "V47 NEXUS PRO TOOLS — Full overwrite AppV1 + Pro tools (Service Studio V2, Social Hub, Precise booking)",
+  "title": "Replace AppV1 with V51 “NEXUS VIRAL” (share + WhatsApp conversion + Swiss smart location)",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-155",
-      "text": "Fully replace the entire contents of `frontend/src/AppV1.jsx` with the exact V47 “NEXUS PRO TOOLS” code provided by the user (full file overwrite).",
+      "id": "REQ-168",
+      "text": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact user-provided V51 “NEXUS VIRAL (Growth & Conversion)” code block (verbatim overwrite).",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "INSTRUCTION : Remplace INTÉGRALEMENT le code de `frontend/src/AppV1.jsx`."
+          "INSTRUCTION : Efface tout le contenu actuel de `frontend/src/AppV1.jsx` et remplace-le par le code ci-dessous."
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` matches the user-provided V47 code as the new baseline (full overwrite, not a patch on the old file).",
-        "The application boots via the existing wrapper (`frontend/src/App.tsx` renders `AppV1`) and shows the V47 Landing screen with the two primary actions (Explorer / Espace Pro)."
+        "`frontend/src/AppV1.jsx` contains exactly the provided V51 code, with no refactors, feature additions, or copy changes.",
+        "The V51 implementation includes the four engines as coded: (1) native share via `navigator.share`, (2) WhatsApp deep-link booking, (3) Swiss ZIP↔city search suggestions, and (4) cinematic dark luxury UI styling.",
+        "The app continues to mount via `frontend/src/App.tsx` rendering `AppV1` (no entrypoint rewiring)."
       ]
     },
     {
-      "id": "REQ-156",
-      "text": "Ensure the project compiles and runs after the V47 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX), without changing the intended V47 UI layout, styling, copy, or interaction behavior.",
+      "id": "REQ-169",
+      "text": "Ensure the project compiles and runs after the V51 overwrite by applying only the minimum mechanical adjustments required by this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX), without changing the intended V51 UI, styling (Tailwind classes), copy, or interaction behavior.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "CODE V47 :"
+          "VOICI LE CODE V51 COMPLET À ÉCRIRE :"
         ]
       },
       "acceptanceCriteria": [
-        "`npm test`/build (or the platform’s build step) succeeds with no unresolved symbol/import errors coming from `AppV1.jsx`.",
-        "No changes are made to any frontend immutable entry files (including `frontend/src/main.tsx` and the Internet Identity / actor hooks).",
-        "`frontend/src/App.tsx` remains a thin wrapper that renders `AppV1` (no additional routing or logic added there)."
-      ]
-    },
-    {
-      "id": "REQ-157",
-      "text": "Make the Pro “Deploy/Finish” injection into the in-memory `salons` list robust against stale React state closures by converting `setSalons([newS, ...salons])` in the V47 `handleDeploy` path to a functional update (`setSalons(prev => [newS, ...prev])`) while preserving identical visible behavior.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "const handleDeploy = (data) => { ... setSalons([newS, ...salons]); setView('client'); }"
-        ]
-      },
-      "acceptanceCriteria": [
-        "After finishing the Pro flow, the newly created salon always appears immediately at the top of the Client feed, even with rapid navigation actions.",
-        "After deploy, the app still switches to the Client view immediately (same visible behavior as V47)."
-      ]
-    },
-    {
-      "id": "REQ-158",
-      "text": "Implement the V47 Social Hub as described: allow the Pro to add Instagram, WhatsApp, and Website, and render those social actions in the client salon detail when present, using the same visual style as the existing Social Hub buttons.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "SOCIAL HUB : Un module pour ajouter Instagram, WhatsApp, Site Web. La page Nexus devient le QG digital du pro."
-        ]
-      },
-      "acceptanceCriteria": [
-        "In Pro Tools (Step 1 / “Identité & Connect”), there is an input for a website URL in addition to Instagram and WhatsApp, and the value is saved into the created salon object.",
-        "In the client salon detail header Social Hub, an additional website action is shown when `salon.website` exists, and it opens the URL in a new tab/window.",
-        "Existing Instagram and WhatsApp buttons remain unchanged in appearance/placement, and the new website button matches the same compact button styling."
-      ]
-    },
-    {
-      "id": "REQ-159",
-      "text": "Preserve and verify the V47 “Precise booking” flow: the client must select an exact date and time before sending a booking request, and after sending, the dedicated pending confirmation screen must communicate a maximum 2-hour validation window and allow returning to the home feed.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "BOOKING PRECIS : Le client sélectionne un créneau exact. La demande part avec un timer de 2h pour validation."
-        ]
-      },
-      "acceptanceCriteria": [
-        "With at least one service selected, the primary CTA advances from services to the date/time picker (calendar step).",
-        "On the date/time step, the “send request” action is disabled until both a date and a time are selected.",
-        "After sending, the UI shows the confirmation/pending screen that includes the selected date and time and explicitly states the 2-hour validation window, and the user can return to the home feed from that screen."
-      ]
-    },
-    {
-      "id": "REQ-160",
-      "text": "Preserve and verify the V47 “Service Studio V2” behavior: the Pro can create rich services including name, price, duration, long description, and a dedicated photo, and those service details are visible to the client in the salon detail (including service images when provided).",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "SERVICE STUDIO V2 : Création ultra-détaillée. Le pro peut tout définir : Nom, Prix, Temps, Description longue, Photo dédiée."
-        ]
-      },
-      "acceptanceCriteria": [
-        "In Pro Tools (services step), creating/editing a service supports: name, numeric price, numeric duration, long description text, and an optional image upload.",
-        "After deploying a salon, opening that salon in the client flow shows the created services, and service images render when provided (no broken image icons due to non-URL values)."
+        "`npm`/Vite build succeeds with the new `AppV1.jsx` in place.",
+        "No runtime crash occurs on initial load; the Landing screen renders and navigation to Client and Pro views works.",
+        "Any fixes made are strictly mechanical (e.g., import corrections) and do not alter visual design, strings, or flow logic in the provided V51 code."
       ]
     }
   ],
   "constraints": [
-    "Do not modify any frontend immutable entry files (including `frontend/src/main.tsx` and the Internet Identity/actor hooks).",
-    "Keep `frontend/src/App.tsx` as the thin wrapper that renders `AppV1`.",
-    "Frontend behavior remains local-only (no backend calls added) unless the provided V47 code already performs them.",
-    "Apply only minimal mechanical fixes beyond the user-provided V47 code; do not refactor or redesign the UI."
+    "Do not modify `frontend/src/App.tsx`; it must remain the thin wrapper that renders `AppV1`.",
+    "Do not modify any frontend immutable entry files listed in the platform constraints (e.g., `frontend/src/main.tsx`, Internet Identity hooks, `frontend/src/components/ui`).",
+    "Do not add backend calls; V51 must remain a local-only frontend demo as provided.",
+    "Preserve the user-provided V51 code verbatim except for strictly build-blocking mechanical fixes."
   ],
   "nonGoals": [
-    "Do not re-enable or integrate prior advanced features (Internet Identity auth flow, role-based routing, React Query data loading, backend CRUD/persistence, on-chain image upload) unless they are explicitly present in the V47 code provided.",
-    "Do not add real-time server timers, push updates, WebSockets, or any external messaging integrations; the 2-hour validation is a UI/UX concept in local state.",
-    "Do not change the overall V47 visual design, layout, or interaction patterns beyond what is strictly required to satisfy the Social Hub Website field and build stability."
+    "Do not implement or re-enable Internet Identity authentication, role-based routing, or React Query data loading.",
+    "Do not connect booking, salons, or sharing to the Motoko backend; no persistence beyond in-memory state unless explicitly present in the provided V51 code.",
+    "Do not redesign the UI or translate/replace any in-app strings beyond what exists in the provided V51 code block."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }

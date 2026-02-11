@@ -1,30 +1,18 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-11T16:51:33.900Z",
+  "generatedAt": "2026-02-11T20:27:00.434Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 6,
-    "implemented": 6,
+    "total": 2,
+    "implemented": 2,
     "items": [
       {
-        "id": "REQ-155",
-        "summary": "Fully replace the entire contents of `frontend/src/AppV1.jsx` with the exact V47 “NEXUS PRO TOOLS” code provided by the user (full file overwrite).",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/AppV1.jsx",
-          "frontend/src/App.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/AppV1.jsx"
-        ]
-      },
-      {
-        "id": "REQ-156",
-        "summary": "Ensure the project compiles and runs after the V47 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX), without changing the intended V47 UI layout, styling, copy, or interaction behavior.",
+        "id": "REQ-168",
+        "summary": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact user-provided V51 “NEXUS VIRAL (Growth & Conversion)” code block (verbatim overwrite).",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx"
@@ -34,41 +22,8 @@
         ]
       },
       {
-        "id": "REQ-157",
-        "summary": "Make the Pro “Deploy/Finish” injection into the in-memory `salons` list robust against stale React state closures by converting `setSalons([newS, ...salons])` in the V47 `handleDeploy` path to a functional update (`setSalons(prev => [newS, ...prev])`) while preserving identical visible behavior.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/AppV1.jsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/AppV1.jsx"
-        ]
-      },
-      {
-        "id": "REQ-158",
-        "summary": "Implement the V47 Social Hub as described: allow the Pro to add Instagram, WhatsApp, and Website, and render those social actions in the client salon detail when present, using the same visual style as the existing Social Hub buttons.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/AppV1.jsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/AppV1.jsx"
-        ]
-      },
-      {
-        "id": "REQ-159",
-        "summary": "Preserve and verify the V47 “Precise booking” flow: the client must select an exact date and time before sending a booking request, and after sending, the dedicated pending confirmation screen must communicate a maximum 2-hour validation window and allow returning to the home feed.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/AppV1.jsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/AppV1.jsx"
-        ]
-      },
-      {
-        "id": "REQ-160",
-        "summary": "Preserve and verify the V47 “Service Studio V2” behavior: the Pro can create rich services including name, price, duration, long description, and a dedicated photo, and those service details are visible to the client in the salon detail (including service images when provided).",
+        "id": "REQ-169",
+        "summary": "Ensure the project compiles and runs after the V51 overwrite by applying only the minimum mechanical adjustments required by this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX), without changing the intended V51 UI, styling (Tailwind classes), copy, or interaction behavior.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx"

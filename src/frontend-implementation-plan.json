@@ -1,103 +1,37 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "V47 NEXUS PRO TOOLS — Frontend overwrite + Pro tools fixes (Social Hub, booking, Service Studio V2)",
+  "title": "Replace AppV1 with V51 “NEXUS VIRAL” and ensure build passes",
   "requirements": [
     {
-      "id": "REQ-155",
-      "summary": "Overwrite AppV1 with the user-provided V47 “NEXUS PRO TOOLS” baseline and keep App.tsx as a thin wrapper.",
+      "id": "REQ-168",
+      "summary": "Overwrite AppV1.jsx with the exact user-provided V51 “NEXUS VIRAL (Growth & Conversion)” code (verbatim).",
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` matches the user-provided V47 code as the new baseline (full overwrite, not a patch on the old file).",
-        "The application boots via the existing wrapper (`frontend/src/App.tsx` renders `AppV1`) and shows the V47 Landing screen with the two primary actions (Explorer / Espace Pro)."
+        "`frontend/src/AppV1.jsx` contains exactly the provided V51 code, with no refactors, feature additions, or copy changes.",
+        "The V51 implementation includes the four engines as coded: (1) native share via `navigator.share`, (2) WhatsApp deep-link booking, (3) Swiss ZIP↔city search suggestions, and (4) cinematic dark luxury UI styling.",
+        "The app continues to mount via `frontend/src/App.tsx` rendering `AppV1` (no entrypoint rewiring)."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Replace the entire file contents with the exact V47 “NEXUS PRO TOOLS” code provided by the user (full overwrite, no partial patch)."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Verify `App.tsx` remains a thin wrapper that only renders `AppV1` and exports it (no routing/logic added); adjust only if the overwrite would otherwise break the import/export wiring."
+          "description": "Delete the entire current contents and paste the exact V51 “NEXUS VIRAL (Growth & Conversion)” code block from the user message (msg-1) as a verbatim overwrite. Do not change formatting, strings, Tailwind classes, or logic."
         }
       ]
     },
     {
-      "id": "REQ-156",
-      "summary": "Apply minimal mechanical fixes so the V47 overwrite compiles and runs in this repo without changing intended UI/UX.",
+      "id": "REQ-169",
+      "summary": "Apply minimal mechanical fixes required for this repo so the V51 overwrite compiles and runs without altering V51 design/copy/behavior.",
       "acceptanceCriteria": [
-        "`npm test`/build (or the platform’s build step) succeeds with no unresolved symbol/import errors coming from `AppV1.jsx`.",
-        "No changes are made to any frontend immutable entry files (including `frontend/src/main.tsx` and the Internet Identity / actor hooks).",
-        "`frontend/src/App.tsx` remains a thin wrapper that renders `AppV1` (no additional routing or logic added there)."
+        "`npm`/Vite build succeeds with the new `AppV1.jsx` in place.",
+        "No runtime crash occurs on initial load; the Landing screen renders and navigation to Client and Pro views works.",
+        "Any fixes made are strictly mechanical (e.g., import corrections) and do not alter visual design, strings, or flow logic in the provided V51 code."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Fix only mechanical issues required for this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX/attributes, React hook usage mistakes) while preserving V47 layout, styling, copy, and interaction behavior."
-        }
-      ]
-    },
-    {
-      "id": "REQ-157",
-      "summary": "Make the Pro deploy injection into salons state robust by converting to a functional state update.",
-      "acceptanceCriteria": [
-        "After finishing the Pro flow, the newly created salon always appears immediately at the top of the Client feed, even with rapid navigation actions.",
-        "After deploy, the app still switches to the Client view immediately (same visible behavior as V47)."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/AppV1.jsx",
-          "operation": "modify",
-          "description": "In the V47 `handleDeploy` path, replace `setSalons([newS, ...salons])` with a functional update `setSalons(prev => [newS, ...prev])`, keeping the same immediate view switch behavior."
-        }
-      ]
-    },
-    {
-      "id": "REQ-158",
-      "summary": "Implement V47 Social Hub Website link in Pro identity step and render website action in client salon detail Social Hub.",
-      "acceptanceCriteria": [
-        "In Pro Tools (Step 1 / “Identité & Connect”), there is an input for a website URL in addition to Instagram and WhatsApp, and the value is saved into the created salon object.",
-        "In the client salon detail header Social Hub, an additional website action is shown when `salon.website` exists, and it opens the URL in a new tab/window.",
-        "Existing Instagram and WhatsApp buttons remain unchanged in appearance/placement, and the new website button matches the same compact button styling."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/AppV1.jsx",
-          "operation": "modify",
-          "description": "Extend the Pro Tools identity/connect step to capture a Website URL, persist it into the in-memory salon object created by the Pro flow, and render a matching-styled Website action in the client salon detail Social Hub that opens the URL in a new tab/window when present (leave existing Instagram/WhatsApp UI unchanged)."
-        }
-      ]
-    },
-    {
-      "id": "REQ-159",
-      "summary": "Preserve and verify V47 precise booking flow with required date/time selection and a pending confirmation screen stating a 2-hour validation window.",
-      "acceptanceCriteria": [
-        "With at least one service selected, the primary CTA advances from services to the date/time picker (calendar step).",
-        "On the date/time step, the “send request” action is disabled until both a date and a time are selected.",
-        "After sending, the UI shows the confirmation/pending screen that includes the selected date and time and explicitly states the 2-hour validation window, and the user can return to the home feed from that screen."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/AppV1.jsx",
-          "operation": "modify",
-          "description": "Ensure the booking wizard enforces selecting an exact date and time before enabling the send action; after send, show the dedicated pending confirmation screen including the chosen date/time and explicit 2-hour validation window messaging, with a control to return to the home/feed view."
-        }
-      ]
-    },
-    {
-      "id": "REQ-160",
-      "summary": "Preserve and verify V47 Service Studio V2 rich service creation (name, price, duration, long description, photo) and client visibility including images.",
-      "acceptanceCriteria": [
-        "In Pro Tools (services step), creating/editing a service supports: name, numeric price, numeric duration, long description text, and an optional image upload.",
-        "After deploying a salon, opening that salon in the client flow shows the created services, and service images render when provided (no broken image icons due to non-URL values)."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/AppV1.jsx",
-          "operation": "modify",
-          "description": "In the Pro services step, ensure the service model and UI support long description and an optional dedicated photo per service (stored as a renderable URL such as a local object URL); in the client salon detail, render service fields (including images when present) with guards so non-URL values do not produce broken image icons."
+          "description": "If the verbatim V51 paste is build-blocking in this repository, make only strictly mechanical adjustments inside this file (e.g., fix missing/incorrect imports, resolve undefined identifiers, correct invalid JSX/React syntax, ensure a valid default export for AppV1). Do not add features, do not change any UI/copy, do not add backend calls, and do not rewire the entrypoint (App.tsx must remain unchanged)."
         }
       ]
     }
