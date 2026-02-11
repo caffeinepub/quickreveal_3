@@ -1,11 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Overwrite `frontend/src/AppV1.jsx` with the provided V38 “GENESIS ARCHITECT” single-file UI (Landing → Client → Pro Studio), ensuring it compiles/runs in this repo with only minimal build-fixing adjustments and improved deploy-state robustness.
+**Goal:** Replace the current AppV1 UI with the user-provided V43 “NEXUS SECURE CONNECT” experience, ensuring it compiles in the repo and includes the required domicile logistics gating, post-request pending screen, secure in-app chat, and privacy reassurance messaging.
 
 **Planned changes:**
-- Fully replace the contents of `frontend/src/AppV1.jsx` with the exact V38 code provided (including imports, components, local data like `INITIAL_SALONS` and `PRESETS`, Tailwind classes, and interaction logic).
-- Apply minimal mechanical fixes needed for the V38 code to compile and run in this codebase without changing intended UI/UX (e.g., missing imports, unresolved identifiers, JSX/export issues).
-- Update the Pro “deploy/publish” flow to use a functional React state update (`setSalons(prev => [newSalon, ...prev])`) to avoid stale-closure issues while keeping the same visible behavior (new salon added to top and switch to Client view).
+- Fully overwrite `frontend/src/AppV1.jsx` with the exact user-provided V43 “NEXUS SECURE CONNECT” code (entire file replaced verbatim).
+- Apply only minimal mechanical fixes needed for the V43 code to compile and run in this repository (e.g., imports, undefined identifiers, JSX issues) without changing intended layout/styling/copy/behavior.
+- Ensure the booking request flow enforces a required logistics form for “Domicile” services (address + access instructions required before sending).
+- After sending a request, show an awaiting-confirmation/pending screen with a “Chat with the Pro” action that opens a local-state in-app secure chat UI, plus visible privacy reassurance messaging about data sharing occurring only after confirmation.
 
-**User-visible outcome:** The app launches into the V38 landing screen and can navigate to Client and Pro Studio using local state only; the Pro Studio includes Smart Presets, a detailed service editor (image/technical description/duration/price) reflected in the client menu, a desktop split-view live preview, and deploying a new salon reliably adds it to the top of the client list and switches to Client.
+**User-visible outcome:** The app boots into the V43 Landing → Client → Pro UI, requires address/access details for domicile bookings before sending a request, then shows a pending confirmation state with an in-app secure chat to coordinate details and clear privacy reassurance messaging.

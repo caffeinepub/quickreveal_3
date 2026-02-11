@@ -1,18 +1,18 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-11T01:42:51.964Z",
+  "generatedAt": "2026-02-11T03:20:41.866Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
     "total": 3,
-    "implemented": 3,
+    "implemented": 2,
     "items": [
       {
-        "id": "REQ-119",
-        "summary": "Completely replace (overwrite) the entire contents of `frontend/src/AppV1.jsx` with the exact V38 “GENESIS ARCHITECT” code block provided by the user, preserving components, local data (`INITIAL_SALONS`, `PRESETS`), Tailwind classes, imports, and interaction logic as given (treat it as the whole app UI: Landing → Client → Pro Studio).",
+        "id": "REQ-139",
+        "summary": "Fully overwrite `frontend/src/AppV1.jsx` with the exact user-provided V43 “NEXUS SECURE CONNECT” code block (verbatim replacement of the entire file).",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx"
@@ -22,19 +22,29 @@
         ]
       },
       {
-        "id": "REQ-120",
-        "summary": "Ensure the V38 app compiles and runs in this repository by applying only minimal mechanical adjustments required by this codebase (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports) without changing the intended V38 UI, layout, styling, copy, or interaction behavior.",
-        "status": "implemented",
+        "id": "REQ-140",
+        "summary": "Ensure the V43 UI compiles and runs in this repository by applying only the minimum mechanical fixes required by this codebase (e.g., missing/incorrect imports, undefined identifiers, invalid JSX), without changing the intended V43 UI layout, styling (Tailwind classes), copy, or interaction behavior.",
+        "status": "missing",
         "plannedFiles": [
-          "frontend/src/AppV1.jsx"
+          "frontend/src/components/MotionButton.tsx",
+          "frontend/src/components/Pressable.tsx",
+          "frontend/src/components/PremiumBadge.tsx",
+          "frontend/src/components/ProfileSetupModal.tsx",
+          "frontend/src/components/AuthHeader.tsx",
+          "frontend/src/components/SalonListSection.tsx",
+          "frontend/src/components/VipDashboard.tsx",
+          "frontend/src/components/MemberCard.tsx",
+          "frontend/src/components/MonopolyModeSwitch.tsx",
+          "frontend/src/components/RevenueChart.tsx",
+          "frontend/src/components/CreateSalonForm.tsx",
+          "frontend/src/components/ProSalonWizard.tsx",
+          "frontend/src/components/ProStudioCreator.tsx"
         ],
-        "matchedFiles": [
-          "frontend/src/AppV1.jsx"
-        ]
+        "matchedFiles": []
       },
       {
-        "id": "REQ-121",
-        "summary": "Make the Pro deploy/publish injection logic robust against stale React state closures in the V38 `handleDeploy` path by using a functional `setSalons(prev => [newSalon, ...prev])` update, while preserving identical visible behavior (new salon appears immediately at the top and the view switches to Client).",
+        "id": "REQ-141",
+        "summary": "Implement/verify the V43 booking request flow changes described by the user: (1) when a selected salon/service is of type “Domicile”, the client must complete the logistics form (address + access instructions) before the booking request can be sent; (2) after the request is sent, show the pending confirmation screen and provide a “Chat with the Pro” action that opens an in-app secure chat UI; (3) include privacy reassurance messaging indicating user data is only shared after confirmation.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx"
@@ -51,6 +61,7 @@
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
     "frontend/src/AppV1.jsx",
+    "frontend/src/index.css",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

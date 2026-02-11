@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 65,
-  "summary": "V38 « GENESIS ARCHITECT » : remplacer intégralement `frontend/src/AppV1.jsx` par le code V38 fourni (verbatim). Focus sur création de services ultra-détaillée et ergonomie « Click-to-Edit » avec 3 ruptures : (1) Smart Presets par catégorie (ajout 1‑clic), (2) Service Studio détaillé (photo/desc/durée/prix par service), (3) interface Studio Split‑View (outils à gauche, preview client temps réel à droite).",
+  "projectStateVersion": 73,
+  "summary": "V43 « NEXUS SECURE CONNECT » : remplacer intégralement `frontend/src/AppV1.jsx` par le code V43 fourni (verbatim). Évolutions clés : si le rendez-vous est en mode « Domicile », affichage d’un formulaire logistique (adresse + infos d’accès) avant l’envoi de la demande ; après envoi, écran d’attente avec CTA « Discuter avec le Pro » ouvrant un Secure Chat intégré ; ajout de mentions Privacy/« données chiffrées et partagées uniquement si la demande est acceptée ».",
   "architectural_notes": [
     "RESET complet : écrasement total du backend et du frontend, considéré comme nouvelle V1.0 officielle.",
     "Backend Motoko réduit à un modèle Salon/Service/Socials avec `stable var salons` et endpoints `getSalons` (query) + `createSalon` (shared); seed de 4 salons suisses au démarrage (si salons vide).",
@@ -860,6 +860,158 @@
         "REQ-121"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-fully-overwrite-frontend-src-appv1-jsx-with-the-exact-user-provided-v39-nexus-sovereign-code-block-as-the-new-app-ui-landing-client-pro-studio-treating-it-as-the-whole-frontend-application",
+      "title": "Fully overwrite `frontend/src/AppV1.jsx` with the exact user-provided V39 “NEXUS SOVEREIGN” code block as the new app UI (Landing → Client → Pro Studio), treating it as the whole frontend application.",
+      "reqIds": [
+        "REQ-122"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v39-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-unresolved-identifiers-invalid-jsx-without-changing-the-intended-v39-ui-layout-styling-copy-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V39 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX), without changing the intended V39 UI layout, styling, copy, or interaction behavior.",
+      "reqIds": [
+        "REQ-123"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-extended-trades-library-evolution-end-to-end-ensure-the-client-category-filter-bar-the-pro-category-select-and-the-presets-presets-include-the-new-categories-esth-tique-massage-and-tattoo-and-that-presets-are-present-and-specific-e-g-include-examples-like-microneedling-pose-chablis-full-back",
+      "title": "Implement the ‘Extended trades library’ evolution end-to-end: ensure the Client category filter bar, the Pro category select, and the presets (`PRESETS`) include the new categories “Esthétique”, “Massage”, and “Tattoo”, and that presets are present and specific (e.g., include examples like “Microneedling”, “Pose Chablis”, “Full Back”).",
+      "reqIds": [
+        "REQ-124"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-portfolio-manager-evolution-keep-the-salon-ambience-gallery-upload-section-separate-from-technical-service-photos-and-ensure-uploaded-gallery-images-appear-in-the-salon-detail-portfolio-wall-for-the-created-salon-preview-and-after-deploy-injection-into-the-in-memory-salon-list",
+      "title": "Implement the ‘Portfolio Manager’ evolution: keep the salon ‘ambience’ gallery upload section separate from technical service photos, and ensure uploaded gallery images appear in the salon detail ‘Portfolio’ wall for the created salon preview and after deploy injection into the in-memory salon list.",
+      "reqIds": [
+        "REQ-125"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-pro-plan-monetization-evolution-in-the-pro-studio-final-step-allow-the-pro-to-select-either-starter-or-elite-plan-at-the-end-of-configuration-and-ensure-finishing-the-flow-works-for-both-plan-choices-even-if-starter-has-restrictions",
+      "title": "Implement the ‘Pro plan monetization’ evolution in the Pro Studio final step: allow the Pro to select either “Starter” or “Elite” plan at the end of configuration, and ensure finishing the flow works for both plan choices (even if Starter has restrictions).",
+      "reqIds": [
+        "REQ-126"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-the-pro-deploy-finish-injection-into-the-in-memory-salons-list-robust-against-stale-react-state-closures-by-using-a-functional-state-update-for-setsalons-while-preserving-identical-visible-behavior-new-salon-appears-immediately-at-the-top-and-the-view-switches-to-client",
+      "title": "Make the Pro ‘Deploy/Finish’ injection into the in-memory `salons` list robust against stale React state closures by using a functional state update for `setSalons`, while preserving identical visible behavior (new salon appears immediately at the top and the view switches to Client).",
+      "reqIds": [
+        "REQ-127"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-the-direct-booking-request-evolution-in-the-client-tunnel-confirming-a-booking-should-submit-a-booking-request-without-collecting-card-details-and-explicitly-indicate-pay-on-site-behavior-no-payment-ui",
+      "title": "Preserve the ‘Direct booking request’ evolution in the Client tunnel: confirming a booking should submit a “Booking Request” without collecting card details and explicitly indicate pay-on-site behavior (no payment UI).",
+      "reqIds": [
+        "REQ-128"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v41-nexus-romandie-code-provided-by-the-user-verbatim-overwrite-preserving-components-local-seed-data-tailwind-classes-imports-ui-strings-and-interaction-logic",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V41 “NEXUS ROMANDIE” code provided by the user (verbatim overwrite, preserving components, local seed data, Tailwind classes, imports, UI strings, and interaction logic).",
+      "reqIds": [
+        "REQ-129"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v41-overwrite-by-applying-only-minimal-mechanical-adjustments-required-by-this-repository-e-g-missing-incorrect-imports-unresolved-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v41-ui-copy-layout-styling-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V41 overwrite by applying only minimal mechanical adjustments required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports), without changing the intended V41 UI, copy, layout, styling, or interaction behavior.",
+      "reqIds": [
+        "REQ-130"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-verify-the-v41-simulated-geolocation-behavior-in-the-client-search-bar-clicking-the-navigation-button-toggles-a-proximity-mode-that-re-sorts-the-currently-filtered-salon-list-by-ascending-distance-so-the-demo-shows-lausanne-entries-before-gen-ve-before-yverdon-and-displays-the-sorted-by-proximity-indicator-when-enabled",
+      "title": "Implement/verify the V41 simulated geolocation behavior in the Client search bar: clicking the \"Navigation\" (📍) button toggles a proximity mode that re-sorts the currently filtered salon list by ascending `distance` (so the demo shows Lausanne entries before Genève, before Yverdon), and displays the “sorted by proximity” indicator when enabled.",
+      "reqIds": [
+        "REQ-131"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-verify-smart-presets-v2-behavior-in-the-pro-studio-genesisarchitect-clicking-a-preset-suggestion-must-not-directly-add-the-service-instead-it-opens-the-service-editor-with-fields-pre-filled-from-the-preset-allowing-the-pro-to-modify-price-time-description-image-before-clicking-add-to-append-it-to-preview-services",
+      "title": "Implement/verify “Smart Presets V2” behavior in the Pro Studio (GenesisArchitect): clicking a preset suggestion must NOT directly add the service; instead it opens the service editor with fields pre-filled from the preset, allowing the Pro to modify price/time/description/image before clicking “Add” to append it to `preview.services`.",
+      "reqIds": [
+        "REQ-132"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-v41-pro-deploy-flow-to-be-robust-against-stale-react-state-closures-when-a-pro-finishes-and-a-new-salon-is-injected-into-the-in-memory-salons-list-use-a-functional-state-update-setsalons-prev-news-prev-to-ensure-the-salon-always-appears-immediately-at-the-top-even-with-rapid-navigation-actions-while-keeping-the-visible-behavior-identical-switch-to-client-view-immediately-after-deploy",
+      "title": "Update the V41 Pro deploy flow to be robust against stale React state closures: when a Pro finishes and a new salon is injected into the in-memory `salons` list, use a functional state update (`setSalons(prev => [newS, ...prev])`) to ensure the salon always appears immediately at the top, even with rapid navigation/actions, while keeping the visible behavior identical (switch to Client view immediately after deploy).",
+      "reqIds": [
+        "REQ-133"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-v41-demo-dataset-is-anchored-in-swiss-romandie-as-provided-lausanne-gen-ve-yverdon-and-remains-local-only-no-backend-calls-the-initial-client-list-must-render-the-three-seed-salons-with-their-fields-location-distance-distancestr-nextslot-tags-services-exactly-as-defined-in-the-v41-initial-salons",
+      "title": "Ensure the V41 demo dataset is anchored in Swiss Romandie as provided (Lausanne, Genève, Yverdon) and remains local-only (no backend calls): the initial Client list must render the three seed salons with their fields (location, distance/distanceStr, nextSlot, tags, services) exactly as defined in the V41 `INITIAL_SALONS`.",
+      "reqIds": [
+        "REQ-134"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-completely-replace-the-entire-contents-of-frontend-src-appv1-jsx-with-the-provided-v42-nexus-connect-code-block-full-overwrite-preserving-its-components-local-seed-data-initial-salons-presets-tailwind-classes-imports-and-interaction-logic-as-given",
+      "title": "Completely replace the entire contents of `frontend/src/AppV1.jsx` with the provided V42 “NEXUS CONNECT” code block (full overwrite), preserving its components, local seed data (`INITIAL_SALONS`, `PRESETS`), Tailwind classes, imports, and interaction logic as given.",
+      "reqIds": [
+        "REQ-135"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-v42-booking-validation-workflow-in-the-client-flow-when-a-user-sends-a-request-from-the-salon-detail-show-a-dedicated-pending-confirmation-screen-that-communicates-the-request-is-sent-and-awaiting-pro-validation-maximum-2-hours-and-ensure-the-user-can-return-to-the-home-feed-from-that-screen",
+      "title": "Implement the V42 booking validation workflow in the client flow: when a user sends a request from the salon detail, show a dedicated pending confirmation screen that communicates the request is sent and awaiting Pro validation (maximum 2 hours), and ensure the user can return to the home feed from that screen.",
+      "reqIds": [
+        "REQ-136"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-in-app-requests-tracking-surface-in-the-bottom-navigation-demandes-tab-that-lists-booking-requests-with-their-current-status-including-at-least-pending-and-confirmed-so-users-can-follow-the-request-lifecycle-end-to-end-in-local-state",
+      "title": "Add an in-app “Requests” tracking surface in the bottom navigation (“Demandes” tab) that lists booking requests with their current status, including at least Pending (🟡) and Confirmed (🟢), so users can follow the request lifecycle end-to-end in local state.",
+      "reqIds": [
+        "REQ-137"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-the-pro-deploy-injection-of-a-newly-created-salon-into-the-in-memory-salons-list-robust-against-stale-react-state-closures-by-using-a-functional-setsalons-prev-newsalon-prev-update-while-preserving-the-visible-behavior-new-salon-appears-immediately-at-the-top-and-the-view-switches-to-client",
+      "title": "Make the Pro ‘deploy’ injection of a newly created salon into the in-memory salons list robust against stale React state closures by using a functional `setSalons(prev => [newSalon, ...prev])` update, while preserving the visible behavior (new salon appears immediately at the top and the view switches to Client).",
+      "reqIds": [
+        "REQ-138"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fully-overwrite-frontend-src-appv1-jsx-with-the-exact-user-provided-v43-nexus-secure-connect-code-block-verbatim-replacement-of-the-entire-file",
+      "title": "Fully overwrite `frontend/src/AppV1.jsx` with the exact user-provided V43 “NEXUS SECURE CONNECT” code block (verbatim replacement of the entire file).",
+      "reqIds": [
+        "REQ-139"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-verify-the-v43-booking-request-flow-changes-described-by-the-user-1-when-a-selected-salon-service-is-of-type-domicile-the-client-must-complete-the-logistics-form-address-access-instructions-before-the-booking-request-can-be-sent-2-after-the-request-is-sent-show-the-pending-confirmation-screen-and-provide-a-chat-with-the-pro-action-that-opens-an-in-app-secure-chat-ui-3-include-privacy-reassurance-messaging-indicating-user-data-is-only-shared-after-confirmation",
+      "title": "Implement/verify the V43 booking request flow changes described by the user: (1) when a selected salon/service is of type “Domicile”, the client must complete the logistics form (address + access instructions) before the booking request can be sent; (2) after the request is sent, show the pending confirmation screen and provide a “Chat with the Pro” action that opens an in-app secure chat UI; (3) include privacy reassurance messaging indicating user data is only shared after confirmation.",
+      "reqIds": [
+        "REQ-141"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -1199,6 +1351,38 @@
       "id": "AR-68",
       "summary": "V38 « GENESIS ARCHITECT » : overwrite total de `frontend/src/AppV1.jsx` avec le code V38 fourni (verbatim) + appliquer uniquement les ajustements mécaniques nécessaires pour compiler, sans changer design/UX/logique. Inclut Smart Presets, Service Studio détaillé (photo/desc/durée/prix), et Studio Split‑View avec preview client en temps réel.",
       "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-69",
+      "summary": "V39 « NEXUS SOVEREIGN » : overwrite total de `frontend/src/AppV1.jsx` avec le code V39 fourni (verbatim) + appliquer uniquement les ajustements mécaniques nécessaires pour compiler, sans changer design/UX/logique. Inclut catégories étendues (Esthétique/Massage/Tattoo) + presets riches, Portfolio Manager (galerie ambiance), Plan Pro (Starter/Elite), et booking « Demande de RDV » sans carte (paiement sur place).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-70",
+      "summary": "V41 « NEXUS ROMANDIE » : overwrite total de `frontend/src/AppV1.jsx` avec le code V41 fourni (verbatim) incluant géolocalisation simulée (tri par proximité via bouton Navigation), Presets intelligents V2 (suggestion ouvre l’éditeur pré-rempli avant ajout), et dataset Suisse Romande (Lausanne/Genève/Yverdon).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-71",
+      "summary": "V42 « NEXUS CONNECT » : overwrite total de `frontend/src/AppV1.jsx` avec le code V42 fourni (verbatim) incluant workflow de validation réservation (Demande → Pending/Confirmation) + écran Pending (délai max 2h) + onglet bottom-bar « Demandes » (Inbox) pour suivre les statuts.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-72",
+      "summary": "V43 « NEXUS SECURE CONNECT » : overwrite total de `frontend/src/AppV1.jsx` avec le code V43 fourni (verbatim) incluant formulaire logistique obligatoire pour prestations « Domicile » (adresse + accès) avant envoi de demande, Secure Chat post-demande (« Discuter avec le Pro ») et Privacy UI rassurante.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-74",
+      "summary": "Ensure the V43 UI compiles and runs in this repository by applying only the minimum mechanical fixes required by this codebase (e.g., missing/incorrect imports, undefined identifiers, invalid JSX), without changing the intended V43 UI layout, styling (Tailwind classes), copy, or interaction behavior.",
+      "reqIds": [
+        "REQ-140"
+      ],
       "status": "pending"
     }
   ],

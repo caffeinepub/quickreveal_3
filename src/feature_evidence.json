@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-completely-replace-overwrite-the-entire-contents-of-frontend-src-appv1-jsx-with-the-exact-v38-genesis-architect-code-block-provided-by-the-user-preserving-components-local-data-initial-salons-presets-tailwind-classes-imports-and-interaction-logic-as-given-treat-it-as-the-whole-app-ui-landing-client-pro-studio",
-      "featureTitle": "Completely replace (overwrite) the entire contents of `frontend/src/AppV1.jsx` with the exact V38 “GENESIS ARCHITECT” code block provided by the user, preserving components, local data (`INITIAL_SALONS`, `PRESETS`), Tailwind classes, imports, and interaction logic as given (treat it as the whole app UI: Landing → Client → Pro Studio).",
+      "featureId": "feature-fully-overwrite-frontend-src-appv1-jsx-with-the-exact-user-provided-v43-nexus-secure-connect-code-block-verbatim-replacement-of-the-entire-file",
+      "featureTitle": "Fully overwrite `frontend/src/AppV1.jsx` with the exact user-provided V43 “NEXUS SECURE CONNECT” code block (verbatim replacement of the entire file).",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -17,13 +17,13 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-119"
+        "REQ-139"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-v38-app-compiles-and-runs-in-this-repository-by-applying-only-minimal-mechanical-adjustments-required-by-this-codebase-e-g-missing-incorrect-imports-unresolved-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v38-ui-layout-styling-copy-or-interaction-behavior",
-      "featureTitle": "Ensure the V38 app compiles and runs in this repository by applying only minimal mechanical adjustments required by this codebase (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports) without changing the intended V38 UI, layout, styling, copy, or interaction behavior.",
+      "featureId": "feature-implement-verify-the-v43-booking-request-flow-changes-described-by-the-user-1-when-a-selected-salon-service-is-of-type-domicile-the-client-must-complete-the-logistics-form-address-access-instructions-before-the-booking-request-can-be-sent-2-after-the-request-is-sent-show-the-pending-confirmation-screen-and-provide-a-chat-with-the-pro-action-that-opens-an-in-app-secure-chat-ui-3-include-privacy-reassurance-messaging-indicating-user-data-is-only-shared-after-confirmation",
+      "featureTitle": "Implement/verify the V43 booking request flow changes described by the user: (1) when a selected salon/service is of type “Domicile”, the client must complete the logistics form (address + access instructions) before the booking request can be sent; (2) after the request is sent, show the pending confirmation screen and provide a “Chat with the Pro” action that opens an in-app secure chat UI; (3) include privacy reassurance messaging indicating user data is only shared after confirmation.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -37,27 +37,7 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-120"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-make-the-pro-deploy-publish-injection-logic-robust-against-stale-react-state-closures-in-the-v38-handledeploy-path-by-using-a-functional-setsalons-prev-newsalon-prev-update-while-preserving-identical-visible-behavior-new-salon-appears-immediately-at-the-top-and-the-view-switches-to-client",
-      "featureTitle": "Make the Pro deploy/publish injection logic robust against stale React state closures in the V38 `handleDeploy` path by using a functional `setSalons(prev => [newSalon, ...prev])` update, while preserving identical visible behavior (new salon appears immediately at the top and the view switches to Client).",
-      "files": [
-        "frontend/src/AppV1.jsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-121"
+        "REQ-141"
       ],
       "confidence": "high"
     }

@@ -1,55 +1,113 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "V38 Genesis Architect (AppV1.jsx full overwrite + build fixes + robust deploy state update)",
+  "title": "V43 NEXUS SECURE CONNECT: AppV1 replacement + compile fixes + domicile logistics gating + secure chat + privacy UI",
   "requirements": [
     {
-      "id": "REQ-119",
-      "summary": "Fully overwrite AppV1.jsx with the user-provided V38 “GENESIS ARCHITECT” single-file app UI (Landing → Client → Pro Studio) including Smart Presets, detailed service studio fields, and desktop split-view live preview.",
+      "id": "REQ-139",
+      "summary": "Replace AppV1 with the exact user-provided V43 “NEXUS SECURE CONNECT” code (full-file overwrite only).",
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` is a full overwrite with the provided V38 code (no partial merges).",
-        "The application boots into the V38 landing screen and can navigate to Client and Pro views using only in-file local state (no backend calls).",
-        "Smart Presets are present in the Pro studio: selecting/using a category shows preset service chips that add a service in one click.",
-        "Detailed Service Studio is present: each service supports per-service image, technical description, duration, and price in the Pro studio and is rendered in the client service menu.",
-        "Split-view is present on desktop widths: left side tools, right side live client preview panel."
+        "`frontend/src/AppV1.jsx` contents match the provided V43 code (full-file overwrite; no partial merges).",
+        "No changes are made to `frontend/src/App.tsx`; it remains a thin wrapper that renders `AppV1`.",
+        "The app boots and renders the V43 UI (Landing → Client → Pro) using local in-file data only (no backend calls introduced)."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Replace the entire file contents with the exact V38 “GENESIS ARCHITECT” code block provided by the user (full overwrite, no merging). Preserve all provided imports, local data (e.g., `INITIAL_SALONS`, `PRESETS`), Tailwind classes, French UI strings, and in-file state-driven navigation/interaction logic so the app remains frontend-only/local-state."
+          "description": "Fully overwrite the entire file with the exact V43 “NEXUS SECURE CONNECT” code block provided by the user, verbatim (no merges, no edits)."
         }
       ]
     },
     {
-      "id": "REQ-120",
-      "summary": "Apply only minimal mechanical adjustments needed for the V38 AppV1.jsx to compile and run in this repo without changing intended UI/UX behavior.",
+      "id": "REQ-140",
+      "summary": "Make the V43 UI compile in this repo with only minimal mechanical fixes (imports/undefined identifiers/JSX validity) while preserving V43 layout, Tailwind classes, copy, and behavior.",
       "acceptanceCriteria": [
-        "`npm test`/build (or the platform build) succeeds for the frontend without modifying immutable entry files.",
-        "No runtime crash on initial render (landing view).",
-        "Any fixes are limited to build-breakers (e.g., adding a missing import for a referenced symbol) and do not alter the provided UI/UX behavior."
+        "`npm run build` (or equivalent) succeeds with no unresolved symbols referenced from `frontend/src/AppV1.jsx` (e.g., Framer Motion, lucide-react icons, React hooks).",
+        "No immutable frontend entry files are modified (especially files under `frontend/src/hooks/*` listed as immutable and `frontend/src/main.tsx`)."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/AppV1.jsx",
+          "path": "frontend/src/components/MotionButton.tsx",
           "operation": "modify",
-          "description": "After pasting the V38 code, make only build-blocking mechanical fixes required by this codebase (e.g., adjust/restore missing imports for referenced symbols, fix invalid JSX, remove duplicate default exports, resolve undefined identifiers) while keeping the intended V38 layout/styling/copy/behavior unchanged. Do not add backend calls or auth flows."
+          "description": "Implement a minimal, build-safe MotionButton component (non-animated fallback if needed) matching any V43 imports/usage to eliminate unresolved references, without changing V43 UI copy or layout."
+        },
+        {
+          "path": "frontend/src/components/Pressable.tsx",
+          "operation": "modify",
+          "description": "Implement a minimal Pressable wrapper component (e.g., forwards props/refs, supports className/onClick) compatible with any V43 usage to fix build errors without altering intended behavior."
+        },
+        {
+          "path": "frontend/src/components/PremiumBadge.tsx",
+          "operation": "modify",
+          "description": "Implement a minimal PremiumBadge component (presentational only) if referenced by V43, ensuring exports align with how V43 imports it."
+        },
+        {
+          "path": "frontend/src/components/ProfileSetupModal.tsx",
+          "operation": "modify",
+          "description": "Implement a minimal ProfileSetupModal component (can be a no-op render when closed) only to satisfy any V43 references; do not introduce authentication flows beyond what V43 already contains."
+        },
+        {
+          "path": "frontend/src/components/AuthHeader.tsx",
+          "operation": "modify",
+          "description": "Implement a minimal AuthHeader component if referenced by V43 (pure UI/header shell), avoiding new authentication requirements unless V43 already includes them."
+        },
+        {
+          "path": "frontend/src/components/SalonListSection.tsx",
+          "operation": "modify",
+          "description": "Implement a minimal SalonListSection component if referenced by V43 (presentation + props passthrough) to resolve any missing imports."
+        },
+        {
+          "path": "frontend/src/components/VipDashboard.tsx",
+          "operation": "modify",
+          "description": "Implement a minimal VipDashboard component if referenced by V43 to prevent unresolved module/component errors during build."
+        },
+        {
+          "path": "frontend/src/components/MemberCard.tsx",
+          "operation": "modify",
+          "description": "Implement a minimal MemberCard component if referenced by V43 to satisfy compilation (UI-only, local state only)."
+        },
+        {
+          "path": "frontend/src/components/MonopolyModeSwitch.tsx",
+          "operation": "modify",
+          "description": "Implement a minimal MonopolyModeSwitch toggle component if referenced by V43; keep it frontend-only and do not add backend calls."
+        },
+        {
+          "path": "frontend/src/components/RevenueChart.tsx",
+          "operation": "modify",
+          "description": "Implement a minimal RevenueChart component stub if referenced by V43 (static chart placeholder) to fix build-time missing exports."
+        },
+        {
+          "path": "frontend/src/components/CreateSalonForm.tsx",
+          "operation": "modify",
+          "description": "Implement a minimal CreateSalonForm component stub if referenced by V43, keeping all behavior local-only and avoiding backend integration."
+        },
+        {
+          "path": "frontend/src/components/ProSalonWizard.tsx",
+          "operation": "modify",
+          "description": "Implement a minimal ProSalonWizard component stub if referenced by V43 to satisfy imports, preserving any V43 navigation expectations."
+        },
+        {
+          "path": "frontend/src/components/ProStudioCreator.tsx",
+          "operation": "modify",
+          "description": "Implement a minimal ProStudioCreator component stub if referenced by V43 to satisfy compilation; keep local-only."
         }
       ]
     },
     {
-      "id": "REQ-121",
-      "summary": "Harden the V38 Pro deploy/publish flow against stale React state closures by using a functional salons state update in handleDeploy while keeping identical visible behavior.",
+      "id": "REQ-141",
+      "summary": "Ensure V43 booking-request flow enforces domicile logistics completion, shows pending confirmation with a “Chat with the Pro” action opening an in-app secure chat UI, and displays privacy reassurance messaging.",
       "acceptanceCriteria": [
-        "After deploying a new salon from the Pro studio, the new salon appears at the top of the client list immediately.",
-        "Rapid successive deploy attempts do not lose the newly added salon due to stale state closures.",
-        "The view still switches to Client immediately after a successful deploy, matching the provided behavior."
+        "For a salon with `type === \"Domicile\"`, attempting to proceed from service selection to sending a request requires the logistics form step to be completed first (address and access info must be non-empty).",
+        "After a request is sent, the UI shows a pending/awaiting-confirmation screen and displays an action to open the secure chat interface.",
+        "The secure chat UI supports sending messages in local state and can be closed to return to the pending screen.",
+        "A privacy reassurance message is visible in the logistics step and/or pending flow, consistent with the V43 design."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "In the V38 `handleDeploy` path, change salons insertion to a functional update (e.g., `setSalons(prev => [newSalon, ...prev])`) to prevent stale-closure issues, while preserving identical visible behavior (new salon immediately at top; view switches to Client)."
+          "description": "Within the V43 AppV1 implementation (as provided by the user), verify the domicile logistics gating (address + access instructions required before sending), pending confirmation screen, “Chat with the Pro” CTA that opens/closes an in-app secure chat UI using local state only, and visible privacy reassurance messaging. If any of these are missing in the provided V43 block, apply the smallest possible mechanical edits inside AppV1 to implement them without changing intended V43 layout, Tailwind classes, copy, or interaction behavior, and without adding backend calls."
         }
       ]
     }
