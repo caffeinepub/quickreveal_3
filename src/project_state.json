@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 73,
-  "summary": "V43 « NEXUS SECURE CONNECT » : remplacer intégralement `frontend/src/AppV1.jsx` par le code V43 fourni (verbatim). Évolutions clés : si le rendez-vous est en mode « Domicile », affichage d’un formulaire logistique (adresse + infos d’accès) avant l’envoi de la demande ; après envoi, écran d’attente avec CTA « Discuter avec le Pro » ouvrant un Secure Chat intégré ; ajout de mentions Privacy/« données chiffrées et partagées uniquement si la demande est acceptée ».",
+  "projectStateVersion": 77,
+  "summary": "V45 « NEXUS ELITE POLISH » : remplacer intégralement `frontend/src/AppV1.jsx` par le code V45 fourni (verbatim). Objectifs : calibrage mobile parfait (fix du sélecteur Salon/Domicile via `grid` 50/50), branding premium (textures, dégradés subtils, glassmorphism) et refonte \"vendeuse\" de la Growth Landing Pro (grande image de fond, textes plus gros, design aéré et confiant).",
   "architectural_notes": [
     "RESET complet : écrasement total du backend et du frontend, considéré comme nouvelle V1.0 officielle.",
     "Backend Motoko réduit à un modèle Salon/Service/Socials avec `stable var salons` et endpoints `getSalons` (query) + `createSalon` (shared); seed de 4 salons suisses au démarrage (si salons vide).",
@@ -26,7 +26,7 @@
     "Risque de build V32 : l’icône `Eye` est utilisée dans `LiveStudio` mais n’est pas importée depuis `lucide-react` (unresolved symbol).",
     "Risque de régression V38 : `handleDeploy` utilise `setSalons([newS, ...salons])` (closure potentiellement obsolète). Utiliser une mise à jour fonctionnelle pour éviter la perte d’injection en cas d’actions rapides."
   ],
-  "isFixRequest": false,
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-implement-internet-identity-authentication-and-replace-the-existing-fake-login-screen-with-the-internet-identity-login-flow",
@@ -1012,6 +1012,62 @@
         "REQ-141"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-completely-overwrite-frontend-src-appv1-jsx-with-the-exact-user-provided-v44-nexus-calendar-growth-code-verbatim-replacement-of-the-entire-file",
+      "title": "Completely overwrite `frontend/src/AppV1.jsx` with the exact user-provided V44 “NEXUS CALENDAR & GROWTH” code (verbatim replacement of the entire file).",
+      "reqIds": [
+        "REQ-142"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-v44-client-scheduler-flow-works-as-specified-after-selecting-at-least-one-service-the-user-must-select-a-day-and-a-time-in-the-visual-calendar-before-being-allowed-to-send-the-booking-request-after-sending-show-the-pending-confirmation-screen-that-includes-the-selected-date-and-time",
+      "title": "Ensure the V44 Client Scheduler flow works as specified: after selecting at least one service, the user must select a day and a time in the visual calendar before being allowed to send the booking request; after sending, show the pending confirmation screen that includes the selected date and time.",
+      "reqIds": [
+        "REQ-143"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-v44-pro-entry-experience-uses-the-growth-landing-marketing-welcome-screen-before-the-pro-studio-as-implemented-in-the-provided-v44-genesisarchitect-welcome-state",
+      "title": "Ensure the V44 Pro entry experience uses the Growth Landing (marketing welcome screen) before the Pro Studio, as implemented in the provided V44 `GenesisArchitect` welcome state.",
+      "reqIds": [
+        "REQ-144"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-the-v44-app-compile-and-run-in-this-repository-by-applying-only-minimal-mechanical-fixes-required-by-this-codebase-e-g-missing-incorrect-imports-unresolved-symbols-invalid-jsx-without-changing-the-intended-v44-ui-tailwind-styling-copy-or-interaction-behavior",
+      "title": "Make the V44 app compile and run in this repository by applying only minimal mechanical fixes required by this codebase (e.g., missing/incorrect imports, unresolved symbols, invalid JSX), without changing the intended V44 UI, Tailwind styling, copy, or interaction behavior.",
+      "reqIds": [
+        "REQ-145"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-pro-deploy-finish-action-that-injects-the-newly-created-salon-into-the-in-memory-salons-list-is-robust-against-stale-react-state-closures-by-using-a-functional-state-update-for-setsalons-while-keeping-the-visible-behavior-identical-new-salon-appears-immediately-at-the-top-and-the-view-switches-to-client",
+      "title": "Ensure the Pro “deploy/finish” action that injects the newly created salon into the in-memory `salons` list is robust against stale React state closures by using a functional state update for `setSalons`, while keeping the visible behavior identical (new salon appears immediately at the top and the view switches to Client).",
+      "reqIds": [
+        "REQ-146"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fully-overwrite-frontend-src-appv1-jsx-with-the-exact-user-provided-v45-nexus-elite-polish-code-block-full-file-replacement-preserving-its-components-local-seed-data-initial-salons-presets-tailwind-classes-imports-ui-strings-and-interaction-logic-as-provided",
+      "title": "Fully overwrite `frontend/src/AppV1.jsx` with the exact user-provided V45 “NEXUS ELITE POLISH” code block (full file replacement), preserving its components, local seed data (`INITIAL_SALONS`, `PRESETS`), Tailwind classes, imports, UI strings, and interaction logic as provided.",
+      "reqIds": [
+        "REQ-147"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v45-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-unresolved-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v45-ui-layout-styling-copy-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V45 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports), without changing the intended V45 UI layout, styling, copy, or interaction behavior.",
+      "reqIds": [
+        "REQ-148"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -1382,6 +1438,32 @@
       "summary": "Ensure the V43 UI compiles and runs in this repository by applying only the minimum mechanical fixes required by this codebase (e.g., missing/incorrect imports, undefined identifiers, invalid JSX), without changing the intended V43 UI layout, styling (Tailwind classes), copy, or interaction behavior.",
       "reqIds": [
         "REQ-140"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-75",
+      "summary": "V44 « NEXUS CALENDAR & GROWTH » : overwrite total de `frontend/src/AppV1.jsx` avec le code V44 fourni (verbatim) incluant Scheduler (choix Date & Heure obligatoire avant envoi de demande) et Growth Landing (page marketing d’entrée de l’espace Pro).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-76",
+      "summary": "Ensure the V44 UI compiles and runs in this repository by applying only the minimum mechanical fixes required by this codebase (e.g., missing/incorrect imports, undefined identifiers, invalid JSX), without changing the intended V44 UI layout, styling (Tailwind classes), copy, or interaction behavior.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-77",
+      "summary": "V45 « NEXUS ELITE POLISH » : overwrite total de `frontend/src/AppV1.jsx` avec le code V45 fourni (verbatim) incluant (1) fix mobile du sélecteur Salon/Domicile en grid 50/50, (2) textures premium + glassmorphism, (3) Pro Landing revamp (hero background + copywriting vendeur).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-80",
+      "summary": "Preserve and verify the V45 visual changes in the running app: (1) mobile-perfect alignment for the Salon/Domicile selector implemented with a 2-column grid (no overflow), (2) premium textures via subtle gradients + transparency/glassmorphism on cards and surfaces, and (3) revamped Pro landing with a large background image, larger sales-oriented typography, and an airier, confident layout.",
+      "reqIds": [
+        "REQ-149"
       ],
       "status": "pending"
     }

@@ -1,7 +1,7 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-11T03:20:41.866Z",
+  "generatedAt": "2026-02-11T04:17:08.853Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
@@ -11,8 +11,8 @@
     "implemented": 2,
     "items": [
       {
-        "id": "REQ-139",
-        "summary": "Fully overwrite `frontend/src/AppV1.jsx` with the exact user-provided V43 “NEXUS SECURE CONNECT” code block (verbatim replacement of the entire file).",
+        "id": "REQ-147",
+        "summary": "Fully overwrite `frontend/src/AppV1.jsx` with the exact user-provided V45 “NEXUS ELITE POLISH” code block (full file replacement), preserving its components, local seed data (`INITIAL_SALONS`, `PRESETS`), Tailwind classes, imports, UI strings, and interaction logic as provided.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx"
@@ -22,36 +22,24 @@
         ]
       },
       {
-        "id": "REQ-140",
-        "summary": "Ensure the V43 UI compiles and runs in this repository by applying only the minimum mechanical fixes required by this codebase (e.g., missing/incorrect imports, undefined identifiers, invalid JSX), without changing the intended V43 UI layout, styling (Tailwind classes), copy, or interaction behavior.",
+        "id": "REQ-148",
+        "summary": "Ensure the project compiles and runs after the V45 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports), without changing the intended V45 UI layout, styling, copy, or interaction behavior.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/AppV1.jsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/AppV1.jsx"
+        ]
+      },
+      {
+        "id": "REQ-149",
+        "summary": "Preserve and verify the V45 visual changes in the running app: (1) mobile-perfect alignment for the Salon/Domicile selector implemented with a 2-column grid (no overflow), (2) premium textures via subtle gradients + transparency/glassmorphism on cards and surfaces, and (3) revamped Pro landing with a large background image, larger sales-oriented typography, and an airier, confident layout.",
         "status": "missing",
         "plannedFiles": [
-          "frontend/src/components/MotionButton.tsx",
-          "frontend/src/components/Pressable.tsx",
-          "frontend/src/components/PremiumBadge.tsx",
-          "frontend/src/components/ProfileSetupModal.tsx",
-          "frontend/src/components/AuthHeader.tsx",
-          "frontend/src/components/SalonListSection.tsx",
-          "frontend/src/components/VipDashboard.tsx",
-          "frontend/src/components/MemberCard.tsx",
-          "frontend/src/components/MonopolyModeSwitch.tsx",
-          "frontend/src/components/RevenueChart.tsx",
-          "frontend/src/components/CreateSalonForm.tsx",
-          "frontend/src/components/ProSalonWizard.tsx",
-          "frontend/src/components/ProStudioCreator.tsx"
+          "frontend/src/v45-visual-checklist.md"
         ],
         "matchedFiles": []
-      },
-      {
-        "id": "REQ-141",
-        "summary": "Implement/verify the V43 booking request flow changes described by the user: (1) when a selected salon/service is of type “Domicile”, the client must complete the logistics form (address + access instructions) before the booking request can be sent; (2) after the request is sent, show the pending confirmation screen and provide a “Chat with the Pro” action that opens an in-app secure chat UI; (3) include privacy reassurance messaging indicating user data is only shared after confirmation.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/AppV1.jsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/AppV1.jsx"
-        ]
       }
     ]
   },
@@ -61,7 +49,6 @@
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
     "frontend/src/AppV1.jsx",
-    "frontend/src/index.css",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

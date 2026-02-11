@@ -1,113 +1,53 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "V43 NEXUS SECURE CONNECT: AppV1 replacement + compile fixes + domicile logistics gating + secure chat + privacy UI",
+  "title": "Overwrite AppV1 with V45 “NEXUS ELITE POLISH” and keep the frontend building",
   "requirements": [
     {
-      "id": "REQ-139",
-      "summary": "Replace AppV1 with the exact user-provided V43 “NEXUS SECURE CONNECT” code (full-file overwrite only).",
+      "id": "REQ-147",
+      "summary": "Fully replace frontend/src/AppV1.jsx with the exact V45 “NEXUS ELITE POLISH” code provided by the user, preserving all provided UI, seed data, imports, strings, and logic.",
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` contents match the provided V43 code (full-file overwrite; no partial merges).",
-        "No changes are made to `frontend/src/App.tsx`; it remains a thin wrapper that renders `AppV1`.",
-        "The app boots and renders the V43 UI (Landing → Client → Pro) using local in-file data only (no backend calls introduced)."
+        "`frontend/src/AppV1.jsx` contents exactly match the V45 code provided by the user (no partial merges).",
+        "`frontend/src/App.tsx` continues to render `AppV1` as the app root (wrapper remains unchanged).",
+        "No backend calls are introduced; the app remains a local-state demo driven by the in-file data structures."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Fully overwrite the entire file with the exact V43 “NEXUS SECURE CONNECT” code block provided by the user, verbatim (no merges, no edits)."
+          "description": "Overwrite the entire file with the exact V45 “NEXUS ELITE POLISH” code block from the referenced user message (full file replacement; no partial merges). Ensure the in-file local seed data (INITIAL_SALONS, PRESETS), Tailwind classes, imports, UI strings, and interaction logic remain exactly as provided, and that no backend integration is added."
         }
       ]
     },
     {
-      "id": "REQ-140",
-      "summary": "Make the V43 UI compile in this repo with only minimal mechanical fixes (imports/undefined identifiers/JSX validity) while preserving V43 layout, Tailwind classes, copy, and behavior.",
+      "id": "REQ-148",
+      "summary": "Apply only minimal mechanical fixes needed for this repo so the V45 AppV1 build succeeds without altering intended UI/layout/styling/copy/behavior.",
       "acceptanceCriteria": [
-        "`npm run build` (or equivalent) succeeds with no unresolved symbols referenced from `frontend/src/AppV1.jsx` (e.g., Framer Motion, lucide-react icons, React hooks).",
-        "No immutable frontend entry files are modified (especially files under `frontend/src/hooks/*` listed as immutable and `frontend/src/main.tsx`)."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/MotionButton.tsx",
-          "operation": "modify",
-          "description": "Implement a minimal, build-safe MotionButton component (non-animated fallback if needed) matching any V43 imports/usage to eliminate unresolved references, without changing V43 UI copy or layout."
-        },
-        {
-          "path": "frontend/src/components/Pressable.tsx",
-          "operation": "modify",
-          "description": "Implement a minimal Pressable wrapper component (e.g., forwards props/refs, supports className/onClick) compatible with any V43 usage to fix build errors without altering intended behavior."
-        },
-        {
-          "path": "frontend/src/components/PremiumBadge.tsx",
-          "operation": "modify",
-          "description": "Implement a minimal PremiumBadge component (presentational only) if referenced by V43, ensuring exports align with how V43 imports it."
-        },
-        {
-          "path": "frontend/src/components/ProfileSetupModal.tsx",
-          "operation": "modify",
-          "description": "Implement a minimal ProfileSetupModal component (can be a no-op render when closed) only to satisfy any V43 references; do not introduce authentication flows beyond what V43 already contains."
-        },
-        {
-          "path": "frontend/src/components/AuthHeader.tsx",
-          "operation": "modify",
-          "description": "Implement a minimal AuthHeader component if referenced by V43 (pure UI/header shell), avoiding new authentication requirements unless V43 already includes them."
-        },
-        {
-          "path": "frontend/src/components/SalonListSection.tsx",
-          "operation": "modify",
-          "description": "Implement a minimal SalonListSection component if referenced by V43 (presentation + props passthrough) to resolve any missing imports."
-        },
-        {
-          "path": "frontend/src/components/VipDashboard.tsx",
-          "operation": "modify",
-          "description": "Implement a minimal VipDashboard component if referenced by V43 to prevent unresolved module/component errors during build."
-        },
-        {
-          "path": "frontend/src/components/MemberCard.tsx",
-          "operation": "modify",
-          "description": "Implement a minimal MemberCard component if referenced by V43 to satisfy compilation (UI-only, local state only)."
-        },
-        {
-          "path": "frontend/src/components/MonopolyModeSwitch.tsx",
-          "operation": "modify",
-          "description": "Implement a minimal MonopolyModeSwitch toggle component if referenced by V43; keep it frontend-only and do not add backend calls."
-        },
-        {
-          "path": "frontend/src/components/RevenueChart.tsx",
-          "operation": "modify",
-          "description": "Implement a minimal RevenueChart component stub if referenced by V43 (static chart placeholder) to fix build-time missing exports."
-        },
-        {
-          "path": "frontend/src/components/CreateSalonForm.tsx",
-          "operation": "modify",
-          "description": "Implement a minimal CreateSalonForm component stub if referenced by V43, keeping all behavior local-only and avoiding backend integration."
-        },
-        {
-          "path": "frontend/src/components/ProSalonWizard.tsx",
-          "operation": "modify",
-          "description": "Implement a minimal ProSalonWizard component stub if referenced by V43 to satisfy imports, preserving any V43 navigation expectations."
-        },
-        {
-          "path": "frontend/src/components/ProStudioCreator.tsx",
-          "operation": "modify",
-          "description": "Implement a minimal ProStudioCreator component stub if referenced by V43 to satisfy compilation; keep local-only."
-        }
-      ]
-    },
-    {
-      "id": "REQ-141",
-      "summary": "Ensure V43 booking-request flow enforces domicile logistics completion, shows pending confirmation with a “Chat with the Pro” action opening an in-app secure chat UI, and displays privacy reassurance messaging.",
-      "acceptanceCriteria": [
-        "For a salon with `type === \"Domicile\"`, attempting to proceed from service selection to sending a request requires the logistics form step to be completed first (address and access info must be non-empty).",
-        "After a request is sent, the UI shows a pending/awaiting-confirmation screen and displays an action to open the secure chat interface.",
-        "The secure chat UI supports sending messages in local state and can be closed to return to the pending screen.",
-        "A privacy reassurance message is visible in the logistics step and/or pending flow, consistent with the V43 design."
+        "`npm run build` (or equivalent CI build) succeeds with the V45 `AppV1.jsx` code in place.",
+        "The app loads in the browser without runtime errors (blank screen, red error overlay, or console exceptions).",
+        "Any changes made beyond the overwrite are limited to build-breaking mechanical fixes only (no refactors, no feature additions)."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Within the V43 AppV1 implementation (as provided by the user), verify the domicile logistics gating (address + access instructions required before sending), pending confirmation screen, “Chat with the Pro” CTA that opens/closes an in-app secure chat UI using local state only, and visible privacy reassurance messaging. If any of these are missing in the provided V43 block, apply the smallest possible mechanical edits inside AppV1 to implement them without changing intended V43 layout, Tailwind classes, copy, or interaction behavior, and without adding backend calls."
+          "description": "If (and only if) the V45 drop-in produces build/runtime errors in this repository, apply minimal mechanical fixes within this file (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate exports) while keeping the intended V45 UI layout, styling (Tailwind classes), copy, and interaction behavior unchanged. Do not introduce backend calls."
+        }
+      ]
+    },
+    {
+      "id": "REQ-149",
+      "summary": "Preserve and verify the V45 visual changes (mobile selector grid, premium glass/gradient textures, and revamped Pro landing hero/background image + typography).",
+      "acceptanceCriteria": [
+        "On mobile viewport widths (~360–430px), the Salon/Domicile selector renders as a 2-column grid with equal-width buttons and no horizontal overflow/clipping.",
+        "Cards/surfaces show the intended gradient + glass/blur treatments as defined by the provided Tailwind classes (no regression to flat solid cards).",
+        "Entering the Pro experience shows the revamped Pro landing/welcome state with the large background image and larger marketing typography as in V45."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/v45-visual-checklist.md",
+          "operation": "create",
+          "description": "Add a short internal verification checklist (in English) describing how to manually confirm: (1) the Salon/Domicile selector uses a 2-column grid with no overflow at ~360–430px widths, (2) cards/surfaces show the intended gradient + glassmorphism Tailwind treatments, and (3) the Pro landing/welcome state shows the large background image and larger marketing typography as in V45. This file is for verification only and must not change app behavior."
         }
       ]
     }

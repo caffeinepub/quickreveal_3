@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-fully-overwrite-frontend-src-appv1-jsx-with-the-exact-user-provided-v43-nexus-secure-connect-code-block-verbatim-replacement-of-the-entire-file",
-      "featureTitle": "Fully overwrite `frontend/src/AppV1.jsx` with the exact user-provided V43 “NEXUS SECURE CONNECT” code block (verbatim replacement of the entire file).",
+      "featureId": "feature-fully-overwrite-frontend-src-appv1-jsx-with-the-exact-user-provided-v45-nexus-elite-polish-code-block-full-file-replacement-preserving-its-components-local-seed-data-initial-salons-presets-tailwind-classes-imports-ui-strings-and-interaction-logic-as-provided",
+      "featureTitle": "Fully overwrite `frontend/src/AppV1.jsx` with the exact user-provided V45 “NEXUS ELITE POLISH” code block (full file replacement), preserving its components, local seed data (`INITIAL_SALONS`, `PRESETS`), Tailwind classes, imports, UI strings, and interaction logic as provided.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -17,13 +17,13 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-139"
+        "REQ-147"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-implement-verify-the-v43-booking-request-flow-changes-described-by-the-user-1-when-a-selected-salon-service-is-of-type-domicile-the-client-must-complete-the-logistics-form-address-access-instructions-before-the-booking-request-can-be-sent-2-after-the-request-is-sent-show-the-pending-confirmation-screen-and-provide-a-chat-with-the-pro-action-that-opens-an-in-app-secure-chat-ui-3-include-privacy-reassurance-messaging-indicating-user-data-is-only-shared-after-confirmation",
-      "featureTitle": "Implement/verify the V43 booking request flow changes described by the user: (1) when a selected salon/service is of type “Domicile”, the client must complete the logistics form (address + access instructions) before the booking request can be sent; (2) after the request is sent, show the pending confirmation screen and provide a “Chat with the Pro” action that opens an in-app secure chat UI; (3) include privacy reassurance messaging indicating user data is only shared after confirmation.",
+      "featureId": "feature-ensure-the-project-compiles-and-runs-after-the-v45-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-unresolved-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v45-ui-layout-styling-copy-or-interaction-behavior",
+      "featureTitle": "Ensure the project compiles and runs after the V45 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports), without changing the intended V45 UI layout, styling, copy, or interaction behavior.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -37,7 +37,7 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-141"
+        "REQ-148"
       ],
       "confidence": "high"
     }

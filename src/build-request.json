@@ -1,90 +1,79 @@
 {
   "kind": "build_request",
-  "title": "Critical update: Replace AppV1 with V43 “NEXUS SECURE CONNECT” (logistics address + secure chat + privacy UI)",
+  "title": "Critical update: Overwrite AppV1 with V45 “NEXUS ELITE POLISH” and ensure it builds",
   "priority": "high",
   "requirements": [
     {
-      "id": "REQ-139",
-      "text": "Fully overwrite `frontend/src/AppV1.jsx` with the exact user-provided V43 “NEXUS SECURE CONNECT” code block (verbatim replacement of the entire file).",
+      "id": "REQ-147",
+      "text": "Fully overwrite `frontend/src/AppV1.jsx` with the exact user-provided V45 “NEXUS ELITE POLISH” code block (full file replacement), preserving its components, local seed data (`INITIAL_SALONS`, `PRESETS`), Tailwind classes, imports, UI strings, and interaction logic as provided.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "user-message-v45"
         ],
         "quotes": [
           "INSTRUCTION : Remplace INTÉGRALEMENT le code de `frontend/src/AppV1.jsx`.",
-          "MISE À JOUR CRITIQUE : V43 \"NEXUS SECURE CONNECT\".",
-          "CODE V43 :"
+          "CODE V45 :\n\nimport React, { useState, useEffect, useRef } from 'react';\nimport { motion, AnimatePresence } from 'framer-motion';\n..."
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` contents match the provided V43 code (full-file overwrite; no partial merges).",
-        "No changes are made to `frontend/src/App.tsx`; it remains a thin wrapper that renders `AppV1`.",
-        "The app boots and renders the V43 UI (Landing → Client → Pro) using local in-file data only (no backend calls introduced)."
+        "`frontend/src/AppV1.jsx` contents exactly match the V45 code provided by the user (no partial merges).",
+        "`frontend/src/App.tsx` continues to render `AppV1` as the app root (wrapper remains unchanged).",
+        "No backend calls are introduced; the app remains a local-state demo driven by the in-file data structures."
       ]
     },
     {
-      "id": "REQ-140",
-      "text": "Ensure the V43 UI compiles and runs in this repository by applying only the minimum mechanical fixes required by this codebase (e.g., missing/incorrect imports, undefined identifiers, invalid JSX), without changing the intended V43 UI layout, styling (Tailwind classes), copy, or interaction behavior.",
+      "id": "REQ-148",
+      "text": "Ensure the project compiles and runs after the V45 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports), without changing the intended V45 UI layout, styling, copy, or interaction behavior.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "user-message-v45"
         ],
         "quotes": [
-          "Use English for any user-facing text in the build request."
+          "MISE À JOUR CRITIQUE : V45 \"NEXUS ELITE POLISH\".",
+          "Objectif : Calibrage mobile parfait (fix du bouton Domicile), branding haut de gamme (textures, glassmorphism) et copywriting vendeur pour convertir."
         ]
       },
       "acceptanceCriteria": [
-        "`npm run build` (or equivalent) succeeds with no unresolved symbols referenced from `frontend/src/AppV1.jsx` (e.g., Framer Motion, lucide-react icons, React hooks).",
-        "No immutable frontend entry files are modified (especially files under `frontend/src/hooks/*` listed as immutable and `frontend/src/main.tsx`)."
+        "`npm run build` (or equivalent CI build) succeeds with the V45 `AppV1.jsx` code in place.",
+        "The app loads in the browser without runtime errors (blank screen, red error overlay, or console exceptions).",
+        "Any changes made beyond the overwrite are limited to build-breaking mechanical fixes only (no refactors, no feature additions)."
       ]
     },
     {
-      "id": "REQ-141",
-      "text": "Implement/verify the V43 booking request flow changes described by the user: (1) when a selected salon/service is of type “Domicile”, the client must complete the logistics form (address + access instructions) before the booking request can be sent; (2) after the request is sent, show the pending confirmation screen and provide a “Chat with the Pro” action that opens an in-app secure chat UI; (3) include privacy reassurance messaging indicating user data is only shared after confirmation.",
+      "id": "REQ-149",
+      "text": "Preserve and verify the V45 visual changes in the running app: (1) mobile-perfect alignment for the Salon/Domicile selector implemented with a 2-column grid (no overflow), (2) premium textures via subtle gradients + transparency/glassmorphism on cards and surfaces, and (3) revamped Pro landing with a large background image, larger sales-oriented typography, and an airier, confident layout.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "user-message-v45"
         ],
         "quotes": [
-          "FORMULAIRE LOGISTIQUE : Si le service est \"Domicile\", le client DOIT remplir son adresse + instructions d'accès avant d'envoyer la demande.",
-          "SECURE CHAT : Après la demande, un bouton \"Discuter avec le Pro\" apparaît. C'est une interface de messagerie intégrée pour régler les détails (Parking, Code porte...).",
-          "PRIVACY UI : Des mentions \"Vos données sont partagées uniquement après confirmation\" pour rassurer."
+          "LES CHANGEMENTS VISUELS :\n1. FIX UI MOBILE : Le sélecteur Salon/Domicile utilise une `grid` pour un alignement parfait sans débordement.\n2. TEXTURES PREMIUM : Ajout de dégradés subtils et d'effets de transparence (glassmorphism) sur les cartes.\n3. PRO LANDING REVAMP : Grande image de fond, textes plus gros et plus \"vendeurs\", design plus aéré et confiant."
         ]
       },
       "acceptanceCriteria": [
-        "For a salon with `type === \"Domicile\"`, attempting to proceed from service selection to sending a request requires the logistics form step to be completed first (address and access info must be non-empty).",
-        "After a request is sent, the UI shows a pending/awaiting-confirmation screen and displays an action to open the secure chat interface.",
-        "The secure chat UI supports sending messages in local state and can be closed to return to the pending screen.",
-        "A privacy reassurance message is visible in the logistics step and/or pending flow, consistent with the V43 design."
+        "On mobile viewport widths (~360–430px), the Salon/Domicile selector renders as a 2-column grid with equal-width buttons and no horizontal overflow/clipping.",
+        "Cards/surfaces show the intended gradient + glass/blur treatments as defined by the provided Tailwind classes (no regression to flat solid cards).",
+        "Entering the Pro experience shows the revamped Pro landing/welcome state with the large background image and larger marketing typography as in V45."
       ]
     }
   ],
   "constraints": [
-    "Frontend must continue to mount through existing Vite/React wiring; do not modify `frontend/src/App.tsx`.",
-    "Do not edit any frontend immutable paths listed in SYSTEM_CONTEXT (compose them only if needed).",
-    "Keep the implementation local-only (no new backend calls, no new Motoko changes) unless the user explicitly requests backend integration.",
-    "Preserve the provided V43 visual design, Tailwind classes, and UI strings; only minimal mechanical/build fixes are allowed beyond the explicitly requested logistics/chat/privacy behaviors."
+    "Do not modify `frontend/src/App.tsx`; it must remain the thin wrapper that renders `AppV1`.",
+    "Do not edit any frontend immutable entry files listed in `SYSTEM_CONTEXT.frontend.immutablePaths`.",
+    "Keep the V45 implementation as a local-state demo (no new backend integration).",
+    "Use English for all user-facing text in this build request document (do not translate/alter the app’s in-code UI strings unless required for build)."
   ],
   "nonGoals": [
-    "Do not implement real encrypted messaging or backend persistence for chat/messages; the secure chat is an in-app UI demo in local state only.",
-    "Do not add Internet Identity, role-based routing, React Query data fetching, or any previously implemented advanced backend-driven features unless they are already present in the provided V43 code.",
-    "Do not refactor or redesign the V43 UI beyond what is necessary to satisfy the required domicile logistics gating and the post-request chat CTA behavior."
+    "Implementing or re-enabling Internet Identity authentication, role-based routing, or React Query data loading.",
+    "Any backend (Motoko) changes, schema changes, persistence work, or migrations.",
+    "Adding new product features beyond what exists in the provided V45 code (e.g., payments, real chat backend, push updates).",
+    "Generating or editing image assets; V45 may continue to use external Unsplash image URLs as provided."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
   }
 }
