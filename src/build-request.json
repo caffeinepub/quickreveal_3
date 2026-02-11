@@ -1,11 +1,11 @@
 {
   "kind": "build_request",
-  "title": "V37 “NEXUS PRO MAX”: Full overwrite AppV1 with Service Architect + Multi-service Cart + Schedule Matrix",
+  "title": "V38 Genesis Architect: Full AppV1.jsx overwrite with Smart Presets + detailed Service Studio + split-view live preview",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-117",
-      "text": "Fully replace (overwrite) the entire contents of `frontend/src/AppV1.jsx` with the exact V37 “NEXUS PRO MAX” code block provided by the user, treating it as the complete application UI (Landing → Client → Pro Studio) and preserving its components, local seed data (`INITIAL_SALONS`), Tailwind classes, imports, UI strings, and interaction logic as provided.",
+      "id": "REQ-119",
+      "text": "Completely replace (overwrite) the entire contents of `frontend/src/AppV1.jsx` with the exact V38 “GENESIS ARCHITECT” code block provided by the user, preserving components, local data (`INITIAL_SALONS`, `PRESETS`), Tailwind classes, imports, and interaction logic as given (treat it as the whole app UI: Landing → Client → Pro Studio).",
       "target": "frontend",
       "source": {
         "messageIds": [
@@ -13,61 +13,69 @@
         ],
         "quotes": [
           "INSTRUCTION : Remplace INTÉGRALEMENT le code de `frontend/src/AppV1.jsx`.",
-          "CODE V37 : (full code block)"
+          "MISE À JOUR MAJEURE : V38 \"GENESIS ARCHITECT\".",
+          "CODE V38 :"
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` is a full overwrite of the user-provided V37 code block (no partial merges).",
-        "The app boots via the existing `frontend/src/App.tsx` wrapper and shows the V37 Landing screen.",
-        "The V37 Client flow works: selecting a salon opens details; selecting multiple services updates the sticky cart totals (price and duration) in real time; clicking the cart CTA closes the detail view as in the provided code.",
-        "The V37 Pro flow works: opening “Pro” shows the TitanStudio with Identity/Services/Availability tabs; adding services supports photo, technical description, duration, and price; publishing injects the new salon into the client list as in the provided code.",
-        "The Schedule/Availability selections in Pro (e.g., Nocturne/Dimanche/Lundi tags) appear as availability/tag badges on the salon card in the client list, consistent with the provided code."
+        "`frontend/src/AppV1.jsx` is a full overwrite with the provided V38 code (no partial merges).",
+        "The application boots into the V38 landing screen and can navigate to Client and Pro views using only in-file local state (no backend calls).",
+        "Smart Presets are present in the Pro studio: selecting/using a category shows preset service chips that add a service in one click.",
+        "Detailed Service Studio is present: each service supports per-service image, technical description, duration, and price in the Pro studio and is rendered in the client service menu.",
+        "Split-view is present on desktop widths: left side tools, right side live client preview panel."
       ]
     },
     {
-      "id": "REQ-118",
-      "text": "Ensure the V37 app compiles and runs in this repository by applying only minimal mechanical adjustments required by this codebase (e.g., missing/incorrect imports, unresolved symbols, invalid JSX, duplicate exports), without changing the intended V37 UI design, copy, or interaction behavior. Additionally, make the Pro “Publish” salon injection robust against stale React state closures by using a functional `setSalons(prev => [newSalon, ...prev])` update while preserving identical visible behavior.",
+      "id": "REQ-120",
+      "text": "Ensure the V38 app compiles and runs in this repository by applying only minimal mechanical adjustments required by this codebase (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports) without changing the intended V38 UI, layout, styling, copy, or interaction behavior.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "appliquer uniquement les ajustements mécaniques nécessaires pour compiler, sans changer le design ni la logique",
-          "const handleDeploy = (data) => { ... setSalons([newS, ...salons]); ... }"
+          "Remplace INTÉGRALEMENT le code de `frontend/src/AppV1.jsx`."
         ]
       },
       "acceptanceCriteria": [
-        "`npm run build` (or the project’s equivalent build) succeeds without runtime errors caused by missing imports or undefined identifiers introduced by the V37 paste.",
-        "No refactors/feature additions are introduced beyond what is necessary to make the pasted V37 code compile and run in this repo.",
-        "Publishing a salon from the Pro studio always injects the new salon at the top of the client list, even after rapid successive publishes/navigation, with the same visible behavior (new salon on top and view switches to Client)."
+        "`npm test`/build (or the platform build) succeeds for the frontend without modifying immutable entry files.",
+        "No runtime crash on initial render (landing view).",
+        "Any fixes are limited to build-breakers (e.g., adding a missing import for a referenced symbol) and do not alter the provided UI/UX behavior."
+      ]
+    },
+    {
+      "id": "REQ-121",
+      "text": "Make the Pro deploy/publish injection logic robust against stale React state closures in the V38 `handleDeploy` path by using a functional `setSalons(prev => [newSalon, ...prev])` update, while preserving identical visible behavior (new salon appears immediately at the top and the view switches to Client).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "const handleDeploy = (data) => { ... setSalons([newS, ...salons]); setView('client'); }"
+        ]
+      },
+      "acceptanceCriteria": [
+        "After deploying a new salon from the Pro studio, the new salon appears at the top of the client list immediately.",
+        "Rapid successive deploy attempts do not lose the newly added salon due to stale state closures.",
+        "The view still switches to Client immediately after a successful deploy, matching the provided behavior."
       ]
     }
   ],
   "constraints": [
     "Do not modify `frontend/src/App.tsx`; it must remain the thin wrapper that renders `AppV1`.",
-    "Do not modify any frontend immutable entry files or any paths listed as immutable in SYSTEM_CONTEXT.",
-    "Implement this as a frontend-only, local-state demo flow (no new backend calls added as part of this V37 overwrite)."
+    "Do not modify any frontend immutable entry files listed by the platform (e.g., `frontend/src/main.tsx`, Internet Identity hooks, `frontend/src/components/ui`).",
+    "Keep the V38 implementation frontend-only/local-state (no backend integration added as part of this change).",
+    "Use English in the build request text (this specification), even if the in-app UI strings in the provided code are French."
   ],
   "nonGoals": [
-    "Do not implement or restore Internet Identity authentication, role-based routing, React Query data loading, or Motoko backend integration as part of this V37 overwrite.",
-    "Do not add persistence beyond what is already present in the provided V37 code (e.g., no new localStorage/sessionStorage unless required for a build fix).",
-    "Do not change V37 UI text/copy to English; preserve the user-provided UI strings in the pasted code."
+    "Do not integrate or re-enable Internet Identity authentication, role-based routing, or React Query data loading as part of this V38 overwrite.",
+    "Do not add backend Motoko changes (salons persistence, bookings, availability, images, loyalty, monopoly mode) for this request.",
+    "Do not refactor or redesign the provided V38 UI/UX beyond minimal build-fixing adjustments.",
+    "Do not generate or edit images/assets; use the URLs and local file uploads already present in the provided V38 code."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [
-      "Use English for any user-facing text in build requests/specs."
-    ],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
   }
 }

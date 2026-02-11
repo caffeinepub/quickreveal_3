@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-fully-replace-overwrite-the-entire-contents-of-frontend-src-appv1-jsx-with-the-exact-v37-nexus-pro-max-code-block-provided-by-the-user-treating-it-as-the-complete-application-ui-landing-client-pro-studio-and-preserving-its-components-local-seed-data-initial-salons-tailwind-classes-imports-ui-strings-and-interaction-logic-as-provided",
-      "featureTitle": "Fully replace (overwrite) the entire contents of `frontend/src/AppV1.jsx` with the exact V37 “NEXUS PRO MAX” code block provided by the user, treating it as the complete application UI (Landing → Client → Pro Studio) and preserving its components, local seed data (`INITIAL_SALONS`), Tailwind classes, imports, UI strings, and interaction logic as provided.",
+      "featureId": "feature-completely-replace-overwrite-the-entire-contents-of-frontend-src-appv1-jsx-with-the-exact-v38-genesis-architect-code-block-provided-by-the-user-preserving-components-local-data-initial-salons-presets-tailwind-classes-imports-and-interaction-logic-as-given-treat-it-as-the-whole-app-ui-landing-client-pro-studio",
+      "featureTitle": "Completely replace (overwrite) the entire contents of `frontend/src/AppV1.jsx` with the exact V38 “GENESIS ARCHITECT” code block provided by the user, preserving components, local data (`INITIAL_SALONS`, `PRESETS`), Tailwind classes, imports, and interaction logic as given (treat it as the whole app UI: Landing → Client → Pro Studio).",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -17,13 +17,13 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-117"
+        "REQ-119"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-v37-app-compiles-and-runs-in-this-repository-by-applying-only-minimal-mechanical-adjustments-required-by-this-codebase-e-g-missing-incorrect-imports-unresolved-symbols-invalid-jsx-duplicate-exports-without-changing-the-intended-v37-ui-design-copy-or-interaction-behavior-additionally-make-the-pro-publish-salon-injection-robust-against-stale-react-state-closures-by-using-a-functional-setsalons-prev-newsalon-prev-update-while-preserving-identical-visible-behavior",
-      "featureTitle": "Ensure the V37 app compiles and runs in this repository by applying only minimal mechanical adjustments required by this codebase (e.g., missing/incorrect imports, unresolved symbols, invalid JSX, duplicate exports), without changing the intended V37 UI design, copy, or interaction behavior. Additionally, make the Pro “Publish” salon injection robust against stale React state closures by using a functional `setSalons(prev => [newSalon, ...prev])` update while preserving identical visible behavior.",
+      "featureId": "feature-ensure-the-v38-app-compiles-and-runs-in-this-repository-by-applying-only-minimal-mechanical-adjustments-required-by-this-codebase-e-g-missing-incorrect-imports-unresolved-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v38-ui-layout-styling-copy-or-interaction-behavior",
+      "featureTitle": "Ensure the V38 app compiles and runs in this repository by applying only minimal mechanical adjustments required by this codebase (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports) without changing the intended V38 UI, layout, styling, copy, or interaction behavior.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -37,7 +37,27 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-118"
+        "REQ-120"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-make-the-pro-deploy-publish-injection-logic-robust-against-stale-react-state-closures-in-the-v38-handledeploy-path-by-using-a-functional-setsalons-prev-newsalon-prev-update-while-preserving-identical-visible-behavior-new-salon-appears-immediately-at-the-top-and-the-view-switches-to-client",
+      "featureTitle": "Make the Pro deploy/publish injection logic robust against stale React state closures in the V38 `handleDeploy` path by using a functional `setSalons(prev => [newSalon, ...prev])` update, while preserving identical visible behavior (new salon appears immediately at the top and the view switches to Client).",
+      "files": [
+        "frontend/src/AppV1.jsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
+      ],
+      "testIds": [
+        "REQ-121"
       ],
       "confidence": "high"
     }

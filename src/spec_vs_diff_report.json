@@ -1,37 +1,51 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-10T23:06:10.435Z",
-  "summary": "Diff shows updates to `frontend/src/AppV1.jsx` (new V37-style UI code with `INITIAL_SALONS`, Lucide imports, and client components like `StatusBadge`/`NexusCard`), plus edits to `frontend-file-summaries.txt` and `project_state.json`. However, the AppV1 diff is truncated, so key acceptance criteria (full verbatim overwrite and the functional `setSalons(prev => ...)` publish injection) cannot be confirmed from the provided evidence.",
+  "generatedAt": "2026-02-11T01:42:51.959Z",
+  "summary": "Diff shows updates to `frontend/src/AppV1.jsx` consistent with a V38-style local-state UI (imports, `INITIAL_SALONS`, `PRESETS`, and client components are present), but the provided diff is truncated and does not include key sections needed to verify the full overwrite requirement or the specific `handleDeploy` functional state update. Two additional project metadata/state files were modified without being requested in the BuildRequest.",
   "missing_requirements": [
     {
-      "id": "REQ-117",
-      "requirement": "Fully replace (overwrite) the entire contents of `frontend/src/AppV1.jsx` with the exact V37 “NEXUS PRO MAX” code block provided by the user (no partial merges), preserving UI strings, components, seed data, Tailwind, and interaction logic.",
-      "reason": "The `frontend/src/AppV1.jsx` content is truncated in the diff summary, so it’s not possible to verify a complete verbatim overwrite of the entire file (and that all specified flows/logic from the user-provided V37 block are present exactly).",
+      "id": "REQ-119",
+      "requirement": "Completely overwrite `frontend/src/AppV1.jsx` with the exact provided V38 “GENESIS ARCHITECT” code block (verbatim), including Smart Presets, Detailed Service Studio, and split-view live preview behavior.",
+      "reason": "The diff for `frontend/src/AppV1.jsx` is truncated and does not show the complete file contents (including the Pro Studio area, split-view layout, navigation flow Landing→Client→Pro, and the exact verbatim code block). As a result, a full overwrite and the presence of all required V38 behaviors cannot be verified from the provided evidence.",
       "evidence": [
-        "frontend/src/AppV1.jsx (truncated in diff summary)"
+        "frontend/src/AppV1.jsx (truncated)"
       ]
     },
     {
-      "id": "REQ-118",
-      "requirement": "Make Pro “Publish” salon injection robust against stale state closures by using a functional update `setSalons(prev => [newSalon, ...prev])` while preserving behavior; ensure minimal mechanical adjustments only.",
-      "reason": "The diff summary does not show the Pro publish handler or any `setSalons(prev => ...)` functional update; due to truncation, this requirement cannot be verified as implemented.",
+      "id": "REQ-120",
+      "requirement": "Ensure the V38 app compiles/runs with only minimal mechanical adjustments (no UI/UX behavior changes; no immutable entry file changes).",
+      "reason": "The diff summary does not provide build output or enough code context to confirm compilation/runtime success, nor does it show what mechanical adjustments (if any) were required beyond the partial snippet. Immutable entry files are not shown as modified, but successful build/no runtime crash cannot be verified from the truncated snippet alone.",
       "evidence": [
-        "frontend/src/AppV1.jsx (truncated in diff summary)"
+        "frontend/src/AppV1.jsx (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-121",
+      "requirement": "Update V38 `handleDeploy` to use functional state update: `setSalons(prev => [newSalon, ...prev])` to avoid stale closures, preserving identical visible behavior.",
+      "reason": "`handleDeploy` is not visible in the truncated `AppV1.jsx` snippet, so it cannot be verified that `setSalons` uses the required functional updater form.",
+      "evidence": [
+        "frontend/src/AppV1.jsx (truncated)"
       ]
     }
   ],
   "hallucinated_features": [
     {
-      "description": "Updated/maintained repository metadata/state files (`frontend-file-summaries.txt`, `project_state.json`) as part of the change set.",
-      "reason": "BuildRequest only specifies overwriting `frontend/src/AppV1.jsx` (with minimal compile fixes) and explicitly focuses on frontend demo behavior; it does not request modifying these repo summary/state artifacts.",
+      "description": "Modified `frontend-file-summaries.txt` (repository summary/metadata content).",
+      "reason": "The BuildRequest only asks for a frontend UI overwrite in `frontend/src/AppV1.jsx` plus minimal build-fixing adjustments. Updating a file-summary/metadata document is not requested and is not necessary to satisfy the UI requirements based on the diff summary alone.",
       "evidence": [
-        "frontend-file-summaries.txt",
+        "frontend-file-summaries.txt"
+      ]
+    },
+    {
+      "description": "Modified `project_state.json` (project tracking/state metadata).",
+      "reason": "The BuildRequest does not request changes to project state/metadata files; it focuses on `AppV1.jsx` behavior and minimal build adjustments.",
+      "evidence": [
         "project_state.json"
       ]
     }
   ],
-  "confidence": 0.56,
+  "confidence": 0.46,
   "changed_files": [
     "frontend-file-summaries.txt",
     "frontend/src/AppV1.jsx",

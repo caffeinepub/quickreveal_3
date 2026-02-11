@@ -1,18 +1,18 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-10T23:06:10.441Z",
+  "generatedAt": "2026-02-11T01:42:51.964Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 2,
-    "implemented": 2,
+    "total": 3,
+    "implemented": 3,
     "items": [
       {
-        "id": "REQ-117",
-        "summary": "Fully replace (overwrite) the entire contents of `frontend/src/AppV1.jsx` with the exact V37 “NEXUS PRO MAX” code block provided by the user, treating it as the complete application UI (Landing → Client → Pro Studio) and preserving its components, local seed data (`INITIAL_SALONS`), Tailwind classes, imports, UI strings, and interaction logic as provided.",
+        "id": "REQ-119",
+        "summary": "Completely replace (overwrite) the entire contents of `frontend/src/AppV1.jsx` with the exact V38 “GENESIS ARCHITECT” code block provided by the user, preserving components, local data (`INITIAL_SALONS`, `PRESETS`), Tailwind classes, imports, and interaction logic as given (treat it as the whole app UI: Landing → Client → Pro Studio).",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx"
@@ -22,8 +22,19 @@
         ]
       },
       {
-        "id": "REQ-118",
-        "summary": "Ensure the V37 app compiles and runs in this repository by applying only minimal mechanical adjustments required by this codebase (e.g., missing/incorrect imports, unresolved symbols, invalid JSX, duplicate exports), without changing the intended V37 UI design, copy, or interaction behavior. Additionally, make the Pro “Publish” salon injection robust against stale React state closures by using a functional `setSalons(prev => [newSalon, ...prev])` update while preserving identical visible behavior.",
+        "id": "REQ-120",
+        "summary": "Ensure the V38 app compiles and runs in this repository by applying only minimal mechanical adjustments required by this codebase (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports) without changing the intended V38 UI, layout, styling, copy, or interaction behavior.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/AppV1.jsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/AppV1.jsx"
+        ]
+      },
+      {
+        "id": "REQ-121",
+        "summary": "Make the Pro deploy/publish injection logic robust against stale React state closures in the V38 `handleDeploy` path by using a functional `setSalons(prev => [newSalon, ...prev])` update, while preserving identical visible behavior (new salon appears immediately at the top and the view switches to Client).",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx"

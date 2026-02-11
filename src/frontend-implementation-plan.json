@@ -1,39 +1,55 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "V37 NEXUS PRO MAX overwrite of AppV1 (frontend-only local-state demo)",
+  "title": "V38 Genesis Architect (AppV1.jsx full overwrite + build fixes + robust deploy state update)",
   "requirements": [
     {
-      "id": "REQ-117",
-      "summary": "Overwrite frontend/src/AppV1.jsx with the user-provided V37 “NEXUS PRO MAX” code block as the complete UI and interaction flow (Landing → Client → Pro Studio), preserving seed data, Tailwind classes, imports, strings, and logic.",
+      "id": "REQ-119",
+      "summary": "Fully overwrite AppV1.jsx with the user-provided V38 “GENESIS ARCHITECT” single-file app UI (Landing → Client → Pro Studio) including Smart Presets, detailed service studio fields, and desktop split-view live preview.",
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` is a full overwrite of the user-provided V37 code block (no partial merges).",
-        "The app boots via the existing `frontend/src/App.tsx` wrapper and shows the V37 Landing screen.",
-        "The V37 Client flow works: selecting a salon opens details; selecting multiple services updates the sticky cart totals (price and duration) in real time; clicking the cart CTA closes the detail view as in the provided code.",
-        "The V37 Pro flow works: opening “Pro” shows the TitanStudio with Identity/Services/Availability tabs; adding services supports photo, technical description, duration, and price; publishing injects the new salon into the client list as in the provided code.",
-        "The Schedule/Availability selections in Pro (e.g., Nocturne/Dimanche/Lundi tags) appear as availability/tag badges on the salon card in the client list, consistent with the provided code."
+        "`frontend/src/AppV1.jsx` is a full overwrite with the provided V38 code (no partial merges).",
+        "The application boots into the V38 landing screen and can navigate to Client and Pro views using only in-file local state (no backend calls).",
+        "Smart Presets are present in the Pro studio: selecting/using a category shows preset service chips that add a service in one click.",
+        "Detailed Service Studio is present: each service supports per-service image, technical description, duration, and price in the Pro studio and is rendered in the client service menu.",
+        "Split-view is present on desktop widths: left side tools, right side live client preview panel."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Replace the entire file contents with the exact V37 “NEXUS PRO MAX” code block provided by the user (full paste, no merging). Keep all V37 components, local seed data (INITIAL_SALONS), Tailwind classes, imports, French UI strings, and interaction logic exactly as provided, so the existing frontend/src/App.tsx wrapper continues to render AppV1 and the first view is the V37 Landing screen."
+          "description": "Replace the entire file contents with the exact V38 “GENESIS ARCHITECT” code block provided by the user (full overwrite, no merging). Preserve all provided imports, local data (e.g., `INITIAL_SALONS`, `PRESETS`), Tailwind classes, French UI strings, and in-file state-driven navigation/interaction logic so the app remains frontend-only/local-state."
         }
       ]
     },
     {
-      "id": "REQ-118",
-      "summary": "Apply minimal mechanical compile/run fixes for the V37 paste (without changing intended UI/copy/behavior) and make Pro Publish injection robust via functional setSalons update to avoid stale state closures.",
+      "id": "REQ-120",
+      "summary": "Apply only minimal mechanical adjustments needed for the V38 AppV1.jsx to compile and run in this repo without changing intended UI/UX behavior.",
       "acceptanceCriteria": [
-        "`npm run build` (or the project’s equivalent build) succeeds without runtime errors caused by missing imports or undefined identifiers introduced by the V37 paste.",
-        "No refactors/feature additions are introduced beyond what is necessary to make the pasted V37 code compile and run in this repo.",
-        "Publishing a salon from the Pro studio always injects the new salon at the top of the client list, even after rapid successive publishes/navigation, with the same visible behavior (new salon on top and view switches to Client)."
+        "`npm test`/build (or the platform build) succeeds for the frontend without modifying immutable entry files.",
+        "No runtime crash on initial render (landing view).",
+        "Any fixes are limited to build-breakers (e.g., adding a missing import for a referenced symbol) and do not alter the provided UI/UX behavior."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "After the V37 overwrite, make only repository-compatibility fixes required to compile (e.g., adjust React/lucide imports, resolve undefined symbols, fix invalid JSX, remove duplicate exports) while preserving V37 design, copy, and interaction behavior. Update the Pro “Publish/Deploy” salon injection to use a functional state update `setSalons(prev => [newSalon, ...prev])` to prevent stale closure issues, keeping identical visible behavior (new salon appears first and app navigates back to Client)."
+          "description": "After pasting the V38 code, make only build-blocking mechanical fixes required by this codebase (e.g., adjust/restore missing imports for referenced symbols, fix invalid JSX, remove duplicate default exports, resolve undefined identifiers) while keeping the intended V38 layout/styling/copy/behavior unchanged. Do not add backend calls or auth flows."
+        }
+      ]
+    },
+    {
+      "id": "REQ-121",
+      "summary": "Harden the V38 Pro deploy/publish flow against stale React state closures by using a functional salons state update in handleDeploy while keeping identical visible behavior.",
+      "acceptanceCriteria": [
+        "After deploying a new salon from the Pro studio, the new salon appears at the top of the client list immediately.",
+        "Rapid successive deploy attempts do not lose the newly added salon due to stale state closures.",
+        "The view still switches to Client immediately after a successful deploy, matching the provided behavior."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/AppV1.jsx",
+          "operation": "modify",
+          "description": "In the V38 `handleDeploy` path, change salons insertion to a functional update (e.g., `setSalons(prev => [newSalon, ...prev])`) to prevent stale-closure issues, while preserving identical visible behavior (new salon immediately at top; view switches to Client)."
         }
       ]
     }
