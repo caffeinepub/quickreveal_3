@@ -1,46 +1,15 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-11T04:17:08.845Z",
-  "summary": "Diff shows `frontend/src/AppV1.jsx` was modified with a substantial V45-style UI (lucide-react imports, local seed data, gradient/glassmorphism card styling). However, because the file content is truncated and the user-provided V45 code block is not included here, the diff summary is insufficient to verify the “exact full-file replacement” requirement or the specific V45 visual/UX acceptance criteria. Two additional files (`frontend-file-summaries.txt`, `project_state.json`) were modified without being requested in the BuildRequest.",
-  "missing_requirements": [
-    {
-      "id": "REQ-147",
-      "requirement": "Fully overwrite `frontend/src/AppV1.jsx` with the exact user-provided V45 “NEXUS ELITE POLISH” code block (full file replacement), preserving components, `INITIAL_SALONS`, `PRESETS`, Tailwind classes, imports, UI strings, and interaction logic exactly as provided.",
-      "reason": "`frontend/src/AppV1.jsx` is truncated in the diff summary, and the referenced user-provided V45 code block is not present in the provided materials, so an exact/verbatim full-file match cannot be verified from the diff summary alone.",
-      "evidence": [
-        "frontend/src/AppV1.jsx (truncated)"
-      ]
-    },
-    {
-      "id": "REQ-148",
-      "requirement": "Ensure the project compiles and runs after the V45 overwrite with only minimal mechanical fixes required by the repo, without changing intended V45 UI/layout/copy/behavior.",
-      "reason": "The diff summary does not provide evidence of build success (`npm run build`) or absence of runtime errors, and the AppV1 implementation is truncated so potential build-breaking issues (e.g., missing components/exports/references later in file) cannot be assessed.",
-      "evidence": [
-        "frontend/src/AppV1.jsx (truncated)"
-      ]
-    },
-    {
-      "id": "REQ-149",
-      "requirement": "Preserve and verify V45 visual changes: (1) Salon/Domicile selector as a 2-column grid with no overflow on mobile, (2) premium gradient/glass textures on cards/surfaces, (3) revamped Pro landing with large background image and larger marketing typography/airier layout.",
-      "reason": "While the truncated snippet shows some gradient/glass styling on a card, the diff summary does not include the Salon/Domicile selector implementation or the Pro landing view, so the specific visual acceptance criteria cannot be verified.",
-      "evidence": [
-        "frontend/src/AppV1.jsx (truncated)"
-      ]
-    }
-  ],
+  "generatedAt": "2026-02-11T16:51:33.891Z",
+  "summary": "The diff clearly modifies `frontend/src/AppV1.jsx`, but due to truncation it’s not possible to verify several requested behavioral details (deploy functional state update, precise booking gating/pending screen, full Service Studio V2 functionality) from the provided excerpt alone. Two auxiliary metadata/state files were also modified, which were not requested by the BuildRequest.",
+  "missing_requirements": [],
   "hallucinated_features": [
     {
-      "description": "Updated/added documentation-style summaries in `frontend-file-summaries.txt`.",
-      "reason": "The BuildRequest only asked to overwrite `frontend/src/AppV1.jsx` and apply minimal mechanical build fixes; it did not request modifying repository summary documentation.",
+      "description": "Updated repository metadata/summary files (`frontend-file-summaries.txt` and `project_state.json`).",
+      "reason": "The BuildRequest requirements focus on overwriting `frontend/src/AppV1.jsx` and making minimal mechanical fixes for build stability and specific UI behaviors; it does not request changes to project metadata/state summary files.",
       "evidence": [
-        "frontend-file-summaries.txt"
-      ]
-    },
-    {
-      "description": "Updated `project_state.json` metadata/state version and summary content.",
-      "reason": "The BuildRequest did not request changes to project state tracking/metadata; only the AppV1 overwrite and minimal build fixes were requested.",
-      "evidence": [
+        "frontend-file-summaries.txt",
         "project_state.json"
       ]
     }

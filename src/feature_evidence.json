@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-fully-overwrite-frontend-src-appv1-jsx-with-the-exact-user-provided-v45-nexus-elite-polish-code-block-full-file-replacement-preserving-its-components-local-seed-data-initial-salons-presets-tailwind-classes-imports-ui-strings-and-interaction-logic-as-provided",
-      "featureTitle": "Fully overwrite `frontend/src/AppV1.jsx` with the exact user-provided V45 “NEXUS ELITE POLISH” code block (full file replacement), preserving its components, local seed data (`INITIAL_SALONS`, `PRESETS`), Tailwind classes, imports, UI strings, and interaction logic as provided.",
+      "featureId": "feature-fully-replace-the-entire-contents-of-frontend-src-appv1-jsx-with-the-exact-v47-nexus-pro-tools-code-provided-by-the-user-full-file-overwrite",
+      "featureTitle": "Fully replace the entire contents of `frontend/src/AppV1.jsx` with the exact V47 “NEXUS PRO TOOLS” code provided by the user (full file overwrite).",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -17,13 +17,13 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-147"
+        "REQ-155"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-project-compiles-and-runs-after-the-v45-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-unresolved-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v45-ui-layout-styling-copy-or-interaction-behavior",
-      "featureTitle": "Ensure the project compiles and runs after the V45 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports), without changing the intended V45 UI layout, styling, copy, or interaction behavior.",
+      "featureId": "feature-ensure-the-project-compiles-and-runs-after-the-v47-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-unresolved-identifiers-invalid-jsx-without-changing-the-intended-v47-ui-layout-styling-copy-or-interaction-behavior",
+      "featureTitle": "Ensure the project compiles and runs after the V47 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX), without changing the intended V47 UI layout, styling, copy, or interaction behavior.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -37,7 +37,87 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-148"
+        "REQ-156"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-make-the-pro-deploy-finish-injection-into-the-in-memory-salons-list-robust-against-stale-react-state-closures-by-converting-setsalons-news-salons-in-the-v47-handledeploy-path-to-a-functional-update-setsalons-prev-news-prev-while-preserving-identical-visible-behavior",
+      "featureTitle": "Make the Pro “Deploy/Finish” injection into the in-memory `salons` list robust against stale React state closures by converting `setSalons([newS, ...salons])` in the V47 `handleDeploy` path to a functional update (`setSalons(prev => [newS, ...prev])`) while preserving identical visible behavior.",
+      "files": [
+        "frontend/src/AppV1.jsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
+      ],
+      "testIds": [
+        "REQ-157"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-v47-social-hub-as-described-allow-the-pro-to-add-instagram-whatsapp-and-website-and-render-those-social-actions-in-the-client-salon-detail-when-present-using-the-same-visual-style-as-the-existing-social-hub-buttons",
+      "featureTitle": "Implement the V47 Social Hub as described: allow the Pro to add Instagram, WhatsApp, and Website, and render those social actions in the client salon detail when present, using the same visual style as the existing Social Hub buttons.",
+      "files": [
+        "frontend/src/AppV1.jsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
+      ],
+      "testIds": [
+        "REQ-158"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-preserve-and-verify-the-v47-precise-booking-flow-the-client-must-select-an-exact-date-and-time-before-sending-a-booking-request-and-after-sending-the-dedicated-pending-confirmation-screen-must-communicate-a-maximum-2-hour-validation-window-and-allow-returning-to-the-home-feed",
+      "featureTitle": "Preserve and verify the V47 “Precise booking” flow: the client must select an exact date and time before sending a booking request, and after sending, the dedicated pending confirmation screen must communicate a maximum 2-hour validation window and allow returning to the home feed.",
+      "files": [
+        "frontend/src/AppV1.jsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
+      ],
+      "testIds": [
+        "REQ-159"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-preserve-and-verify-the-v47-service-studio-v2-behavior-the-pro-can-create-rich-services-including-name-price-duration-long-description-and-a-dedicated-photo-and-those-service-details-are-visible-to-the-client-in-the-salon-detail-including-service-images-when-provided",
+      "featureTitle": "Preserve and verify the V47 “Service Studio V2” behavior: the Pro can create rich services including name, price, duration, long description, and a dedicated photo, and those service details are visible to the client in the salon detail (including service images when provided).",
+      "files": [
+        "frontend/src/AppV1.jsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
+      ],
+      "testIds": [
+        "REQ-160"
       ],
       "confidence": "high"
     }

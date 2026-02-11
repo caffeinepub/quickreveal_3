@@ -1,53 +1,103 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Overwrite AppV1 with V45 “NEXUS ELITE POLISH” and keep the frontend building",
+  "title": "V47 NEXUS PRO TOOLS — Frontend overwrite + Pro tools fixes (Social Hub, booking, Service Studio V2)",
   "requirements": [
     {
-      "id": "REQ-147",
-      "summary": "Fully replace frontend/src/AppV1.jsx with the exact V45 “NEXUS ELITE POLISH” code provided by the user, preserving all provided UI, seed data, imports, strings, and logic.",
+      "id": "REQ-155",
+      "summary": "Overwrite AppV1 with the user-provided V47 “NEXUS PRO TOOLS” baseline and keep App.tsx as a thin wrapper.",
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` contents exactly match the V45 code provided by the user (no partial merges).",
-        "`frontend/src/App.tsx` continues to render `AppV1` as the app root (wrapper remains unchanged).",
-        "No backend calls are introduced; the app remains a local-state demo driven by the in-file data structures."
+        "`frontend/src/AppV1.jsx` matches the user-provided V47 code as the new baseline (full overwrite, not a patch on the old file).",
+        "The application boots via the existing wrapper (`frontend/src/App.tsx` renders `AppV1`) and shows the V47 Landing screen with the two primary actions (Explorer / Espace Pro)."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Overwrite the entire file with the exact V45 “NEXUS ELITE POLISH” code block from the referenced user message (full file replacement; no partial merges). Ensure the in-file local seed data (INITIAL_SALONS, PRESETS), Tailwind classes, imports, UI strings, and interaction logic remain exactly as provided, and that no backend integration is added."
+          "description": "Replace the entire file contents with the exact V47 “NEXUS PRO TOOLS” code provided by the user (full overwrite, no partial patch)."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Verify `App.tsx` remains a thin wrapper that only renders `AppV1` and exports it (no routing/logic added); adjust only if the overwrite would otherwise break the import/export wiring."
         }
       ]
     },
     {
-      "id": "REQ-148",
-      "summary": "Apply only minimal mechanical fixes needed for this repo so the V45 AppV1 build succeeds without altering intended UI/layout/styling/copy/behavior.",
+      "id": "REQ-156",
+      "summary": "Apply minimal mechanical fixes so the V47 overwrite compiles and runs in this repo without changing intended UI/UX.",
       "acceptanceCriteria": [
-        "`npm run build` (or equivalent CI build) succeeds with the V45 `AppV1.jsx` code in place.",
-        "The app loads in the browser without runtime errors (blank screen, red error overlay, or console exceptions).",
-        "Any changes made beyond the overwrite are limited to build-breaking mechanical fixes only (no refactors, no feature additions)."
+        "`npm test`/build (or the platform’s build step) succeeds with no unresolved symbol/import errors coming from `AppV1.jsx`.",
+        "No changes are made to any frontend immutable entry files (including `frontend/src/main.tsx` and the Internet Identity / actor hooks).",
+        "`frontend/src/App.tsx` remains a thin wrapper that renders `AppV1` (no additional routing or logic added there)."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "If (and only if) the V45 drop-in produces build/runtime errors in this repository, apply minimal mechanical fixes within this file (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate exports) while keeping the intended V45 UI layout, styling (Tailwind classes), copy, and interaction behavior unchanged. Do not introduce backend calls."
+          "description": "Fix only mechanical issues required for this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX/attributes, React hook usage mistakes) while preserving V47 layout, styling, copy, and interaction behavior."
         }
       ]
     },
     {
-      "id": "REQ-149",
-      "summary": "Preserve and verify the V45 visual changes (mobile selector grid, premium glass/gradient textures, and revamped Pro landing hero/background image + typography).",
+      "id": "REQ-157",
+      "summary": "Make the Pro deploy injection into salons state robust by converting to a functional state update.",
       "acceptanceCriteria": [
-        "On mobile viewport widths (~360–430px), the Salon/Domicile selector renders as a 2-column grid with equal-width buttons and no horizontal overflow/clipping.",
-        "Cards/surfaces show the intended gradient + glass/blur treatments as defined by the provided Tailwind classes (no regression to flat solid cards).",
-        "Entering the Pro experience shows the revamped Pro landing/welcome state with the large background image and larger marketing typography as in V45."
+        "After finishing the Pro flow, the newly created salon always appears immediately at the top of the Client feed, even with rapid navigation actions.",
+        "After deploy, the app still switches to the Client view immediately (same visible behavior as V47)."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/v45-visual-checklist.md",
-          "operation": "create",
-          "description": "Add a short internal verification checklist (in English) describing how to manually confirm: (1) the Salon/Domicile selector uses a 2-column grid with no overflow at ~360–430px widths, (2) cards/surfaces show the intended gradient + glassmorphism Tailwind treatments, and (3) the Pro landing/welcome state shows the large background image and larger marketing typography as in V45. This file is for verification only and must not change app behavior."
+          "path": "frontend/src/AppV1.jsx",
+          "operation": "modify",
+          "description": "In the V47 `handleDeploy` path, replace `setSalons([newS, ...salons])` with a functional update `setSalons(prev => [newS, ...prev])`, keeping the same immediate view switch behavior."
+        }
+      ]
+    },
+    {
+      "id": "REQ-158",
+      "summary": "Implement V47 Social Hub Website link in Pro identity step and render website action in client salon detail Social Hub.",
+      "acceptanceCriteria": [
+        "In Pro Tools (Step 1 / “Identité & Connect”), there is an input for a website URL in addition to Instagram and WhatsApp, and the value is saved into the created salon object.",
+        "In the client salon detail header Social Hub, an additional website action is shown when `salon.website` exists, and it opens the URL in a new tab/window.",
+        "Existing Instagram and WhatsApp buttons remain unchanged in appearance/placement, and the new website button matches the same compact button styling."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/AppV1.jsx",
+          "operation": "modify",
+          "description": "Extend the Pro Tools identity/connect step to capture a Website URL, persist it into the in-memory salon object created by the Pro flow, and render a matching-styled Website action in the client salon detail Social Hub that opens the URL in a new tab/window when present (leave existing Instagram/WhatsApp UI unchanged)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-159",
+      "summary": "Preserve and verify V47 precise booking flow with required date/time selection and a pending confirmation screen stating a 2-hour validation window.",
+      "acceptanceCriteria": [
+        "With at least one service selected, the primary CTA advances from services to the date/time picker (calendar step).",
+        "On the date/time step, the “send request” action is disabled until both a date and a time are selected.",
+        "After sending, the UI shows the confirmation/pending screen that includes the selected date and time and explicitly states the 2-hour validation window, and the user can return to the home feed from that screen."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/AppV1.jsx",
+          "operation": "modify",
+          "description": "Ensure the booking wizard enforces selecting an exact date and time before enabling the send action; after send, show the dedicated pending confirmation screen including the chosen date/time and explicit 2-hour validation window messaging, with a control to return to the home/feed view."
+        }
+      ]
+    },
+    {
+      "id": "REQ-160",
+      "summary": "Preserve and verify V47 Service Studio V2 rich service creation (name, price, duration, long description, photo) and client visibility including images.",
+      "acceptanceCriteria": [
+        "In Pro Tools (services step), creating/editing a service supports: name, numeric price, numeric duration, long description text, and an optional image upload.",
+        "After deploying a salon, opening that salon in the client flow shows the created services, and service images render when provided (no broken image icons due to non-URL values)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/AppV1.jsx",
+          "operation": "modify",
+          "description": "In the Pro services step, ensure the service model and UI support long description and an optional dedicated photo per service (stored as a renderable URL such as a local object URL); in the client salon detail, render service fields (including images when present) with guards so non-URL values do not produce broken image icons."
         }
       ]
     }

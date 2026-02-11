@@ -1,18 +1,30 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-11T04:17:08.853Z",
+  "generatedAt": "2026-02-11T16:51:33.900Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 3,
-    "implemented": 2,
+    "total": 6,
+    "implemented": 6,
     "items": [
       {
-        "id": "REQ-147",
-        "summary": "Fully overwrite `frontend/src/AppV1.jsx` with the exact user-provided V45 “NEXUS ELITE POLISH” code block (full file replacement), preserving its components, local seed data (`INITIAL_SALONS`, `PRESETS`), Tailwind classes, imports, UI strings, and interaction logic as provided.",
+        "id": "REQ-155",
+        "summary": "Fully replace the entire contents of `frontend/src/AppV1.jsx` with the exact V47 “NEXUS PRO TOOLS” code provided by the user (full file overwrite).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/AppV1.jsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/AppV1.jsx"
+        ]
+      },
+      {
+        "id": "REQ-156",
+        "summary": "Ensure the project compiles and runs after the V47 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX), without changing the intended V47 UI layout, styling, copy, or interaction behavior.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx"
@@ -22,8 +34,8 @@
         ]
       },
       {
-        "id": "REQ-148",
-        "summary": "Ensure the project compiles and runs after the V45 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports), without changing the intended V45 UI layout, styling, copy, or interaction behavior.",
+        "id": "REQ-157",
+        "summary": "Make the Pro “Deploy/Finish” injection into the in-memory `salons` list robust against stale React state closures by converting `setSalons([newS, ...salons])` in the V47 `handleDeploy` path to a functional update (`setSalons(prev => [newS, ...prev])`) while preserving identical visible behavior.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx"
@@ -33,13 +45,37 @@
         ]
       },
       {
-        "id": "REQ-149",
-        "summary": "Preserve and verify the V45 visual changes in the running app: (1) mobile-perfect alignment for the Salon/Domicile selector implemented with a 2-column grid (no overflow), (2) premium textures via subtle gradients + transparency/glassmorphism on cards and surfaces, and (3) revamped Pro landing with a large background image, larger sales-oriented typography, and an airier, confident layout.",
-        "status": "missing",
+        "id": "REQ-158",
+        "summary": "Implement the V47 Social Hub as described: allow the Pro to add Instagram, WhatsApp, and Website, and render those social actions in the client salon detail when present, using the same visual style as the existing Social Hub buttons.",
+        "status": "implemented",
         "plannedFiles": [
-          "frontend/src/v45-visual-checklist.md"
+          "frontend/src/AppV1.jsx"
         ],
-        "matchedFiles": []
+        "matchedFiles": [
+          "frontend/src/AppV1.jsx"
+        ]
+      },
+      {
+        "id": "REQ-159",
+        "summary": "Preserve and verify the V47 “Precise booking” flow: the client must select an exact date and time before sending a booking request, and after sending, the dedicated pending confirmation screen must communicate a maximum 2-hour validation window and allow returning to the home feed.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/AppV1.jsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/AppV1.jsx"
+        ]
+      },
+      {
+        "id": "REQ-160",
+        "summary": "Preserve and verify the V47 “Service Studio V2” behavior: the Pro can create rich services including name, price, duration, long description, and a dedicated photo, and those service details are visible to the client in the salon detail (including service images when provided).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/AppV1.jsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/AppV1.jsx"
+        ]
       }
     ]
   },
