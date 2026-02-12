@@ -1,87 +1,100 @@
 {
   "kind": "build_request",
-  "title": "V60 \"NEXUS DIVINE\" full overwrite of AppV1.jsx (Noir Lumière / Haute Couture / Liquid Gold)",
-  "priority": "high",
+  "title": "V61 Nexus Pro Master: Replace AppV1 with provided code and restore full Pro Studio in V60 Divine design",
+  "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-191",
-      "text": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V60 “NEXUS DIVINE” code block provided by the user (verbatim), treating it as the full app UI and local-only logic (Intro → App feed → Salon detail morph modal → Partner/Pro entry), including its imports, hardcoded datasets (`CATEGORIES`, `SALONS`), typography styling (`serifFont`), Framer Motion `layoutId` morphing, “Liquid Gold” service selection effect, and the Champagne Gold final CTA.",
+      "id": "REQ-194",
+      "text": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V61 code block provided by the user (verbatim overwrite), treating it as the full application UI and logic (Intro → Client feed → Salon detail modal → Pro Studio), with local-only in-file data and no backend calls.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "user-msg-v60"
+          "msg-1"
         ],
         "quotes": [
           "INSTRUCTION : Efface tout le contenu actuel de `frontend/src/AppV1.jsx` et remplace-le par le code ci-dessous.",
-          "VOICI LE CODE V60 COMPLET À ÉCRIRE :"
+          "VOICI LE CODE V61 COMPLET À ÉCRIRE :"
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` is a full-file overwrite containing exactly the user-provided V60 code (no refactors, no feature additions).",
-        "The V60 flows exist as coded: Intro screen (PURE BEAUTY) → App feed with categories → selecting a salon opens the morphing detail overlay via `layoutId` → selecting services toggles the gold glow state → the final Champagne Gold CTA appears when at least one service is selected."
+        "`frontend/src/AppV1.jsx` is a full-file overwrite matching the user-provided V61 code (no partial merges).",
+        "The app still mounts through the existing wiring where `frontend/src/App.tsx` renders `AppV1` (no entrypoint changes).",
+        "No backend canister methods are called from the V61 UI; all state remains in-memory/local within `AppV1.jsx`."
       ]
     },
     {
-      "id": "REQ-192",
-      "text": "Ensure the project compiles and runs after the V60 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., resolving missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports) without changing the intended V60 UI layout, styling (Tailwind classes), copy, data, or interaction behavior.",
+      "id": "REQ-195",
+      "text": "Ensure the project compiles and runs after the V61 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports), without changing the intended V61 UI layout, styling (Tailwind classes), copy, datasets (`CATEGORIES`, `INITIAL_SALONS`, `PRESETS`), or interaction behavior.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "user-msg-v60"
+          "msg-1"
         ],
         "quotes": [
-          "INSTRUCTION : Efface tout le contenu actuel de `frontend/src/AppV1.jsx` et remplace-le par le code ci-dessous."
+          "VOICI LE CODE V61 COMPLET À ÉCRIRE :"
         ]
       },
       "acceptanceCriteria": [
-        "`npm run build` (or equivalent CI build) succeeds with the V60 `AppV1.jsx` in place.",
-        "The app boots through the existing Vite/React entry wiring and renders the V60 Intro as the initial view.",
-        "Any changes made beyond the AppV1 overwrite are strictly limited to build-breaking mechanical fixes and do not alter visible UI/UX or text."
+        "`npm`/Vite dev build succeeds without runtime errors on initial load.",
+        "All referenced icons/components/functions in the pasted V61 code resolve correctly at build time (no unresolved imports).",
+        "Any fixes are limited to build-breakers only (e.g., adding a missing import) and do not alter the visible design or flows."
       ]
     },
     {
-      "id": "REQ-193",
-      "text": "Keep `frontend/src/App.tsx` as the thin wrapper that renders `AppV1` and do not modify any frontend immutable entry files; the app must continue to mount through the existing `frontend/src/main.tsx` wiring.",
+      "id": "REQ-196",
+      "text": "Preserve and verify the restored V61 Pro Studio functionality within the Divine (V60) luxury visual system: the Pro can configure salon identity (name, category, city, bio), set type (Salon/Domicile), add social links (Instagram, WhatsApp, Website if present in the V61 code), upload a cover image (local preview), and build services (add via presets, add custom, delete services) with name, price, duration, and description.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "user-msg-v60"
+          "msg-1"
         ],
         "quotes": [
-          "Efface tout le contenu actuel de `frontend/src/AppV1.jsx` et remplace-le par le code ci-dessous."
+          "STUDIO PRO COMPLET : Le formulaire permet de tout configurer : Nom, Catégorie, Ville (Smart), Bio, Instagram/Web/WhatsApp, Photo de couverture.",
+          "SERVICE BUILDER : Le pro peut ajouter/supprimer des services avec Nom, Prix, Durée et Description.",
+          "DESIGN CONSISTENT : L'espace Pro utilise désormais les codes visuels \"Noir Lumière\" et \"Or\" de la V60."
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/src/App.tsx` continues to only render `<AppV1 />` (no routing or provider changes added there).",
-        "No changes are made to immutable frontend paths listed in SYSTEM_CONTEXT."
+        "From the Intro screen, clicking the Partner/Pro entry action opens the Pro Studio flow.",
+        "Step 1 (Identity) updates the live `preview` model: name, category, location/city, type selector, bio, and social fields are editable.",
+        "Cover image selection via file input shows a local preview (using an object URL) without uploading anywhere.",
+        "Step 2 (Services) allows: (a) selecting a preset to open the service editor prefilled, (b) creating a custom service, (c) validating a service to append it to the preview services list, and (d) deleting an existing service from the list.",
+        "Pro Studio visuals remain consistent with the V60/V61 black-and-gold styling used elsewhere in the app (no theming regressions)."
+      ]
+    },
+    {
+      "id": "REQ-197",
+      "text": "Make the Pro deploy/publish injection of a newly created salon into the in-memory `salons` list robust against stale React state closures by using a functional state update for `setSalons`, while preserving identical visible behavior (newly created salon appears immediately at the top and the app switches back to the client feed).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "const handleDeploy = (data) => { ... setSalons([newS, ...salons]); setView('app'); }"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Publishing from Pro Studio reliably adds the new salon to the top of the client feed even if the user navigates quickly or triggers rapid state changes.",
+        "The post-deploy view switches to the client feed immediately (same as the V61 code’s intended behavior).",
+        "No additional persistence layer is introduced (keep local-only)."
       ]
     }
   ],
   "constraints": [
-    "Frontend immutable entry files must not be modified (per SYSTEM_CONTEXT immutablePaths).",
     "Do not modify `frontend/src/App.tsx`; it must remain the thin wrapper that renders `AppV1`.",
-    "Apply only minimal mechanical changes necessary to compile/run; do not change the provided V60 UI, interactions, or in-file data model.",
-    "No backend integration work is included; the V60 app remains local-only and uses external image URLs as provided."
+    "Do not modify any frontend immutable entry files listed in the system context (including `frontend/src/main.tsx` and the Internet Identity hooks).",
+    "Keep the V61 implementation local-only: no backend calls, no React Query data fetching changes, no Internet Identity flow changes.",
+    "Use English for any user-facing text in the build request (this document)."
   ],
   "nonGoals": [
-    "Do not implement or restore Internet Identity, role-based routing, React Query data fetching, or any backend-driven salon/booking persistence.",
-    "Do not redesign or translate the V60 in-app UI text; preserve the user-provided strings exactly as they appear in the V60 code.",
-    "Do not add new features (e.g., additional tabs, real-time updates, payments, or backend APIs)."
+    "Do not re-introduce or wire Internet Identity authentication, role-based routing, or any backend-driven data flows for this V61 overwrite.",
+    "Do not implement real ‘smart city’ suggestions/autocomplete beyond what is already present in the provided V61 code.",
+    "Do not add new product features or redesign the V61 UI beyond minimal build-fix adjustments.",
+    "Do not add image generation or replace the provided external Unsplash image URLs."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [
-      "Use English for any user-facing text in build requests."
-    ],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
   }
 }

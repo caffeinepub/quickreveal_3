@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 101,
-  "summary": "V60 « NEXUS DIVINE (HAUTE JOAILLERIE & LUMIÈRE) » : effacer et remplacer intégralement `frontend/src/AppV1.jsx` par le code V60 fourni (verbatim). Direction artistique : “Noir Lumière” (dégradés charbon & lumière), typographie Haute Couture (titres serif), interaction “Liquide & Or” (sélection services avec glow doré + CTA final Or Champagne). UX : Intro PURE BEAUTY + accès Partenaire, feed catégories, détail salon en morphing via Framer Motion `layoutId`, conversion WhatsApp.",
+  "projectStateVersion": 103,
+  "summary": "V61 « NEXUS PRO MASTER » : effacer et remplacer intégralement `frontend/src/AppV1.jsx` par le code V61 fourni (verbatim). Conserver le design luxe V60 “Noir Lumière / Or” tout en restaurant un Espace Pro fonctionnel : Studio Pro complet (identité + photo cover + bio + réseaux + type Salon/Domicile) + Service Builder (ajout/suppression services avec nom/prix/durée/description) + injection locale du salon créé dans le feed + conversion WhatsApp.",
   "architectural_notes": [
     "RESET complet : écrasement total du backend et du frontend, considéré comme nouvelle V1.0 officielle.",
     "Backend Motoko réduit à un modèle Salon/Service/Socials avec `stable var salons` et endpoints `getSalons` (query) + `createSalon` (shared); seed de 4 salons suisses au démarrage (si salons vide).",
@@ -22,11 +22,11 @@
     "Le RESET supprime explicitement des fonctionnalités précédemment prévues/implémentées (Internet Identity, rôles backend, persistance complète pré/post-upgrade, créneaux datés, réservations, Monopoly Mode, upload d’images on-chain, React Query).",
     "Les champs `image` contiennent des liens au format Markdown `[url](url)` au lieu d’une URL brute, ce qui peut casser l’affichage `<img src=...>` côté React.",
     "Le code V8 utilise des classes Tailwind utilitaires (ex: `hide-scrollbar`) et des composants/animations (Framer Motion, lucide-react) : vérifier que ces dépendances/utilitaires existent dans le projet sinon risque de build/UI cassée.",
-    "Risque de régression V29 : `handleDeploy` fait `setSalons([s, ...salons])` (capture potentielle d’état obsolète). Utiliser une mise à jour fonctionnelle peut être nécessaire si des déploiements multiples/navigations rapides provoquent une perte d’injection dans la liste.",
     "Risque de build V32 : l’icône `Eye` est utilisée dans `LiveStudio` mais n’est pas importée depuis `lucide-react` (unresolved symbol).",
-    "Risque de régression V38 : `handleDeploy` utilise `setSalons([newS, ...salons])` (closure potentiellement obsolète). Utiliser une mise à jour fonctionnelle pour éviter la perte d’injection en cas d’actions rapides."
+    "Risque de régression V38 : `handleDeploy` utilise `setSalons([newS, ...salons])` (closure potentiellement obsolète). Utiliser une mise à jour fonctionnelle pour éviter la perte d’injection en cas d’actions rapides.",
+    "Risque de régression V61 : le filtrage catégories côté Client semble incomplet (la logique ne filtre explicitement que pour 'Barber' et laisse potentiellement toutes les autres catégories afficher tous les salons)."
   ],
-  "isFixRequest": false,
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-implement-internet-identity-authentication-and-replace-the-existing-fake-login-screen-with-the-internet-identity-login-flow",
@@ -1412,6 +1412,38 @@
         "REQ-192"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v61-code-block-provided-by-the-user-verbatim-overwrite-treating-it-as-the-full-application-ui-and-logic-intro-client-feed-salon-detail-modal-pro-studio-with-local-only-in-file-data-and-no-backend-calls",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V61 code block provided by the user (verbatim overwrite), treating it as the full application UI and logic (Intro → Client feed → Salon detail modal → Pro Studio), with local-only in-file data and no backend calls.",
+      "reqIds": [
+        "REQ-194"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v61-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-undefined-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v61-ui-layout-styling-tailwind-classes-copy-datasets-categories-initial-salons-presets-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V61 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports), without changing the intended V61 UI layout, styling (Tailwind classes), copy, datasets (`CATEGORIES`, `INITIAL_SALONS`, `PRESETS`), or interaction behavior.",
+      "reqIds": [
+        "REQ-195"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-restored-v61-pro-studio-functionality-within-the-divine-v60-luxury-visual-system-the-pro-can-configure-salon-identity-name-category-city-bio-set-type-salon-domicile-add-social-links-instagram-whatsapp-website-if-present-in-the-v61-code-upload-a-cover-image-local-preview-and-build-services-add-via-presets-add-custom-delete-services-with-name-price-duration-and-description",
+      "title": "Preserve and verify the restored V61 Pro Studio functionality within the Divine (V60) luxury visual system: the Pro can configure salon identity (name, category, city, bio), set type (Salon/Domicile), add social links (Instagram, WhatsApp, Website if present in the V61 code), upload a cover image (local preview), and build services (add via presets, add custom, delete services) with name, price, duration, and description.",
+      "reqIds": [
+        "REQ-196"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-the-pro-deploy-publish-injection-of-a-newly-created-salon-into-the-in-memory-salons-list-robust-against-stale-react-state-closures-by-using-a-functional-state-update-for-setsalons-while-preserving-identical-visible-behavior-newly-created-salon-appears-immediately-at-the-top-and-the-app-switches-back-to-the-client-feed",
+      "title": "Make the Pro deploy/publish injection of a newly created salon into the in-memory `salons` list robust against stale React state closures by using a functional state update for `setSalons`, while preserving identical visible behavior (newly created salon appears immediately at the top and the app switches back to the client feed).",
+      "reqIds": [
+        "REQ-197"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -1877,6 +1909,12 @@
       "reqIds": [
         "REQ-193"
       ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-95",
+      "summary": "V61 « NEXUS PRO MASTER » : overwrite total de `frontend/src/AppV1.jsx` avec le code V61 fourni (verbatim) pour restaurer un Studio Pro complet (bio/réseaux/photo/services) tout en conservant l’esthétique V60 “Noir Lumière / Or”, avec injection locale du salon déployé dans le feed et CTA WhatsApp.",
+      "reqIds": [],
       "status": "pending"
     }
   ],

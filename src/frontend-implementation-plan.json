@@ -1,56 +1,81 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "V60 NEXUS DIVINE AppV1.jsx full overwrite + compile-safe wiring (frontend-only)",
+  "title": "V61 Nexus Pro Master: Frontend-only AppV1 overwrite + build fixes + Pro Studio restore",
   "requirements": [
     {
-      "id": "REQ-191",
-      "summary": "Full overwrite frontend/src/AppV1.jsx with the user-provided V60 “NEXUS DIVINE” code block verbatim as the complete local-only UI and logic.",
+      "id": "REQ-194",
+      "summary": "Full-file overwrite frontend/src/AppV1.jsx with the exact user-provided V61 code and keep it local-only (no backend calls).",
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` is a full-file overwrite containing exactly the user-provided V60 code (no refactors, no feature additions).",
-        "The V60 flows exist as coded: Intro screen (PURE BEAUTY) → App feed with categories → selecting a salon opens the morphing detail overlay via `layoutId` → selecting services toggles the gold glow state → the final Champagne Gold CTA appears when at least one service is selected."
+        "`frontend/src/AppV1.jsx` is a full-file overwrite matching the user-provided V61 code (no partial merges).",
+        "The app still mounts through the existing wiring where `frontend/src/App.tsx` renders `AppV1` (no entrypoint changes).",
+        "No backend canister methods are called from the V61 UI; all state remains in-memory/local within `AppV1.jsx`."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Delete all existing contents and replace the entire file with the exact V60 “NEXUS DIVINE” code block from user message `user-msg-v60` (verbatim, including imports, `CATEGORIES`/`SALONS`, `serifFont`, Framer Motion `layoutId` morphing, Liquid Gold selection effect, and final Champagne Gold CTA)."
+          "description": "Delete the current contents and overwrite the entire file verbatim with the user-provided V61 code block, ensuring it remains a self-contained local-only UI (no actor/hooks/backend calls introduced)."
         }
       ]
     },
     {
-      "id": "REQ-192",
-      "summary": "Ensure the app compiles and runs after the V60 overwrite using only minimal mechanical fixes that do not change V60 UI/UX, copy, or behavior.",
+      "id": "REQ-195",
+      "summary": "Apply only minimal mechanical fixes needed for this repo so the V61 overwrite compiles and runs without altering intended UI/behavior.",
       "acceptanceCriteria": [
-        "`npm run build` (or equivalent CI build) succeeds with the V60 `AppV1.jsx` in place.",
-        "The app boots through the existing Vite/React entry wiring and renders the V60 Intro as the initial view.",
-        "Any changes made beyond the AppV1 overwrite are strictly limited to build-breaking mechanical fixes and do not alter visible UI/UX or text."
+        "`npm`/Vite dev build succeeds without runtime errors on initial load.",
+        "All referenced icons/components/functions in the pasted V61 code resolve correctly at build time (no unresolved imports).",
+        "Any fixes are limited to build-breakers only (e.g., adding a missing import) and do not alter the visible design or flows."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "If (and only if) the repository build fails after the verbatim V60 overwrite, apply the smallest possible mechanical adjustments inside this file strictly to resolve build-breaking issues (e.g., missing/incorrect imports, undefined identifiers, invalid JSX, conflicting exports) while preserving the V60 layout, styling (Tailwind classes), copy, in-file datasets, and interaction behavior exactly as intended."
+          "description": "After the verbatim V61 paste, make minimal build-only corrections if required by the repository (e.g., add missing React/lucide imports, resolve undefined identifiers, fix invalid JSX/duplicate exports) without changing copy, Tailwind classes, datasets (CATEGORIES/INITIAL_SALONS/PRESETS), or interaction behavior."
         },
         {
-          "path": "frontend/src/declarations.d.ts",
-          "operation": "create",
-          "description": "Add minimal TypeScript module declarations only if the build toolchain fails due to missing type declarations for libraries used by the V60 code (keep declarations minimal and non-invasive to avoid changing runtime behavior)."
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "If the pasted V61 code references any Divine/V60 utility classes or keyframes not currently defined (e.g., custom animation classnames), add the missing CSS definitions here in the existing global styling entrypoint, keeping visuals consistent and avoiding layout/behavior changes."
         }
       ]
     },
     {
-      "id": "REQ-193",
-      "summary": "Keep frontend/src/App.tsx as the thin wrapper rendering AppV1 and do not modify immutable entry wiring; app continues to mount via frontend/src/main.tsx.",
+      "id": "REQ-196",
+      "summary": "Preserve and verify the restored V61 Pro Studio flow (identity + services + cover preview) within the Divine (V60) black-and-gold visual system.",
       "acceptanceCriteria": [
-        "`frontend/src/App.tsx` continues to only render `<AppV1 />` (no routing or provider changes added there).",
-        "No changes are made to immutable frontend paths listed in SYSTEM_CONTEXT."
+        "From the Intro screen, clicking the Partner/Pro entry action opens the Pro Studio flow.",
+        "Step 1 (Identity) updates the live `preview` model: name, category, location/city, type selector, bio, and social fields are editable.",
+        "Cover image selection via file input shows a local preview (using an object URL) without uploading anywhere.",
+        "Step 2 (Services) allows: (a) selecting a preset to open the service editor prefilled, (b) creating a custom service, (c) validating a service to append it to the preview services list, and (d) deleting an existing service from the list.",
+        "Pro Studio visuals remain consistent with the V60/V61 black-and-gold styling used elsewhere in the app (no theming regressions)."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/__checks__/app-wrapper-contract.md",
-          "operation": "create",
-          "description": "Add a small internal check note documenting the wrapper contract: `App.tsx` must remain a thin renderer of `AppV1`, and mounting must remain through `main.tsx`. This exists to prevent accidental future edits; no entry files are modified."
+          "path": "frontend/src/AppV1.jsx",
+          "operation": "modify",
+          "description": "Ensure the pasted V61 Pro Studio implementation is fully wired inside AppV1's view flow (Intro → Pro Studio), with in-memory preview state for identity + services, local cover image preview via object URL (and cleanup via URL.revokeObjectURL if the V61 code requires a mechanical fix), and no persistence/backend usage."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Verify that any Pro Studio-specific Divine styling helpers used by the V61 code (animation/util classes) are present; add only missing definitions needed for parity with the Divine black-and-gold visual system."
+        }
+      ]
+    },
+    {
+      "id": "REQ-197",
+      "summary": "Make Pro publish/deploy insertion into the in-memory salons list robust by using functional state updates for setSalons.",
+      "acceptanceCriteria": [
+        "Publishing from Pro Studio reliably adds the new salon to the top of the client feed even if the user navigates quickly or triggers rapid state changes.",
+        "The post-deploy view switches to the client feed immediately (same as the V61 code’s intended behavior).",
+        "No additional persistence layer is introduced (keep local-only)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/AppV1.jsx",
+          "operation": "modify",
+          "description": "In the V61 publish/deploy handler (e.g., handleDeploy), replace any closure-based `setSalons([newS, ...salons])` usage with a functional update `setSalons(prev => [newS, ...prev])`, preserving identical UI behavior (new salon at top, then switch view back to the client feed)."
         }
       ]
     }

@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v60-nexus-divine-code-block-provided-by-the-user-verbatim-treating-it-as-the-full-app-ui-and-local-only-logic-intro-app-feed-salon-detail-morph-modal-partner-pro-entry-including-its-imports-hardcoded-datasets-categories-salons-typography-styling-seriffont-framer-motion-layoutid-morphing-liquid-gold-service-selection-effect-and-the-champagne-gold-final-cta",
-      "featureTitle": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V60 “NEXUS DIVINE” code block provided by the user (verbatim), treating it as the full app UI and local-only logic (Intro → App feed → Salon detail morph modal → Partner/Pro entry), including its imports, hardcoded datasets (`CATEGORIES`, `SALONS`), typography styling (`serifFont`), Framer Motion `layoutId` morphing, “Liquid Gold” service selection effect, and the Champagne Gold final CTA.",
+      "featureId": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v61-code-block-provided-by-the-user-verbatim-overwrite-treating-it-as-the-full-application-ui-and-logic-intro-client-feed-salon-detail-modal-pro-studio-with-local-only-in-file-data-and-no-backend-calls",
+      "featureTitle": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V61 code block provided by the user (verbatim overwrite), treating it as the full application UI and logic (Intro → Client feed → Salon detail modal → Pro Studio), with local-only in-file data and no backend calls.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -17,13 +17,13 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-191"
+        "REQ-194"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-project-compiles-and-runs-after-the-v60-appv1-jsx-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-resolving-missing-incorrect-imports-undefined-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v60-ui-layout-styling-tailwind-classes-copy-data-or-interaction-behavior",
-      "featureTitle": "Ensure the project compiles and runs after the V60 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., resolving missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports) without changing the intended V60 UI layout, styling (Tailwind classes), copy, data, or interaction behavior.",
+      "featureId": "feature-ensure-the-project-compiles-and-runs-after-the-v61-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-undefined-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v61-ui-layout-styling-tailwind-classes-copy-datasets-categories-initial-salons-presets-or-interaction-behavior",
+      "featureTitle": "Ensure the project compiles and runs after the V61 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports), without changing the intended V61 UI layout, styling (Tailwind classes), copy, datasets (`CATEGORIES`, `INITIAL_SALONS`, `PRESETS`), or interaction behavior.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -37,7 +37,47 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-192"
+        "REQ-195"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-preserve-and-verify-the-restored-v61-pro-studio-functionality-within-the-divine-v60-luxury-visual-system-the-pro-can-configure-salon-identity-name-category-city-bio-set-type-salon-domicile-add-social-links-instagram-whatsapp-website-if-present-in-the-v61-code-upload-a-cover-image-local-preview-and-build-services-add-via-presets-add-custom-delete-services-with-name-price-duration-and-description",
+      "featureTitle": "Preserve and verify the restored V61 Pro Studio functionality within the Divine (V60) luxury visual system: the Pro can configure salon identity (name, category, city, bio), set type (Salon/Domicile), add social links (Instagram, WhatsApp, Website if present in the V61 code), upload a cover image (local preview), and build services (add via presets, add custom, delete services) with name, price, duration, and description.",
+      "files": [
+        "frontend/src/AppV1.jsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
+      ],
+      "testIds": [
+        "REQ-196"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-make-the-pro-deploy-publish-injection-of-a-newly-created-salon-into-the-in-memory-salons-list-robust-against-stale-react-state-closures-by-using-a-functional-state-update-for-setsalons-while-preserving-identical-visible-behavior-newly-created-salon-appears-immediately-at-the-top-and-the-app-switches-back-to-the-client-feed",
+      "featureTitle": "Make the Pro deploy/publish injection of a newly created salon into the in-memory `salons` list robust against stale React state closures by using a functional state update for `setSalons`, while preserving identical visible behavior (newly created salon appears immediately at the top and the app switches back to the client feed).",
+      "files": [
+        "frontend/src/AppV1.jsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
+      ],
+      "testIds": [
+        "REQ-197"
       ],
       "confidence": "high"
     }

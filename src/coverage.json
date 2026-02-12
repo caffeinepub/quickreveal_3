@@ -1,18 +1,18 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-12T01:45:17.770Z",
+  "generatedAt": "2026-02-12T01:58:19.131Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 3,
-    "implemented": 2,
+    "total": 4,
+    "implemented": 4,
     "items": [
       {
-        "id": "REQ-191",
-        "summary": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V60 “NEXUS DIVINE” code block provided by the user (verbatim), treating it as the full app UI and local-only logic (Intro → App feed → Salon detail morph modal → Partner/Pro entry), including its imports, hardcoded datasets (`CATEGORIES`, `SALONS`), typography styling (`serifFont`), Framer Motion `layoutId` morphing, “Liquid Gold” service selection effect, and the Champagne Gold final CTA.",
+        "id": "REQ-194",
+        "summary": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V61 code block provided by the user (verbatim overwrite), treating it as the full application UI and logic (Intro → Client feed → Salon detail modal → Pro Studio), with local-only in-file data and no backend calls.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx"
@@ -22,25 +22,39 @@
         ]
       },
       {
-        "id": "REQ-192",
-        "summary": "Ensure the project compiles and runs after the V60 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., resolving missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports) without changing the intended V60 UI layout, styling (Tailwind classes), copy, data, or interaction behavior.",
+        "id": "REQ-195",
+        "summary": "Ensure the project compiles and runs after the V61 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports), without changing the intended V61 UI layout, styling (Tailwind classes), copy, datasets (`CATEGORIES`, `INITIAL_SALONS`, `PRESETS`), or interaction behavior.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx",
-          "frontend/src/declarations.d.ts"
+          "frontend/src/index.css"
         ],
         "matchedFiles": [
           "frontend/src/AppV1.jsx"
         ]
       },
       {
-        "id": "REQ-193",
-        "summary": "Keep `frontend/src/App.tsx` as the thin wrapper that renders `AppV1` and do not modify any frontend immutable entry files; the app must continue to mount through the existing `frontend/src/main.tsx` wiring.",
-        "status": "missing",
+        "id": "REQ-196",
+        "summary": "Preserve and verify the restored V61 Pro Studio functionality within the Divine (V60) luxury visual system: the Pro can configure salon identity (name, category, city, bio), set type (Salon/Domicile), add social links (Instagram, WhatsApp, Website if present in the V61 code), upload a cover image (local preview), and build services (add via presets, add custom, delete services) with name, price, duration, and description.",
+        "status": "implemented",
         "plannedFiles": [
-          "frontend/src/__checks__/app-wrapper-contract.md"
+          "frontend/src/AppV1.jsx",
+          "frontend/src/index.css"
         ],
-        "matchedFiles": []
+        "matchedFiles": [
+          "frontend/src/AppV1.jsx"
+        ]
+      },
+      {
+        "id": "REQ-197",
+        "summary": "Make the Pro deploy/publish injection of a newly created salon into the in-memory `salons` list robust against stale React state closures by using a functional state update for `setSalons`, while preserving identical visible behavior (newly created salon appears immediately at the top and the app switches back to the client feed).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/AppV1.jsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/AppV1.jsx"
+        ]
       }
     ]
   },
@@ -50,7 +64,6 @@
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
     "frontend/src/AppV1.jsx",
-    "frontend/src/index.css",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",
