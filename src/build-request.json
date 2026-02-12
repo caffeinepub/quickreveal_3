@@ -1,11 +1,11 @@
 {
   "kind": "build_request",
-  "title": "V61 Nexus Pro Master: Replace AppV1 with provided code and restore full Pro Studio in V60 Divine design",
-  "priority": "normal",
+  "title": "Overwrite AppV1 with V65 Nexus Professional (Date/Time + Identity steps)",
+  "priority": "high",
   "requirements": [
     {
-      "id": "REQ-194",
-      "text": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V61 code block provided by the user (verbatim overwrite), treating it as the full application UI and logic (Intro → Client feed → Salon detail modal → Pro Studio), with local-only in-file data and no backend calls.",
+      "id": "REQ-204",
+      "text": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact user-provided V65 “NEXUS PROFESSIONAL” code block (verbatim), preserving all components, local data constants, imports, Tailwind classes, UI strings, and interaction logic as provided.",
       "target": "frontend",
       "source": {
         "messageIds": [
@@ -13,85 +13,79 @@
         ],
         "quotes": [
           "INSTRUCTION : Efface tout le contenu actuel de `frontend/src/AppV1.jsx` et remplace-le par le code ci-dessous.",
-          "VOICI LE CODE V61 COMPLET À ÉCRIRE :"
+          "VOICI LE CODE V65 COMPLET À ÉCRIRE :"
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` is a full-file overwrite matching the user-provided V61 code (no partial merges).",
-        "The app still mounts through the existing wiring where `frontend/src/App.tsx` renders `AppV1` (no entrypoint changes).",
-        "No backend canister methods are called from the V61 UI; all state remains in-memory/local within `AppV1.jsx`."
+        "`frontend/src/AppV1.jsx` content matches the provided V65 code block exactly (full overwrite, no partial merge).",
+        "The app still boots through the existing `frontend/src/App.tsx` wrapper (no entry wiring changes)."
       ]
     },
     {
-      "id": "REQ-195",
-      "text": "Ensure the project compiles and runs after the V61 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports), without changing the intended V61 UI layout, styling (Tailwind classes), copy, datasets (`CATEGORIES`, `INITIAL_SALONS`, `PRESETS`), or interaction behavior.",
+      "id": "REQ-205",
+      "text": "Ensure the project compiles and runs after the V65 overwrite by applying only minimal mechanical fixes required by this repository (e.g., fixing missing/incorrect imports, resolving undefined identifiers, invalid JSX, duplicate default exports) without changing the intended V65 UI, styling, copy, datasets, or interaction behavior.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "VOICI LE CODE V61 COMPLET À ÉCRIRE :"
+          "L'utilisateur signale que l'app n'est pas fonctionnelle car il manque la sélection de la date/heure et l'identification du client."
         ]
       },
       "acceptanceCriteria": [
-        "`npm`/Vite dev build succeeds without runtime errors on initial load.",
-        "All referenced icons/components/functions in the pasted V61 code resolve correctly at build time (no unresolved imports).",
-        "Any fixes are limited to build-breakers only (e.g., adding a missing import) and do not alter the visible design or flows."
+        "`npm run build` and `npm run dev` succeed without runtime errors.",
+        "Any changes beyond the verbatim V65 overwrite are limited strictly to build-breaking mechanical fixes."
       ]
     },
     {
-      "id": "REQ-196",
-      "text": "Preserve and verify the restored V61 Pro Studio functionality within the Divine (V60) luxury visual system: the Pro can configure salon identity (name, category, city, bio), set type (Salon/Domicile), add social links (Instagram, WhatsApp, Website if present in the V61 code), upload a cover image (local preview), and build services (add via presets, add custom, delete services) with name, price, duration, and description.",
+      "id": "REQ-206",
+      "text": "Preserve and verify the V65 sequential booking flow in local-only state: Service selection → Date/Time picker → Client identity form → Request submission → Pending (3s simulation) → Booked ticket → Mirror Protocol. The payment/reveal (Mirror Protocol) must not be accessible before the booked ticket step.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "STUDIO PRO COMPLET : Le formulaire permet de tout configurer : Nom, Catégorie, Ville (Smart), Bio, Instagram/Web/WhatsApp, Photo de couverture.",
-          "SERVICE BUILDER : Le pro peut ajouter/supprimer des services avec Nom, Prix, Durée et Description.",
-          "DESIGN CONSISTENT : L'espace Pro utilise désormais les codes visuels \"Noir Lumière\" et \"Or\" de la V60."
+          "LOGIQUE SÉQUENTIELLE : Selection -> DateTime -> Identity -> Request -> Pending -> Booked -> Mirror Protocol."
         ]
       },
       "acceptanceCriteria": [
-        "From the Intro screen, clicking the Partner/Pro entry action opens the Pro Studio flow.",
-        "Step 1 (Identity) updates the live `preview` model: name, category, location/city, type selector, bio, and social fields are editable.",
-        "Cover image selection via file input shows a local preview (using an object URL) without uploading anywhere.",
-        "Step 2 (Services) allows: (a) selecting a preset to open the service editor prefilled, (b) creating a custom service, (c) validating a service to append it to the preview services list, and (d) deleting an existing service from the list.",
-        "Pro Studio visuals remain consistent with the V60/V61 black-and-gold styling used elsewhere in the app (no theming regressions)."
+        "After selecting at least one service, the next step is a Date/Time screen where a day and a time slot can be selected.",
+        "The user cannot proceed from Date/Time to the next step unless a time slot is selected.",
+        "After Date/Time, an Identity screen collects client name and phone; the user cannot submit the request unless both fields are non-empty.",
+        "Submitting the request shows a Pending screen and automatically transitions to Booked after ~3 seconds.",
+        "The “Pay & Reveal” / Mirror Protocol entry point is only available on the Booked ticket screen (not during selection, datetime, identity, or pending)."
       ]
     },
     {
-      "id": "REQ-197",
-      "text": "Make the Pro deploy/publish injection of a newly created salon into the in-memory `salons` list robust against stale React state closures by using a functional state update for `setSalons`, while preserving identical visible behavior (newly created salon appears immediately at the top and the app switches back to the client feed).",
+      "id": "REQ-207",
+      "text": "Ensure the final booked ticket displays the user-selected date and time (from the Date/Time step) and the client identity (from the Identity step), as implemented in the provided V65 code.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "const handleDeploy = (data) => { ... setSalons([newS, ...salons]); setView('app'); }"
+          "TICKET FINAL : Le ticket de réservation affiche désormais la date et l'heure choisies."
         ]
       },
       "acceptanceCriteria": [
-        "Publishing from Pro Studio reliably adds the new salon to the top of the client feed even if the user navigates quickly or triggers rapid state changes.",
-        "The post-deploy view switches to the client feed immediately (same as the V61 code’s intended behavior).",
-        "No additional persistence layer is introduced (keep local-only)."
+        "The booked ticket UI shows the selected day label and selected time slot.",
+        "The booked ticket UI shows the entered client name alongside the selected date/time (per the V65 UI)."
       ]
     }
   ],
   "constraints": [
     "Do not modify `frontend/src/App.tsx`; it must remain the thin wrapper that renders `AppV1`.",
-    "Do not modify any frontend immutable entry files listed in the system context (including `frontend/src/main.tsx` and the Internet Identity hooks).",
-    "Keep the V61 implementation local-only: no backend calls, no React Query data fetching changes, no Internet Identity flow changes.",
-    "Use English for any user-facing text in the build request (this document)."
+    "Do not modify any frontend immutable entry files (including `frontend/src/main.tsx` and the hooks under `frontend/src/hooks/*` listed as immutable).",
+    "Keep behavior local-only (no backend calls) as implied by the provided V65 in-file dataset and logic.",
+    "Use English for all user-facing text in this build request (specification only); do not reinterpret or rewrite the UI strings inside the provided V65 code block."
   ],
   "nonGoals": [
-    "Do not re-introduce or wire Internet Identity authentication, role-based routing, or any backend-driven data flows for this V61 overwrite.",
-    "Do not implement real ‘smart city’ suggestions/autocomplete beyond what is already present in the provided V61 code.",
-    "Do not add new product features or redesign the V61 UI beyond minimal build-fix adjustments.",
-    "Do not add image generation or replace the provided external Unsplash image URLs."
+    "Do not re-introduce Internet Identity, role-based routing, React Query data loading, or any prior backend-driven features unless they already exist inside the provided V65 code block.",
+    "Do not refactor, rename, or reorganize the V65 code for style/architecture; only minimal build-fix edits are allowed if necessary.",
+    "Do not add new product features beyond the V65 Date/Time picker, Identity form, sequential flow, and ticket changes already present in the provided code."
   ],
   "imageRequirements": {
     "required": [],

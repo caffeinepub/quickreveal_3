@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v61-code-block-provided-by-the-user-verbatim-overwrite-treating-it-as-the-full-application-ui-and-logic-intro-client-feed-salon-detail-modal-pro-studio-with-local-only-in-file-data-and-no-backend-calls",
-      "featureTitle": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V61 code block provided by the user (verbatim overwrite), treating it as the full application UI and logic (Intro → Client feed → Salon detail modal → Pro Studio), with local-only in-file data and no backend calls.",
+      "featureId": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-user-provided-v65-nexus-professional-code-block-verbatim-preserving-all-components-local-data-constants-imports-tailwind-classes-ui-strings-and-interaction-logic-as-provided",
+      "featureTitle": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact user-provided V65 “NEXUS PROFESSIONAL” code block (verbatim), preserving all components, local data constants, imports, Tailwind classes, UI strings, and interaction logic as provided.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -17,13 +17,13 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-194"
+        "REQ-204"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-project-compiles-and-runs-after-the-v61-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-undefined-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v61-ui-layout-styling-tailwind-classes-copy-datasets-categories-initial-salons-presets-or-interaction-behavior",
-      "featureTitle": "Ensure the project compiles and runs after the V61 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports), without changing the intended V61 UI layout, styling (Tailwind classes), copy, datasets (`CATEGORIES`, `INITIAL_SALONS`, `PRESETS`), or interaction behavior.",
+      "featureId": "feature-ensure-the-project-compiles-and-runs-after-the-v65-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-fixing-missing-incorrect-imports-resolving-undefined-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v65-ui-styling-copy-datasets-or-interaction-behavior",
+      "featureTitle": "Ensure the project compiles and runs after the V65 overwrite by applying only minimal mechanical fixes required by this repository (e.g., fixing missing/incorrect imports, resolving undefined identifiers, invalid JSX, duplicate default exports) without changing the intended V65 UI, styling, copy, datasets, or interaction behavior.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -37,13 +37,13 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-195"
+        "REQ-205"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-preserve-and-verify-the-restored-v61-pro-studio-functionality-within-the-divine-v60-luxury-visual-system-the-pro-can-configure-salon-identity-name-category-city-bio-set-type-salon-domicile-add-social-links-instagram-whatsapp-website-if-present-in-the-v61-code-upload-a-cover-image-local-preview-and-build-services-add-via-presets-add-custom-delete-services-with-name-price-duration-and-description",
-      "featureTitle": "Preserve and verify the restored V61 Pro Studio functionality within the Divine (V60) luxury visual system: the Pro can configure salon identity (name, category, city, bio), set type (Salon/Domicile), add social links (Instagram, WhatsApp, Website if present in the V61 code), upload a cover image (local preview), and build services (add via presets, add custom, delete services) with name, price, duration, and description.",
+      "featureId": "feature-preserve-and-verify-the-v65-sequential-booking-flow-in-local-only-state-service-selection-date-time-picker-client-identity-form-request-submission-pending-3s-simulation-booked-ticket-mirror-protocol-the-payment-reveal-mirror-protocol-must-not-be-accessible-before-the-booked-ticket-step",
+      "featureTitle": "Preserve and verify the V65 sequential booking flow in local-only state: Service selection → Date/Time picker → Client identity form → Request submission → Pending (3s simulation) → Booked ticket → Mirror Protocol. The payment/reveal (Mirror Protocol) must not be accessible before the booked ticket step.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -57,13 +57,13 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-196"
+        "REQ-206"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-make-the-pro-deploy-publish-injection-of-a-newly-created-salon-into-the-in-memory-salons-list-robust-against-stale-react-state-closures-by-using-a-functional-state-update-for-setsalons-while-preserving-identical-visible-behavior-newly-created-salon-appears-immediately-at-the-top-and-the-app-switches-back-to-the-client-feed",
-      "featureTitle": "Make the Pro deploy/publish injection of a newly created salon into the in-memory `salons` list robust against stale React state closures by using a functional state update for `setSalons`, while preserving identical visible behavior (newly created salon appears immediately at the top and the app switches back to the client feed).",
+      "featureId": "feature-ensure-the-final-booked-ticket-displays-the-user-selected-date-and-time-from-the-date-time-step-and-the-client-identity-from-the-identity-step-as-implemented-in-the-provided-v65-code",
+      "featureTitle": "Ensure the final booked ticket displays the user-selected date and time (from the Date/Time step) and the client identity (from the Identity step), as implemented in the provided V65 code.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -77,7 +77,7 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-197"
+        "REQ-207"
       ],
       "confidence": "high"
     }

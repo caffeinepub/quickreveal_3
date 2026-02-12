@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 103,
-  "summary": "V61 « NEXUS PRO MASTER » : effacer et remplacer intégralement `frontend/src/AppV1.jsx` par le code V61 fourni (verbatim). Conserver le design luxe V60 “Noir Lumière / Or” tout en restaurant un Espace Pro fonctionnel : Studio Pro complet (identité + photo cover + bio + réseaux + type Salon/Domicile) + Service Builder (ajout/suppression services avec nom/prix/durée/description) + injection locale du salon créé dans le feed + conversion WhatsApp.",
+  "projectStateVersion": 109,
+  "summary": "V65 « NEXUS PROFESSIONAL » : effacer et remplacer intégralement `frontend/src/AppV1.jsx` par le code V65 fourni (verbatim). Ajouts fonctionnels : étape sélection Date & Heure après choix des services + formulaire d’identité (Prénom/Nom, Téléphone). Logique séquentielle sécurisée : Selection → DateTime → Identity → Request → Pending (3s) → Booked (ticket affichant date/heure + nom) → uniquement sur ticket : « Payer & Révéler » ouvrant le Mirror Protocol.",
   "architectural_notes": [
     "RESET complet : écrasement total du backend et du frontend, considéré comme nouvelle V1.0 officielle.",
     "Backend Motoko réduit à un modèle Salon/Service/Socials avec `stable var salons` et endpoints `getSalons` (query) + `createSalon` (shared); seed de 4 salons suisses au démarrage (si salons vide).",
@@ -9,10 +9,10 @@
     "Frontend : base officielle = un seul fichier `src/App.jsx` \"Swiss Vogue\" avec dataset local `INITIAL_SWISS_DATA` pour fonctionner immédiatement; intégrations backend/II mises en pause.",
     "UX : Client = feed de cartes \"Luxury\" + filtres cliquables (Badge button) sur catégories FR [Tout, Coiffure, Barbier, Spa, Onglerie] + dock de navigation flottant.",
     "UX : Pro = wizard immersif 3 étapes (nom → upload photo locale via `URL.createObjectURL` → écran confirmation), sans persistance backend pour l’instant.",
-    "Frontend V3.0 : `src/App.jsx` remplacé par \"STUDIO PRO ULTIMATE\" (Luxe) avec dataset local suisse `INITIAL_SWISS_DATA` (4 salons, CHF, images HD), sans appels backend.",
     "Mode Pro : wizard immersif en 5 étapes (Nom/Ville → Catégorie/Pitch → Photo → Menu services → Confirmation) avec gestion locale des services (ajout/suppression) et photo via upload local (`URL.createObjectURL`).",
     "Frontend V5 « BUSINESS SUITE » : services enrichis (duration/desc/popular) et affichage détaillé côté Client; mode Pro : wizard 5 étapes avec éditeur de services avancé (prix/durée/description/populaire) + upload photo locale via `URL.createObjectURL`, toujours sans backend.",
-    "Frontend V8 « INFINITY VERSE » : App monofichier `src/App.jsx` (Landing → Auth → Client/Pro) avec dataset local `INITIAL_SWISS_DATA` orienté Video Commerce + Drops + Membership, et ProWizard 5 étapes incluant projection de revenus en temps réel."
+    "Frontend V8 « INFINITY VERSE » : App monofichier `src/App.jsx` (Landing → Auth → Client/Pro) avec dataset local `INITIAL_SWISS_DATA` orienté Video Commerce + Drops + Membership, et ProWizard 5 étapes incluant projection de revenus en temps réel.",
+    "Frontend V65 « NEXUS PROFESSIONAL » : `frontend/src/AppV1.jsx` devient une app mono-fichier locale avec tunnel de réservation séquentiel incluant sélection date/heure + formulaire d’identité (nom/téléphone) avant envoi de demande, puis pending simulé et ticket confirmé déclenchant Mirror Protocol."
   ],
   "known_issues": [
     "Risque de confusion dans le périmètre « temps réel » : l’actualisation du graphique doit se faire après actions utilisateur (pas de push serveur).",
@@ -1444,6 +1444,86 @@
         "REQ-197"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-user-provided-v62-nexus-mirror-code-block-verbatim",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact user-provided V62 “NEXUS MIRROR” code block (verbatim).",
+      "reqIds": [
+        "REQ-198"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v62-overwrite-by-applying-only-the-minimal-mechanical-adjustments-required-by-this-repository-e-g-fixing-missing-incorrect-imports-resolving-undefined-identifiers-fixing-invalid-jsx-or-resolving-duplicate-default-exports-without-changing-the-intended-v62-ui-layout-styling-tailwind-classes-copy-datasets-categories-salons-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V62 overwrite by applying only the minimal mechanical adjustments required by this repository (e.g., fixing missing/incorrect imports, resolving undefined identifiers, fixing invalid JSX, or resolving duplicate default exports), without changing the intended V62 UI layout, styling (Tailwind classes), copy, datasets (`CATEGORIES`, `SALONS`), or interaction behavior.",
+      "reqIds": [
+        "REQ-199"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-v62-mirror-protocol-flow-works-end-to-end-exactly-as-described-in-the-provided-v62-code-trigger-from-salon-detail-simulated-camera-recording-reveal-loop-press-and-hold-golden-progress-to-success-and-viral-share-action-using-navigator-share-when-available",
+      "title": "Preserve and verify the V62 “Mirror Protocol” flow works end-to-end exactly as described in the provided V62 code: trigger from salon detail, simulated camera/recording, reveal loop, press-and-hold golden progress to success, and viral share action using `navigator.share` when available.",
+      "reqIds": [
+        "REQ-200"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v64-nexus-reality-code-block-provided-by-the-user-verbatim-treating-it-as-the-full-app-ui-logic-for-this-repository",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V64 “NEXUS REALITY” code block provided by the user (verbatim), treating it as the full app UI/logic for this repository.",
+      "reqIds": [
+        "REQ-201"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-verify-the-v64-chronological-and-secure-client-flow-so-that-payment-mirror-protocol-cannot-appear-before-a-booking-is-confirmed-service-selection-send-request-pending-wait-3s-simulation-confirmed-ticket-only-on-the-confirmed-ticket-show-the-pay-reveal-action-that-opens-mirror-protocol",
+      "title": "Implement/verify the V64 chronological and secure client flow so that payment (Mirror Protocol) cannot appear before a booking is confirmed: Service selection → Send request → Pending wait (3s simulation) → Confirmed ticket → Only on the confirmed ticket show the “Pay & Reveal” action that opens Mirror Protocol.",
+      "reqIds": [
+        "REQ-202"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v64-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-unresolved-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v64-ui-layout-styling-tailwind-classes-copy-data-constants-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V64 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports) without changing the intended V64 UI layout, styling (Tailwind classes), copy, data constants, or interaction behavior.",
+      "reqIds": [
+        "REQ-203"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-user-provided-v65-nexus-professional-code-block-verbatim-preserving-all-components-local-data-constants-imports-tailwind-classes-ui-strings-and-interaction-logic-as-provided",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact user-provided V65 “NEXUS PROFESSIONAL” code block (verbatim), preserving all components, local data constants, imports, Tailwind classes, UI strings, and interaction logic as provided.",
+      "reqIds": [
+        "REQ-204"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v65-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-fixing-missing-incorrect-imports-resolving-undefined-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v65-ui-styling-copy-datasets-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V65 overwrite by applying only minimal mechanical fixes required by this repository (e.g., fixing missing/incorrect imports, resolving undefined identifiers, invalid JSX, duplicate default exports) without changing the intended V65 UI, styling, copy, datasets, or interaction behavior.",
+      "reqIds": [
+        "REQ-205"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-v65-sequential-booking-flow-in-local-only-state-service-selection-date-time-picker-client-identity-form-request-submission-pending-3s-simulation-booked-ticket-mirror-protocol-the-payment-reveal-mirror-protocol-must-not-be-accessible-before-the-booked-ticket-step",
+      "title": "Preserve and verify the V65 sequential booking flow in local-only state: Service selection → Date/Time picker → Client identity form → Request submission → Pending (3s simulation) → Booked ticket → Mirror Protocol. The payment/reveal (Mirror Protocol) must not be accessible before the booked ticket step.",
+      "reqIds": [
+        "REQ-206"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-final-booked-ticket-displays-the-user-selected-date-and-time-from-the-date-time-step-and-the-client-identity-from-the-identity-step-as-implemented-in-the-provided-v65-code",
+      "title": "Ensure the final booked ticket displays the user-selected date and time (from the Date/Time step) and the client identity (from the Identity step), as implemented in the provided V65 code.",
+      "reqIds": [
+        "REQ-207"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -1914,6 +1994,24 @@
     {
       "id": "AR-95",
       "summary": "V61 « NEXUS PRO MASTER » : overwrite total de `frontend/src/AppV1.jsx` avec le code V61 fourni (verbatim) pour restaurer un Studio Pro complet (bio/réseaux/photo/services) tout en conservant l’esthétique V60 “Noir Lumière / Or”, avec injection locale du salon déployé dans le feed et CTA WhatsApp.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-96",
+      "summary": "V62 « NEXUS MIRROR » : overwrite total de `frontend/src/AppV1.jsx` avec le code V62 fourni (verbatim) et intégrer la mécanique « Mirror Protocol » (Révéler le Résultat → Camera UI → reveal vidéo loop → press & hold pour débloquer paiement → succès viral + partage).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-97",
+      "summary": "V64 « NEXUS REALITY » : overwrite total de `frontend/src/AppV1.jsx` avec le code V64 fourni (verbatim) + corriger le flux pour que « Payer & Révéler » (Mirror Protocol) n’apparaisse qu’après confirmation (ticket) : Sélection → Pending 3s → Confirmé → Paiement/Révélation.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-98",
+      "summary": "V65 « NEXUS PROFESSIONAL » : overwrite total de `frontend/src/AppV1.jsx` avec le code V65 fourni (verbatim) ajoutant l’étape Date & Heure (jour + slots) et l’étape Identité client (nom + téléphone), avec tunnel séquentiel Selection → DateTime → Identity → Request → Pending → Booked → Mirror Protocol et ticket final incluant date/heure choisies.",
       "reqIds": [],
       "status": "pending"
     }

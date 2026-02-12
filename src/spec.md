@@ -1,12 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Replace `frontend/src/AppV1.jsx` with the user-provided V61 UI (client feed, salon modal, and full Pro Studio) while keeping the V60 “Divine” black-and-gold styling and ensuring the app compiles/runs with local-only in-memory data.
+**Goal:** Replace `frontend/src/AppV1.jsx` with the user-provided V65 “NEXUS PROFESSIONAL” implementation and ensure the app compiles and runs while preserving the intended sequential booking flow (including Date/Time and Client Identity steps).
 
 **Planned changes:**
-- Fully overwrite `frontend/src/AppV1.jsx` with the provided V61 code (verbatim as the source of UI/logic), keeping all data local/in-file and making no backend calls.
-- Apply only minimal mechanical build fixes (e.g., missing imports, undefined identifiers, invalid JSX/exports) required for successful compile/run without changing intended layout, styling, copy, datasets, or behaviors.
-- Verify/restore Pro Studio flows within the Divine visual system: identity editing (name/category/city/type/bio/socials), local cover image preview, and service builder (presets/custom/add/delete).
-- Update the Pro Studio publish/deploy handler to use a functional `setSalons` state update so newly created salons reliably appear at the top and the app returns to the client feed.
+- Fully overwrite `frontend/src/AppV1.jsx` with the provided V65 code block verbatim (no partial merge).
+- Apply only minimal mechanical fixes needed for this repository so the project builds and runs (without changing V65 UI, copy, styling, datasets, or behavior).
+- Preserve and verify the local-only step flow: Service selection → Date/Time picker → Identity form → Request submission → Pending (~3s) → Booked ticket → Mirror Protocol, with Mirror Protocol inaccessible before the Booked step.
+- Ensure the booked ticket displays the user-selected date/time and entered client identity as captured in earlier steps.
 
-**User-visible outcome:** Users can navigate from the intro to the client feed, open salon details in a modal, and enter a working Pro Studio to configure a salon (including cover image preview and services) and publish it so it instantly appears at the top of the local client feed.
+**User-visible outcome:** Users can select services, pick a date and time slot, enter their name and phone, submit a booking request, see a short pending state, then view a booked ticket showing their chosen date/time and identity; “Pay & Reveal” / Mirror Protocol becomes available only after the booking is confirmed.
