@@ -1,38 +1,101 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "V53 “NEXUS OLYMPUS” overwrite + compile-safe mechanical fixes (frontend-only)",
+  "title": "V54 NEXUS MANIFESTO: AppV1 full overwrite + compile fixes + preserved intro/share/WhatsApp + deploy robustness",
   "requirements": [
     {
-      "id": "REQ-177",
-      "summary": "Fully overwrite AppV1.jsx with the exact user-provided V53 “NEXUS OLYMPUS” implementation while preserving the specified local datasets, UI, styling, and logic.",
+      "id": "REQ-179",
+      "summary": "Full-file overwrite AppV1.jsx with the user-provided V54 “NEXUS MANIFESTO” code block verbatim.",
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` matches the user-provided V53 code content as the application UI implementation (intro -> landing -> client -> pro studio).",
-        "The app continues to mount via the existing `frontend/src/App.tsx` wrapper that renders `AppV1`."
+        "`frontend/src/AppV1.jsx` matches the provided V54 code block with a full-file overwrite (no partial merges).",
+        "The app still mounts via the existing wrapper (`frontend/src/App.tsx` renders `AppV1`) without changing the entry wiring."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Delete all existing file content and replace it with the exact V53 “NEXUS OLYMPUS” code block supplied by the user, preserving all imports, components, Tailwind classes, UI strings, interaction logic, and the local seed data/constants explicitly called out (SWISS_DB, SHOWREEL, INITIAL_SALONS, PROFESSIONS, RICH_PRESETS)."
+          "description": "Completely replace the entire contents of `frontend/src/AppV1.jsx` with the exact V54 “NEXUS MANIFESTO” code block from the user message (verbatim: all imports, components, local seed data, Tailwind classes, and UI strings)."
         }
       ]
     },
     {
-      "id": "REQ-178",
-      "summary": "Apply only minimal mechanical fixes needed for this repo so V53 compiles and runs without altering intended V53 UI/UX or the five pillars (intro showreel, native share, WhatsApp booking, Swiss location suggestions, cinematic dark UI).",
+      "id": "REQ-180",
+      "summary": "Apply minimal mechanical fixes needed for this repo so the V54 overwrite compiles and runs, without altering intended V54 UI/UX.",
       "acceptanceCriteria": [
-        "Build succeeds with no TypeScript/JSX compile errors after the overwrite.",
-        "On launch, the Olympus Intro showreel is displayed full-screen and only entering proceeds to the app.",
-        "Tapping a Share action uses `navigator.share` when available; when unavailable, the fallback path executes without crashing.",
-        "Confirming a booking generates a working WhatsApp `wa.me` link with a prefilled message that includes salon name, selected services, selected date/time, location context (including address for domicile), and total price.",
-        "The location input shows suggestions by ZIP prefix or city substring using the in-file `SWISS_DB` dataset."
+        "`npm`/Vite build succeeds with no unresolved symbol/import errors coming from the V54 code.",
+        "Runtime navigation works through the V54 flow (intro → landing → client feed; pro studio accessible from landing) without crashes."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "After the V53 paste, make strictly mechanical, build-blocking fixes only (e.g., add/adjust missing imports, remove duplicate exports, fix invalid JSX/React usage, resolve undefined identifiers) while keeping the V53 layout, Tailwind styling, copy, and interaction behavior unchanged—specifically preserving: full-screen Olympus Intro gating, `navigator.share` with safe fallback, WhatsApp `wa.me` deep-link message composition, SWISS_DB-powered location suggestions, and the cinematic dark UI/trust badges."
+          "description": "Make only minimal repository-specific mechanical fixes required after the V54 paste (e.g., fix missing/incorrect imports, resolve undefined identifiers, correct invalid JSX, ensure a single default export). Do not change layout/styling/copy/interaction behavior beyond what is required to run."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "If (and only if) the pasted V54 code references utility/animation classnames not available in this repo, add the minimal missing CSS animations/utilities here to restore build/runtime without changing the V54 visual design language."
+        }
+      ]
+    },
+    {
+      "id": "REQ-181",
+      "summary": "Preserve the V54 Manifesto Intro: 3-line typographic cycling sequence, profession icons row, and Enter CTA that transitions into the app.",
+      "acceptanceCriteria": [
+        "On app launch, the intro screen shows the manifesto text sequence and changes text automatically on an interval.",
+        "The intro screen displays the profession icon row immediately (no navigation needed).",
+        "Tapping the intro CTA transitions to the landing screen (view changes from `intro` to `landing`)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/AppV1.jsx",
+          "operation": "modify",
+          "description": "Ensure the V54 intro screen implements (and remains wired as the initial view) the manifesto text sequence cycling “L'ÉLITE SUISSE.” → “À DOMICILE OU SALON.” → “RÉSERVEZ L'EXCELLENCE.” on an interval, renders the profession icons row on the intro screen, and the Enter CTA transitions the view from `intro` to `landing`."
+        }
+      ]
+    },
+    {
+      "id": "REQ-182",
+      "summary": "Keep the V54 high-tech luxury styling characteristics (blur, tight typography, contrast) without introducing other theming systems.",
+      "acceptanceCriteria": [
+        "Key surfaces in intro, landing, client feed header, and salon detail retain the intended blur/contrast/tight-typography styling from the V54 code.",
+        "No additional global theme overhaul is introduced that changes V54 visuals beyond required build fixes."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/AppV1.jsx",
+          "operation": "modify",
+          "description": "During any compile/runtime fixes, preserve V54’s styling approach (notably `backdrop-blur`, tight typography, and high-contrast surfaces). Avoid substituting with alternative theme systems or refactors that change visuals."
+        }
+      ]
+    },
+    {
+      "id": "REQ-183",
+      "summary": "Maintain V54 viral functions: native share via navigator.share (with safe fallback) and WhatsApp wa.me deep-link with prefilled booking summary.",
+      "acceptanceCriteria": [
+        "From the salon detail screen, the share action triggers `navigator.share` when supported; when not supported, the fallback path does not crash the app.",
+        "From the confirmation step, the WhatsApp button opens a `wa.me` link containing prefilled text including selected services, date/time, domicile address when applicable, and total price."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/AppV1.jsx",
+          "operation": "modify",
+          "description": "Verify the V54 share action uses `navigator.share` when available and gracefully falls back (no crash) when unavailable. Verify the WhatsApp bridge generates a `wa.me` link whose prefilled text includes salon name, selected services, selected date/time, location details (including domicile address when applicable), and total price."
+        }
+      ]
+    },
+    {
+      "id": "REQ-184",
+      "summary": "Make Pro deploy insertion into in-memory salons robust against stale state closures while preserving visible behavior.",
+      "acceptanceCriteria": [
+        "After finishing the Pro studio flow, the newly created salon is always inserted at index 0 of the client feed even with rapid navigation/interactions.",
+        "The app switches to the client view immediately after deploy, matching the current visible behavior."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/AppV1.jsx",
+          "operation": "modify",
+          "description": "Update the V54 `handleDeploy` (or equivalent) to avoid stale React state closures by using a functional state update when prepending the new salon (so it always appears at index 0). Keep the immediate view switch to `client` after deploy unchanged in visible behavior."
         }
       ]
     }

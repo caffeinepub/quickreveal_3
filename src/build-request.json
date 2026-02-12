@@ -1,75 +1,128 @@
 {
   "kind": "build_request",
-  "title": "Overwrite AppV1 with V53 “NEXUS OLYMPUS” cinematic intro + viral sharing + WhatsApp booking",
+  "title": "V54 NEXUS MANIFESTO: Full AppV1 overwrite with Manifesto Intro + maintained native share and WhatsApp bridge",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-177",
-      "text": "Delete all existing content of `frontend/src/AppV1.jsx` and replace the entire file with the exact V53 “NEXUS OLYMPUS” code block provided by the user (full overwrite), preserving components, local seed data (`SWISS_DB`, `SHOWREEL`, `INITIAL_SALONS`, `PROFESSIONS`, `RICH_PRESETS`), Tailwind classes, imports, UI strings, and interaction logic as given.",
+      "id": "REQ-179",
+      "text": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact user-provided V54 “NEXUS MANIFESTO” code block (verbatim full overwrite, including all components, local seed data, imports, Tailwind classes, and UI strings).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-user-v54"
         ],
         "quotes": [
+          "Efface tout le contenu actuel de `frontend/src/AppV1.jsx` et remplace-le par le code ci-dessous.",
+          "VOICI LE CODE V54 COMPLET À ÉCRIRE :"
+        ]
+      },
+      "acceptanceCriteria": [
+        "`frontend/src/AppV1.jsx` matches the provided V54 code block with a full-file overwrite (no partial merges).",
+        "The app still mounts via the existing wrapper (`frontend/src/App.tsx` renders `AppV1`) without changing the entry wiring."
+      ]
+    },
+    {
+      "id": "REQ-180",
+      "text": "Ensure the project compiles and runs after the V54 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports), without changing the intended V54 UI layout, styling, copy, or interaction behavior.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-v54"
+        ],
+        "quotes": [
+          "Use English for any user-facing text in the build request.",
           "INSTRUCTION : Efface tout le contenu actuel de `frontend/src/AppV1.jsx` et remplace-le par le code ci-dessous."
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` matches the user-provided V53 code content as the application UI implementation (intro -> landing -> client -> pro studio).",
-        "The app continues to mount via the existing `frontend/src/App.tsx` wrapper that renders `AppV1`."
+        "`npm`/Vite build succeeds with no unresolved symbol/import errors coming from the V54 code.",
+        "Runtime navigation works through the V54 flow (intro → landing → client feed; pro studio accessible from landing) without crashes."
       ]
     },
     {
-      "id": "REQ-178",
-      "text": "Ensure the project compiles and runs after the V53 overwrite by applying only minimal mechanical adjustments required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports), without changing the intended V53 UI layout, styling, copy, or interaction behavior, including the five pillars: Olympus Intro showreel, native share via `navigator.share`, WhatsApp `wa.me` deep-link booking, Swiss smart location suggestions, and dark cinematic UI with trust badges.",
+      "id": "REQ-181",
+      "text": "Preserve and verify the V54 “Manifesto Intro” behavior: replace the previous showreel intro with a massive typographic sequence that cycles the three lines “L'ÉLITE SUISSE.” → “À DOMICILE OU SALON.” → “RÉSERVEZ L'EXCELLENCE.” and shows profession icons on the intro screen, with a clear “Enter” CTA that transitions into the app.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-user-v54"
         ],
         "quotes": [
-          "LES 5 PILIERS DE LA V53 :",
-          "1.  **OLYMPUS INTRO (SHOWREEL)**",
-          "2.  **NATIVE VIRAL ENGINE**",
-          "3.  **WHATSAPP DEEP LINK**",
-          "4.  **SMART LOCATION**",
-          "5.  **CINEMATIC UI**"
+          "MANIFESTO INTRO : Remplacement du \"Showreel\" par une séquence typographique massive et hypnotique : \"L'ÉLITE SUISSE\" -> \"À DOMICILE OU SALON\" -> \"RÉSERVEZ L'EXCELLENCE\".",
+          "VISUAL CLARITY : Dès l'écran d'accueil, affichage des icônes de métiers (Barber, Nails, Hair) pour que l'offre soit évidente immédiatement."
         ]
       },
       "acceptanceCriteria": [
-        "Build succeeds with no TypeScript/JSX compile errors after the overwrite.",
-        "On launch, the Olympus Intro showreel is displayed full-screen and only entering proceeds to the app.",
-        "Tapping a Share action uses `navigator.share` when available; when unavailable, the fallback path executes without crashing.",
-        "Confirming a booking generates a working WhatsApp `wa.me` link with a prefilled message that includes salon name, selected services, selected date/time, location context (including address for domicile), and total price.",
-        "The location input shows suggestions by ZIP prefix or city substring using the in-file `SWISS_DB` dataset."
+        "On app launch, the intro screen shows the manifesto text sequence and changes text automatically on an interval.",
+        "The intro screen displays the profession icon row immediately (no navigation needed).",
+        "Tapping the intro CTA transitions to the landing screen (view changes from `intro` to `landing`)."
+      ]
+    },
+    {
+      "id": "REQ-182",
+      "text": "Preserve the V54 high-tech luxury UI styling characteristics as implemented by the provided code: heavy use of `backdrop-blur`, tight typography, and high contrast surfaces, without replacing the V54 design language with other theming systems.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-v54"
+        ],
+        "quotes": [
+          "HIGH-TECH LUXURY UI : Utilisation intensive de flous (backdrop-blur), de typographies serrées et de contrastes forts pour une autorité immédiate."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Key surfaces in intro, landing, client feed header, and salon detail retain the intended blur/contrast/tight-typography styling from the V54 code.",
+        "No additional global theme overhaul is introduced that changes V54 visuals beyond required build fixes."
+      ]
+    },
+    {
+      "id": "REQ-183",
+      "text": "Keep the viral functions integrated in V54: (1) native sharing via `navigator.share` with graceful fallback when unavailable, and (2) WhatsApp deep-link generation (`wa.me`) with a prefilled message containing salon name, selected services, selected date/time, location details (including domicile address when applicable), and total price.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-v54"
+        ],
+        "quotes": [
+          "FONCTIONS VIRALES MAINTENUES : Le partage natif et le pont WhatsApp restent intégrés."
+        ]
+      },
+      "acceptanceCriteria": [
+        "From the salon detail screen, the share action triggers `navigator.share` when supported; when not supported, the fallback path does not crash the app.",
+        "From the confirmation step, the WhatsApp button opens a `wa.me` link containing prefilled text including selected services, date/time, domicile address when applicable, and total price."
+      ]
+    },
+    {
+      "id": "REQ-184",
+      "text": "Make the Pro deploy/publish injection into the in-memory `salons` list robust against stale React state closures while preserving identical visible behavior: when `handleDeploy` adds a newly created salon, it must reliably appear immediately at the top of the client list and the view must switch to Client immediately after deploy.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-v54"
+        ],
+        "quotes": [
+          "const handleDeploy = (data) => {\n      if(data) {\n          const newS = { ...data, id: Date.now(), verified: true, reviews: 0, distance: 0.1, priceStart: data.services[0]?.price || 0 };\n          setSalons([newS, ...salons]);\n          setView('client');\n      }\n  };"
+        ]
+      },
+      "acceptanceCriteria": [
+        "After finishing the Pro studio flow, the newly created salon is always inserted at index 0 of the client feed even with rapid navigation/interactions.",
+        "The app switches to the client view immediately after deploy, matching the current visible behavior."
       ]
     }
   ],
   "constraints": [
-    "Do not modify any frontend immutable entry files (including `frontend/src/main.tsx` and the hooks in `frontend/src/hooks/*` listed as immutable by the platform).",
-    "Keep `frontend/src/App.tsx` as the thin wrapper that renders `AppV1` (no changes to app entry wiring).",
-    "Do not add backend calls; keep the V53 implementation as local-only state/data as provided.",
-    "Any changes beyond the V53 paste must be strictly limited to build-breaking mechanical fixes and must not alter intended UI/UX, styling, copy, or interaction behavior."
+    "Frontend must remain local-only as per the provided V54 code (no new backend calls introduced).",
+    "Do not modify `frontend/src/App.tsx` (it must remain the thin wrapper that renders `AppV1`).",
+    "Do not modify any frontend immutable entry files listed in SYSTEM_CONTEXT.",
+    "Apply only minimal mechanical build fixes; do not refactor or alter the intended V54 UI/UX behavior."
   ],
   "nonGoals": [
-    "Implementing or re-enabling Internet Identity authentication, role-based routing, or React Query data loading.",
-    "Connecting the V53 UI to the Motoko backend for salons/bookings/images.",
-    "Changing V53 user-facing UI copy/language (the pasted V53 UI strings must remain as provided).",
-    "Adding new features or refactoring the provided V53 code for optimization or architecture changes."
+    "Do not (re)introduce Internet Identity authentication, role-based routing, or React Query data fetching in this V54 overwrite.",
+    "Do not add backend persistence, bookings storage, or any Motoko changes as part of this request.",
+    "Do not redesign or re-theme beyond what is already expressed in the provided V54 code."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
   }
 }

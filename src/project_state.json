@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 93,
-  "summary": "V53 « NEXUS OLYMPUS (INTRO CINÉMATIQUE & VIRALITÉ) » : effacer et remplacer intégralement `frontend/src/AppV1.jsx` par le code V53 fourni (verbatim). Focus : expérience « marque de luxe » avec (1) Olympus Intro showreel plein écran (stories + grain cinéma) avant l’app, (2) Native Viral Engine via `navigator.share`, (3) WhatsApp deep link pré-rempli pour réservation, (4) Smart Location Suisse NPA↔Ville, (5) UI cinématique sombre + badges de confiance.",
+  "projectStateVersion": 95,
+  "summary": "V54 « NEXUS MANIFESTO (CLARTÉ IMMÉDIATE) » : effacer et remplacer intégralement `frontend/src/AppV1.jsx` par le code V54 fourni (verbatim). Focus : compréhension en 3 secondes via Manifesto Intro typographique (« L'ÉLITE SUISSE » → « À DOMICILE OU SALON » → « RÉSERVEZ L'EXCELLENCE »), visual clarity (icônes métiers dès l’accueil), UI high-tech luxury (backdrop-blur/contrastes/typo serrée) tout en maintenant les fonctions virales (share natif `navigator.share` + pont WhatsApp).",
   "architectural_notes": [
     "RESET complet : écrasement total du backend et du frontend, considéré comme nouvelle V1.0 officielle.",
     "Backend Motoko réduit à un modèle Salon/Service/Socials avec `stable var salons` et endpoints `getSalons` (query) + `createSalon` (shared); seed de 4 salons suisses au démarrage (si salons vide).",
@@ -1300,6 +1300,54 @@
         "REQ-178"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-user-provided-v54-nexus-manifesto-code-block-verbatim-full-overwrite-including-all-components-local-seed-data-imports-tailwind-classes-and-ui-strings",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact user-provided V54 “NEXUS MANIFESTO” code block (verbatim full overwrite, including all components, local seed data, imports, Tailwind classes, and UI strings).",
+      "reqIds": [
+        "REQ-179"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v54-appv1-jsx-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-unresolved-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v54-ui-layout-styling-copy-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V54 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports), without changing the intended V54 UI layout, styling, copy, or interaction behavior.",
+      "reqIds": [
+        "REQ-180"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-v54-manifesto-intro-behavior-replace-the-previous-showreel-intro-with-a-massive-typographic-sequence-that-cycles-the-three-lines-l-lite-suisse-domicile-ou-salon-r-servez-l-excellence-and-shows-profession-icons-on-the-intro-screen-with-a-clear-enter-cta-that-transitions-into-the-app",
+      "title": "Preserve and verify the V54 “Manifesto Intro” behavior: replace the previous showreel intro with a massive typographic sequence that cycles the three lines “L'ÉLITE SUISSE.” → “À DOMICILE OU SALON.” → “RÉSERVEZ L'EXCELLENCE.” and shows profession icons on the intro screen, with a clear “Enter” CTA that transitions into the app.",
+      "reqIds": [
+        "REQ-181"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-the-v54-high-tech-luxury-ui-styling-characteristics-as-implemented-by-the-provided-code-heavy-use-of-backdrop-blur-tight-typography-and-high-contrast-surfaces-without-replacing-the-v54-design-language-with-other-theming-systems",
+      "title": "Preserve the V54 high-tech luxury UI styling characteristics as implemented by the provided code: heavy use of `backdrop-blur`, tight typography, and high contrast surfaces, without replacing the V54 design language with other theming systems.",
+      "reqIds": [
+        "REQ-182"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-keep-the-viral-functions-integrated-in-v54-1-native-sharing-via-navigator-share-with-graceful-fallback-when-unavailable-and-2-whatsapp-deep-link-generation-wa-me-with-a-prefilled-message-containing-salon-name-selected-services-selected-date-time-location-details-including-domicile-address-when-applicable-and-total-price",
+      "title": "Keep the viral functions integrated in V54: (1) native sharing via `navigator.share` with graceful fallback when unavailable, and (2) WhatsApp deep-link generation (`wa.me`) with a prefilled message containing salon name, selected services, selected date/time, location details (including domicile address when applicable), and total price.",
+      "reqIds": [
+        "REQ-183"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-the-pro-deploy-publish-injection-into-the-in-memory-salons-list-robust-against-stale-react-state-closures-while-preserving-identical-visible-behavior-when-handledeploy-adds-a-newly-created-salon-it-must-reliably-appear-immediately-at-the-top-of-the-client-list-and-the-view-must-switch-to-client-immediately-after-deploy",
+      "title": "Make the Pro deploy/publish injection into the in-memory `salons` list robust against stale React state closures while preserving identical visible behavior: when `handleDeploy` adds a newly created salon, it must reliably appear immediately at the top of the client list and the view must switch to Client immediately after deploy.",
+      "reqIds": [
+        "REQ-184"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -1732,6 +1780,12 @@
     {
       "id": "AR-87",
       "summary": "V53 « NEXUS OLYMPUS » : overwrite total de `frontend/src/AppV1.jsx` avec le code V53 fourni (verbatim) incluant Olympus Intro showreel (stories + grain cinéma) + Viral Share (navigator.share) + WhatsApp deep link + Smart Location Suisse NPA↔Ville + UI cinématique luxe.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-88",
+      "summary": "V54 « NEXUS MANIFESTO » : overwrite total de `frontend/src/AppV1.jsx` avec le code V54 fourni (verbatim) pour remplacer l’intro showreel par un Manifesto Intro typographique ultra clair (3 secondes), afficher les icônes métiers dès l’accueil, renforcer l’UI high-tech luxe (backdrop-blur/contrastes), tout en maintenant le partage natif (`navigator.share`) et le deep link WhatsApp.",
       "reqIds": [],
       "status": "pending"
     }

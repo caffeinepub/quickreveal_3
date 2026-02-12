@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-delete-all-existing-content-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v53-nexus-olympus-code-block-provided-by-the-user-full-overwrite-preserving-components-local-seed-data-swiss-db-showreel-initial-salons-professions-rich-presets-tailwind-classes-imports-ui-strings-and-interaction-logic-as-given",
-      "featureTitle": "Delete all existing content of `frontend/src/AppV1.jsx` and replace the entire file with the exact V53 “NEXUS OLYMPUS” code block provided by the user (full overwrite), preserving components, local seed data (`SWISS_DB`, `SHOWREEL`, `INITIAL_SALONS`, `PROFESSIONS`, `RICH_PRESETS`), Tailwind classes, imports, UI strings, and interaction logic as given.",
+      "featureId": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-user-provided-v54-nexus-manifesto-code-block-verbatim-full-overwrite-including-all-components-local-seed-data-imports-tailwind-classes-and-ui-strings",
+      "featureTitle": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact user-provided V54 “NEXUS MANIFESTO” code block (verbatim full overwrite, including all components, local seed data, imports, Tailwind classes, and UI strings).",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -17,13 +17,13 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-177"
+        "REQ-179"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-project-compiles-and-runs-after-the-v53-overwrite-by-applying-only-minimal-mechanical-adjustments-required-by-this-repository-e-g-missing-incorrect-imports-unresolved-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v53-ui-layout-styling-copy-or-interaction-behavior-including-the-five-pillars-olympus-intro-showreel-native-share-via-navigator-share-whatsapp-wa-me-deep-link-booking-swiss-smart-location-suggestions-and-dark-cinematic-ui-with-trust-badges",
-      "featureTitle": "Ensure the project compiles and runs after the V53 overwrite by applying only minimal mechanical adjustments required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports), without changing the intended V53 UI layout, styling, copy, or interaction behavior, including the five pillars: Olympus Intro showreel, native share via `navigator.share`, WhatsApp `wa.me` deep-link booking, Swiss smart location suggestions, and dark cinematic UI with trust badges.",
+      "featureId": "feature-ensure-the-project-compiles-and-runs-after-the-v54-appv1-jsx-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-unresolved-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v54-ui-layout-styling-copy-or-interaction-behavior",
+      "featureTitle": "Ensure the project compiles and runs after the V54 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports), without changing the intended V54 UI layout, styling, copy, or interaction behavior.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -37,7 +37,87 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-178"
+        "REQ-180"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-preserve-and-verify-the-v54-manifesto-intro-behavior-replace-the-previous-showreel-intro-with-a-massive-typographic-sequence-that-cycles-the-three-lines-l-lite-suisse-domicile-ou-salon-r-servez-l-excellence-and-shows-profession-icons-on-the-intro-screen-with-a-clear-enter-cta-that-transitions-into-the-app",
+      "featureTitle": "Preserve and verify the V54 “Manifesto Intro” behavior: replace the previous showreel intro with a massive typographic sequence that cycles the three lines “L'ÉLITE SUISSE.” → “À DOMICILE OU SALON.” → “RÉSERVEZ L'EXCELLENCE.” and shows profession icons on the intro screen, with a clear “Enter” CTA that transitions into the app.",
+      "files": [
+        "frontend/src/AppV1.jsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
+      ],
+      "testIds": [
+        "REQ-181"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-preserve-the-v54-high-tech-luxury-ui-styling-characteristics-as-implemented-by-the-provided-code-heavy-use-of-backdrop-blur-tight-typography-and-high-contrast-surfaces-without-replacing-the-v54-design-language-with-other-theming-systems",
+      "featureTitle": "Preserve the V54 high-tech luxury UI styling characteristics as implemented by the provided code: heavy use of `backdrop-blur`, tight typography, and high contrast surfaces, without replacing the V54 design language with other theming systems.",
+      "files": [
+        "frontend/src/AppV1.jsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
+      ],
+      "testIds": [
+        "REQ-182"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-keep-the-viral-functions-integrated-in-v54-1-native-sharing-via-navigator-share-with-graceful-fallback-when-unavailable-and-2-whatsapp-deep-link-generation-wa-me-with-a-prefilled-message-containing-salon-name-selected-services-selected-date-time-location-details-including-domicile-address-when-applicable-and-total-price",
+      "featureTitle": "Keep the viral functions integrated in V54: (1) native sharing via `navigator.share` with graceful fallback when unavailable, and (2) WhatsApp deep-link generation (`wa.me`) with a prefilled message containing salon name, selected services, selected date/time, location details (including domicile address when applicable), and total price.",
+      "files": [
+        "frontend/src/AppV1.jsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
+      ],
+      "testIds": [
+        "REQ-183"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-make-the-pro-deploy-publish-injection-into-the-in-memory-salons-list-robust-against-stale-react-state-closures-while-preserving-identical-visible-behavior-when-handledeploy-adds-a-newly-created-salon-it-must-reliably-appear-immediately-at-the-top-of-the-client-list-and-the-view-must-switch-to-client-immediately-after-deploy",
+      "featureTitle": "Make the Pro deploy/publish injection into the in-memory `salons` list robust against stale React state closures while preserving identical visible behavior: when `handleDeploy` adds a newly created salon, it must reliably appear immediately at the top of the client list and the view must switch to Client immediately after deploy.",
+      "files": [
+        "frontend/src/AppV1.jsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
+      ],
+      "testIds": [
+        "REQ-184"
       ],
       "confidence": "high"
     }
