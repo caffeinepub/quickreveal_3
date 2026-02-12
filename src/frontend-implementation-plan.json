@@ -1,103 +1,119 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "V66 NEXUS FREEDOM frontend overwrite + booking tunnel + Mirror terminal (local-only)",
+  "title": "V70 NEXUS OMNIPRESENCE AppV1 overwrite + geo-priority feed verification (frontend-only)",
   "requirements": [
     {
-      "id": "REQ-208",
-      "summary": "Full overwrite AppV1.jsx with user-provided V66 “NEXUS FREEDOM” app code (local demo state, no backend calls).",
+      "id": "REQ-214",
+      "summary": "Fully overwrite frontend/src/AppV1.jsx with the exact user-provided V70 “NEXUS OMNIPRESENCE” code block (verbatim).",
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` is a full-file overwrite and matches the user-provided V66 code (same components, constants, Tailwind classes, and UI strings), except for any strictly build-breaking mechanical fixes covered by REQ-209.",
-        "`frontend/src/App.tsx` continues to render `AppV1` unchanged, so the app still mounts via the existing Vite/React wiring.",
-        "The app runs purely in frontend state using `INITIAL_ARTISTS` / `PRESETS` without calling Motoko canister methods or React Query hooks."
+        "`frontend/src/AppV1.jsx` content is fully replaced by the provided V70 code (no partial merges).",
+        "The app still mounts through the existing `frontend/src/App.tsx` wrapper (which renders `AppV1`) without changing any immutable entry files.",
+        "No backend calls are introduced; all data remains local/in-file as in the provided code."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Delete the entire current file content and replace it with the exact user-provided V66 “NEXUS FREEDOM” code (Intro → Client feed → Artist booking tunnel → Creator Studio + Mirror terminal), keeping all data local-only and ensuring there are no backend calls."
+          "description": "Delete all existing content and paste the user-provided V70 “NEXUS OMNIPRESENCE” code as a full-file overwrite, preserving all imports, local demo datasets (including `CITIES`, `CATEGORIES`, `INITIAL_ARTISTS`, `PRESETS`), Tailwind classes, UI strings, and interaction logic exactly as provided."
         }
       ]
     },
     {
-      "id": "REQ-209",
-      "summary": "Apply minimal mechanical adjustments so the pasted V66 code compiles in this repo without altering intended UI/UX behavior or copy.",
+      "id": "REQ-215",
+      "summary": "Apply minimal mechanical compile/runtime fixes required by the repo after the V70 overwrite, without altering intended V70 behavior or UI.",
       "acceptanceCriteria": [
-        "`npm run build` (or equivalent CI build) succeeds without TypeScript/JSX compilation errors.",
-        "All referenced symbols from `react`, `framer-motion`, and `lucide-react` used in JSX are properly imported (or unused imports removed only if they break the build).",
-        "No changes are made to frontend immutable entry files listed in SYSTEM_CONTEXT."
+        "`npm`/Vite build succeeds with no runtime crash on initial load.",
+        "Only mechanical build fixes are applied; no feature additions or refactors beyond what is required to run.",
+        "`frontend/src/App.tsx` remains unchanged as the thin wrapper rendering `AppV1`."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Make only build-blocking mechanical fixes required by this repository (e.g., fix/adjust imports, remove duplicate exports, resolve undefined identifiers, ensure valid JSX). Do not refactor, redesign, or change V66 datasets/strings/flow behavior."
+          "description": "After the V70 overwrite, make only mechanical fixes needed for this repository to compile/run (e.g., adjust missing/incorrect imports, resolve undefined identifiers, fix invalid JSX, remove duplicate default exports) while keeping the intended V70 UI/UX, styling, copy, and interaction behavior unchanged."
         }
       ]
     },
     {
-      "id": "REQ-210",
-      "summary": "Preserve and verify the V66 sequential booking tunnel including required Location step and conditional address requirement.",
+      "id": "REQ-216",
+      "summary": "Preserve and verify the V70 Smart Header multi-city selector behavior (sticky, dropdown, immediate update, closes on selection).",
       "acceptanceCriteria": [
-        "From an artist detail screen, selecting at least one service enables advancing to the Location step.",
-        "On the Location step, the user can only choose options that the selected artist supports (`acceptsMobile` enables “at client”, `acceptsStudio` enables “at pro”), and cannot proceed until one option is selected.",
-        "On the Date/Time step, the user cannot proceed until both a day and time are selected.",
-        "On the Identity step, the user cannot send the request until name and phone are provided; address is additionally required and collected only when location is “at client”.",
-        "Sending the request shows the Pending screen and automatically transitions to the Final ticket after ~3 seconds."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/docs/v66-verification.md",
-          "operation": "create",
-          "description": "Add a manual verification checklist for the V66 booking tunnel: Services → Location (required) → Date/Time (required) → Identity (conditional address) → Pending (3s) → Final ticket. Document the expected gating rules tied to `acceptsMobile`/`acceptsStudio` and the conditional address requirement."
-        }
-      ]
-    },
-    {
-      "id": "REQ-211",
-      "summary": "Preserve and verify the V66 Creator Studio flow including mode toggles, presets/services management, and immediate in-memory deployment to the client feed.",
-      "acceptanceCriteria": [
-        "From the Intro screen, the “Creator space” entry opens the Creator Studio screen.",
-        "In Creator Studio step 1, toggling the two work-mode buttons updates `acceptsMobile` / `acceptsStudio` in the preview state.",
-        "In Creator Studio step 2, clicking a preset adds a service entry to the preview list and the service list supports deletion.",
-        "Finishing/deploying creates a new artist and injects it into the in-memory `artists` list so it appears at the top of the client feed immediately, without requiring a refresh."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/docs/v66-verification.md",
-          "operation": "modify",
-          "description": "Extend the V66 manual verification checklist with Creator Studio checks: entry from Intro, Mobile/Home Studio toggles update preview, preset add + delete services, and deploy injects artist at top of feed without refresh."
-        }
-      ]
-    },
-    {
-      "id": "REQ-212",
-      "summary": "Prevent stale closure issues when deploying artists by using a functional state update for setArtists in the V66 deploy path.",
-      "acceptanceCriteria": [
-        "Deploying multiple times in quick succession never loses an injected artist due to stale state; each deployed artist reliably appears in the feed.",
-        "Visible behavior remains the same as V66: after deploy, the app switches to the client feed and the new artist is at the top."
+        "The header displays the current city and the dropdown shows all cities from `CITIES`.",
+        "Selecting a city updates the displayed city in the header immediately.",
+        "The dropdown closes after a city selection.",
+        "The header remains sticky while scrolling the feed."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "In the Creator Studio deploy handler, change the `setArtists([artistWithId, ...artists])`-style update to a functional state update (`setArtists(prev => [artistWithId, ...prev])`) to avoid stale closures, keeping identical visible behavior and view switching."
+          "description": "Ensure the V70 Smart Header logic is present and working: sticky header, current-city label, city dropdown sourced from `CITIES`, selection updates simulated user location state immediately and closes the dropdown. Only make changes if required to restore the exact V70 behavior after compile fixes."
         }
       ]
     },
     {
-      "id": "REQ-213",
-      "summary": "Preserve and verify Mirror Protocol terminal gating: only accessible after final ticket confirmation and totals derived from selected services.",
+      "id": "REQ-217",
+      "summary": "Preserve and verify the V70 dynamic feed reordering into “Autour de vous” and “Ailleurs en Suisse” based on selected city and simulated distance.",
       "acceptanceCriteria": [
-        "During Services/Location/Date-Time/Identity/Pending steps, there is no visible UI control that opens Mirror Protocol.",
-        "On the Final ticket screen, the “Pay (Mirror)” action opens `MirrorProtocol` and shows the total amount derived from the selected services.",
-        "Completing Mirror Protocol calls the provided `onFinish` behavior (closes Mirror and resets/returns to the feed via the existing V66 logic)."
+        "Changing the selected city immediately recomputes and re-renders the two sections without a page refresh.",
+        "Artists in the local section are sorted by ascending simulated distance; the others section is also sorted by ascending simulated distance.",
+        "Both sections render when they have entries; if one section is empty, only the other section is shown (no blank screen).",
+        "Artists remain accessible even when categorized as “Ailleurs en Suisse” (no removal from the app)."
       ],
       "file_operations": [
         {
-          "path": "frontend/docs/v66-verification.md",
+          "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Add Mirror Protocol verification steps: confirm no UI access before final ticket, confirm Pay (Mirror) is present on final ticket only, confirm total equals selected services sum, and confirm onFinish closes Mirror and returns per V66 flow."
+          "description": "Verify and (only if mechanically necessary) adjust the V70 in-file feed computation/rendering so that switching user city instantly re-splits artists into “Autour de vous” vs “Ailleurs en Suisse” and sorts each section by ascending simulated distance, while still rendering all artists across the two sections."
+        }
+      ]
+    },
+    {
+      "id": "REQ-218",
+      "summary": "Preserve and verify V70 distance simulation badges update dynamically based on selected city using getDistance(userCity, proCity).",
+      "acceptanceCriteria": [
+        "Each artist card shows a distance badge based on the current selected city and the artist’s `city` field.",
+        "Switching the selected city updates the badges immediately (e.g., Lausanne↔Genève pair reflects the configured ~62km).",
+        "The local-vs-others split is consistent with the same computed distances used for badges."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/AppV1.jsx",
+          "operation": "modify",
+          "description": "Confirm that distance badges use the V70-provided `getDistance(userCity, proCity)` and reactively update on city change; ensure the same computed values drive both the badges and the local-vs-others split. Only apply edits if required to restore intended V70 behavior."
+        }
+      ]
+    },
+    {
+      "id": "REQ-219",
+      "summary": "Preserve and verify V70 Travel Mode UI cues for far artists (near vs far styling + “Se déplace” indicator when applicable).",
+      "acceptanceCriteria": [
+        "Near vs far badge styling changes according to the V70 code thresholds (e.g., near/proximity treatment vs km treatment).",
+        "When an artist is far and `acceptsMobile` is true, the extra travel/availability indicator (e.g., “Se déplace”) is visible.",
+        "No navigation/booking capabilities are removed for far artists."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/AppV1.jsx",
+          "operation": "modify",
+          "description": "Ensure the V70 card UI keeps Travel Mode cues consistent with the V70 thresholds: far/near badge styling changes as intended and far + `acceptsMobile` shows the additional “Se déplace” (or equivalent V70 label) indicator, without removing access/interaction for far artists."
+        }
+      ]
+    },
+    {
+      "id": "REQ-220",
+      "summary": "Harden V70 handleProDeploy against stale React state closures by using a functional state update when prepending a deployed artist.",
+      "acceptanceCriteria": [
+        "Deploying from Creator Studio reliably prepends the new artist even if the user triggers rapid navigation actions.",
+        "The new artist appears immediately at the top of the feed after deploy.",
+        "After deploy, the UI switches to the main app feed view as in the V70 flow."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/AppV1.jsx",
+          "operation": "modify",
+          "description": "In the V70 `handleProDeploy` flow, ensure the deployed artist is prepended via a functional state update (e.g., `setArtists(prev => [newArtist, ...prev])`) to avoid stale-closure issues, while keeping identical visible behavior (immediate top insertion + switch back to the main feed view)."
         }
       ]
     }

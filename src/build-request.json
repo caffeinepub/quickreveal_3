@@ -1,132 +1,163 @@
 {
   "kind": "build_request",
-  "title": "V66 NEXUS FREEDOM: overwrite AppV1 with freelance/mobile-home-studio sequential booking flow + Mirror terminal",
+  "title": "V70 NEXUS OMNIPRESENCE: replace AppV1 with multi-city geo-priority feed + smart header",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-208",
-      "text": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V66 “NEXUS FREEDOM” code provided by the user, treating it as the full frontend application UI/logic (Intro → Client app feed → Artist detail booking tunnel → Pro Creator Studio), with local-only in-file demo data and no backend calls.",
+      "id": "REQ-214",
+      "text": "Delete all existing content of `frontend/src/AppV1.jsx` and replace the entire file with the exact V70 “NEXUS OMNIPRESENCE” code block provided by the user (full overwrite), preserving components, local demo datasets (`CITIES`, `CATEGORIES`, `INITIAL_ARTISTS`, `PRESETS`), Tailwind classes, imports, UI strings, and interaction logic as given.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "INSTRUCTION : Efface tout le contenu actuel de `frontend/src/AppV1.jsx` et remplace-le par le code ci-dessous."
+          "INSTRUCTION : Efface tout le contenu actuel de `frontend/src/AppV1.jsx` et remplace-le par le code ci-dessous.",
+          "VOICI LE CODE V70 COMPLET À ÉCRIRE :"
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` is a full-file overwrite and matches the user-provided V66 code (same components, constants, Tailwind classes, and UI strings), except for any strictly build-breaking mechanical fixes covered by REQ-209.",
-        "`frontend/src/App.tsx` continues to render `AppV1` unchanged, so the app still mounts via the existing Vite/React wiring.",
-        "The app runs purely in frontend state using `INITIAL_ARTISTS` / `PRESETS` without calling Motoko canister methods or React Query hooks."
+        "`frontend/src/AppV1.jsx` content is fully replaced by the provided V70 code (no partial merges).",
+        "The app still mounts through the existing `frontend/src/App.tsx` wrapper (which renders `AppV1`) without changing any immutable entry files.",
+        "No backend calls are introduced; all data remains local/in-file as in the provided code."
       ]
     },
     {
-      "id": "REQ-209",
-      "text": "Ensure the V66 implementation compiles and runs in this repository by applying only minimal mechanical adjustments required by the repo’s wiring/dependencies (e.g., missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports) without changing the intended V66 UI design, copy, datasets, or interaction behavior.",
+      "id": "REQ-215",
+      "text": "Ensure the project compiles and runs after the V70 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports) without changing the intended V70 UI, layout, styling, copy, or interaction behavior.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "**VOICI LE CODE V66 COMPLET À ÉCRIRE :**"
+          "MISE À JOUR OMNIPRÉSENTE : V70 \"NEXUS OMNIPRESENCE\"",
+          "VOICI LE CODE V70 COMPLET À ÉCRIRE :"
         ]
       },
       "acceptanceCriteria": [
-        "`npm run build` (or equivalent CI build) succeeds without TypeScript/JSX compilation errors.",
-        "All referenced symbols from `react`, `framer-motion`, and `lucide-react` used in JSX are properly imported (or unused imports removed only if they break the build).",
-        "No changes are made to frontend immutable entry files listed in SYSTEM_CONTEXT."
+        "`npm`/Vite build succeeds with no runtime crash on initial load.",
+        "Only mechanical build fixes are applied; no feature additions or refactors beyond what is required to run.",
+        "`frontend/src/App.tsx` remains unchanged as the thin wrapper rendering `AppV1`."
       ]
     },
     {
-      "id": "REQ-210",
-      "text": "Preserve and verify the V66 sequential booking tunnel and freelance-specific “Location” logic: Services → Location (at client vs at pro) → Date/Time → Identity → Pending (3-second simulated validation) → Final ticket; the “Location” step must be required and the Identity step must require an address only when the user selected ‘at client’.",
+      "id": "REQ-216",
+      "text": "Preserve and verify the V70 “Smart Header” multi-city selector behavior: a sticky header shows the current user city (e.g., “Actuellement à : Lausanne”); clicking opens a dropdown of cities; selecting a city updates the user’s simulated location state immediately and closes the dropdown.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "**LES 4 PILIERS DE LA V66 :**\n1.  **LOGIQUE \"LIEU\"** : Dans le tunnel de réservation, ajout d'une étape critique : \"Où se fait la prestation ?\" (Chez le Client ou Chez le Pro).\n...\n4.  **FLUX SÉQUENTIEL** : Services -> Lieu -> Date -> Identité -> Attente Validation -> Ticket Final."
+          "1.  SMART HEADER : Un sélecteur de ville en haut (\"Actuellement à : Lausanne\"). Cliquer change la \"Position Utilisateur\"."
         ]
       },
       "acceptanceCriteria": [
-        "From an artist detail screen, selecting at least one service enables advancing to the Location step.",
-        "On the Location step, the user can only choose options that the selected artist supports (`acceptsMobile` enables “at client”, `acceptsStudio` enables “at pro”), and cannot proceed until one option is selected.",
-        "On the Date/Time step, the user cannot proceed until both a day and time are selected.",
-        "On the Identity step, the user cannot send the request until name and phone are provided; address is additionally required and collected only when location is “at client”.",
-        "Sending the request shows the Pending screen and automatically transitions to the Final ticket after ~3 seconds."
+        "The header displays the current city and the dropdown shows all cities from `CITIES`.",
+        "Selecting a city updates the displayed city in the header immediately.",
+        "The dropdown closes after a city selection.",
+        "The header remains sticky while scrolling the feed."
       ]
     },
     {
-      "id": "REQ-211",
-      "text": "Preserve and verify the V66 “Creator Studio” (Pro space) flow: the user can enter Creator Studio from the intro, configure whether the freelance works as “Mobile” and/or “Home Studio”, add services (including preset suggestions), and deploy a new artist that appears immediately in the client feed.",
+      "id": "REQ-217",
+      "text": "Preserve and verify the V70 “Dynamic Reordering” behavior: when the user city changes, the feed reorders instantly into two sections—(1) “Autour de vous” containing artists considered local by the distance simulation, and (2) “Ailleurs en Suisse” containing the remaining artists—while keeping global access to all artists.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "2.  **CREATOR STUDIO (RETOUR)** : L'espace Pro est réintégré. Le freelance configure s'il est \"Mobile\" (déplacement) ou \"Home Studio\" (reçoit)."
+          "2.  DYNAMIC REORDERING :\n    * Si je choisis \"Genève\", les artistes de Genève remontent instantanément dans une section \"Autour de vous\".\n    * Les autres descendent dans une section \"Ailleurs en Suisse\"."
         ]
       },
       "acceptanceCriteria": [
-        "From the Intro screen, the “Creator space” entry opens the Creator Studio screen.",
-        "In Creator Studio step 1, toggling the two work-mode buttons updates `acceptsMobile` / `acceptsStudio` in the preview state.",
-        "In Creator Studio step 2, clicking a preset adds a service entry to the preview list and the service list supports deletion.",
-        "Finishing/deploying creates a new artist and injects it into the in-memory `artists` list so it appears at the top of the client feed immediately, without requiring a refresh."
+        "Changing the selected city immediately recomputes and re-renders the two sections without a page refresh.",
+        "Artists in the local section are sorted by ascending simulated distance; the others section is also sorted by ascending simulated distance.",
+        "Both sections render when they have entries; if one section is empty, only the other section is shown (no blank screen).",
+        "Artists remain accessible even when categorized as “Ailleurs en Suisse” (no removal from the app)."
       ]
     },
     {
-      "id": "REQ-212",
-      "text": "Make the Pro deploy/injection state update robust against stale React state closures in the V66 deploy path by using a functional state update for `setArtists`, while preserving identical visible behavior (newly created artist appears immediately at the top and the view switches to the client app).",
+      "id": "REQ-218",
+      "text": "Preserve and verify the V70 “Distance Simulation” behavior: displayed distances (km badges) change dynamically based on the selected user city using the provided `getDistance(userCity, proCity)` function.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "const handleProDeploy = (newArtist) => {\n      if(newArtist) {\n          const artistWithId = { ...newArtist, id: Date.now(), verified: true, priceStart: newArtist.services[0]?.price || 0 };\n          setArtists([artistWithId, ...artists]);\n          setView('app');\n      } else {\n          setView('intro');\n      }\n  };"
+          "3.  DISTANCE SIMULATION : Le calcul des km change dynamiquement selon la ville choisie par le client (Ex: Si je suis à Genève, Lausanne devient \"60km\")."
         ]
       },
       "acceptanceCriteria": [
-        "Deploying multiple times in quick succession never loses an injected artist due to stale state; each deployed artist reliably appears in the feed.",
-        "Visible behavior remains the same as V66: after deploy, the app switches to the client feed and the new artist is at the top."
+        "Each artist card shows a distance badge based on the current selected city and the artist’s `city` field.",
+        "Switching the selected city updates the badges immediately (e.g., Lausanne↔Genève pair reflects the configured ~62km).",
+        "The local-vs-others split is consistent with the same computed distances used for badges."
       ]
     },
     {
-      "id": "REQ-213",
-      "text": "Preserve and verify the V66 “Mirror Protocol” terminal behavior: the Mirror Protocol is presented as the freelancer’s official payment terminal and must only be accessible after the final booked ticket step; opening it before the booking is confirmed must not be possible via the UI.",
+      "id": "REQ-219",
+      "text": "Preserve and verify the V70 “Travel Mode” UI cues on artist cards: when an artist is far (per the provided thresholds in the code), the UI indicates they are not nearby but still accessible (e.g., far-distance badge styling and the additional “Se déplace” indicator when applicable).",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "3.  **TERMINAL \"MIRROR\"** : Le Mirror Protocol est présenté comme l'outil d'encaissement officiel du freelance (plus de cash, plus de risque)."
+          "4.  TRAVEL MODE : L'interface s'adapte pour dire si le pro est \"Ici\" ou \"Loin\" (mais accessible)."
         ]
       },
       "acceptanceCriteria": [
-        "During Services/Location/Date-Time/Identity/Pending steps, there is no visible UI control that opens Mirror Protocol.",
-        "On the Final ticket screen, the “Pay (Mirror)” action opens `MirrorProtocol` and shows the total amount derived from the selected services.",
-        "Completing Mirror Protocol calls the provided `onFinish` behavior (closes Mirror and resets/returns to the feed via the existing V66 logic)."
+        "Near vs far badge styling changes according to the V70 code thresholds (e.g., near/proximity treatment vs km treatment).",
+        "When an artist is far and `acceptsMobile` is true, the extra travel/availability indicator (e.g., “Se déplace”) is visible.",
+        "No navigation/booking capabilities are removed for far artists."
+      ]
+    },
+    {
+      "id": "REQ-220",
+      "text": "Make the Pro deploy/injection logic robust against stale React state closures in the V70 `handleProDeploy` path by using a functional state update when prepending the newly created artist to the `artists` list, while preserving identical visible behavior (new artist appears immediately at the top and the view switches to the app feed).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "V70 « NEXUS OMNIPRESENCE » : overwrite total de `frontend/src/AppV1.jsx` avec le code V70 fourni (verbatim) ..."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Deploying from Creator Studio reliably prepends the new artist even if the user triggers rapid navigation actions.",
+        "The new artist appears immediately at the top of the feed after deploy.",
+        "After deploy, the UI switches to the main app feed view as in the V70 flow."
       ]
     }
   ],
   "constraints": [
     "Do not modify `frontend/src/App.tsx`; it must remain the thin wrapper that renders `AppV1`.",
-    "Do not modify any frontend immutable entry files listed in SYSTEM_CONTEXT.",
-    "Keep the V66 frontend as local-only demo logic (no backend calls / no Internet Identity flow changes).",
-    "When fixing issues, apply only minimal mechanical adjustments required for compilation; do not refactor or redesign the provided V66 UI/UX."
+    "Do not modify any frontend immutable entry files listed in SYSTEM_CONTEXT (including `frontend/src/main.tsx` and Internet Identity hooks).",
+    "Apply only minimal mechanical changes needed to compile/run; do not change intended V70 UI/UX behavior.",
+    "Keep the V70 implementation local-only (no backend calls or React Query data wiring)."
   ],
   "nonGoals": [
-    "Re-introducing Internet Identity authentication, role-based routing, or React Query data loading.",
-    "Implementing Motoko backend changes (artists/freelancers, bookings, persistence, payments).",
-    "Adding new product features beyond what exists in the provided V66 code (e.g., real payments, real chat, real-time updates)."
+    "No Motoko backend changes.",
+    "No Internet Identity/auth/routing changes.",
+    "No additional features beyond the provided V70 behavior (e.g., no real geolocation, no maps integration, no persistence layer).",
+    "No redesign or copy changes beyond what is required to fix build-breaking issues."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }

@@ -1,18 +1,18 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-12T20:53:18.930Z",
+  "generatedAt": "2026-02-12T21:25:44.159Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 6,
-    "implemented": 3,
+    "total": 7,
+    "implemented": 7,
     "items": [
       {
-        "id": "REQ-208",
-        "summary": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V66 “NEXUS FREEDOM” code provided by the user, treating it as the full frontend application UI/logic (Intro → Client app feed → Artist detail booking tunnel → Pro Creator Studio), with local-only in-file demo data and no backend calls.",
+        "id": "REQ-214",
+        "summary": "Delete all existing content of `frontend/src/AppV1.jsx` and replace the entire file with the exact V70 “NEXUS OMNIPRESENCE” code block provided by the user (full overwrite), preserving components, local demo datasets (`CITIES`, `CATEGORIES`, `INITIAL_ARTISTS`, `PRESETS`), Tailwind classes, imports, UI strings, and interaction logic as given.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx"
@@ -22,8 +22,8 @@
         ]
       },
       {
-        "id": "REQ-209",
-        "summary": "Ensure the V66 implementation compiles and runs in this repository by applying only minimal mechanical adjustments required by the repo’s wiring/dependencies (e.g., missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports) without changing the intended V66 UI design, copy, datasets, or interaction behavior.",
+        "id": "REQ-215",
+        "summary": "Ensure the project compiles and runs after the V70 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports) without changing the intended V70 UI, layout, styling, copy, or interaction behavior.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx"
@@ -33,26 +33,8 @@
         ]
       },
       {
-        "id": "REQ-210",
-        "summary": "Preserve and verify the V66 sequential booking tunnel and freelance-specific “Location” logic: Services → Location (at client vs at pro) → Date/Time → Identity → Pending (3-second simulated validation) → Final ticket; the “Location” step must be required and the Identity step must require an address only when the user selected ‘at client’.",
-        "status": "missing",
-        "plannedFiles": [
-          "frontend/docs/v66-verification.md"
-        ],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-211",
-        "summary": "Preserve and verify the V66 “Creator Studio” (Pro space) flow: the user can enter Creator Studio from the intro, configure whether the freelance works as “Mobile” and/or “Home Studio”, add services (including preset suggestions), and deploy a new artist that appears immediately in the client feed.",
-        "status": "missing",
-        "plannedFiles": [
-          "frontend/docs/v66-verification.md"
-        ],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-212",
-        "summary": "Make the Pro deploy/injection state update robust against stale React state closures in the V66 deploy path by using a functional state update for `setArtists`, while preserving identical visible behavior (newly created artist appears immediately at the top and the view switches to the client app).",
+        "id": "REQ-216",
+        "summary": "Preserve and verify the V70 “Smart Header” multi-city selector behavior: a sticky header shows the current user city (e.g., “Actuellement à : Lausanne”); clicking opens a dropdown of cities; selecting a city updates the user’s simulated location state immediately and closes the dropdown.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx"
@@ -62,13 +44,48 @@
         ]
       },
       {
-        "id": "REQ-213",
-        "summary": "Preserve and verify the V66 “Mirror Protocol” terminal behavior: the Mirror Protocol is presented as the freelancer’s official payment terminal and must only be accessible after the final booked ticket step; opening it before the booking is confirmed must not be possible via the UI.",
-        "status": "missing",
+        "id": "REQ-217",
+        "summary": "Preserve and verify the V70 “Dynamic Reordering” behavior: when the user city changes, the feed reorders instantly into two sections—(1) “Autour de vous” containing artists considered local by the distance simulation, and (2) “Ailleurs en Suisse” containing the remaining artists—while keeping global access to all artists.",
+        "status": "implemented",
         "plannedFiles": [
-          "frontend/docs/v66-verification.md"
+          "frontend/src/AppV1.jsx"
         ],
-        "matchedFiles": []
+        "matchedFiles": [
+          "frontend/src/AppV1.jsx"
+        ]
+      },
+      {
+        "id": "REQ-218",
+        "summary": "Preserve and verify the V70 “Distance Simulation” behavior: displayed distances (km badges) change dynamically based on the selected user city using the provided `getDistance(userCity, proCity)` function.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/AppV1.jsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/AppV1.jsx"
+        ]
+      },
+      {
+        "id": "REQ-219",
+        "summary": "Preserve and verify the V70 “Travel Mode” UI cues on artist cards: when an artist is far (per the provided thresholds in the code), the UI indicates they are not nearby but still accessible (e.g., far-distance badge styling and the additional “Se déplace” indicator when applicable).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/AppV1.jsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/AppV1.jsx"
+        ]
+      },
+      {
+        "id": "REQ-220",
+        "summary": "Make the Pro deploy/injection logic robust against stale React state closures in the V70 `handleProDeploy` path by using a functional state update when prepending the newly created artist to the `artists` list, while preserving identical visible behavior (new artist appears immediately at the top and the view switches to the app feed).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/AppV1.jsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/AppV1.jsx"
+        ]
       }
     ]
   },

@@ -1,53 +1,62 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-12T20:53:18.920Z",
-  "summary": "Diff shows partial update to `frontend/src/AppV1.jsx` introducing V66-like constants (`INITIAL_ARTISTS`, `PRESETS`) and a `MirrorProtocol` component, but the file is truncated so core flow requirements (sequential booking tunnel, Creator Studio deploy path, and Mirror gating) cannot be verified. Two additional files (`frontend-file-summaries.txt`, `project_state.json`) were modified without being requested.",
+  "generatedAt": "2026-02-12T21:25:44.147Z",
+  "summary": "Diff shows `frontend/src/AppV1.jsx` was modified to include V70-like local datasets (`CITIES`, `CATEGORIES`, `INITIAL_ARTISTS`, `PRESETS`) and a `getDistance` function, but the file is truncated so the required Smart Header, dynamic feed reordering, travel-mode cues, and the functional `handleProDeploy` state update cannot be verified. Two additional non-requested files (`frontend-file-summaries.txt`, `project_state.json`) were also modified.",
   "missing_requirements": [
     {
-      "id": "REQ-208",
-      "requirement": "Completely overwrite `frontend/src/AppV1.jsx` with the exact user-provided V66 “NEXUS FREEDOM” code (full app UI/logic) and keep app local-only (no backend calls).",
-      "reason": "The diff shows `frontend/src/AppV1.jsx` changed and includes V66-like pieces, but the file content is truncated and does not provide evidence that the entire file was replaced with the exact provided V66 code (verbatim components/strings/classes) or that no backend calls/hooks exist elsewhere in the file.",
+      "id": "REQ-214",
+      "requirement": "Fully overwrite `frontend/src/AppV1.jsx` with the exact provided V70 “NEXUS OMNIPRESENCE” code block (verbatim), preserving all imports, components, strings, Tailwind classes, and local-only logic; no backend calls.",
+      "reason": "The diff for `frontend/src/AppV1.jsx` is truncated and does not provide enough evidence to confirm an exact verbatim full-file overwrite, nor to confirm that no backend calls were introduced in the unseen portion.",
       "evidence": [
         "frontend/src/AppV1.jsx (truncated)"
       ]
     },
     {
-      "id": "REQ-209",
-      "requirement": "Ensure the V66 implementation compiles via minimal mechanical fixes (correct imports/identifiers; no immutable entry changes).",
-      "reason": "Only partial import/JSX evidence is shown; build success and absence of missing/undefined symbols across the full file cannot be confirmed from the truncated diff. Also, the diff does not include `frontend/src/App.tsx`, so we cannot verify it remained unchanged.",
+      "id": "REQ-215",
+      "requirement": "Ensure the project compiles/runs after the overwrite with only minimal mechanical fixes (no behavior/UX changes); `frontend/src/App.tsx` unchanged.",
+      "reason": "The diff summary does not show build-related fixes beyond the partial `AppV1.jsx` content, and it does not include evidence about compilation/runtime success. While `frontend/src/App.tsx` is not listed as modified, build success cannot be verified from the truncated diff.",
+      "evidence": [
+        "frontend/src/AppV1.jsx (truncated)",
+        "file-diff summary (Modified: 3; App.tsx not shown as modified)"
+      ]
+    },
+    {
+      "id": "REQ-216",
+      "requirement": "Implement/preserve Smart Header: sticky header with current city label, dropdown of all `CITIES`, selecting updates city immediately and closes dropdown.",
+      "reason": "The provided portion of `AppV1.jsx` shows the `CITIES` constant and distance utilities, but does not include the header UI or dropdown interaction logic due to truncation.",
       "evidence": [
         "frontend/src/AppV1.jsx (truncated)"
       ]
     },
     {
-      "id": "REQ-210",
-      "requirement": "Preserve/verify the sequential booking tunnel with required Location step and conditional address requirement; pending transitions after ~3 seconds.",
-      "reason": "No evidence of the Services→Location→Date/Time→Identity→Pending→Final ticket flow, required gating rules, or the 3-second pending transition is visible in the provided truncated snippet.",
+      "id": "REQ-217",
+      "requirement": "Implement/preserve dynamic feed reordering into “Autour de vous” and “Ailleurs en Suisse” sections on city change; both sorted by ascending simulated distance; sections conditionally rendered.",
+      "reason": "The diff excerpt includes `getDistance` and initial artist data, but does not show any feed rendering logic, section splitting, or sorting behavior (truncated).",
       "evidence": [
         "frontend/src/AppV1.jsx (truncated)"
       ]
     },
     {
-      "id": "REQ-211",
-      "requirement": "Preserve/verify Creator Studio flow and deploy injects a new artist into in-memory list (appears at top of feed) with work-mode toggles and preset add/delete.",
-      "reason": "The truncated snippet shows data/constants and MirrorProtocol, but does not show Creator Studio screens, work-mode toggles updating preview state, preset add/delete, or deploy behavior injecting into `artists`.",
+      "id": "REQ-218",
+      "requirement": "Distance simulation badges update dynamically per selected city using `getDistance(userCity, proCity)`; split consistent with computed distances.",
+      "reason": "Although `getDistance` exists in the shown portion, the UI that displays distance badges and reacts to city changes is not visible in the truncated diff.",
       "evidence": [
         "frontend/src/AppV1.jsx (truncated)"
       ]
     },
     {
-      "id": "REQ-212",
-      "requirement": "Use functional state update for `setArtists` in deploy path to avoid stale closures; preserve behavior.",
-      "reason": "No evidence is shown of the deploy path implementation or of `setArtists(prev => ...)` usage; cannot verify robustness change was applied.",
+      "id": "REQ-219",
+      "requirement": "Travel Mode UI cues: far/near badge styling per thresholds; show “Se déplace” (or equivalent) indicator when far and `acceptsMobile` is true; no removal of capabilities for far artists.",
+      "reason": "The truncated diff does not show artist card rendering, threshold logic, or the “Se déplace” indicator implementation.",
       "evidence": [
         "frontend/src/AppV1.jsx (truncated)"
       ]
     },
     {
-      "id": "REQ-213",
-      "requirement": "Mirror Protocol only accessible after final booked ticket; “Pay (Mirror)” opens MirrorProtocol with correct total; onFinish closes and resets/returns to feed.",
-      "reason": "While `MirrorProtocol` component exists, the diff snippet does not show how/when it is opened, whether it is gated to only the Final ticket screen, whether amount is derived from selected services, or whether completion resets/returns to feed.",
+      "id": "REQ-220",
+      "requirement": "Make `handleProDeploy` robust against stale closures by using a functional state update when prepending the new artist; preserve behavior (new artist at top, switch to feed).",
+      "reason": "No `handleProDeploy` code is visible in the diff excerpt, so the required functional state update cannot be confirmed.",
       "evidence": [
         "frontend/src/AppV1.jsx (truncated)"
       ]
@@ -55,21 +64,21 @@
   ],
   "hallucinated_features": [
     {
-      "description": "Modified `frontend-file-summaries.txt` (project documentation/metadata) without any requirement to change it.",
-      "reason": "BuildRequest only specifies overwriting `frontend/src/AppV1.jsx` and preserving `frontend/src/App.tsx`; it does not request updating summary/metadata files.",
+      "description": "Updated repository metadata/state documentation files (`project_state.json`) with a narrative about V70 behavior.",
+      "reason": "BuildRequest requirements focus on overwriting `frontend/src/AppV1.jsx` and applying minimal mechanical fixes; it does not request updating `project_state.json`.",
       "evidence": [
-        "frontend-file-summaries.txt"
+        "project_state.json (modified, truncated)"
       ]
     },
     {
-      "description": "Modified `project_state.json` summary/feature metadata without any requirement to change it.",
-      "reason": "BuildRequest does not mention altering project state/versioning metadata files; this is extra scope not requested.",
+      "description": "Modified `frontend-file-summaries.txt` contents describing many frontend files and features.",
+      "reason": "BuildRequest does not request changes to `frontend-file-summaries.txt`; it is outside the specified `AppV1.jsx` overwrite/mechanical-fix scope.",
       "evidence": [
-        "project_state.json"
+        "frontend-file-summaries.txt (modified, truncated)"
       ]
     }
   ],
-  "confidence": 0.44,
+  "confidence": 0.55,
   "changed_files": [
     "frontend-file-summaries.txt",
     "frontend/src/AppV1.jsx",

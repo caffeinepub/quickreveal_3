@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 111,
-  "summary": "V66 « NEXUS FREEDOM » (pivot stratégique Freelance/Domicile) : effacer et remplacer intégralement `frontend/src/AppV1.jsx` par le code V66 fourni (verbatim). Nouvelle cible produit : talents indépendants (Mobile / Home Studio) sans terminal de paiement. Tunnel séquentiel mis à jour : Services → Lieu (chez le client / chez le pro) → Date & Heure → Identité (nom/téléphone + adresse si domicile) → Pending validation (3s simulé) → Ticket final ; Mirror Protocol devient le terminal d’encaissement déclenchable uniquement après le ticket.",
+  "projectStateVersion": 113,
+  "summary": "V70 « NEXUS OMNIPRESENCE » : effacer et remplacer intégralement `frontend/src/AppV1.jsx` par le code V70 fourni (verbatim). Nouvelle orientation UX : multi‑villes & géo‑priorité avec sélecteur de ville (“Actuellement à …”), re‑classement dynamique des artistes en sections « Autour de vous » vs « Ailleurs en Suisse » selon une distance simulée recalculée, et indication Travel Mode (pro “Ici”/“Loin” mais accessible). Le tunnel reste séquentiel (Services → Lieu → Date/Heure → Identité → Pending 3s → Ticket), et Mirror Protocol reste un terminal d’encaissement accessible uniquement après le ticket confirmé.",
   "architectural_notes": [
     "RESET complet : écrasement total du backend et du frontend, considéré comme nouvelle V1.0 officielle.",
     "Backend Motoko réduit à un modèle Salon/Service/Socials avec `stable var salons` et endpoints `getSalons` (query) + `createSalon` (shared); seed de 4 salons suisses au démarrage (si salons vide).",
@@ -1548,6 +1548,62 @@
         "REQ-212"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-delete-all-existing-content-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v70-nexus-omnipresence-code-block-provided-by-the-user-full-overwrite-preserving-components-local-demo-datasets-cities-categories-initial-artists-presets-tailwind-classes-imports-ui-strings-and-interaction-logic-as-given",
+      "title": "Delete all existing content of `frontend/src/AppV1.jsx` and replace the entire file with the exact V70 “NEXUS OMNIPRESENCE” code block provided by the user (full overwrite), preserving components, local demo datasets (`CITIES`, `CATEGORIES`, `INITIAL_ARTISTS`, `PRESETS`), Tailwind classes, imports, UI strings, and interaction logic as given.",
+      "reqIds": [
+        "REQ-214"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v70-appv1-jsx-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-undefined-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v70-ui-layout-styling-copy-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V70 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports) without changing the intended V70 UI, layout, styling, copy, or interaction behavior.",
+      "reqIds": [
+        "REQ-215"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-v70-smart-header-multi-city-selector-behavior-a-sticky-header-shows-the-current-user-city-e-g-actuellement-lausanne-clicking-opens-a-dropdown-of-cities-selecting-a-city-updates-the-user-s-simulated-location-state-immediately-and-closes-the-dropdown",
+      "title": "Preserve and verify the V70 “Smart Header” multi-city selector behavior: a sticky header shows the current user city (e.g., “Actuellement à : Lausanne”); clicking opens a dropdown of cities; selecting a city updates the user’s simulated location state immediately and closes the dropdown.",
+      "reqIds": [
+        "REQ-216"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-v70-dynamic-reordering-behavior-when-the-user-city-changes-the-feed-reorders-instantly-into-two-sections-1-autour-de-vous-containing-artists-considered-local-by-the-distance-simulation-and-2-ailleurs-en-suisse-containing-the-remaining-artists-while-keeping-global-access-to-all-artists",
+      "title": "Preserve and verify the V70 “Dynamic Reordering” behavior: when the user city changes, the feed reorders instantly into two sections—(1) “Autour de vous” containing artists considered local by the distance simulation, and (2) “Ailleurs en Suisse” containing the remaining artists—while keeping global access to all artists.",
+      "reqIds": [
+        "REQ-217"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-v70-distance-simulation-behavior-displayed-distances-km-badges-change-dynamically-based-on-the-selected-user-city-using-the-provided-getdistance-usercity-procity-function",
+      "title": "Preserve and verify the V70 “Distance Simulation” behavior: displayed distances (km badges) change dynamically based on the selected user city using the provided `getDistance(userCity, proCity)` function.",
+      "reqIds": [
+        "REQ-218"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-v70-travel-mode-ui-cues-on-artist-cards-when-an-artist-is-far-per-the-provided-thresholds-in-the-code-the-ui-indicates-they-are-not-nearby-but-still-accessible-e-g-far-distance-badge-styling-and-the-additional-se-d-place-indicator-when-applicable",
+      "title": "Preserve and verify the V70 “Travel Mode” UI cues on artist cards: when an artist is far (per the provided thresholds in the code), the UI indicates they are not nearby but still accessible (e.g., far-distance badge styling and the additional “Se déplace” indicator when applicable).",
+      "reqIds": [
+        "REQ-219"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-the-pro-deploy-injection-logic-robust-against-stale-react-state-closures-in-the-v70-handleprodeploy-path-by-using-a-functional-state-update-when-prepending-the-newly-created-artist-to-the-artists-list-while-preserving-identical-visible-behavior-new-artist-appears-immediately-at-the-top-and-the-view-switches-to-the-app-feed",
+      "title": "Make the Pro deploy/injection logic robust against stale React state closures in the V70 `handleProDeploy` path by using a functional state update when prepending the newly created artist to the `artists` list, while preserving identical visible behavior (new artist appears immediately at the top and the view switches to the app feed).",
+      "reqIds": [
+        "REQ-220"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -2067,6 +2123,12 @@
       "reqIds": [
         "REQ-213"
       ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-106",
+      "summary": "V70 « NEXUS OMNIPRESENCE » : overwrite total de `frontend/src/AppV1.jsx` avec le code V70 fourni (verbatim) pour ajouter un Smart Header (sélecteur de ville), un re-classement géo-prioritaire « Autour de vous » / « Ailleurs en Suisse » basé sur une distance simulée recalculée selon la ville choisie, et un Travel Mode indiquant « Ici » vs « Loin » tout en gardant l’accès global.",
+      "reqIds": [],
       "status": "pending"
     }
   ],
