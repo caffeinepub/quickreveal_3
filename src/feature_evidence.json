@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-user-provided-v54-nexus-manifesto-code-block-verbatim-full-overwrite-including-all-components-local-seed-data-imports-tailwind-classes-and-ui-strings",
-      "featureTitle": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact user-provided V54 “NEXUS MANIFESTO” code block (verbatim full overwrite, including all components, local seed data, imports, Tailwind classes, and UI strings).",
+      "featureId": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v60-nexus-divine-code-block-provided-by-the-user-verbatim-treating-it-as-the-full-app-ui-and-local-only-logic-intro-app-feed-salon-detail-morph-modal-partner-pro-entry-including-its-imports-hardcoded-datasets-categories-salons-typography-styling-seriffont-framer-motion-layoutid-morphing-liquid-gold-service-selection-effect-and-the-champagne-gold-final-cta",
+      "featureTitle": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V60 “NEXUS DIVINE” code block provided by the user (verbatim), treating it as the full app UI and local-only logic (Intro → App feed → Salon detail morph modal → Partner/Pro entry), including its imports, hardcoded datasets (`CATEGORIES`, `SALONS`), typography styling (`serifFont`), Framer Motion `layoutId` morphing, “Liquid Gold” service selection effect, and the Champagne Gold final CTA.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -17,13 +17,13 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-179"
+        "REQ-191"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-project-compiles-and-runs-after-the-v54-appv1-jsx-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-unresolved-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v54-ui-layout-styling-copy-or-interaction-behavior",
-      "featureTitle": "Ensure the project compiles and runs after the V54 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports), without changing the intended V54 UI layout, styling, copy, or interaction behavior.",
+      "featureId": "feature-ensure-the-project-compiles-and-runs-after-the-v60-appv1-jsx-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-resolving-missing-incorrect-imports-undefined-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v60-ui-layout-styling-tailwind-classes-copy-data-or-interaction-behavior",
+      "featureTitle": "Ensure the project compiles and runs after the V60 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., resolving missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports) without changing the intended V60 UI layout, styling (Tailwind classes), copy, data, or interaction behavior.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -37,87 +37,7 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-180"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-preserve-and-verify-the-v54-manifesto-intro-behavior-replace-the-previous-showreel-intro-with-a-massive-typographic-sequence-that-cycles-the-three-lines-l-lite-suisse-domicile-ou-salon-r-servez-l-excellence-and-shows-profession-icons-on-the-intro-screen-with-a-clear-enter-cta-that-transitions-into-the-app",
-      "featureTitle": "Preserve and verify the V54 “Manifesto Intro” behavior: replace the previous showreel intro with a massive typographic sequence that cycles the three lines “L'ÉLITE SUISSE.” → “À DOMICILE OU SALON.” → “RÉSERVEZ L'EXCELLENCE.” and shows profession icons on the intro screen, with a clear “Enter” CTA that transitions into the app.",
-      "files": [
-        "frontend/src/AppV1.jsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-181"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-preserve-the-v54-high-tech-luxury-ui-styling-characteristics-as-implemented-by-the-provided-code-heavy-use-of-backdrop-blur-tight-typography-and-high-contrast-surfaces-without-replacing-the-v54-design-language-with-other-theming-systems",
-      "featureTitle": "Preserve the V54 high-tech luxury UI styling characteristics as implemented by the provided code: heavy use of `backdrop-blur`, tight typography, and high contrast surfaces, without replacing the V54 design language with other theming systems.",
-      "files": [
-        "frontend/src/AppV1.jsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-182"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-keep-the-viral-functions-integrated-in-v54-1-native-sharing-via-navigator-share-with-graceful-fallback-when-unavailable-and-2-whatsapp-deep-link-generation-wa-me-with-a-prefilled-message-containing-salon-name-selected-services-selected-date-time-location-details-including-domicile-address-when-applicable-and-total-price",
-      "featureTitle": "Keep the viral functions integrated in V54: (1) native sharing via `navigator.share` with graceful fallback when unavailable, and (2) WhatsApp deep-link generation (`wa.me`) with a prefilled message containing salon name, selected services, selected date/time, location details (including domicile address when applicable), and total price.",
-      "files": [
-        "frontend/src/AppV1.jsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-183"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-make-the-pro-deploy-publish-injection-into-the-in-memory-salons-list-robust-against-stale-react-state-closures-while-preserving-identical-visible-behavior-when-handledeploy-adds-a-newly-created-salon-it-must-reliably-appear-immediately-at-the-top-of-the-client-list-and-the-view-must-switch-to-client-immediately-after-deploy",
-      "featureTitle": "Make the Pro deploy/publish injection into the in-memory `salons` list robust against stale React state closures while preserving identical visible behavior: when `handleDeploy` adds a newly created salon, it must reliably appear immediately at the top of the client list and the view must switch to Client immediately after deploy.",
-      "files": [
-        "frontend/src/AppV1.jsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-184"
+        "REQ-192"
       ],
       "confidence": "high"
     }

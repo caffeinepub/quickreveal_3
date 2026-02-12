@@ -1,18 +1,18 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-12T00:30:10.612Z",
+  "generatedAt": "2026-02-12T01:45:17.770Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 6,
-    "implemented": 6,
+    "total": 3,
+    "implemented": 2,
     "items": [
       {
-        "id": "REQ-179",
-        "summary": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact user-provided V54 “NEXUS MANIFESTO” code block (verbatim full overwrite, including all components, local seed data, imports, Tailwind classes, and UI strings).",
+        "id": "REQ-191",
+        "summary": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V60 “NEXUS DIVINE” code block provided by the user (verbatim), treating it as the full app UI and local-only logic (Intro → App feed → Salon detail morph modal → Partner/Pro entry), including its imports, hardcoded datasets (`CATEGORIES`, `SALONS`), typography styling (`serifFont`), Framer Motion `layoutId` morphing, “Liquid Gold” service selection effect, and the Champagne Gold final CTA.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx"
@@ -22,60 +22,25 @@
         ]
       },
       {
-        "id": "REQ-180",
-        "summary": "Ensure the project compiles and runs after the V54 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports), without changing the intended V54 UI layout, styling, copy, or interaction behavior.",
+        "id": "REQ-192",
+        "summary": "Ensure the project compiles and runs after the V60 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., resolving missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports) without changing the intended V60 UI layout, styling (Tailwind classes), copy, data, or interaction behavior.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx",
-          "frontend/src/index.css"
+          "frontend/src/declarations.d.ts"
         ],
         "matchedFiles": [
           "frontend/src/AppV1.jsx"
         ]
       },
       {
-        "id": "REQ-181",
-        "summary": "Preserve and verify the V54 “Manifesto Intro” behavior: replace the previous showreel intro with a massive typographic sequence that cycles the three lines “L'ÉLITE SUISSE.” → “À DOMICILE OU SALON.” → “RÉSERVEZ L'EXCELLENCE.” and shows profession icons on the intro screen, with a clear “Enter” CTA that transitions into the app.",
-        "status": "implemented",
+        "id": "REQ-193",
+        "summary": "Keep `frontend/src/App.tsx` as the thin wrapper that renders `AppV1` and do not modify any frontend immutable entry files; the app must continue to mount through the existing `frontend/src/main.tsx` wiring.",
+        "status": "missing",
         "plannedFiles": [
-          "frontend/src/AppV1.jsx"
+          "frontend/src/__checks__/app-wrapper-contract.md"
         ],
-        "matchedFiles": [
-          "frontend/src/AppV1.jsx"
-        ]
-      },
-      {
-        "id": "REQ-182",
-        "summary": "Preserve the V54 high-tech luxury UI styling characteristics as implemented by the provided code: heavy use of `backdrop-blur`, tight typography, and high contrast surfaces, without replacing the V54 design language with other theming systems.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/AppV1.jsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/AppV1.jsx"
-        ]
-      },
-      {
-        "id": "REQ-183",
-        "summary": "Keep the viral functions integrated in V54: (1) native sharing via `navigator.share` with graceful fallback when unavailable, and (2) WhatsApp deep-link generation (`wa.me`) with a prefilled message containing salon name, selected services, selected date/time, location details (including domicile address when applicable), and total price.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/AppV1.jsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/AppV1.jsx"
-        ]
-      },
-      {
-        "id": "REQ-184",
-        "summary": "Make the Pro deploy/publish injection into the in-memory `salons` list robust against stale React state closures while preserving identical visible behavior: when `handleDeploy` adds a newly created salon, it must reliably appear immediately at the top of the client list and the view must switch to Client immediately after deploy.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/AppV1.jsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/AppV1.jsx"
-        ]
+        "matchedFiles": []
       }
     ]
   },
@@ -85,6 +50,7 @@
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
     "frontend/src/AppV1.jsx",
+    "frontend/src/index.css",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

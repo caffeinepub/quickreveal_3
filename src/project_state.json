@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 95,
-  "summary": "V54 « NEXUS MANIFESTO (CLARTÉ IMMÉDIATE) » : effacer et remplacer intégralement `frontend/src/AppV1.jsx` par le code V54 fourni (verbatim). Focus : compréhension en 3 secondes via Manifesto Intro typographique (« L'ÉLITE SUISSE » → « À DOMICILE OU SALON » → « RÉSERVEZ L'EXCELLENCE »), visual clarity (icônes métiers dès l’accueil), UI high-tech luxury (backdrop-blur/contrastes/typo serrée) tout en maintenant les fonctions virales (share natif `navigator.share` + pont WhatsApp).",
+  "projectStateVersion": 101,
+  "summary": "V60 « NEXUS DIVINE (HAUTE JOAILLERIE & LUMIÈRE) » : effacer et remplacer intégralement `frontend/src/AppV1.jsx` par le code V60 fourni (verbatim). Direction artistique : “Noir Lumière” (dégradés charbon & lumière), typographie Haute Couture (titres serif), interaction “Liquide & Or” (sélection services avec glow doré + CTA final Or Champagne). UX : Intro PURE BEAUTY + accès Partenaire, feed catégories, détail salon en morphing via Framer Motion `layoutId`, conversion WhatsApp.",
   "architectural_notes": [
     "RESET complet : écrasement total du backend et du frontend, considéré comme nouvelle V1.0 officielle.",
     "Backend Motoko réduit à un modèle Salon/Service/Socials avec `stable var salons` et endpoints `getSalons` (query) + `createSalon` (shared); seed de 4 salons suisses au démarrage (si salons vide).",
@@ -1348,6 +1348,70 @@
         "REQ-184"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v55-nexus-fusion-code-provided-by-the-user-preserving-all-components-local-seed-data-swiss-db-categories-initial-salons-tailwind-classes-imports-ui-strings-and-interaction-logic-as-given",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V55 “NEXUS FUSION” code provided by the user, preserving all components, local seed data (`SWISS_DB`, `CATEGORIES`, `INITIAL_SALONS`), Tailwind classes, imports, UI strings, and interaction logic as given.",
+      "reqIds": [
+        "REQ-185"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v55-appv1-jsx-overwrite-by-applying-only-the-minimal-mechanical-adjustments-required-by-this-repository-e-g-missing-incorrect-imports-unresolved-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v55-ui-layout-styling-copy-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V55 `AppV1.jsx` overwrite by applying only the minimal mechanical adjustments required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports), without changing the intended V55 UI layout, styling, copy, or interaction behavior.",
+      "reqIds": [
+        "REQ-186"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-three-v55-interface-behaviors-in-the-running-app-1-the-intro-nexus-title-morphs-into-the-in-app-header-logo-via-framer-motion-shared-layoutid-continuity-2-the-global-background-image-persists-across-intro-app-and-transitions-by-dimming-softening-rather-than-hard-cutting-and-3-selecting-a-category-updates-the-global-background-to-reflect-that-category-s-universe-immediately-on-the-app-view",
+      "title": "Preserve and verify the three V55 interface behaviors in the running app: (1) the intro “NEXUS” title morphs into the in-app header logo via Framer Motion shared `layoutId` continuity, (2) the global background image persists across Intro → App and transitions by dimming/softening rather than hard-cutting, and (3) selecting a category updates the global background to reflect that category’s universe immediately on the App view.",
+      "reqIds": [
+        "REQ-187"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fully-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v58-nexus-ether-code-provided-by-the-user-verbatim-treating-it-as-the-complete-frontend-ui-intro-app-partner-pro-access-with-local-only-in-file-data-and-no-backend-calls",
+      "title": "Fully delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V58 “NEXUS ETHER” code provided by the user (verbatim), treating it as the complete frontend UI (Intro → App → Partner/Pro access) with local-only in-file data and no backend calls.",
+      "reqIds": [
+        "REQ-188"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v58-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-unresolved-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v58-ui-layout-styling-tailwind-classes-copy-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V58 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports), without changing the intended V58 UI layout, styling (Tailwind classes), copy, or interaction behavior.",
+      "reqIds": [
+        "REQ-189"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-the-v58-ether-interaction-pillars-in-the-running-app-1-ethereal-magazine-intro-2-fluid-navigation-without-hard-cuts-and-3-morphing-salon-detail-where-selecting-a-salon-expands-the-card-into-the-detail-overlay-via-framer-motion-layoutid-continuity-no-route-page-change",
+      "title": "Preserve the V58 “ETHER” interaction pillars in the running app: (1) Ethereal magazine Intro, (2) fluid navigation without hard cuts, and (3) morphing salon detail where selecting a salon expands the card into the detail overlay via Framer Motion `layoutId` continuity (no route/page change).",
+      "reqIds": [
+        "REQ-190"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v60-nexus-divine-code-block-provided-by-the-user-verbatim-treating-it-as-the-full-app-ui-and-local-only-logic-intro-app-feed-salon-detail-morph-modal-partner-pro-entry-including-its-imports-hardcoded-datasets-categories-salons-typography-styling-seriffont-framer-motion-layoutid-morphing-liquid-gold-service-selection-effect-and-the-champagne-gold-final-cta",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V60 “NEXUS DIVINE” code block provided by the user (verbatim), treating it as the full app UI and local-only logic (Intro → App feed → Salon detail morph modal → Partner/Pro entry), including its imports, hardcoded datasets (`CATEGORIES`, `SALONS`), typography styling (`serifFont`), Framer Motion `layoutId` morphing, “Liquid Gold” service selection effect, and the Champagne Gold final CTA.",
+      "reqIds": [
+        "REQ-191"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v60-appv1-jsx-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-resolving-missing-incorrect-imports-undefined-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v60-ui-layout-styling-tailwind-classes-copy-data-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V60 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., resolving missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports) without changing the intended V60 UI layout, styling (Tailwind classes), copy, data, or interaction behavior.",
+      "reqIds": [
+        "REQ-192"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -1787,6 +1851,32 @@
       "id": "AR-88",
       "summary": "V54 « NEXUS MANIFESTO » : overwrite total de `frontend/src/AppV1.jsx` avec le code V54 fourni (verbatim) pour remplacer l’intro showreel par un Manifesto Intro typographique ultra clair (3 secondes), afficher les icônes métiers dès l’accueil, renforcer l’UI high-tech luxe (backdrop-blur/contrastes), tout en maintenant le partage natif (`navigator.share`) et le deep link WhatsApp.",
       "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-89",
+      "summary": "V55 « NEXUS FUSION » : overwrite total de `frontend/src/AppV1.jsx` avec le code V55 fourni (verbatim) pour implémenter (1) morphing transition du logo via `layoutId`, (2) backdrop contextuel persistant (blur/dim), (3) auto-focus catégorie avec fond dynamique selon l’univers sélectionné.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-90",
+      "summary": "V58 « NEXUS ETHER » : overwrite total de `frontend/src/AppV1.jsx` avec le code V58 fourni (verbatim) pour basculer vers le design “Luxe Invisible / Vogue” (intro magazine PURE BEAUTY + accès partenaire discret), navigation fluide, et détail salon en morphing continu (carte qui s’agrandit via `layoutId`) au lieu d’une navigation page.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-91",
+      "summary": "V60 « NEXUS DIVINE » : overwrite total de `frontend/src/AppV1.jsx` avec le code V60 fourni (verbatim) pour basculer vers l’esthétique “Noir Lumière”, typographie serif Haute Couture, interaction services “Or Liquide” + CTA Or Champagne, avec intro PURE BEAUTY / espace partenaire, feed catégories et détail salon en morphing (`layoutId`) + conversion WhatsApp.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-94",
+      "summary": "Keep `frontend/src/App.tsx` as the thin wrapper that renders `AppV1` and do not modify any frontend immutable entry files; the app must continue to mount through the existing `frontend/src/main.tsx` wiring.",
+      "reqIds": [
+        "REQ-193"
+      ],
       "status": "pending"
     }
   ],
