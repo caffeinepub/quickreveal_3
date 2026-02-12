@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 109,
-  "summary": "V65 « NEXUS PROFESSIONAL » : effacer et remplacer intégralement `frontend/src/AppV1.jsx` par le code V65 fourni (verbatim). Ajouts fonctionnels : étape sélection Date & Heure après choix des services + formulaire d’identité (Prénom/Nom, Téléphone). Logique séquentielle sécurisée : Selection → DateTime → Identity → Request → Pending (3s) → Booked (ticket affichant date/heure + nom) → uniquement sur ticket : « Payer & Révéler » ouvrant le Mirror Protocol.",
+  "projectStateVersion": 111,
+  "summary": "V66 « NEXUS FREEDOM » (pivot stratégique Freelance/Domicile) : effacer et remplacer intégralement `frontend/src/AppV1.jsx` par le code V66 fourni (verbatim). Nouvelle cible produit : talents indépendants (Mobile / Home Studio) sans terminal de paiement. Tunnel séquentiel mis à jour : Services → Lieu (chez le client / chez le pro) → Date & Heure → Identité (nom/téléphone + adresse si domicile) → Pending validation (3s simulé) → Ticket final ; Mirror Protocol devient le terminal d’encaissement déclenchable uniquement après le ticket.",
   "architectural_notes": [
     "RESET complet : écrasement total du backend et du frontend, considéré comme nouvelle V1.0 officielle.",
     "Backend Motoko réduit à un modèle Salon/Service/Socials avec `stable var salons` et endpoints `getSalons` (query) + `createSalon` (shared); seed de 4 salons suisses au démarrage (si salons vide).",
@@ -26,7 +26,7 @@
     "Risque de régression V38 : `handleDeploy` utilise `setSalons([newS, ...salons])` (closure potentiellement obsolète). Utiliser une mise à jour fonctionnelle pour éviter la perte d’injection en cas d’actions rapides.",
     "Risque de régression V61 : le filtrage catégories côté Client semble incomplet (la logique ne filtre explicitement que pour 'Barber' et laisse potentiellement toutes les autres catégories afficher tous les salons)."
   ],
-  "isFixRequest": true,
+  "isFixRequest": false,
   "existing_features": [
     {
       "id": "feature-implement-internet-identity-authentication-and-replace-the-existing-fake-login-screen-with-the-internet-identity-login-flow",
@@ -1524,6 +1524,30 @@
         "REQ-207"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v66-nexus-freedom-code-provided-by-the-user-treating-it-as-the-full-frontend-application-ui-logic-intro-client-app-feed-artist-detail-booking-tunnel-pro-creator-studio-with-local-only-in-file-demo-data-and-no-backend-calls",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V66 “NEXUS FREEDOM” code provided by the user, treating it as the full frontend application UI/logic (Intro → Client app feed → Artist detail booking tunnel → Pro Creator Studio), with local-only in-file demo data and no backend calls.",
+      "reqIds": [
+        "REQ-208"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-v66-implementation-compiles-and-runs-in-this-repository-by-applying-only-minimal-mechanical-adjustments-required-by-the-repo-s-wiring-dependencies-e-g-missing-incorrect-imports-undefined-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v66-ui-design-copy-datasets-or-interaction-behavior",
+      "title": "Ensure the V66 implementation compiles and runs in this repository by applying only minimal mechanical adjustments required by the repo’s wiring/dependencies (e.g., missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports) without changing the intended V66 UI design, copy, datasets, or interaction behavior.",
+      "reqIds": [
+        "REQ-209"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-the-pro-deploy-injection-state-update-robust-against-stale-react-state-closures-in-the-v66-deploy-path-by-using-a-functional-state-update-for-setartists-while-preserving-identical-visible-behavior-newly-created-artist-appears-immediately-at-the-top-and-the-view-switches-to-the-client-app",
+      "title": "Make the Pro deploy/injection state update robust against stale React state closures in the V66 deploy path by using a functional state update for `setArtists`, while preserving identical visible behavior (newly created artist appears immediately at the top and the view switches to the client app).",
+      "reqIds": [
+        "REQ-212"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -2013,6 +2037,36 @@
       "id": "AR-98",
       "summary": "V65 « NEXUS PROFESSIONAL » : overwrite total de `frontend/src/AppV1.jsx` avec le code V65 fourni (verbatim) ajoutant l’étape Date & Heure (jour + slots) et l’étape Identité client (nom + téléphone), avec tunnel séquentiel Selection → DateTime → Identity → Request → Pending → Booked → Mirror Protocol et ticket final incluant date/heure choisies.",
       "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-99",
+      "summary": "V66 « NEXUS FREEDOM » : overwrite total de `frontend/src/AppV1.jsx` avec le code V66 fourni (verbatim) + pivot produit vers freelances (Mobile/Home Studio) avec étape Lieu dans le tunnel (Services → Lieu → Date → Identité → Pending → Ticket) et Mirror Protocol présenté comme terminal de paiement post-ticket.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-102",
+      "summary": "Preserve and verify the V66 sequential booking tunnel and freelance-specific “Location” logic: Services → Location (at client vs at pro) → Date/Time → Identity → Pending (3-second simulated validation) → Final ticket; the “Location” step must be required and the Identity step must require an address only when the user selected ‘at client’.",
+      "reqIds": [
+        "REQ-210"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-103",
+      "summary": "Preserve and verify the V66 “Creator Studio” (Pro space) flow: the user can enter Creator Studio from the intro, configure whether the freelance works as “Mobile” and/or “Home Studio”, add services (including preset suggestions), and deploy a new artist that appears immediately in the client feed.",
+      "reqIds": [
+        "REQ-211"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-105",
+      "summary": "Preserve and verify the V66 “Mirror Protocol” terminal behavior: the Mirror Protocol is presented as the freelancer’s official payment terminal and must only be accessible after the final booked ticket step; opening it before the booking is confirmed must not be possible via the UI.",
+      "reqIds": [
+        "REQ-213"
+      ],
       "status": "pending"
     }
   ],

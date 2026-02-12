@@ -1,91 +1,129 @@
 {
   "kind": "build_request",
-  "title": "Overwrite AppV1 with V65 Nexus Professional (Date/Time + Identity steps)",
-  "priority": "high",
+  "title": "V66 NEXUS FREEDOM: overwrite AppV1 with freelance/mobile-home-studio sequential booking flow + Mirror terminal",
+  "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-204",
-      "text": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact user-provided V65 “NEXUS PROFESSIONAL” code block (verbatim), preserving all components, local data constants, imports, Tailwind classes, UI strings, and interaction logic as provided.",
+      "id": "REQ-208",
+      "text": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V66 “NEXUS FREEDOM” code provided by the user, treating it as the full frontend application UI/logic (Intro → Client app feed → Artist detail booking tunnel → Pro Creator Studio), with local-only in-file demo data and no backend calls.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "INSTRUCTION : Efface tout le contenu actuel de `frontend/src/AppV1.jsx` et remplace-le par le code ci-dessous.",
-          "VOICI LE CODE V65 COMPLET À ÉCRIRE :"
+          "INSTRUCTION : Efface tout le contenu actuel de `frontend/src/AppV1.jsx` et remplace-le par le code ci-dessous."
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` content matches the provided V65 code block exactly (full overwrite, no partial merge).",
-        "The app still boots through the existing `frontend/src/App.tsx` wrapper (no entry wiring changes)."
+        "`frontend/src/AppV1.jsx` is a full-file overwrite and matches the user-provided V66 code (same components, constants, Tailwind classes, and UI strings), except for any strictly build-breaking mechanical fixes covered by REQ-209.",
+        "`frontend/src/App.tsx` continues to render `AppV1` unchanged, so the app still mounts via the existing Vite/React wiring.",
+        "The app runs purely in frontend state using `INITIAL_ARTISTS` / `PRESETS` without calling Motoko canister methods or React Query hooks."
       ]
     },
     {
-      "id": "REQ-205",
-      "text": "Ensure the project compiles and runs after the V65 overwrite by applying only minimal mechanical fixes required by this repository (e.g., fixing missing/incorrect imports, resolving undefined identifiers, invalid JSX, duplicate default exports) without changing the intended V65 UI, styling, copy, datasets, or interaction behavior.",
+      "id": "REQ-209",
+      "text": "Ensure the V66 implementation compiles and runs in this repository by applying only minimal mechanical adjustments required by the repo’s wiring/dependencies (e.g., missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports) without changing the intended V66 UI design, copy, datasets, or interaction behavior.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "L'utilisateur signale que l'app n'est pas fonctionnelle car il manque la sélection de la date/heure et l'identification du client."
+          "**VOICI LE CODE V66 COMPLET À ÉCRIRE :**"
         ]
       },
       "acceptanceCriteria": [
-        "`npm run build` and `npm run dev` succeed without runtime errors.",
-        "Any changes beyond the verbatim V65 overwrite are limited strictly to build-breaking mechanical fixes."
+        "`npm run build` (or equivalent CI build) succeeds without TypeScript/JSX compilation errors.",
+        "All referenced symbols from `react`, `framer-motion`, and `lucide-react` used in JSX are properly imported (or unused imports removed only if they break the build).",
+        "No changes are made to frontend immutable entry files listed in SYSTEM_CONTEXT."
       ]
     },
     {
-      "id": "REQ-206",
-      "text": "Preserve and verify the V65 sequential booking flow in local-only state: Service selection → Date/Time picker → Client identity form → Request submission → Pending (3s simulation) → Booked ticket → Mirror Protocol. The payment/reveal (Mirror Protocol) must not be accessible before the booked ticket step.",
+      "id": "REQ-210",
+      "text": "Preserve and verify the V66 sequential booking tunnel and freelance-specific “Location” logic: Services → Location (at client vs at pro) → Date/Time → Identity → Pending (3-second simulated validation) → Final ticket; the “Location” step must be required and the Identity step must require an address only when the user selected ‘at client’.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "LOGIQUE SÉQUENTIELLE : Selection -> DateTime -> Identity -> Request -> Pending -> Booked -> Mirror Protocol."
+          "**LES 4 PILIERS DE LA V66 :**\n1.  **LOGIQUE \"LIEU\"** : Dans le tunnel de réservation, ajout d'une étape critique : \"Où se fait la prestation ?\" (Chez le Client ou Chez le Pro).\n...\n4.  **FLUX SÉQUENTIEL** : Services -> Lieu -> Date -> Identité -> Attente Validation -> Ticket Final."
         ]
       },
       "acceptanceCriteria": [
-        "After selecting at least one service, the next step is a Date/Time screen where a day and a time slot can be selected.",
-        "The user cannot proceed from Date/Time to the next step unless a time slot is selected.",
-        "After Date/Time, an Identity screen collects client name and phone; the user cannot submit the request unless both fields are non-empty.",
-        "Submitting the request shows a Pending screen and automatically transitions to Booked after ~3 seconds.",
-        "The “Pay & Reveal” / Mirror Protocol entry point is only available on the Booked ticket screen (not during selection, datetime, identity, or pending)."
+        "From an artist detail screen, selecting at least one service enables advancing to the Location step.",
+        "On the Location step, the user can only choose options that the selected artist supports (`acceptsMobile` enables “at client”, `acceptsStudio` enables “at pro”), and cannot proceed until one option is selected.",
+        "On the Date/Time step, the user cannot proceed until both a day and time are selected.",
+        "On the Identity step, the user cannot send the request until name and phone are provided; address is additionally required and collected only when location is “at client”.",
+        "Sending the request shows the Pending screen and automatically transitions to the Final ticket after ~3 seconds."
       ]
     },
     {
-      "id": "REQ-207",
-      "text": "Ensure the final booked ticket displays the user-selected date and time (from the Date/Time step) and the client identity (from the Identity step), as implemented in the provided V65 code.",
+      "id": "REQ-211",
+      "text": "Preserve and verify the V66 “Creator Studio” (Pro space) flow: the user can enter Creator Studio from the intro, configure whether the freelance works as “Mobile” and/or “Home Studio”, add services (including preset suggestions), and deploy a new artist that appears immediately in the client feed.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "TICKET FINAL : Le ticket de réservation affiche désormais la date et l'heure choisies."
+          "2.  **CREATOR STUDIO (RETOUR)** : L'espace Pro est réintégré. Le freelance configure s'il est \"Mobile\" (déplacement) ou \"Home Studio\" (reçoit)."
         ]
       },
       "acceptanceCriteria": [
-        "The booked ticket UI shows the selected day label and selected time slot.",
-        "The booked ticket UI shows the entered client name alongside the selected date/time (per the V65 UI)."
+        "From the Intro screen, the “Creator space” entry opens the Creator Studio screen.",
+        "In Creator Studio step 1, toggling the two work-mode buttons updates `acceptsMobile` / `acceptsStudio` in the preview state.",
+        "In Creator Studio step 2, clicking a preset adds a service entry to the preview list and the service list supports deletion.",
+        "Finishing/deploying creates a new artist and injects it into the in-memory `artists` list so it appears at the top of the client feed immediately, without requiring a refresh."
+      ]
+    },
+    {
+      "id": "REQ-212",
+      "text": "Make the Pro deploy/injection state update robust against stale React state closures in the V66 deploy path by using a functional state update for `setArtists`, while preserving identical visible behavior (newly created artist appears immediately at the top and the view switches to the client app).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "const handleProDeploy = (newArtist) => {\n      if(newArtist) {\n          const artistWithId = { ...newArtist, id: Date.now(), verified: true, priceStart: newArtist.services[0]?.price || 0 };\n          setArtists([artistWithId, ...artists]);\n          setView('app');\n      } else {\n          setView('intro');\n      }\n  };"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Deploying multiple times in quick succession never loses an injected artist due to stale state; each deployed artist reliably appears in the feed.",
+        "Visible behavior remains the same as V66: after deploy, the app switches to the client feed and the new artist is at the top."
+      ]
+    },
+    {
+      "id": "REQ-213",
+      "text": "Preserve and verify the V66 “Mirror Protocol” terminal behavior: the Mirror Protocol is presented as the freelancer’s official payment terminal and must only be accessible after the final booked ticket step; opening it before the booking is confirmed must not be possible via the UI.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "3.  **TERMINAL \"MIRROR\"** : Le Mirror Protocol est présenté comme l'outil d'encaissement officiel du freelance (plus de cash, plus de risque)."
+        ]
+      },
+      "acceptanceCriteria": [
+        "During Services/Location/Date-Time/Identity/Pending steps, there is no visible UI control that opens Mirror Protocol.",
+        "On the Final ticket screen, the “Pay (Mirror)” action opens `MirrorProtocol` and shows the total amount derived from the selected services.",
+        "Completing Mirror Protocol calls the provided `onFinish` behavior (closes Mirror and resets/returns to the feed via the existing V66 logic)."
       ]
     }
   ],
   "constraints": [
     "Do not modify `frontend/src/App.tsx`; it must remain the thin wrapper that renders `AppV1`.",
-    "Do not modify any frontend immutable entry files (including `frontend/src/main.tsx` and the hooks under `frontend/src/hooks/*` listed as immutable).",
-    "Keep behavior local-only (no backend calls) as implied by the provided V65 in-file dataset and logic.",
-    "Use English for all user-facing text in this build request (specification only); do not reinterpret or rewrite the UI strings inside the provided V65 code block."
+    "Do not modify any frontend immutable entry files listed in SYSTEM_CONTEXT.",
+    "Keep the V66 frontend as local-only demo logic (no backend calls / no Internet Identity flow changes).",
+    "When fixing issues, apply only minimal mechanical adjustments required for compilation; do not refactor or redesign the provided V66 UI/UX."
   ],
   "nonGoals": [
-    "Do not re-introduce Internet Identity, role-based routing, React Query data loading, or any prior backend-driven features unless they already exist inside the provided V65 code block.",
-    "Do not refactor, rename, or reorganize the V65 code for style/architecture; only minimal build-fix edits are allowed if necessary.",
-    "Do not add new product features beyond the V65 Date/Time picker, Identity form, sequential flow, and ticket changes already present in the provided code."
+    "Re-introducing Internet Identity authentication, role-based routing, or React Query data loading.",
+    "Implementing Motoko backend changes (artists/freelancers, bookings, persistence, payments).",
+    "Adding new product features beyond what exists in the provided V66 code (e.g., real payments, real chat, real-time updates)."
   ],
   "imageRequirements": {
     "required": [],

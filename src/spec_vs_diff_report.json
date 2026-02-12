@@ -1,37 +1,53 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-12T20:31:12.214Z",
-  "summary": "The diff shows substantial changes to `frontend/src/AppV1.jsx` and also modifies `frontend-file-summaries.txt` and `project_state.json`. However, because `AppV1.jsx` is truncated and the V65 reference code block is not included in the diff, the key requirements (verbatim overwrite and specific sequential flow/booking-ticket details) cannot be verified from the provided evidence.",
+  "generatedAt": "2026-02-12T20:53:18.920Z",
+  "summary": "Diff shows partial update to `frontend/src/AppV1.jsx` introducing V66-like constants (`INITIAL_ARTISTS`, `PRESETS`) and a `MirrorProtocol` component, but the file is truncated so core flow requirements (sequential booking tunnel, Creator Studio deploy path, and Mirror gating) cannot be verified. Two additional files (`frontend-file-summaries.txt`, `project_state.json`) were modified without being requested.",
   "missing_requirements": [
     {
-      "id": "REQ-204",
-      "requirement": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact user-provided V65 “NEXUS PROFESSIONAL” code block (verbatim).",
-      "reason": "`frontend/src/AppV1.jsx` content is truncated in the diff summary and the V65 reference code block is not shown, so an exact/verbatim match cannot be confirmed.",
+      "id": "REQ-208",
+      "requirement": "Completely overwrite `frontend/src/AppV1.jsx` with the exact user-provided V66 “NEXUS FREEDOM” code (full app UI/logic) and keep app local-only (no backend calls).",
+      "reason": "The diff shows `frontend/src/AppV1.jsx` changed and includes V66-like pieces, but the file content is truncated and does not provide evidence that the entire file was replaced with the exact provided V66 code (verbatim components/strings/classes) or that no backend calls/hooks exist elsewhere in the file.",
       "evidence": [
         "frontend/src/AppV1.jsx (truncated)"
       ]
     },
     {
-      "id": "REQ-205",
-      "requirement": "Ensure the project compiles and runs after the V65 overwrite by applying only minimal mechanical fixes required by this repository without changing intended V65 UI/behavior.",
-      "reason": "The diff summary does not provide build results (`npm run build` / `npm run dev`) and `AppV1.jsx` is truncated, so it is not possible to confirm compilation/runtime success or that changes are strictly mechanical.",
+      "id": "REQ-209",
+      "requirement": "Ensure the V66 implementation compiles via minimal mechanical fixes (correct imports/identifiers; no immutable entry changes).",
+      "reason": "Only partial import/JSX evidence is shown; build success and absence of missing/undefined symbols across the full file cannot be confirmed from the truncated diff. Also, the diff does not include `frontend/src/App.tsx`, so we cannot verify it remained unchanged.",
       "evidence": [
         "frontend/src/AppV1.jsx (truncated)"
       ]
     },
     {
-      "id": "REQ-206",
-      "requirement": "Preserve and verify the V65 sequential local-only booking flow and ensure Mirror Protocol is only accessible after the Booked ticket step.",
-      "reason": "Only a portion of `MirrorProtocol` is visible due to truncation; the service → date/time → identity → pending (3s) → booked gating and navigation rules are not verifiable from the provided excerpt.",
+      "id": "REQ-210",
+      "requirement": "Preserve/verify the sequential booking tunnel with required Location step and conditional address requirement; pending transitions after ~3 seconds.",
+      "reason": "No evidence of the Services→Location→Date/Time→Identity→Pending→Final ticket flow, required gating rules, or the 3-second pending transition is visible in the provided truncated snippet.",
       "evidence": [
         "frontend/src/AppV1.jsx (truncated)"
       ]
     },
     {
-      "id": "REQ-207",
-      "requirement": "Ensure the final booked ticket displays the user-selected date/time and client identity as implemented in the provided V65 code.",
-      "reason": "The booked ticket UI and its data bindings are not visible in the truncated `AppV1.jsx` excerpt, so the presence of selected day/time and client name on the booked ticket cannot be confirmed.",
+      "id": "REQ-211",
+      "requirement": "Preserve/verify Creator Studio flow and deploy injects a new artist into in-memory list (appears at top of feed) with work-mode toggles and preset add/delete.",
+      "reason": "The truncated snippet shows data/constants and MirrorProtocol, but does not show Creator Studio screens, work-mode toggles updating preview state, preset add/delete, or deploy behavior injecting into `artists`.",
+      "evidence": [
+        "frontend/src/AppV1.jsx (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-212",
+      "requirement": "Use functional state update for `setArtists` in deploy path to avoid stale closures; preserve behavior.",
+      "reason": "No evidence is shown of the deploy path implementation or of `setArtists(prev => ...)` usage; cannot verify robustness change was applied.",
+      "evidence": [
+        "frontend/src/AppV1.jsx (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-213",
+      "requirement": "Mirror Protocol only accessible after final booked ticket; “Pay (Mirror)” opens MirrorProtocol with correct total; onFinish closes and resets/returns to feed.",
+      "reason": "While `MirrorProtocol` component exists, the diff snippet does not show how/when it is opened, whether it is gated to only the Final ticket screen, whether amount is derived from selected services, or whether completion resets/returns to feed.",
       "evidence": [
         "frontend/src/AppV1.jsx (truncated)"
       ]
@@ -39,21 +55,21 @@
   ],
   "hallucinated_features": [
     {
-      "description": "Updated/added repository documentation/state summary content unrelated to the requested frontend overwrite (modified `frontend-file-summaries.txt`).",
-      "reason": "The BuildRequest only asks to overwrite `frontend/src/AppV1.jsx` with V65 and apply minimal build fixes; it does not request updating summary/meta files.",
+      "description": "Modified `frontend-file-summaries.txt` (project documentation/metadata) without any requirement to change it.",
+      "reason": "BuildRequest only specifies overwriting `frontend/src/AppV1.jsx` and preserving `frontend/src/App.tsx`; it does not request updating summary/metadata files.",
       "evidence": [
-        "frontend-file-summaries.txt (modified)"
+        "frontend-file-summaries.txt"
       ]
     },
     {
-      "description": "Updated `project_state.json` metadata/summary describing V65 implementation.",
-      "reason": "The BuildRequest does not request changes to `project_state.json`; it is not necessary for the specified UI overwrite and local-only flow requirements.",
+      "description": "Modified `project_state.json` summary/feature metadata without any requirement to change it.",
+      "reason": "BuildRequest does not mention altering project state/versioning metadata files; this is extra scope not requested.",
       "evidence": [
-        "project_state.json (modified)"
+        "project_state.json"
       ]
     }
   ],
-  "confidence": 0.46,
+  "confidence": 0.44,
   "changed_files": [
     "frontend-file-summaries.txt",
     "frontend/src/AppV1.jsx",

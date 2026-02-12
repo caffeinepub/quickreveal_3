@@ -1,12 +1,14 @@
 # Specification
 
 ## Summary
-**Goal:** Replace `frontend/src/AppV1.jsx` with the user-provided V65 “NEXUS PROFESSIONAL” implementation and ensure the app compiles and runs while preserving the intended sequential booking flow (including Date/Time and Client Identity steps).
+**Goal:** Replace the current AppV1 with the user-provided V66 “NEXUS FREEDOM” local-only UI, preserving the sequential freelance booking tunnel, Creator Studio deployment flow, and post-booking Mirror Protocol terminal.
 
 **Planned changes:**
-- Fully overwrite `frontend/src/AppV1.jsx` with the provided V65 code block verbatim (no partial merge).
-- Apply only minimal mechanical fixes needed for this repository so the project builds and runs (without changing V65 UI, copy, styling, datasets, or behavior).
-- Preserve and verify the local-only step flow: Service selection → Date/Time picker → Identity form → Request submission → Pending (~3s) → Booked ticket → Mirror Protocol, with Mirror Protocol inaccessible before the Booked step.
-- Ensure the booked ticket displays the user-selected date/time and entered client identity as captured in earlier steps.
+- Fully overwrite `frontend/src/AppV1.jsx` with the exact user-provided V66 code as the complete frontend UI/logic, using only in-file demo data (no backend calls).
+- Apply only minimal mechanical fixes required for this repo to compile/run (imports, JSX issues, undefined identifiers), without altering V66 UI/UX, copy, datasets, or behavior.
+- Preserve and verify the sequential booking flow: Services → Location (required; options gated by `acceptsMobile`/`acceptsStudio`) → Date/Time → Identity (address required only for “at client”) → Pending (~3s) → Final ticket.
+- Preserve and verify Creator Studio: enter from Intro, configure Mobile/Home Studio modes, add/delete services (including presets), deploy a new artist into the in-memory feed immediately.
+- Make deploy injection robust by updating `setArtists` via a functional state update to prevent stale-closure drops on rapid deploys.
+- Preserve and verify Mirror Protocol terminal access control: only available from the Final ticket; “Pay (Mirror)” opens the terminal showing the correct total and finishes via the existing V66 onFinish behavior.
 
-**User-visible outcome:** Users can select services, pick a date and time slot, enter their name and phone, submit a booking request, see a short pending state, then view a booked ticket showing their chosen date/time and identity; “Pay & Reveal” / Mirror Protocol becomes available only after the booking is confirmed.
+**User-visible outcome:** Users can browse the client feed, complete a required multi-step booking (including Location logic), receive a final ticket, and then pay via the Mirror Protocol terminal; pros can use Creator Studio to deploy a new freelancer that appears immediately in the feed.

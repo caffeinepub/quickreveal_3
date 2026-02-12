@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-user-provided-v65-nexus-professional-code-block-verbatim-preserving-all-components-local-data-constants-imports-tailwind-classes-ui-strings-and-interaction-logic-as-provided",
-      "featureTitle": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact user-provided V65 “NEXUS PROFESSIONAL” code block (verbatim), preserving all components, local data constants, imports, Tailwind classes, UI strings, and interaction logic as provided.",
+      "featureId": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v66-nexus-freedom-code-provided-by-the-user-treating-it-as-the-full-frontend-application-ui-logic-intro-client-app-feed-artist-detail-booking-tunnel-pro-creator-studio-with-local-only-in-file-demo-data-and-no-backend-calls",
+      "featureTitle": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V66 “NEXUS FREEDOM” code provided by the user, treating it as the full frontend application UI/logic (Intro → Client app feed → Artist detail booking tunnel → Pro Creator Studio), with local-only in-file demo data and no backend calls.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -17,13 +17,13 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-204"
+        "REQ-208"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-project-compiles-and-runs-after-the-v65-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-fixing-missing-incorrect-imports-resolving-undefined-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v65-ui-styling-copy-datasets-or-interaction-behavior",
-      "featureTitle": "Ensure the project compiles and runs after the V65 overwrite by applying only minimal mechanical fixes required by this repository (e.g., fixing missing/incorrect imports, resolving undefined identifiers, invalid JSX, duplicate default exports) without changing the intended V65 UI, styling, copy, datasets, or interaction behavior.",
+      "featureId": "feature-ensure-the-v66-implementation-compiles-and-runs-in-this-repository-by-applying-only-minimal-mechanical-adjustments-required-by-the-repo-s-wiring-dependencies-e-g-missing-incorrect-imports-undefined-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v66-ui-design-copy-datasets-or-interaction-behavior",
+      "featureTitle": "Ensure the V66 implementation compiles and runs in this repository by applying only minimal mechanical adjustments required by the repo’s wiring/dependencies (e.g., missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports) without changing the intended V66 UI design, copy, datasets, or interaction behavior.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -37,13 +37,13 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-205"
+        "REQ-209"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-preserve-and-verify-the-v65-sequential-booking-flow-in-local-only-state-service-selection-date-time-picker-client-identity-form-request-submission-pending-3s-simulation-booked-ticket-mirror-protocol-the-payment-reveal-mirror-protocol-must-not-be-accessible-before-the-booked-ticket-step",
-      "featureTitle": "Preserve and verify the V65 sequential booking flow in local-only state: Service selection → Date/Time picker → Client identity form → Request submission → Pending (3s simulation) → Booked ticket → Mirror Protocol. The payment/reveal (Mirror Protocol) must not be accessible before the booked ticket step.",
+      "featureId": "feature-make-the-pro-deploy-injection-state-update-robust-against-stale-react-state-closures-in-the-v66-deploy-path-by-using-a-functional-state-update-for-setartists-while-preserving-identical-visible-behavior-newly-created-artist-appears-immediately-at-the-top-and-the-view-switches-to-the-client-app",
+      "featureTitle": "Make the Pro deploy/injection state update robust against stale React state closures in the V66 deploy path by using a functional state update for `setArtists`, while preserving identical visible behavior (newly created artist appears immediately at the top and the view switches to the client app).",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -57,27 +57,7 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-206"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-ensure-the-final-booked-ticket-displays-the-user-selected-date-and-time-from-the-date-time-step-and-the-client-identity-from-the-identity-step-as-implemented-in-the-provided-v65-code",
-      "featureTitle": "Ensure the final booked ticket displays the user-selected date and time (from the Date/Time step) and the client identity (from the Identity step), as implemented in the provided V65 code.",
-      "files": [
-        "frontend/src/AppV1.jsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-207"
+        "REQ-212"
       ],
       "confidence": "high"
     }

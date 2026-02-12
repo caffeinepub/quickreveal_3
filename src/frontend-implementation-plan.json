@@ -1,68 +1,103 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Overwrite AppV1 with V65 Nexus Professional booking flow (Date/Time + Identity)",
+  "title": "V66 NEXUS FREEDOM frontend overwrite + booking tunnel + Mirror terminal (local-only)",
   "requirements": [
     {
-      "id": "REQ-204",
-      "summary": "Fully overwrite AppV1.jsx with the exact user-provided V65 “NEXUS PROFESSIONAL” code block, verbatim.",
+      "id": "REQ-208",
+      "summary": "Full overwrite AppV1.jsx with user-provided V66 “NEXUS FREEDOM” app code (local demo state, no backend calls).",
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` content matches the provided V65 code block exactly (full overwrite, no partial merge).",
-        "The app still boots through the existing `frontend/src/App.tsx` wrapper (no entry wiring changes)."
+        "`frontend/src/AppV1.jsx` is a full-file overwrite and matches the user-provided V66 code (same components, constants, Tailwind classes, and UI strings), except for any strictly build-breaking mechanical fixes covered by REQ-209.",
+        "`frontend/src/App.tsx` continues to render `AppV1` unchanged, so the app still mounts via the existing Vite/React wiring.",
+        "The app runs purely in frontend state using `INITIAL_ARTISTS` / `PRESETS` without calling Motoko canister methods or React Query hooks."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Delete the current file contents and replace the entire file with the exact V65 “NEXUS PROFESSIONAL” code block provided by the user (verbatim), preserving imports, local constants/datasets, Tailwind classes, UI strings, and interaction logic."
+          "description": "Delete the entire current file content and replace it with the exact user-provided V66 “NEXUS FREEDOM” code (Intro → Client feed → Artist booking tunnel → Creator Studio + Mirror terminal), keeping all data local-only and ensuring there are no backend calls."
         }
       ]
     },
     {
-      "id": "REQ-205",
-      "summary": "Apply only minimal mechanical compile/run fixes required by the repo after the V65 overwrite, without changing intended UI/behavior.",
+      "id": "REQ-209",
+      "summary": "Apply minimal mechanical adjustments so the pasted V66 code compiles in this repo without altering intended UI/UX behavior or copy.",
       "acceptanceCriteria": [
-        "`npm run build` and `npm run dev` succeed without runtime errors.",
-        "Any changes beyond the verbatim V65 overwrite are limited strictly to build-breaking mechanical fixes."
+        "`npm run build` (or equivalent CI build) succeeds without TypeScript/JSX compilation errors.",
+        "All referenced symbols from `react`, `framer-motion`, and `lucide-react` used in JSX are properly imported (or unused imports removed only if they break the build).",
+        "No changes are made to frontend immutable entry files listed in SYSTEM_CONTEXT."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "If the verbatim V65 code does not compile in this repository, apply strictly mechanical fixes only (e.g., missing/incorrect imports, undefined identifiers, invalid JSX/TSX issues, duplicate exports) while preserving all intended V65 UI, styling, copy, datasets, and interaction behavior. Keep all behavior local-only (no backend calls)."
+          "description": "Make only build-blocking mechanical fixes required by this repository (e.g., fix/adjust imports, remove duplicate exports, resolve undefined identifiers, ensure valid JSX). Do not refactor, redesign, or change V66 datasets/strings/flow behavior."
         }
       ]
     },
     {
-      "id": "REQ-206",
-      "summary": "Preserve/verify the V65 sequential local-only booking flow and gating of Mirror Protocol until after the booked ticket step.",
+      "id": "REQ-210",
+      "summary": "Preserve and verify the V66 sequential booking tunnel including required Location step and conditional address requirement.",
       "acceptanceCriteria": [
-        "After selecting at least one service, the next step is a Date/Time screen where a day and a time slot can be selected.",
-        "The user cannot proceed from Date/Time to the next step unless a time slot is selected.",
-        "After Date/Time, an Identity screen collects client name and phone; the user cannot submit the request unless both fields are non-empty.",
-        "Submitting the request shows a Pending screen and automatically transitions to Booked after ~3 seconds.",
-        "The “Pay & Reveal” / Mirror Protocol entry point is only available on the Booked ticket screen (not during selection, datetime, identity, or pending)."
+        "From an artist detail screen, selecting at least one service enables advancing to the Location step.",
+        "On the Location step, the user can only choose options that the selected artist supports (`acceptsMobile` enables “at client”, `acceptsStudio` enables “at pro”), and cannot proceed until one option is selected.",
+        "On the Date/Time step, the user cannot proceed until both a day and time are selected.",
+        "On the Identity step, the user cannot send the request until name and phone are provided; address is additionally required and collected only when location is “at client”.",
+        "Sending the request shows the Pending screen and automatically transitions to the Final ticket after ~3 seconds."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/AppV1.jsx",
-          "operation": "modify",
-          "description": "Ensure the V65 in-file state machine implements the required step order (Selection → Date/Time → Identity → Request → Pending (~3s) → Booked → Mirror Protocol) and enforces gating/validation so users cannot skip required selections and cannot access Mirror Protocol before the Booked ticket screen; keep logic entirely local-only."
+          "path": "frontend/docs/v66-verification.md",
+          "operation": "create",
+          "description": "Add a manual verification checklist for the V66 booking tunnel: Services → Location (required) → Date/Time (required) → Identity (conditional address) → Pending (3s) → Final ticket. Document the expected gating rules tied to `acceptsMobile`/`acceptsStudio` and the conditional address requirement."
         }
       ]
     },
     {
-      "id": "REQ-207",
-      "summary": "Ensure the booked ticket displays the selected date/time and client identity captured earlier in the V65 flow.",
+      "id": "REQ-211",
+      "summary": "Preserve and verify the V66 Creator Studio flow including mode toggles, presets/services management, and immediate in-memory deployment to the client feed.",
       "acceptanceCriteria": [
-        "The booked ticket UI shows the selected day label and selected time slot.",
-        "The booked ticket UI shows the entered client name alongside the selected date/time (per the V65 UI)."
+        "From the Intro screen, the “Creator space” entry opens the Creator Studio screen.",
+        "In Creator Studio step 1, toggling the two work-mode buttons updates `acceptsMobile` / `acceptsStudio` in the preview state.",
+        "In Creator Studio step 2, clicking a preset adds a service entry to the preview list and the service list supports deletion.",
+        "Finishing/deploying creates a new artist and injects it into the in-memory `artists` list so it appears at the top of the client feed immediately, without requiring a refresh."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/docs/v66-verification.md",
+          "operation": "modify",
+          "description": "Extend the V66 manual verification checklist with Creator Studio checks: entry from Intro, Mobile/Home Studio toggles update preview, preset add + delete services, and deploy injects artist at top of feed without refresh."
+        }
+      ]
+    },
+    {
+      "id": "REQ-212",
+      "summary": "Prevent stale closure issues when deploying artists by using a functional state update for setArtists in the V66 deploy path.",
+      "acceptanceCriteria": [
+        "Deploying multiple times in quick succession never loses an injected artist due to stale state; each deployed artist reliably appears in the feed.",
+        "Visible behavior remains the same as V66: after deploy, the app switches to the client feed and the new artist is at the top."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Verify the booked ticket view renders the user-selected day label/time slot from the Date/Time step and the collected client identity (name, and any other identity fields present in V65) from the Identity step, using the exact V65 display logic and strings."
+          "description": "In the Creator Studio deploy handler, change the `setArtists([artistWithId, ...artists])`-style update to a functional state update (`setArtists(prev => [artistWithId, ...prev])`) to avoid stale closures, keeping identical visible behavior and view switching."
+        }
+      ]
+    },
+    {
+      "id": "REQ-213",
+      "summary": "Preserve and verify Mirror Protocol terminal gating: only accessible after final ticket confirmation and totals derived from selected services.",
+      "acceptanceCriteria": [
+        "During Services/Location/Date-Time/Identity/Pending steps, there is no visible UI control that opens Mirror Protocol.",
+        "On the Final ticket screen, the “Pay (Mirror)” action opens `MirrorProtocol` and shows the total amount derived from the selected services.",
+        "Completing Mirror Protocol calls the provided `onFinish` behavior (closes Mirror and resets/returns to the feed via the existing V66 logic)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/docs/v66-verification.md",
+          "operation": "modify",
+          "description": "Add Mirror Protocol verification steps: confirm no UI access before final ticket, confirm Pay (Mirror) is present on final ticket only, confirm total equals selected services sum, and confirm onFinish closes Mirror and returns per V66 flow."
         }
       ]
     }
