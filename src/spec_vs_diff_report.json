@@ -1,84 +1,51 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-12T21:25:44.147Z",
-  "summary": "Diff shows `frontend/src/AppV1.jsx` was modified to include V70-like local datasets (`CITIES`, `CATEGORIES`, `INITIAL_ARTISTS`, `PRESETS`) and a `getDistance` function, but the file is truncated so the required Smart Header, dynamic feed reordering, travel-mode cues, and the functional `handleProDeploy` state update cannot be verified. Two additional non-requested files (`frontend-file-summaries.txt`, `project_state.json`) were also modified.",
+  "generatedAt": "2026-02-13T23:24:09.407Z",
+  "summary": "AppV1.jsx was heavily rewritten toward a local-only NEXUS-style app with mock datasets and localStorage persistence, but the diff is truncated so key V7000-specific requirements (verbatim match, full discovery engine + list↔map, Framer Motion modal animation) cannot be confirmed. Two ancillary files (frontend-file-summaries.txt, project_state.json) were modified even though the request focused on replacing AppV1.jsx and preserving entry wiring.",
   "missing_requirements": [
     {
-      "id": "REQ-214",
-      "requirement": "Fully overwrite `frontend/src/AppV1.jsx` with the exact provided V70 “NEXUS OMNIPRESENCE” code block (verbatim), preserving all imports, components, strings, Tailwind classes, and local-only logic; no backend calls.",
-      "reason": "The diff for `frontend/src/AppV1.jsx` is truncated and does not provide enough evidence to confirm an exact verbatim full-file overwrite, nor to confirm that no backend calls were introduced in the unseen portion.",
+      "id": "REQ-289",
+      "requirement": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V7000 “NEXUS INFINITY” code provided by the user (verbatim), including discovery engine (category rail + distance sort toggle + list/map dual view), bottom dock, booking modal overlay, datasets (`CATEGORIES`, `PRO_DB`), and localStorage brain (`nexus_v7000`).",
+      "reason": "The file is truncated in the diff summary, and the provided snippet does not show the full V7000 UI/logic pieces (e.g., list↔map dual view, distance sort toggle, bottom dock, booking modal overlay). Also, the snippet includes custom additions (e.g., design tokens) that may or may not exist in the user-provided verbatim V7000 block; verbatim equivalence cannot be validated from the truncated content.",
       "evidence": [
         "frontend/src/AppV1.jsx (truncated)"
       ]
     },
     {
-      "id": "REQ-215",
-      "requirement": "Ensure the project compiles/runs after the overwrite with only minimal mechanical fixes (no behavior/UX changes); `frontend/src/App.tsx` unchanged.",
-      "reason": "The diff summary does not show build-related fixes beyond the partial `AppV1.jsx` content, and it does not include evidence about compilation/runtime success. While `frontend/src/App.tsx` is not listed as modified, build success cannot be verified from the truncated diff.",
-      "evidence": [
-        "frontend/src/AppV1.jsx (truncated)",
-        "file-diff summary (Modified: 3; App.tsx not shown as modified)"
-      ]
-    },
-    {
-      "id": "REQ-216",
-      "requirement": "Implement/preserve Smart Header: sticky header with current city label, dropdown of all `CITIES`, selecting updates city immediately and closes dropdown.",
-      "reason": "The provided portion of `AppV1.jsx` shows the `CITIES` constant and distance utilities, but does not include the header UI or dropdown interaction logic due to truncation.",
+      "id": "REQ-290",
+      "requirement": "Ensure V7000 `AppV1.jsx` compiles with minimal mechanical fixes; Framer Motion (`motion`, `AnimatePresence`) imports resolve and booking modal overlay animates; Lucide icons imports resolve (including `Navigation as NavIcon`).",
+      "reason": "In the visible snippet, Lucide icons (including `Navigation as NavIcon`) are imported, but there is no visible `framer-motion` import or usage (`motion`, `AnimatePresence`). This may exist later in the truncated portion, but it cannot be confirmed from the diff summary.",
       "evidence": [
         "frontend/src/AppV1.jsx (truncated)"
       ]
     },
     {
-      "id": "REQ-217",
-      "requirement": "Implement/preserve dynamic feed reordering into “Autour de vous” and “Ailleurs en Suisse” sections on city change; both sorted by ascending simulated distance; sections conditionally rendered.",
-      "reason": "The diff excerpt includes `getDistance` and initial artist data, but does not show any feed rendering logic, section splitting, or sorting behavior (truncated).",
+      "id": "REQ-291",
+      "requirement": "Preserve entry wiring: do not modify `frontend/src/App.tsx`, `frontend/src/main.tsx`, or other immutable entry files; app must continue to mount and render `AppV1`.",
+      "reason": "The diff summary does not show changes to `frontend/src/App.tsx` or `frontend/src/main.tsx`, but since only modified files are listed and these are not among them, this appears satisfied; however, the diff summary does not explicitly show the absence of changes to all immutable entry files beyond those two, so full compliance cannot be proven from the provided evidence.",
       "evidence": [
-        "frontend/src/AppV1.jsx (truncated)"
-      ]
-    },
-    {
-      "id": "REQ-218",
-      "requirement": "Distance simulation badges update dynamically per selected city using `getDistance(userCity, proCity)`; split consistent with computed distances.",
-      "reason": "Although `getDistance` exists in the shown portion, the UI that displays distance badges and reacts to city changes is not visible in the truncated diff.",
-      "evidence": [
-        "frontend/src/AppV1.jsx (truncated)"
-      ]
-    },
-    {
-      "id": "REQ-219",
-      "requirement": "Travel Mode UI cues: far/near badge styling per thresholds; show “Se déplace” (or equivalent) indicator when far and `acceptsMobile` is true; no removal of capabilities for far artists.",
-      "reason": "The truncated diff does not show artist card rendering, threshold logic, or the “Se déplace” indicator implementation.",
-      "evidence": [
-        "frontend/src/AppV1.jsx (truncated)"
-      ]
-    },
-    {
-      "id": "REQ-220",
-      "requirement": "Make `handleProDeploy` robust against stale closures by using a functional state update when prepending the new artist; preserve behavior (new artist at top, switch to feed).",
-      "reason": "No `handleProDeploy` code is visible in the diff excerpt, so the required functional state update cannot be confirmed.",
-      "evidence": [
-        "frontend/src/AppV1.jsx (truncated)"
+        "File diff summary lists modified files as: frontend/src/AppV1.jsx, frontend-file-summaries.txt, project_state.json"
       ]
     }
   ],
   "hallucinated_features": [
     {
-      "description": "Updated repository metadata/state documentation files (`project_state.json`) with a narrative about V70 behavior.",
-      "reason": "BuildRequest requirements focus on overwriting `frontend/src/AppV1.jsx` and applying minimal mechanical fixes; it does not request updating `project_state.json`.",
-      "evidence": [
-        "project_state.json (modified, truncated)"
-      ]
-    },
-    {
-      "description": "Modified `frontend-file-summaries.txt` contents describing many frontend files and features.",
-      "reason": "BuildRequest does not request changes to `frontend-file-summaries.txt`; it is outside the specified `AppV1.jsx` overwrite/mechanical-fix scope.",
+      "description": "Modified `frontend-file-summaries.txt` (a broad documentation/summary file of many frontend pages/components) even though the BuildRequest only required replacing `frontend/src/AppV1.jsx` and preserving entry wiring.",
+      "reason": "Not requested by REQ-289/290/291; also the constraints emphasize frontend-only wiring preservation and verbatim replacement of AppV1 with minimal mechanical fixes, not updating repository summary artifacts.",
       "evidence": [
         "frontend-file-summaries.txt (modified, truncated)"
       ]
+    },
+    {
+      "description": "Modified `project_state.json` with a new summary referencing V7000 replacement work.",
+      "reason": "Not requested by REQ-289/290/291; it is an auxiliary state/metadata file unrelated to the required AppV1.jsx replacement and entry wiring constraints.",
+      "evidence": [
+        "project_state.json (modified, truncated)"
+      ]
     }
   ],
-  "confidence": 0.55,
+  "confidence": 0.58,
   "changed_files": [
     "frontend-file-summaries.txt",
     "frontend/src/AppV1.jsx",

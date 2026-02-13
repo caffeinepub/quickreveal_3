@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 113,
-  "summary": "V70 « NEXUS OMNIPRESENCE » : effacer et remplacer intégralement `frontend/src/AppV1.jsx` par le code V70 fourni (verbatim). Nouvelle orientation UX : multi‑villes & géo‑priorité avec sélecteur de ville (“Actuellement à …”), re‑classement dynamique des artistes en sections « Autour de vous » vs « Ailleurs en Suisse » selon une distance simulée recalculée, et indication Travel Mode (pro “Ici”/“Loin” mais accessible). Le tunnel reste séquentiel (Services → Lieu → Date/Heure → Identité → Pending 3s → Ticket), et Mirror Protocol reste un terminal d’encaissement accessible uniquement après le ticket confirmé.",
+  "projectStateVersion": 141,
+  "summary": "V7000 « NEXUS INFINITY » : effacer et remplacer intégralement `frontend/src/AppV1.jsx` par le code V7000 fourni (verbatim). Objectif : réintégrer le Discovery Engine (Category Rail + tri par distance/geo-sort + Dual View LIST↔MAP), Dock bottom (Explorer/Agenda/Moi), portail Landing, espace Pro stub (Ops/Studio), et persistance `localStorage` via la clé `nexus_v7000`.",
   "architectural_notes": [
     "RESET complet : écrasement total du backend et du frontend, considéré comme nouvelle V1.0 officielle.",
     "Backend Motoko réduit à un modèle Salon/Service/Socials avec `stable var salons` et endpoints `getSalons` (query) + `createSalon` (shared); seed de 4 salons suisses au démarrage (si salons vide).",
@@ -26,7 +26,7 @@
     "Risque de régression V38 : `handleDeploy` utilise `setSalons([newS, ...salons])` (closure potentiellement obsolète). Utiliser une mise à jour fonctionnelle pour éviter la perte d’injection en cas d’actions rapides.",
     "Risque de régression V61 : le filtrage catégories côté Client semble incomplet (la logique ne filtre explicitement que pour 'Barber' et laisse potentiellement toutes les autres catégories afficher tous les salons)."
   ],
-  "isFixRequest": false,
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-implement-internet-identity-authentication-and-replace-the-existing-fake-login-screen-with-the-internet-identity-login-flow",
@@ -1604,6 +1604,510 @@
         "REQ-220"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v71-nexus-command-code-provided-by-the-user-verbatim-overwrite",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V71 “NEXUS COMMAND” code provided by the user (verbatim overwrite).",
+      "reqIds": [
+        "REQ-221"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v71-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-unresolved-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v71-ui-styling-copy-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V71 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports), without changing the intended V71 UI, styling, copy, or interaction behavior.",
+      "reqIds": [
+        "REQ-222"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-the-v71-role-switcher-behavior-a-user-can-instantly-switch-between-client-view-and-pro-view-using-the-provided-buttons-with-no-authentication-and-no-backend-calls",
+      "title": "Preserve the V71 Role Switcher behavior: a user can instantly switch between Client view and Pro view using the provided buttons, with no authentication and no backend calls.",
+      "reqIds": [
+        "REQ-223"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-the-v71-nexus-os-pro-dashboard-with-three-tabs-and-their-data-driven-behaviors-using-the-shared-local-requests-state-radar-pending-requests-with-accept-reject-agenda-confirmed-requests-list-and-wallet-available-balance-from-completed-requests-escrow-total-from-confirmed-requests",
+      "title": "Preserve the V71 “NEXUS OS” Pro Dashboard with three tabs and their data-driven behaviors using the shared local `requests` state: Radar (pending requests with Accept/Reject), Agenda (confirmed requests list), and Wallet (available balance from completed requests + escrow total from confirmed requests).",
+      "reqIds": [
+        "REQ-224"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-the-v71-real-handshake-lifecycle-in-local-shared-state-client-creates-a-booking-request-in-status-pending-pro-updates-it-to-confirmed-running-mirror-protocol-updates-it-to-completed-and-releases-funds-simulation",
+      "title": "Preserve the V71 “Real Handshake” lifecycle in local shared state: Client creates a booking request in status `PENDING`; Pro updates it to `CONFIRMED`; running Mirror Protocol updates it to `COMPLETED` and releases funds (simulation).",
+      "reqIds": [
+        "REQ-225"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v72-nexus-eternity-code-block-provided-by-the-user-verbatim-overwrite-including-all-components-local-mock-data-constants-tailwind-classes-imports-ui-strings-and-interaction-logic",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V72 “NEXUS ETERNITY” code block provided by the user (verbatim overwrite, including all components, local mock data/constants, Tailwind classes, imports, UI strings, and interaction logic).",
+      "reqIds": [
+        "REQ-227"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v72-overwrite-by-applying-only-minimal-mechanical-adjustments-required-by-this-repository-s-wiring-dependencies-e-g-fix-missing-incorrect-imports-undefined-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v72-ui-layout-styling-copy-datasets-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V72 overwrite by applying only minimal mechanical adjustments required by this repository’s wiring/dependencies (e.g., fix missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports), without changing the intended V72 UI layout, styling, copy, datasets, or interaction behavior.",
+      "reqIds": [
+        "REQ-228"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-v72-persistence-engine-behavior-use-useeffect-localstorage-to-persist-at-minimum-the-current-role-booking-requests-and-relevant-pro-state-across-full-page-reloads-using-the-keys-defined-in-the-v72-code",
+      "title": "Preserve and verify the V72 Persistence Engine behavior: use `useEffect` + `localStorage` to persist at minimum the current role, booking requests, and relevant Pro state across full page reloads, using the keys defined in the V72 code.",
+      "reqIds": [
+        "REQ-229"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-v72-mock-data-injection-behavior-the-pro-wallet-must-be-prefilled-with-a-realistic-transaction-history-on-first-launch-in-addition-to-any-completed-requests-generated-during-the-session-as-defined-by-mock-history-in-the-v72-code",
+      "title": "Preserve and verify the V72 Mock Data Injection behavior: the Pro Wallet must be prefilled with a realistic transaction history on first launch (in addition to any completed requests generated during the session) as defined by `MOCK_HISTORY` in the V72 code.",
+      "reqIds": [
+        "REQ-230"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-v72-notification-system-behavior-implement-the-global-toast-system-so-cross-role-alerts-e-g-request-accepted-rejected-paid-appear-even-if-the-user-navigates-switches-role-immediately-after-the-triggering-action",
+      "title": "Preserve and verify the V72 Notification System behavior: implement the global Toast system so cross-role alerts (e.g., request accepted/rejected/paid) appear even if the user navigates/switches role immediately after the triggering action.",
+      "reqIds": [
+        "REQ-231"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-verify-the-v72-smart-date-parsing-behavior-so-appointments-requests-can-be-reliably-categorized-and-sorted-as-past-vs-future-based-on-their-stored-date-time-values-without-changing-the-intended-v72-ui-design",
+      "title": "Implement/verify the V72 Smart Date Parsing behavior so appointments/requests can be reliably categorized and sorted as Past vs Future based on their stored date/time values, without changing the intended V72 UI design.",
+      "reqIds": [
+        "REQ-232"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v73-nexus-universe-code-block-provided-by-the-user-preserving-components-local-mock-data-tailwind-classes-imports-ui-strings-and-interaction-logic-as-given",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V73 “NEXUS UNIVERSE” code block provided by the user, preserving components, local mock data, Tailwind classes, imports, UI strings, and interaction logic as given.",
+      "reqIds": [
+        "REQ-233"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-v73-implementation-compiles-and-runs-in-this-repository-by-applying-only-minimal-mechanical-fixes-required-by-this-codebase-s-wiring-dependencies-e-g-missing-incorrect-imports-undefined-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v73-ui-styling-copy-datasets-or-interaction-behavior",
+      "title": "Ensure the V73 implementation compiles and runs in this repository by applying only minimal mechanical fixes required by this codebase’s wiring/dependencies (e.g., missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports) without changing the intended V73 UI, styling, copy, datasets, or interaction behavior.",
+      "reqIds": [
+        "REQ-234"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-verify-the-v73-pro-first-time-enrollment-logic-when-switching-from-client-mode-to-pro-mode-for-the-first-time-no-stored-pro-profile-the-user-must-be-forced-into-the-creator-studio-setup-flow-before-accessing-the-pro-dashboard-once-setup-is-completed-subsequent-pro-access-goes-directly-to-the-pro-dashboard",
+      "title": "Implement/verify the V73 Pro first-time enrollment logic: when switching from Client mode to Pro mode for the first time (no stored Pro profile), the user must be forced into the Creator Studio setup flow before accessing the Pro Dashboard; once setup is completed, subsequent Pro access goes directly to the Pro Dashboard.",
+      "reqIds": [
+        "REQ-235"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-verify-the-v73-client-discovery-features-restore-category-pills-filtering-and-distance-based-sorting-radar-using-the-user-selected-city-and-compute-display-distances-for-each-pro-using-the-provided-distance-helper-logic",
+      "title": "Implement/verify the V73 Client discovery features: restore category pills filtering and distance-based sorting (“Radar”) using the user-selected city, and compute/display distances for each Pro using the provided distance helper logic.",
+      "reqIds": [
+        "REQ-236"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-verify-the-v73-double-pricing-behavior-in-the-client-booking-flow-the-cart-total-and-per-service-price-selection-must-dynamically-use-the-mobile-price-when-the-client-chooses-at-client-and-the-studio-price-when-the-client-chooses-at-studio-and-only-location-types-supported-by-the-selected-pro-can-be-chosen",
+      "title": "Implement/verify the V73 double pricing behavior in the client booking flow: the cart total and per-service price selection must dynamically use the Mobile price when the client chooses “At client” and the Studio price when the client chooses “At studio”, and only location types supported by the selected Pro can be chosen.",
+      "reqIds": [
+        "REQ-237"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-verify-v73-local-persistence-using-localstorage-via-usestickystate-for-at-minimum-current-role-pro-profile-booking-requests-and-selected-user-city-using-the-keys-defined-in-the-v73-code-nexus-role-v73-nexus-pro-profile-v73-nexus-requests-v73-nexus-user-city",
+      "title": "Preserve/verify V73 local persistence using `localStorage` via `useStickyState` for at minimum: current role, Pro profile, booking requests, and selected user city, using the keys defined in the V73 code (`nexus_role_v73`, `nexus_pro_profile_v73`, `nexus_requests_v73`, `nexus_user_city`).",
+      "reqIds": [
+        "REQ-238"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-verify-the-v73-request-lifecycle-and-payment-gating-client-creates-booking-requests-in-pending-pro-can-update-requests-to-confirmed-or-rejected-only-confirmed-requests-expose-the-pay-action-in-the-client-surface-completing-the-mirrorpayment-flow-updates-the-request-status-to-completed-and-contributes-to-pro-income-calculations",
+      "title": "Preserve/verify the V73 request lifecycle and payment gating: Client creates booking requests in `PENDING`; Pro can update requests to `CONFIRMED` or `REJECTED`; only `CONFIRMED` requests expose the pay action in the Client surface; completing the MirrorPayment flow updates the request status to `COMPLETED` and contributes to Pro income calculations.",
+      "reqIds": [
+        "REQ-239"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-v73-state-updates-robust-against-stale-react-state-closures-in-any-paths-that-prepend-replace-items-in-arrays-e-g-when-adding-a-new-booking-request-to-requests-using-functional-state-updates-while-preserving-identical-visible-behavior",
+      "title": "Make V73 state updates robust against stale React state closures in any paths that prepend/replace items in arrays (e.g., when adding a new booking request to `requests`), using functional state updates while preserving identical visible behavior.",
+      "reqIds": [
+        "REQ-240"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v74-nexus-genesis-code-block-provided-by-the-user-verbatim-overwrite-preserving-all-components-local-data-constants-cities-categories-with-presets-tailwind-classes-imports-ui-strings-and-interaction-logic-as-given",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V74 “NEXUS GENESIS” code block provided by the user (verbatim overwrite), preserving all components, local data/constants (`CITIES`, `CATEGORIES` with presets), Tailwind classes, imports, UI strings, and interaction logic as given.",
+      "reqIds": [
+        "REQ-241"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fully-overwrite-frontend-src-appv1-jsx-with-the-exact-v90-nexus-legendary-code-provided-by-the-user-treating-it-as-the-entire-app-ui-and-logic-intro-setup-creator-studio-pro-dashboard-client-app",
+      "title": "Fully overwrite `frontend/src/AppV1.jsx` with the exact V90 “NEXUS LEGENDARY” code provided by the user, treating it as the entire app UI and logic (Intro → Setup/Creator Studio → Pro Dashboard → Client App).",
+      "reqIds": [
+        "REQ-244"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v90-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-imports-undefined-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v90-ui-styling-copy-data-flow-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V90 overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing imports, undefined identifiers, invalid JSX, duplicate default exports) without changing the intended V90 UI, styling, copy, data flow, or interaction behavior.",
+      "reqIds": [
+        "REQ-245"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-v90-true-calendar-engine-and-anti-double-booking-behavior-availability-must-be-computed-by-subtracting-all-bookings-in-status-pending-or-confirmed-from-the-working-hour-slot-list-for-a-given-pro-and-date-and-past-slots-for-today-must-be-disabled",
+      "title": "Preserve and verify the V90 “True Calendar Engine” and anti-double-booking behavior: availability must be computed by subtracting all bookings in status PENDING or CONFIRMED from the working-hour slot list for a given pro and date, and past slots for Today must be disabled.",
+      "reqIds": [
+        "REQ-246"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-v90-service-hyper-definition-handshake-protocol-smart-context-persistent-brain-pillars-exactly-as-implemented-in-the-v90-code-services-include-id-name-duration-studio-price-mobile-price-description-dedicated-photo-client-requests-place-a-slot-on-hold-pending-pro-can-accept-confirmed-or-reject-rejected-pro-dashboard-surfaces-pending-requests-today-confirmed-appointments-and-revenue-all-ecosystem-state-persists-via-localstorage-key-nexus-legendary-v90",
+      "title": "Preserve and verify the V90 “Service Hyper-Definition” + “Handshake Protocol” + “Smart Context” + “Persistent Brain” pillars exactly as implemented in the V90 code: services include ID/name/duration/studio price/mobile price/description/dedicated photo; client requests place a slot on hold (PENDING); pro can accept (CONFIRMED) or reject (REJECTED); Pro Dashboard surfaces pending requests, today/confirmed appointments, and revenue; all ecosystem state persists via `localStorage` key `nexus_legendary_v90`.",
+      "reqIds": [
+        "REQ-247"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-user-provided-v100-nexus-singularity-code-block-verbatim-overwrite-treating-it-as-the-full-frontend-app-ui-logic-login-setup-pro-client-with-local-only-state-persisted-via-localstorage-key-nexus-singularity-v100",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact user-provided V100 “NEXUS SINGULARITY” code block (verbatim overwrite), treating it as the full frontend app UI/logic (Login → Setup → Pro → Client) with local-only state persisted via `localStorage` key `nexus_singularity_v100`.",
+      "reqIds": [
+        "REQ-248"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-v100-frontend-src-appv1-jsx-implementation-compiles-and-runs-in-this-repository-by-applying-only-minimal-mechanical-fixes-required-by-missing-imports-undefined-identifiers-without-changing-the-intended-v100-ui-layout-styling-copy-datasets-or-interaction-behavior",
+      "title": "Ensure the V100 `frontend/src/AppV1.jsx` implementation compiles and runs in this repository by applying only minimal mechanical fixes required by missing imports/undefined identifiers, without changing the intended V100 UI layout, styling, copy, datasets, or interaction behavior.",
+      "reqIds": [
+        "REQ-249"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-entire-contents-of-frontend-src-appv1-jsx-with-the-provided-v101-nexus-portal-code-block-adding-the-new-scrollable-cinematic-landing-page-hero-liveticker-marketing-sections-as-the-first-entry-surface-before-the-app",
+      "title": "Replace the entire contents of `frontend/src/AppV1.jsx` with the provided V101 “NEXUS PORTAL” code block, adding the new scrollable cinematic Landing Page (Hero + LiveTicker + marketing sections) as the first entry surface before the app.",
+      "reqIds": [
+        "REQ-251"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-v101-smooth-transition-flow-clicking-any-portal-entry-action-e-g-connexion-enter-the-system-footer-ctas-must-move-the-state-machine-from-landing-to-the-biometric-login-screen-and-after-simulated-biometric-success-it-must-enter-the-application-experience-behind-the-portal",
+      "title": "Implement the V101 smooth transition flow: clicking any Portal entry action (e.g., “Connexion” / “Enter the system” / footer CTAs) must move the state machine from `LANDING` to the biometric login screen, and after simulated biometric success it must enter the application experience behind the Portal.",
+      "reqIds": [
+        "REQ-252"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-re-integrate-the-existing-v100-application-logic-currently-in-frontend-src-appv1-jsx-behind-the-new-v101-portal-gate-pro-dashboard-client-booking-flow-payment-gateway-ledger-and-any-v100-state-transitions-wiring-it-into-the-v101-applogic-placeholder-so-the-portal-does-not-replace-the-app-only-gates-it",
+      "title": "Preserve and re-integrate the existing V100 application logic currently in `frontend/src/AppV1.jsx` behind the new V101 Portal gate (Pro dashboard, Client booking flow, payment gateway/ledger, and any V100 state transitions), wiring it into the V101 `AppLogic` placeholder so the Portal does not replace the app—only gates it.",
+      "reqIds": [
+        "REQ-253"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-persistence-to-use-the-v101-storage-key-nexus-v101-as-provided-in-the-v101-usenexusbrain-snippet-for-the-unified-portal-app-state-and-ensure-state-continues-to-persist-across-full-page-reloads",
+      "title": "Update persistence to use the V101 storage key `nexus_v101` (as provided in the V101 `useNexusBrain` snippet) for the unified Portal + App state, and ensure state continues to persist across full page reloads.",
+      "reqIds": [
+        "REQ-254"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v101-appv1-jsx-replacement-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-undefined-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v101-ui-layout-styling-copy-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V101 `AppV1.jsx` replacement by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports), without changing the intended V101 UI layout/styling/copy or interaction behavior.",
+      "reqIds": [
+        "REQ-255"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v200-code-block-provided-by-the-user-verbatim-treating-it-as-the-full-frontend-application-ui-logic-portal-landing-biometric-authgate-creator-suite-setup-pro-dashboard-client-marketplace-with-local-only-state-and-no-backend-calls",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V200 code block provided by the user (verbatim), treating it as the full frontend application UI/logic (Portal Landing → Biometric AuthGate → Creator Suite setup → Pro Dashboard → Client Marketplace) with local-only state and no backend calls.",
+      "reqIds": [
+        "REQ-257"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v200-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-s-wiring-dependencies-e-g-missing-incorrect-imports-unresolved-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v200-ui-layout-styling-tailwind-classes-copy-datasets-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V200 overwrite by applying only minimal mechanical fixes required by this repository’s wiring/dependencies (e.g., missing/incorrect imports, unresolved identifiers, invalid JSX, duplicate default exports), without changing the intended V200 UI layout, styling (Tailwind classes), copy, datasets, or interaction behavior.",
+      "reqIds": [
+        "REQ-258"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-retain-v200-persistence-exactly-as-specified-the-unified-app-state-must-be-persisted-to-localstorage-under-the-key-nexus-singularity-v200-and-a-full-page-reload-must-restore-the-last-persisted-view-userrole-proprofile-bookings-ledger-and-notifications",
+      "title": "Implement/retain V200 persistence exactly as specified: the unified app state must be persisted to `localStorage` under the key `nexus_singularity_v200`, and a full-page reload must restore the last persisted `view`, `userRole`, `proProfile`, `bookings`, `ledger`, and `notifications`.",
+      "reqIds": [
+        "REQ-260"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-the-v200-end-to-end-demo-lifecycle-across-roles-using-shared-local-state-client-creates-a-booking-in-pending-pro-dashboard-radar-can-accept-reject-pending-bookings-confirmed-rejected-client-can-mark-confirmed-bookings-as-completed-via-the-pay-action-pro-ledger-updates-totals-pending-and-history-according-to-the-v200-logic",
+      "title": "Preserve the V200 end-to-end demo lifecycle across roles using shared local state: Client creates a booking in `PENDING`; Pro dashboard Radar can accept/reject pending bookings (`CONFIRMED`/`REJECTED`); Client can mark `CONFIRMED` bookings as `COMPLETED` via the pay action; Pro ledger updates totals/pending and history according to the V200 logic.",
+      "reqIds": [
+        "REQ-261"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-user-provided-v400-nexus-silk-code-block-preserving-components-local-mock-data-constants-tailwind-classes-imports-ui-strings-and-interaction-logic-verbatim",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact user-provided V400 “NEXUS SILK” code block, preserving components, local mock data constants, Tailwind classes, imports, UI strings, and interaction logic verbatim.",
+      "reqIds": [
+        "REQ-262"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v400-appv1-jsx-overwrite-by-applying-only-minimal-mechanical-adjustments-required-by-this-repository-e-g-fix-missing-incorrect-imports-from-lucide-react-or-framer-motion-resolve-undefined-identifiers-used-in-jsx-remove-or-correct-only-truly-build-breaking-references-without-changing-the-intended-v400-ui-layout-styling-copy-datasets-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V400 `AppV1.jsx` overwrite by applying only minimal mechanical adjustments required by this repository (e.g., fix missing/incorrect imports from `lucide-react` or `framer-motion`, resolve undefined identifiers used in JSX, remove or correct only truly build-breaking references) without changing the intended V400 UI layout, styling, copy, datasets, or interaction behavior.",
+      "reqIds": [
+        "REQ-263"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-load-the-silk-typography-fonts-used-by-v400-playfair-display-for-titles-and-inter-for-body-so-that-the-v400-editorial-design-renders-as-intended-by-adding-non-invasive-font-loading-in-an-editable-entry-point-e-g-frontend-index-html-without-changing-any-v400-ui-copy-or-component-logic",
+      "title": "Load the Silk typography fonts used by V400 (Playfair Display for titles and Inter for body) so that the V400 editorial design renders as intended, by adding non-invasive font loading in an editable entry point (e.g., `frontend/index.html`), without changing any V400 UI copy or component logic.",
+      "reqIds": [
+        "REQ-265"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v500-nexus-god-mode-code-provided-by-the-user-full-overwrite-preserving-all-components-mock-data-tailwind-classes-imports-ui-strings-and-interaction-logic-exactly-as-given",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V500 “NEXUS GOD-MODE” code provided by the user (full overwrite, preserving all components, mock data, Tailwind classes, imports, UI strings, and interaction logic exactly as given).",
+      "reqIds": [
+        "REQ-266"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v500-appv1-jsx-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-undefined-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v500-ui-layout-styling-copy-data-constants-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V500 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports) without changing the intended V500 UI layout, styling, copy, data constants, or interaction behavior.",
+      "reqIds": [
+        "REQ-267"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-v500-search-continuity-behavior-the-city-category-selected-on-the-landing-screen-must-be-persisted-into-the-app-brain-state-and-injected-into-the-client-marketplace-filters-so-the-marketplace-header-and-the-pro-list-reflect-the-same-selected-city-category-immediately-upon-entering-the-marketplace",
+      "title": "Preserve and verify the V500 “Search Continuity” behavior: the city/category selected on the Landing screen must be persisted into the app brain state and injected into the Client Marketplace filters so the Marketplace header and the pro list reflect the same selected city/category immediately upon entering the Marketplace.",
+      "reqIds": [
+        "REQ-268"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-v500-logistics-engine-configuration-and-pricing-simulation-pro-setup-must-expose-configurable-travel-parameters-free-radius-in-km-and-chf-per-extra-km-and-the-client-booking-flow-must-display-travel-fees-when-the-user-selects-the-at-home-mobile-location-option-contributing-to-the-displayed-total-according-to-the-v500-logic",
+      "title": "Preserve and verify the V500 “Logistics Engine” configuration and pricing simulation: Pro Setup must expose configurable travel parameters (free radius in km and CHF per extra km), and the Client booking flow must display travel fees when the user selects the at-home (mobile) location option, contributing to the displayed total according to the V500 logic.",
+      "reqIds": [
+        "REQ-269"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-v500-service-add-ons-upsell-behavior-the-client-booking-flow-must-allow-selecting-paid-add-ons-before-confirmation-and-selected-add-ons-must-affect-the-computed-total-according-to-the-v500-code-logic",
+      "title": "Preserve and verify the V500 “Service Add-ons” (upsell) behavior: the Client booking flow must allow selecting paid add-ons before confirmation, and selected add-ons must affect the computed total according to the V500 code logic.",
+      "reqIds": [
+        "REQ-270"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-v500-dual-view-discovery-behavior-the-client-marketplace-must-provide-an-instant-switch-between-list-view-editorial-cards-and-map-view-radar-style-mock-map-without-navigation-away-from-the-marketplace",
+      "title": "Preserve and verify the V500 “Dual-view discovery” behavior: the Client Marketplace must provide an instant switch between LIST view (editorial cards) and MAP view (radar-style mock map) without navigation away from the Marketplace.",
+      "reqIds": [
+        "REQ-271"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-v500-local-persistence-model-the-unified-app-state-must-be-persisted-in-localstorage-under-the-key-nexus-god-v500-and-a-full-reload-must-restore-at-minimum-view-searchcontext-userrole-proprofile-bookings-and-ledger-exactly-as-used-by-the-v500-code",
+      "title": "Preserve and verify the V500 local persistence model: the unified app state must be persisted in `localStorage` under the key `nexus_god_v500` and a full reload must restore at minimum `view`, `searchContext`, `userRole`, `proProfile`, `bookings`, and `ledger` exactly as used by the V500 code.",
+      "reqIds": [
+        "REQ-272"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v600-nexus-eternity-code-block-provided-by-the-user",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V600 “NEXUS ETERNITY” code block provided by the user.",
+      "reqIds": [
+        "REQ-273"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v600-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-s-wiring-dependencies-without-changing-the-intended-v600-ui-layout-styling-tailwind-classes-copy-datasets-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V600 overwrite by applying only minimal mechanical fixes required by this repository’s wiring/dependencies, without changing the intended V600 UI layout, styling (Tailwind classes), copy, datasets, or interaction behavior.",
+      "reqIds": [
+        "REQ-274"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-and-verify-the-in-app-per-booking-chat-system-as-described-a-secure-in-app-chat-ui-must-be-accessible-from-a-booking-detail-surface-for-both-client-and-pro-and-messages-must-be-stored-in-app-state-keyed-by-booking-id",
+      "title": "Implement and verify the in-app per-booking chat system as described: a secure in-app chat UI must be accessible from a booking detail surface for both Client and Pro, and messages must be stored in app state keyed by booking ID.",
+      "reqIds": [
+        "REQ-275"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-and-verify-real-availability-behavior-the-pro-defines-working-hours-e-g-09-00-19-00-and-any-appointment-slot-selection-ui-must-hide-or-prevent-selecting-times-outside-those-defined-hours",
+      "title": "Implement and verify ‘Real Availability’ behavior: the Pro defines working hours (e.g., 09:00–19:00), and any appointment/slot selection UI must hide or prevent selecting times outside those defined hours.",
+      "reqIds": [
+        "REQ-276"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-and-verify-the-pro-settings-tab-editor-in-the-pro-dashboard-the-pro-can-edit-profile-fields-bio-services-names-prices-and-photos-and-changes-are-reflected-immediately-in-the-client-marketplace-for-the-pro-profile",
+      "title": "Implement and verify the Pro ‘Settings’ tab/editor in the Pro dashboard: the Pro can edit profile fields (bio), services (names/prices), and photos, and changes are reflected immediately in the Client marketplace for the Pro profile.",
+      "reqIds": [
+        "REQ-277"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-and-verify-the-review-engine-once-a-booking-is-in-completed-status-the-client-can-submit-a-1-5-star-rating-and-a-text-review-the-review-is-stored-and-appears-on-the-pro-profile-or-an-equivalent-pro-facing-surface-as-part-of-trust-feedback",
+      "title": "Implement and verify the review engine: once a booking is in `COMPLETED` status, the Client can submit a 1–5 star rating and a text review; the review is stored and appears on the Pro profile (or an equivalent Pro-facing surface) as part of trust feedback.",
+      "reqIds": [
+        "REQ-278"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-persistent-sessions-are-upgraded-for-v600-the-unified-app-state-must-be-persisted-and-restored-from-localstorage-under-the-key-nexus-eternity-v600-including-chat-messages-and-reviews-in-addition-to-role-profile-bookings-ledger",
+      "title": "Ensure ‘Persistent Sessions’ are upgraded for V600: the unified app state must be persisted and restored from `localStorage` under the key `nexus_eternity_v600`, including chat messages and reviews in addition to role/profile/bookings/ledger.",
+      "reqIds": [
+        "REQ-279"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v601-nexus-redemption-code-block-provided-by-the-user-verbatim-treating-it-as-the-complete-frontend-ui-logic-landing-simulated-biometric-auth-gate-full-app-and-keeping-it-local-only-no-backend-calls",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V601 “NEXUS REDEMPTION” code block provided by the user (verbatim), treating it as the complete frontend UI/logic (Landing → simulated biometric auth gate → full app) and keeping it local-only (no backend calls).",
+      "reqIds": [
+        "REQ-280"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v601-appv1-jsx-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-s-wiring-dependencies-e-g-missing-incorrect-imports-undefined-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-ui-styling-copy-datasets-or-interaction-behavior-from-the-provided-v601-code",
+      "title": "Ensure the project compiles and runs after the V601 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository’s wiring/dependencies (e.g., missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports) without changing the intended UI, styling, copy, datasets, or interaction behavior from the provided V601 code.",
+      "reqIds": [
+        "REQ-281"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-the-existing-app-entry-wiring-do-not-modify-frontend-src-app-tsx-must-remain-a-thin-wrapper-rendering-appv1-and-do-not-modify-any-frontend-immutable-entry-files-the-application-must-continue-to-mount-through-frontend-src-main-tsx",
+      "title": "Preserve the existing app entry wiring: do not modify `frontend/src/App.tsx` (must remain a thin wrapper rendering `AppV1`) and do not modify any frontend immutable entry files; the application must continue to mount through `frontend/src/main.tsx`.",
+      "reqIds": [
+        "REQ-282"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-retain-v601-local-persistence-exactly-as-specified-in-the-provided-code-the-unified-state-must-be-stored-in-localstorage-under-the-key-nexus-redemption-v601-and-restored-on-page-reload-view-searchcontext-userrole-proprofile-bookings-messages-ledger",
+      "title": "Implement/retain V601 local persistence exactly as specified in the provided code: the unified state must be stored in `localStorage` under the key `nexus_redemption_v601` and restored on page reload (view, searchContext, userRole, proProfile, bookings, messages, ledger).",
+      "reqIds": [
+        "REQ-283"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-and-verify-the-v601-restored-functional-engines-implemented-in-the-provided-code-local-only-pro-atomic-service-creation-editing-photo-duration-studio-mobile-price-in-app-per-booking-chat-pro-wallet-ledger-updates-on-booking-status-changes-client-dual-view-list-map-simulation-and-the-booking-flow-that-creates-pending-bookings-and-allows-pro-to-confirm-reject-them",
+      "title": "Preserve and verify the V601 restored functional engines implemented in the provided code (local-only): Pro atomic service creation/editing (photo, duration, studio/mobile price), in-app per-booking chat, Pro wallet/ledger updates on booking status changes, Client dual-view (list/map simulation), and the booking flow that creates PENDING bookings and allows Pro to CONFIRM/REJECT them.",
+      "reqIds": [
+        "REQ-284"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v1000-nexus-supremacy-code-block-provided-by-the-user-preserving-components-local-data-constants-imports-tailwind-classes-ui-strings-and-interaction-logic-verbatim-as-the-new-full-frontend-application-implementation",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V1000 “NEXUS SUPREMACY” code block provided by the user, preserving components, local data/constants, imports, Tailwind classes, UI strings, and interaction logic verbatim as the new full frontend application implementation.",
+      "reqIds": [
+        "REQ-285"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-project-compiles-and-runs-after-the-v1000-appv1-jsx-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-s-wiring-dependencies-e-g-missing-incorrect-imports-undefined-identifiers-referenced-in-jsx-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v1000-ui-layout-styling-copy-datasets-or-interaction-behavior",
+      "title": "Ensure the project compiles and runs after the V1000 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository’s wiring/dependencies (e.g., missing/incorrect imports, undefined identifiers referenced in JSX, invalid JSX, duplicate default exports), without changing the intended V1000 UI layout, styling, copy, datasets, or interaction behavior.",
+      "reqIds": [
+        "REQ-286"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-preserve-the-existing-application-entry-wiring-do-not-modify-frontend-src-app-tsx-it-must-remain-the-thin-wrapper-rendering-appv1-and-do-not-modify-any-frontend-immutable-entry-files-the-application-must-continue-to-mount-through-frontend-src-main-tsx",
+      "title": "Preserve the existing application entry wiring: do not modify `frontend/src/App.tsx` (it must remain the thin wrapper rendering `AppV1`) and do not modify any frontend immutable entry files; the application must continue to mount through `frontend/src/main.tsx`.",
+      "reqIds": [
+        "REQ-287"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-retain-v1000-local-persistence-exactly-as-specified-in-the-provided-v1000-code-the-unified-state-must-be-stored-in-localstorage-under-the-key-nexus-supremacy-v1000-and-restored-on-full-page-reload-including-at-minimum-view-searchcontext-userrole-proprofile-bookings-messages-and-ledger",
+      "title": "Implement/retain V1000 local persistence exactly as specified in the provided V1000 code: the unified state must be stored in `localStorage` under the key `nexus_supremacy_v1000` and restored on full page reload (including at minimum `view`, `searchContext`, `userRole`, `proProfile`, `bookings`, `messages`, and `ledger`).",
+      "reqIds": [
+        "REQ-288"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v7000-nexus-infinity-code-provided-by-the-user-verbatim-replacement-as-the-complete-app-ui-logic-landing-client-explorer-pro-app-stub-including-the-in-file-datasets-categories-pro-db-the-discovery-engine-category-rail-distance-sort-toggle-list-map-dual-view-the-client-bottom-dock-the-booking-modal-overlay-and-the-localstorage-brain-using-the-key-nexus-v7000",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V7000 “NEXUS INFINITY” code provided by the user (verbatim replacement as the complete app UI/logic: Landing → Client Explorer → Pro App stub), including the in-file datasets (`CATEGORIES`, `PRO_DB`), the discovery engine (category rail + distance sort toggle + list/map dual view), the client bottom dock, the booking modal overlay, and the localStorage brain using the key `nexus_v7000`.",
+      "reqIds": [
+        "REQ-289"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-v7000-frontend-src-appv1-jsx-implementation-compiles-and-runs-in-this-repository-by-applying-only-minimal-mechanical-fixes-required-by-the-repo-wiring-dependencies-e-g-missing-incorrect-imports-undefined-identifiers-referenced-in-jsx-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v7000-ui-layout-styling-tailwind-classes-copy-datasets-or-interaction-behavior",
+      "title": "Ensure the V7000 `frontend/src/AppV1.jsx` implementation compiles and runs in this repository by applying only minimal mechanical fixes required by the repo wiring/dependencies (e.g., missing/incorrect imports, undefined identifiers referenced in JSX, invalid JSX, duplicate default exports) without changing the intended V7000 UI layout, styling (Tailwind classes), copy, datasets, or interaction behavior.",
+      "reqIds": [
+        "REQ-290"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -2129,6 +2633,154 @@
       "id": "AR-106",
       "summary": "V70 « NEXUS OMNIPRESENCE » : overwrite total de `frontend/src/AppV1.jsx` avec le code V70 fourni (verbatim) pour ajouter un Smart Header (sélecteur de ville), un re-classement géo-prioritaire « Autour de vous » / « Ailleurs en Suisse » basé sur une distance simulée recalculée selon la ville choisie, et un Travel Mode indiquant « Ici » vs « Loin » tout en gardant l’accès global.",
       "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-107",
+      "summary": "V71 « NEXUS COMMAND » : overwrite total de `frontend/src/AppV1.jsx` avec le code V71 fourni (verbatim) pour implémenter NEXUS OS (Pro Dashboard Radar/Agenda/Wallet), Role Switcher Client↔Pro, et Real Handshake des demandes PENDING→CONFIRMED→COMPLETED déclenché par Mirror Protocol (state local partagé).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-113",
+      "summary": "Do not modify `frontend/src/App.tsx` and do not modify any frontend immutable entry files; the app must continue to mount through the existing `frontend/src/main.tsx` wiring.",
+      "reqIds": [
+        "REQ-226"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-114",
+      "summary": "V72 « NEXUS ETERNITY » : overwrite total de `frontend/src/AppV1.jsx` avec le code V72 fourni (verbatim) ajoutant (1) persistance `localStorage` via hook `useStickyState` (rôle + requêtes + état pertinent), (2) injection d’historique Wallet mock réaliste (`MOCK_HISTORY`) au premier lancement, (3) système de notifications globales via Toast inter-rôles, et (4) parsing/gestion des dates-heures pour tri RDV passé/futur.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-115",
+      "summary": "V73 « NEXUS UNIVERSE » : overwrite total de `frontend/src/AppV1.jsx` avec le code V73 fourni (verbatim) réintégrant Creator Studio (enrôlement forcé au 1er passage Pro), Client Feed avec pills catégories + tri par distance + choix ville, double pricing Studio/Mobile selon lieu, Pro Dashboard NEXUS OS, et persistance localStorage (role/profil/requests/ville).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-116",
+      "summary": "V74 « NEXUS GENESIS » : overwrite total de `frontend/src/AppV1.jsx` avec le code V74 fourni (verbatim) intégrant Smart Presets (services préchargés par catégorie avec double tarif Studio/Mobile), Advanced Uploader (simulation cover + photos), Pro Dashboard Fintech (radar/agenda/revenus simulés + switch Client), et Client Dynamic Feed (prix exact selon filtre Domicile/Studio) + persistance localStorage via `useStickyState` (clés V74).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-118",
+      "summary": "Ensure the project compiles and runs after the V74 overwrite by applying only the minimal mechanical adjustments required by this repository’s wiring/dependencies (e.g., fix missing/incorrect imports, resolve undefined identifiers, fix invalid JSX, resolve duplicate default exports) without changing the intended V74 UI layout, styling, copy, datasets, or interaction behavior.",
+      "reqIds": [
+        "REQ-242"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-119",
+      "summary": "Preserve and verify the four V74 “GENESIS” engines work end-to-end in local-only state (no backend calls): (1) Smart Presets auto-load editable services when category is chosen, (2) Advanced Uploader simulates cover image selection via local object URLs, (3) Fintech Pro Dashboard shows simulated revenue and allows accepting/rejecting pending requests plus switching immediately back to Client mode, and (4) Dynamic Client Feed shows the correct per-service price for the current location filter (Studio vs Mobile/Domicile) and creates booking requests in `PENDING` status.",
+      "reqIds": [
+        "REQ-243"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-120",
+      "summary": "V90 « NEXUS LEGENDARY » : overwrite total de `frontend/src/AppV1.jsx` avec le code V90 fourni (verbatim) pour implémenter True Calendar Engine anti double-booking, services hyper-def (double pricing + photo), Handshake Protocol (PENDING→CONFIRMED/REJECTED), Smart Context Pro Dashboard, et persistance totale via localStorage (`nexus_legendary_v90`).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-121",
+      "summary": "V100 « NEXUS SINGULARITY » : overwrite total de `frontend/src/AppV1.jsx` avec le code V100 fourni (verbatim) pour implémenter II biométrique simulé, router de paiements hybrides (ICP/Stripe/Twint-Handshake), Atomic Service Builder et Ledger Wallet dual (CHF/ICP) avec persistance `localStorage` (`nexus_singularity_v100`).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-124",
+      "summary": "Keep the existing application entry wiring unchanged: do not modify `frontend/src/App.tsx` and do not modify any frontend immutable entry files; the app must continue to mount through the existing Vite/React entry (`frontend/src/main.tsx`) and render `AppV1`.",
+      "reqIds": [
+        "REQ-250"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-125",
+      "summary": "V101 « NEXUS PORTAL » : overwrite total de `frontend/src/AppV1.jsx` avec le code V101 fourni (verbatim) pour ajouter une landing page vitrine scrollable (hero + live ticker TX + sections marketing) et une transition Connexion → login biométrique simulé → accès à l’app (V100) préservée derrière.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-131",
+      "summary": "Keep the application entry wiring unchanged: do not modify `frontend/src/App.tsx`, and do not modify any frontend immutable entry files; the app must continue to mount via `frontend/src/main.tsx` and render `AppV1`.",
+      "reqIds": [
+        "REQ-256"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-132",
+      "summary": "V200 « NEXUS SINGULARITY » : overwrite total de `frontend/src/AppV1.jsx` avec le code V200 fourni (verbatim) pour implémenter Portal (Landing scroll + LiveTicker + marketing Web3), AuthGate biométrique simulé, Creator Suite Pro (services riches + logistique + ledger/pending), Client Marketplace (booking lifecycle) et persistance `localStorage` via clé `nexus_singularity_v200`.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-135",
+      "summary": "Keep the application entry wiring unchanged: do not modify `frontend/src/App.tsx` (it must remain the thin wrapper that renders `AppV1`) and do not modify any frontend immutable entry files; the app must continue to mount through `frontend/src/main.tsx`.",
+      "reqIds": [
+        "REQ-259"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-136",
+      "summary": "V400 « NEXUS SILK » : overwrite total de `frontend/src/AppV1.jsx` avec le code V400 fourni (verbatim) pour implémenter une expérience “Web2 Luxe” (Hero Search Engine, Editorial Design noir/or, Pro Wizard 2.0, Seamless Booking) avec persistance `localStorage` via clé `nexus_silk_v400`.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-139",
+      "summary": "Keep the existing application entry wiring unchanged: do not modify `frontend/src/App.tsx` (it must remain the thin wrapper that renders `AppV1`) and do not modify any frontend immutable entry files; the app must continue to mount through the existing Vite/React entry (`frontend/src/main.tsx`).",
+      "reqIds": [
+        "REQ-264"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-140",
+      "summary": "V500 « NEXUS GOD-MODE » : overwrite total de `frontend/src/AppV1.jsx` avec le code V500 fourni (verbatim) incluant Search Continuity Landing→Marketplace, Logistics Engine (frais déplacement configurables), Service Add-ons (upsell), Dual-view discovery (Liste↔Carte) et Web3/Fiat checkout simulé avec persistance `localStorage` (`nexus_god_v500`).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-141",
+      "summary": "V600 « NEXUS ETERNITY » : overwrite total de `frontend/src/AppV1.jsx` avec le code V600 fourni (verbatim) incluant In‑app Messaging, Real Availability (horaires Pro), Pro Settings (édition profil/services), Review Engine post-COMPLETED, et persistance `localStorage` via clé `nexus_eternity_v600`.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-142",
+      "summary": "V601 « NEXUS REDEMPTION » : overwrite total de `frontend/src/AppV1.jsx` avec le code V601 fourni (verbatim) — Landing V400-like (Vogue/Apple), Auth biométrique simulé, Pro Setup services atomiques + Chat + Wallet, Client Dual View (Liste/Carte) + booking, persistance localStorage `nexus_redemption_v601`.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-143",
+      "summary": "V1000 « NEXUS SUPREMACY » : overwrite total de `frontend/src/AppV1.jsx` avec le code V1000 fourni (verbatim) incluant Dynamic Pricing Engine, Availability Matrix, Full‑Stack Studio (services + photos + upsell), Hybrid Dashboard (Radar/Agenda/Wallet), Landing Vogue, et persistance localStorage `nexus_supremacy_v1000`.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-144",
+      "summary": "V7000 « NEXUS INFINITY » : overwrite total de `frontend/src/AppV1.jsx` avec le code V7000 fourni (verbatim) pour restaurer le Discovery Engine (Category Rail, tri par distance/Geo-Sort, vue Carte interactive LIST↔MAP), Dock client (Explorer/Agenda/Moi), Landing Portal, Pro space (Ops/Studio stub) et persistance localStorage via `nexus_v7000`.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-147",
+      "summary": "Preserve the repository entry wiring: do not modify `frontend/src/App.tsx`, `frontend/src/main.tsx`, or any frontend immutable entry files; the application must continue to mount through the existing Vite/React entry and render `AppV1`.",
+      "reqIds": [
+        "REQ-291"
+      ],
       "status": "pending"
     }
   ],

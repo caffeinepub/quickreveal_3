@@ -1,18 +1,18 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-12T21:25:44.159Z",
+  "generatedAt": "2026-02-13T23:24:09.416Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 7,
-    "implemented": 7,
+    "total": 3,
+    "implemented": 2,
     "items": [
       {
-        "id": "REQ-214",
-        "summary": "Delete all existing content of `frontend/src/AppV1.jsx` and replace the entire file with the exact V70 “NEXUS OMNIPRESENCE” code block provided by the user (full overwrite), preserving components, local demo datasets (`CITIES`, `CATEGORIES`, `INITIAL_ARTISTS`, `PRESETS`), Tailwind classes, imports, UI strings, and interaction logic as given.",
+        "id": "REQ-289",
+        "summary": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V7000 “NEXUS INFINITY” code provided by the user (verbatim replacement as the complete app UI/logic: Landing → Client Explorer → Pro App stub), including the in-file datasets (`CATEGORIES`, `PRO_DB`), the discovery engine (category rail + distance sort toggle + list/map dual view), the client bottom dock, the booking modal overlay, and the localStorage brain using the key `nexus_v7000`.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx"
@@ -22,70 +22,25 @@
         ]
       },
       {
-        "id": "REQ-215",
-        "summary": "Ensure the project compiles and runs after the V70 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports) without changing the intended V70 UI, layout, styling, copy, or interaction behavior.",
+        "id": "REQ-290",
+        "summary": "Ensure the V7000 `frontend/src/AppV1.jsx` implementation compiles and runs in this repository by applying only minimal mechanical fixes required by the repo wiring/dependencies (e.g., missing/incorrect imports, undefined identifiers referenced in JSX, invalid JSX, duplicate default exports) without changing the intended V7000 UI layout, styling (Tailwind classes), copy, datasets, or interaction behavior.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/AppV1.jsx"
+          "frontend/src/AppV1.jsx",
+          "frontend/src/v7000-compat.notes.md"
         ],
         "matchedFiles": [
           "frontend/src/AppV1.jsx"
         ]
       },
       {
-        "id": "REQ-216",
-        "summary": "Preserve and verify the V70 “Smart Header” multi-city selector behavior: a sticky header shows the current user city (e.g., “Actuellement à : Lausanne”); clicking opens a dropdown of cities; selecting a city updates the user’s simulated location state immediately and closes the dropdown.",
-        "status": "implemented",
+        "id": "REQ-291",
+        "summary": "Preserve the repository entry wiring: do not modify `frontend/src/App.tsx`, `frontend/src/main.tsx`, or any frontend immutable entry files; the application must continue to mount through the existing Vite/React entry and render `AppV1`.",
+        "status": "missing",
         "plannedFiles": [
-          "frontend/src/AppV1.jsx"
+          "frontend/src/entry-wiring.guardrails.md"
         ],
-        "matchedFiles": [
-          "frontend/src/AppV1.jsx"
-        ]
-      },
-      {
-        "id": "REQ-217",
-        "summary": "Preserve and verify the V70 “Dynamic Reordering” behavior: when the user city changes, the feed reorders instantly into two sections—(1) “Autour de vous” containing artists considered local by the distance simulation, and (2) “Ailleurs en Suisse” containing the remaining artists—while keeping global access to all artists.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/AppV1.jsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/AppV1.jsx"
-        ]
-      },
-      {
-        "id": "REQ-218",
-        "summary": "Preserve and verify the V70 “Distance Simulation” behavior: displayed distances (km badges) change dynamically based on the selected user city using the provided `getDistance(userCity, proCity)` function.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/AppV1.jsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/AppV1.jsx"
-        ]
-      },
-      {
-        "id": "REQ-219",
-        "summary": "Preserve and verify the V70 “Travel Mode” UI cues on artist cards: when an artist is far (per the provided thresholds in the code), the UI indicates they are not nearby but still accessible (e.g., far-distance badge styling and the additional “Se déplace” indicator when applicable).",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/AppV1.jsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/AppV1.jsx"
-        ]
-      },
-      {
-        "id": "REQ-220",
-        "summary": "Make the Pro deploy/injection logic robust against stale React state closures in the V70 `handleProDeploy` path by using a functional state update when prepending the newly created artist to the `artists` list, while preserving identical visible behavior (new artist appears immediately at the top and the view switches to the app feed).",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/AppV1.jsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/AppV1.jsx"
-        ]
+        "matchedFiles": []
       }
     ]
   },

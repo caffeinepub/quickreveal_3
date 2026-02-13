@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-delete-all-existing-content-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v70-nexus-omnipresence-code-block-provided-by-the-user-full-overwrite-preserving-components-local-demo-datasets-cities-categories-initial-artists-presets-tailwind-classes-imports-ui-strings-and-interaction-logic-as-given",
-      "featureTitle": "Delete all existing content of `frontend/src/AppV1.jsx` and replace the entire file with the exact V70 “NEXUS OMNIPRESENCE” code block provided by the user (full overwrite), preserving components, local demo datasets (`CITIES`, `CATEGORIES`, `INITIAL_ARTISTS`, `PRESETS`), Tailwind classes, imports, UI strings, and interaction logic as given.",
+      "featureId": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v7000-nexus-infinity-code-provided-by-the-user-verbatim-replacement-as-the-complete-app-ui-logic-landing-client-explorer-pro-app-stub-including-the-in-file-datasets-categories-pro-db-the-discovery-engine-category-rail-distance-sort-toggle-list-map-dual-view-the-client-bottom-dock-the-booking-modal-overlay-and-the-localstorage-brain-using-the-key-nexus-v7000",
+      "featureTitle": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V7000 “NEXUS INFINITY” code provided by the user (verbatim replacement as the complete app UI/logic: Landing → Client Explorer → Pro App stub), including the in-file datasets (`CATEGORIES`, `PRO_DB`), the discovery engine (category rail + distance sort toggle + list/map dual view), the client bottom dock, the booking modal overlay, and the localStorage brain using the key `nexus_v7000`.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -17,13 +17,13 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-214"
+        "REQ-289"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-project-compiles-and-runs-after-the-v70-appv1-jsx-overwrite-by-applying-only-minimal-mechanical-fixes-required-by-this-repository-e-g-missing-incorrect-imports-undefined-identifiers-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v70-ui-layout-styling-copy-or-interaction-behavior",
-      "featureTitle": "Ensure the project compiles and runs after the V70 `AppV1.jsx` overwrite by applying only minimal mechanical fixes required by this repository (e.g., missing/incorrect imports, undefined identifiers, invalid JSX, duplicate default exports) without changing the intended V70 UI, layout, styling, copy, or interaction behavior.",
+      "featureId": "feature-ensure-the-v7000-frontend-src-appv1-jsx-implementation-compiles-and-runs-in-this-repository-by-applying-only-minimal-mechanical-fixes-required-by-the-repo-wiring-dependencies-e-g-missing-incorrect-imports-undefined-identifiers-referenced-in-jsx-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v7000-ui-layout-styling-tailwind-classes-copy-datasets-or-interaction-behavior",
+      "featureTitle": "Ensure the V7000 `frontend/src/AppV1.jsx` implementation compiles and runs in this repository by applying only minimal mechanical fixes required by the repo wiring/dependencies (e.g., missing/incorrect imports, undefined identifiers referenced in JSX, invalid JSX, duplicate default exports) without changing the intended V7000 UI layout, styling (Tailwind classes), copy, datasets, or interaction behavior.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -37,107 +37,7 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-215"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-preserve-and-verify-the-v70-smart-header-multi-city-selector-behavior-a-sticky-header-shows-the-current-user-city-e-g-actuellement-lausanne-clicking-opens-a-dropdown-of-cities-selecting-a-city-updates-the-user-s-simulated-location-state-immediately-and-closes-the-dropdown",
-      "featureTitle": "Preserve and verify the V70 “Smart Header” multi-city selector behavior: a sticky header shows the current user city (e.g., “Actuellement à : Lausanne”); clicking opens a dropdown of cities; selecting a city updates the user’s simulated location state immediately and closes the dropdown.",
-      "files": [
-        "frontend/src/AppV1.jsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-216"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-preserve-and-verify-the-v70-dynamic-reordering-behavior-when-the-user-city-changes-the-feed-reorders-instantly-into-two-sections-1-autour-de-vous-containing-artists-considered-local-by-the-distance-simulation-and-2-ailleurs-en-suisse-containing-the-remaining-artists-while-keeping-global-access-to-all-artists",
-      "featureTitle": "Preserve and verify the V70 “Dynamic Reordering” behavior: when the user city changes, the feed reorders instantly into two sections—(1) “Autour de vous” containing artists considered local by the distance simulation, and (2) “Ailleurs en Suisse” containing the remaining artists—while keeping global access to all artists.",
-      "files": [
-        "frontend/src/AppV1.jsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-217"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-preserve-and-verify-the-v70-distance-simulation-behavior-displayed-distances-km-badges-change-dynamically-based-on-the-selected-user-city-using-the-provided-getdistance-usercity-procity-function",
-      "featureTitle": "Preserve and verify the V70 “Distance Simulation” behavior: displayed distances (km badges) change dynamically based on the selected user city using the provided `getDistance(userCity, proCity)` function.",
-      "files": [
-        "frontend/src/AppV1.jsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-218"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-preserve-and-verify-the-v70-travel-mode-ui-cues-on-artist-cards-when-an-artist-is-far-per-the-provided-thresholds-in-the-code-the-ui-indicates-they-are-not-nearby-but-still-accessible-e-g-far-distance-badge-styling-and-the-additional-se-d-place-indicator-when-applicable",
-      "featureTitle": "Preserve and verify the V70 “Travel Mode” UI cues on artist cards: when an artist is far (per the provided thresholds in the code), the UI indicates they are not nearby but still accessible (e.g., far-distance badge styling and the additional “Se déplace” indicator when applicable).",
-      "files": [
-        "frontend/src/AppV1.jsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-219"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-make-the-pro-deploy-injection-logic-robust-against-stale-react-state-closures-in-the-v70-handleprodeploy-path-by-using-a-functional-state-update-when-prepending-the-newly-created-artist-to-the-artists-list-while-preserving-identical-visible-behavior-new-artist-appears-immediately-at-the-top-and-the-view-switches-to-the-app-feed",
-      "featureTitle": "Make the Pro deploy/injection logic robust against stale React state closures in the V70 `handleProDeploy` path by using a functional state update when prepending the newly created artist to the `artists` list, while preserving identical visible behavior (new artist appears immediately at the top and the view switches to the app feed).",
-      "files": [
-        "frontend/src/AppV1.jsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-220"
+        "REQ-290"
       ],
       "confidence": "high"
     }
