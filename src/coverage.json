@@ -1,7 +1,7 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-13T23:24:09.416Z",
+  "generatedAt": "2026-02-14T00:40:04.314Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
@@ -11,8 +11,8 @@
     "implemented": 2,
     "items": [
       {
-        "id": "REQ-289",
-        "summary": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V7000 “NEXUS INFINITY” code provided by the user (verbatim replacement as the complete app UI/logic: Landing → Client Explorer → Pro App stub), including the in-file datasets (`CATEGORIES`, `PRO_DB`), the discovery engine (category rail + distance sort toggle + list/map dual view), the client bottom dock, the booking modal overlay, and the localStorage brain using the key `nexus_v7000`.",
+        "id": "REQ-292",
+        "summary": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V10000 “NEXUS OMNIVERSE” code provided by the user (full overwrite), preserving all components, local mock data/constants, imports, Tailwind classes, UI strings, and interaction logic as given.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx"
@@ -22,23 +22,23 @@
         ]
       },
       {
-        "id": "REQ-290",
-        "summary": "Ensure the V7000 `frontend/src/AppV1.jsx` implementation compiles and runs in this repository by applying only minimal mechanical fixes required by the repo wiring/dependencies (e.g., missing/incorrect imports, undefined identifiers referenced in JSX, invalid JSX, duplicate default exports) without changing the intended V7000 UI layout, styling (Tailwind classes), copy, datasets, or interaction behavior.",
+        "id": "REQ-293",
+        "summary": "Ensure the V10000 `frontend/src/AppV1.jsx` implementation compiles and runs in this repository by applying only minimal mechanical fixes required by repo wiring/dependencies (e.g., missing/incorrect imports, undefined identifiers referenced in JSX, invalid JSX, missing action functions referenced by components, or duplicate default exports), without changing the intended V10000 UI layout, styling, copy, datasets, or interaction behavior.",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx",
-          "frontend/src/v7000-compat.notes.md"
+          "frontend/src/index.css"
         ],
         "matchedFiles": [
           "frontend/src/AppV1.jsx"
         ]
       },
       {
-        "id": "REQ-291",
-        "summary": "Preserve the repository entry wiring: do not modify `frontend/src/App.tsx`, `frontend/src/main.tsx`, or any frontend immutable entry files; the application must continue to mount through the existing Vite/React entry and render `AppV1`.",
+        "id": "REQ-294",
+        "summary": "Preserve the repository entry wiring: do not modify `frontend/src/App.tsx` (must remain a thin wrapper rendering `AppV1`) and do not modify any frontend immutable entry files; the application must continue to mount through `frontend/src/main.tsx` as currently wired.",
         "status": "missing",
         "plannedFiles": [
-          "frontend/src/entry-wiring.guardrails.md"
+          "frontend/src/ENTRY_WIRING_NOTE.md"
         ],
         "matchedFiles": []
       }

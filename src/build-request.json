@@ -1,85 +1,77 @@
 {
   "kind": "build_request",
-  "title": "Replace AppV1 with V7000 NEXUS INFINITY (Discovery Engine: categories, geo-sort, list↔map)",
+  "title": "Overwrite AppV1 with V10000 “NEXUS OMNIVERSE” and ensure it compiles/runs (local-only, persisted brain)",
   "priority": "high",
   "requirements": [
     {
-      "id": "REQ-289",
-      "text": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V7000 “NEXUS INFINITY” code provided by the user (verbatim replacement as the complete app UI/logic: Landing → Client Explorer → Pro App stub), including the in-file datasets (`CATEGORIES`, `PRO_DB`), the discovery engine (category rail + distance sort toggle + list/map dual view), the client bottom dock, the booking modal overlay, and the localStorage brain using the key `nexus_v7000`.",
+      "id": "REQ-292",
+      "text": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V10000 “NEXUS OMNIVERSE” code provided by the user (full overwrite), preserving all components, local mock data/constants, imports, Tailwind classes, UI strings, and interaction logic as given.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "**INSTRUCTION :** Efface tout le contenu actuel de `frontend/src/AppV1.jsx` et remplace-le par le code ci-dessous.",
-          "const saved = localStorage.getItem('nexus_v7000');"
+          "INSTRUCTION : Efface tout le contenu actuel de `frontend/src/AppV1.jsx` et remplace-le par le code ci-dessous.\n\nVOICI LE CODE V10000 COMPLET À ÉCRIRE :\n\nimport React, { useState, useEffect, useRef } from 'react';\n..."
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` content matches the provided V7000 code block (no refactors or feature additions).",
-        "The app boots through the existing `frontend/src/App.tsx` wrapper and renders the V7000 Landing screen when `state.view === 'LANDING'`.",
-        "State is persisted to `localStorage` under the key `nexus_v7000` and a full page reload restores the last persisted `view`, `userRole`, `bookings`, `favorites`, `proProfile`, and `ledger` per the V7000 state shape."
+        "`frontend/src/AppV1.jsx` matches the user-provided V10000 code block as the complete application UI/logic (Landing → Client Explorer → Pro Studio/Cockpit).",
+        "The local persistence key used by the app brain is exactly `nexus_omniverse_v10000` (read on init, write on any state change).",
+        "No backend calls are introduced; the app remains local-only state as defined in the V10000 code."
       ]
     },
     {
-      "id": "REQ-290",
-      "text": "Ensure the V7000 `frontend/src/AppV1.jsx` implementation compiles and runs in this repository by applying only minimal mechanical fixes required by the repo wiring/dependencies (e.g., missing/incorrect imports, undefined identifiers referenced in JSX, invalid JSX, duplicate default exports) without changing the intended V7000 UI layout, styling (Tailwind classes), copy, datasets, or interaction behavior.",
+      "id": "REQ-293",
+      "text": "Ensure the V10000 `frontend/src/AppV1.jsx` implementation compiles and runs in this repository by applying only minimal mechanical fixes required by repo wiring/dependencies (e.g., missing/incorrect imports, undefined identifiers referenced in JSX, invalid JSX, missing action functions referenced by components, or duplicate default exports), without changing the intended V10000 UI layout, styling, copy, datasets, or interaction behavior.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "**VOICI LE CODE V7000 COMPLET À ÉCRIRE :**"
+          "Assurer que ça compile et s’exécute (minimal mechanical fixes only)."
         ]
       },
       "acceptanceCriteria": [
-        "`npm test` is not required, but the Vite dev build compiles without errors related to `AppV1.jsx` (imports, undefined symbols, JSX syntax).",
-        "Framer Motion imports used by V7000 (`motion`, `AnimatePresence`) resolve and the booking modal overlay animates in/out without runtime errors.",
-        "Lucide icon imports used by V7000 resolve (including the `Navigation as NavIcon` alias and any icons referenced by JSX)."
+        "`npm run build` and `npm run dev` succeed without runtime crashes on initial load.",
+        "Any compile/runtime fixes are strictly mechanical (import/identifier/JSX wiring) and do not alter visible design, text, or flow behavior described by the V10000 code.",
+        "All referenced icons/components/hooks used in JSX are defined/imported (e.g., lucide-react icons, Framer Motion exports, React hooks like `useRef`)."
       ]
     },
     {
-      "id": "REQ-291",
-      "text": "Preserve the repository entry wiring: do not modify `frontend/src/App.tsx`, `frontend/src/main.tsx`, or any frontend immutable entry files; the application must continue to mount through the existing Vite/React entry and render `AppV1`.",
+      "id": "REQ-294",
+      "text": "Preserve the repository entry wiring: do not modify `frontend/src/App.tsx` (must remain a thin wrapper rendering `AppV1`) and do not modify any frontend immutable entry files; the application must continue to mount through `frontend/src/main.tsx` as currently wired.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-1"
         ],
         "quotes": [
-          "Keep `frontend/src/App.tsx` as a thin wrapper that renders `AppV1` (do not change the application entry wiring)"
+          "Efface tout le contenu actuel de `frontend/src/AppV1.jsx` et remplace-le par le code ci-dessous."
         ]
       },
       "acceptanceCriteria": [
-        "No changes are made to `frontend/src/App.tsx` (it remains a thin wrapper rendering `AppV1`).",
-        "No changes are made to any files listed in the platform immutable paths (entry wiring remains intact)."
+        "`frontend/src/App.tsx` remains functionally unchanged (still renders `AppV1` as the root).",
+        "No edits are made to immutable frontend paths listed in SYSTEM_CONTEXT.",
+        "The app still boots through the existing Vite/React entry and renders the new V10000 AppV1 UI."
       ]
     }
   ],
   "constraints": [
-    "Frontend-only change: do not add backend calls; keep the app local-only as in the provided V7000 code.",
-    "Do not modify `frontend/src/App.tsx`, `frontend/src/main.tsx`, or any frontend immutable entry files.",
-    "Replace `frontend/src/AppV1.jsx` with the user-provided V7000 code verbatim; only apply mechanical build fixes if the build breaks."
+    "Do not modify `frontend/src/App.tsx`; it must remain the thin wrapper that renders `AppV1`.",
+    "Do not modify any frontend immutable entry files/paths specified by SYSTEM_CONTEXT (compose instead of editing those files).",
+    "Apply only minimal mechanical changes needed to make the pasted V10000 code compile/run; do not refactor, redesign, or rewrite features beyond build-fixing adjustments.",
+    "Keep the app local-only as per the provided V10000 code (no new backend integration).",
+    "Use English for any user-facing text in this build request (implementation UI strings must remain as provided by the user)."
   ],
   "nonGoals": [
-    "Do not implement Internet Identity, role-based routing via backend roles, or React Query data loading for V7000.",
-    "Do not implement the full Booking Flow V3 (Service → Staff → Date → Login → Payment) beyond what exists in the provided V7000 code block.",
-    "Do not change any user-facing copy inside the provided V7000 code block (even if it is not English)."
+    "Implementing or restoring older backend-driven features (Motoko persistence, Internet Identity, React Query data fetching, on-chain image upload) beyond what exists in the provided V10000 code.",
+    "Adding new product features not explicitly present in the provided V10000 code block.",
+    "Changing the visual design system, copy, or interaction model of the provided V10000 UI (except for unavoidable build-fix adjustments)."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
   }
 }

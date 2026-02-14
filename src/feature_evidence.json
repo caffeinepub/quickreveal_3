@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v7000-nexus-infinity-code-provided-by-the-user-verbatim-replacement-as-the-complete-app-ui-logic-landing-client-explorer-pro-app-stub-including-the-in-file-datasets-categories-pro-db-the-discovery-engine-category-rail-distance-sort-toggle-list-map-dual-view-the-client-bottom-dock-the-booking-modal-overlay-and-the-localstorage-brain-using-the-key-nexus-v7000",
-      "featureTitle": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V7000 “NEXUS INFINITY” code provided by the user (verbatim replacement as the complete app UI/logic: Landing → Client Explorer → Pro App stub), including the in-file datasets (`CATEGORIES`, `PRO_DB`), the discovery engine (category rail + distance sort toggle + list/map dual view), the client bottom dock, the booking modal overlay, and the localStorage brain using the key `nexus_v7000`.",
+      "featureId": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v10000-nexus-omniverse-code-provided-by-the-user-full-overwrite-preserving-all-components-local-mock-data-constants-imports-tailwind-classes-ui-strings-and-interaction-logic-as-given",
+      "featureTitle": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V10000 “NEXUS OMNIVERSE” code provided by the user (full overwrite), preserving all components, local mock data/constants, imports, Tailwind classes, UI strings, and interaction logic as given.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -17,13 +17,13 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-289"
+        "REQ-292"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-v7000-frontend-src-appv1-jsx-implementation-compiles-and-runs-in-this-repository-by-applying-only-minimal-mechanical-fixes-required-by-the-repo-wiring-dependencies-e-g-missing-incorrect-imports-undefined-identifiers-referenced-in-jsx-invalid-jsx-duplicate-default-exports-without-changing-the-intended-v7000-ui-layout-styling-tailwind-classes-copy-datasets-or-interaction-behavior",
-      "featureTitle": "Ensure the V7000 `frontend/src/AppV1.jsx` implementation compiles and runs in this repository by applying only minimal mechanical fixes required by the repo wiring/dependencies (e.g., missing/incorrect imports, undefined identifiers referenced in JSX, invalid JSX, duplicate default exports) without changing the intended V7000 UI layout, styling (Tailwind classes), copy, datasets, or interaction behavior.",
+      "featureId": "feature-ensure-the-v10000-frontend-src-appv1-jsx-implementation-compiles-and-runs-in-this-repository-by-applying-only-minimal-mechanical-fixes-required-by-repo-wiring-dependencies-e-g-missing-incorrect-imports-undefined-identifiers-referenced-in-jsx-invalid-jsx-missing-action-functions-referenced-by-components-or-duplicate-default-exports-without-changing-the-intended-v10000-ui-layout-styling-copy-datasets-or-interaction-behavior",
+      "featureTitle": "Ensure the V10000 `frontend/src/AppV1.jsx` implementation compiles and runs in this repository by applying only minimal mechanical fixes required by repo wiring/dependencies (e.g., missing/incorrect imports, undefined identifiers referenced in JSX, invalid JSX, missing action functions referenced by components, or duplicate default exports), without changing the intended V10000 UI layout, styling, copy, datasets, or interaction behavior.",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -37,7 +37,7 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-290"
+        "REQ-293"
       ],
       "confidence": "high"
     }

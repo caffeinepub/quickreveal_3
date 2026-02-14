@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 141,
-  "summary": "V7000 « NEXUS INFINITY » : effacer et remplacer intégralement `frontend/src/AppV1.jsx` par le code V7000 fourni (verbatim). Objectif : réintégrer le Discovery Engine (Category Rail + tri par distance/geo-sort + Dual View LIST↔MAP), Dock bottom (Explorer/Agenda/Moi), portail Landing, espace Pro stub (Ops/Studio), et persistance `localStorage` via la clé `nexus_v7000`.",
+  "projectStateVersion": 143,
+  "summary": "V10000 « NEXUS OMNIVERSE » : effacer et remplacer intégralement `frontend/src/AppV1.jsx` par le code V10000 fourni (verbatim). Objectif : réunifier l’app en 2 univers (Client: LIST↔MAP pins + booking flow multi-étapes + reviews ; Pro: Cockpit Ops + Studio réglages) avec persistance `localStorage` via la clé `nexus_omniverse_v10000` et continuité de recherche Landing → Client.",
   "architectural_notes": [
     "RESET complet : écrasement total du backend et du frontend, considéré comme nouvelle V1.0 officielle.",
     "Backend Motoko réduit à un modèle Salon/Service/Socials avec `stable var salons` et endpoints `getSalons` (query) + `createSalon` (shared); seed de 4 salons suisses au démarrage (si salons vide).",
@@ -26,7 +26,7 @@
     "Risque de régression V38 : `handleDeploy` utilise `setSalons([newS, ...salons])` (closure potentiellement obsolète). Utiliser une mise à jour fonctionnelle pour éviter la perte d’injection en cas d’actions rapides.",
     "Risque de régression V61 : le filtrage catégories côté Client semble incomplet (la logique ne filtre explicitement que pour 'Barber' et laisse potentiellement toutes les autres catégories afficher tous les salons)."
   ],
-  "isFixRequest": true,
+  "isFixRequest": false,
   "existing_features": [
     {
       "id": "feature-implement-internet-identity-authentication-and-replace-the-existing-fake-login-screen-with-the-internet-identity-login-flow",
@@ -2108,6 +2108,22 @@
         "REQ-290"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v10000-nexus-omniverse-code-provided-by-the-user-full-overwrite-preserving-all-components-local-mock-data-constants-imports-tailwind-classes-ui-strings-and-interaction-logic-as-given",
+      "title": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V10000 “NEXUS OMNIVERSE” code provided by the user (full overwrite), preserving all components, local mock data/constants, imports, Tailwind classes, UI strings, and interaction logic as given.",
+      "reqIds": [
+        "REQ-292"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-v10000-frontend-src-appv1-jsx-implementation-compiles-and-runs-in-this-repository-by-applying-only-minimal-mechanical-fixes-required-by-repo-wiring-dependencies-e-g-missing-incorrect-imports-undefined-identifiers-referenced-in-jsx-invalid-jsx-missing-action-functions-referenced-by-components-or-duplicate-default-exports-without-changing-the-intended-v10000-ui-layout-styling-copy-datasets-or-interaction-behavior",
+      "title": "Ensure the V10000 `frontend/src/AppV1.jsx` implementation compiles and runs in this repository by applying only minimal mechanical fixes required by repo wiring/dependencies (e.g., missing/incorrect imports, undefined identifiers referenced in JSX, invalid JSX, missing action functions referenced by components, or duplicate default exports), without changing the intended V10000 UI layout, styling, copy, datasets, or interaction behavior.",
+      "reqIds": [
+        "REQ-293"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -2780,6 +2796,20 @@
       "summary": "Preserve the repository entry wiring: do not modify `frontend/src/App.tsx`, `frontend/src/main.tsx`, or any frontend immutable entry files; the application must continue to mount through the existing Vite/React entry and render `AppV1`.",
       "reqIds": [
         "REQ-291"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-148",
+      "summary": "V10000 « NEXUS OMNIVERSE » : overwrite total de `frontend/src/AppV1.jsx` avec le code V10000 fourni (verbatim) pour implémenter l’architecture Omniverse (Client LIST↔MAP + booking flow + reviews ; Pro Cockpit Agenda/POS/CRM/Marketing ; Pro Studio services/équipe/horaires/profil) et persistance localStorage `nexus_omniverse_v10000`.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-151",
+      "summary": "Preserve the repository entry wiring: do not modify `frontend/src/App.tsx` (must remain a thin wrapper rendering `AppV1`) and do not modify any frontend immutable entry files; the application must continue to mount through `frontend/src/main.tsx` as currently wired.",
+      "reqIds": [
+        "REQ-294"
       ],
       "status": "pending"
     }
