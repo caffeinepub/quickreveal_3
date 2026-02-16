@@ -7,14 +7,13 @@ import {
   Settings, Edit3, Image as ImageIcon, LogOut, Bell, Star, 
   CreditCard, QrCode, Smartphone, Map as MapIcon, List,
   Lock, ShieldCheck, Globe, Check, Printer, ShoppingBag, 
-  Megaphone, Menu, Store, PenTool, Filter, Navigation as NavIcon, Heart, UserCheck, Package, History
+  Megaphone, Menu, Store, PenTool, Filter, Navigation as NavIcon, 
+  Heart, UserCheck, Package, FileText, Download, AlertTriangle, Crown,
+  Route, CheckSquare, Smile
 } from 'lucide-react';
 
-// --- DESIGN TOKENS ---
-const fontTitle = { fontFamily: '"Playfair Display", "Didot", serif', letterSpacing: '-0.02em' };
-const fontBody = { fontFamily: '"Inter", sans-serif', letterSpacing: '-0.01em' };
-
-// --- DATA CONSTANTS ---
+// --- CONFIGURATION DU DESIGN ---
+const fontTitle = { fontFamily: 'serif', letterSpacing: '-0.02em' }; 
 const CITIES = ["Lausanne", "Genève", "Montreux", "Zurich", "Sion", "Monaco"];
 const CATEGORIES = [
     { id: 'ALL', label: 'Tout', icon: LayoutGrid },
@@ -23,337 +22,195 @@ const CATEGORIES = [
     { id: 'Onglerie', label: 'Onglerie', icon: Feather },
     { id: 'Esthétique', label: 'Esthétique', icon: Zap }
 ];
-const DAYS = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+const PLANS = [
+    { id: 'STARTER', name: 'Mobile', price: 19, features: ['Agenda Intelligent', 'Zone Géo', 'Paiement Lien'] },
+    { id: 'EMPIRE', name: 'Pro', price: 49, features: ['Tout Mobile', 'Multi-Staff', 'Marketing SMS', 'Export Compta'] }
+];
 
-// --- MOCK DATABASE (SEED) ---
-const SEED_PRO = {
-    id: 'p1', name: "Maison Or", category: 'Barber', city: 'Genève', lat: 45, lng: 30, rating: 5.0, reviews: 124,
-    cover: "https://images.unsplash.com/photo-1503951914875-452162b7f304?auto=format&fit=crop&w=800&q=80",
-    bio: "L'excellence masculine. Coupe, barbe et soins visage.",
-    address: "Rue du Rhône 42",
-    hours: { 'Lun':null, 'Mar':'09:00-19:00', 'Mer':'09:00-19:00', 'Jeu':'09:00-21:00', 'Ven':'09:00-21:00', 'Sam':'09:00-17:00', 'Dim':null },
-    services: [
-        { id: 's1', name: "Coupe Signature", time: 45, sPrice: 50, mPrice: 90, cover: "https://images.unsplash.com/photo-1621605815971-fbc98d665033", addons: [{name:"Barbe", price:20}, {name:"Masque", price:15}] }
-    ],
-    staff: [{id: 'st1', name: 'Julien', role: 'Master'}, {id: 'st2', name: 'Thomas', role: 'Junior'}]
-};
-
-// --- BRAIN (STATE MANAGEMENT) ---
+// --- MOTEUR CENTRAL (STATE MANAGEMENT) ---
 const useNexusBrain = () => {
     const [state, setState] = useState(() => {
-        const saved = localStorage.getItem('nexus_omniverse_v10000');
-        return saved ? JSON.parse(saved) : { 
-            view: 'LANDING', 
-            searchCtx: { city: 'Genève', category: 'ALL' },
-            userRole: null, 
-            proProfile: null, 
-            bookings: [], // {id, status: PENDING|CONFIRMED|COMPLETED, ...}
-            clients: [], // CRM
-            inventory: [{id: 'prod1', name: 'Cire Mat', price: 25, stock: 12}, {id: 'prod2', name: 'Huile Barbe', price: 30, stock: 5}], 
-            campaigns: [],
-            favorites: [],
-            ledger: { total: 0, cash: 0, card: 0, history: [] }
-        };
+        // Tentative de récupération locale ou initialisation par défaut
+        try {
+            const saved = localStorage.getItem('nexus_v12_clean');
+            return saved ? JSON.parse(saved) : { 
+                view: 'LANDING', 
+                userRole: null, 
+                proProfile: null, 
+                bookings: [], clients: [], campaigns: [], 
+                inventory: [{id: 'p1', name: 'Shampoing', price: 25, stock: 10}],
+                ledger: { total: 0, cash: 0, card: 0, history: [] },
+                searchCtx: { city: 'Genève', category: 'ALL' }
+            };
+        } catch (e) {
+            return { view: 'LANDING', ledger: { total: 0, cash: 0, card: 0, history: [] }, bookings: [], clients: [], inventory: [], campaigns: [], searchCtx: { city: 'Genève', category: 'ALL' } };
+        }
     });
 
-    useEffect(() => { localStorage.setItem('nexus_omniverse_v10000', JSON.stringify(state)); }, [state]);
+    useEffect(() => { localStorage.setItem('nexus_v12_clean', JSON.stringify(state)); }, [state]);
 
     const actions = {
-        setSearch: (ctx) => setState(s => ({...s, searchCtx: {...s.searchCtx, ...ctx}})),
-        
-        // NAVIGATION
         go: (view) => setState(s => ({...s, view})),
-        login: (role) => setState(s => ({...s, userRole: role, view: role === 'PRO' ? (s.proProfile ? 'PRO_COCKPIT' : 'PRO_STUDIO') : 'CLIENT_EXPLORER'})),
+        setSearch: (ctx) => setState(s => ({...s, searchCtx: {...s.searchCtx, ...ctx}})),
+        convertPro: (plan) => setState(s => ({...s, userRole: 'PRO', view: 'PRO_ONBOARDING', proProfile: {plan, name:'', services:[{id:1, name:'Service Base', price:50, time:30}]}})),
+        convertClient: () => setState(s => ({...s, userRole: 'CLIENT', view: 'CLIENT_EXPLORER'})),
         
-        // PRO CONFIG (STUDIO)
-        saveProfile: (p) => setState(s => ({...s, proProfile: p})),
-        updateServices: (svcs) => setState(s => ({...s, proProfile: {...s.proProfile, services: svcs}})),
-        updateStaff: (staff) => setState(s => ({...s, proProfile: {...s.proProfile, staff}})),
-        
-        // PRO OPS (COCKPIT)
+        saveProfile: (p) => setState(s => ({...s, proProfile: {...s.proProfile, ...p}})),
         addInventory: (prod) => setState(s => ({...s, inventory: [...s.inventory, {...prod, id: Date.now()}]})),
         sendCampaign: (c) => setState(s => ({...s, campaigns: [...s.campaigns, c]})),
-        goProStudio: () => setState(s => ({...s, view: 'PRO_STUDIO'})),
-        
-        // BOOKING ENGINE
+
         addBooking: (b) => setState(s => {
-            // CRM Update
             let newClients = [...s.clients];
-            if(!newClients.find(c=>c.name===b.clientName)) newClients.push({id:Date.now(), name:b.clientName, visits:1, total:0, last: new Date().toLocaleDateString()});
+            if(!newClients.find(c=>c.name===b.clientName)) newClients.push({id:Date.now(), name:b.clientName, visits:1, total:0});
             return {...s, bookings: [...s.bookings, {...b, id: Date.now(), status: 'CONFIRMED'}], clients: newClients};
         }),
         
-        // POS ENGINE (RETAIL + SERVICE)
         checkout: (bookingId, method, amount, items) => setState(s => {
-            const b = s.bookings.find(x => x.id === bookingId);
             const newLedger = {
                 total: s.ledger.total + amount,
                 cash: method === 'CASH' ? s.ledger.cash + amount : s.ledger.cash,
                 card: method !== 'CASH' ? s.ledger.card + amount : s.ledger.card,
-                history: [{id: Date.now(), amount, method, label: b?.clientName || 'Vente Directe', items}, ...s.ledger.history]
+                history: [{id: Date.now(), amount, method, label: bookingId ? 'Service' : 'Vente Directe', items}, ...s.ledger.history]
             };
-            // Update booking status if linked
             const newBookings = bookingId ? s.bookings.map(x => x.id === bookingId ? {...x, status: 'COMPLETED', paid: true} : x) : s.bookings;
-            
             return {...s, ledger: newLedger, bookings: newBookings};
         }),
-
-        addReview: (id, rating) => setState(s => ({...s, bookings: s.bookings.map(b => b.id === id ? {...b, reviewed: true, rating} : b)})),
-        toggleFav: (id) => setState(s => ({...s, favorites: s.favorites.includes(id) ? s.favorites.filter(x=>x!==id) : [...s.favorites, id]})),
-
+        
         logout: () => setState(s => ({...s, view: 'LANDING', userRole: null}))
     };
     return { state, actions };
 };
 
-// --- COMPONENT: HERO LANDING (VOGUE) ---
-const LandingPage = ({ onSearch, context }) => {
-    const [city, setCity] = useState(context.city || "Genève");
-    const [cat, setCat] = useState("ALL");
-    
+/* --- 1. LANDING PAGE (MARKETING) --- */
+const LandingPage = ({ actions, ctx }) => {
     return (
-        <div className="min-h-screen bg-[#050505] text-white font-sans flex flex-col relative overflow-hidden">
-            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1596704017254-9b121068fb31?auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center opacity-30 grayscale"/>
-            <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-black/40"/>
-            
-            <nav className="relative z-10 p-8 flex justify-between items-center">
-                <div className="text-2xl font-bold tracking-tighter" style={fontTitle}>NEXUS.</div>
+        <div className="min-h-screen bg-white text-zinc-900 font-sans">
+            <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-zinc-100 px-6 py-4 flex justify-between items-center">
+                <div className="text-2xl font-bold tracking-tighter" style={fontTitle}>Sovereign<span className="text-yellow-600">.</span></div>
                 <div className="flex gap-4">
-                    <button onClick={()=>onSearch({role:'PRO'})} className="text-xs font-bold uppercase tracking-widest text-zinc-300 hover:text-white transition">Business</button>
-                    <button onClick={()=>onSearch({role:'CLIENT'})} className="px-6 py-2 bg-white text-black rounded-full text-xs font-bold uppercase tracking-widest hover:scale-105 transition">Connexion</button>
+                    <button onClick={actions.convertClient} className="text-sm font-bold uppercase hover:text-yellow-600">Espace Client</button>
+                    <button onClick={()=>actions.convertPro('STARTER')} className="px-5 py-2 bg-zinc-900 text-white rounded-full text-xs font-bold uppercase">Espace Pro</button>
                 </div>
             </nav>
-
-            <div className="relative z-10 flex-1 flex flex-col justify-center px-6 items-center text-center">
-                <h1 className="text-7xl md:text-9xl mb-8 leading-[0.9] animate-fade-in" style={fontTitle}>
-                    Omniverse<br/>Edition.
-                </h1>
-                
-                {/* SEARCH CONTINUITY */}
-                <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-2 rounded-full flex flex-col md:flex-row gap-2 w-full max-w-xl shadow-2xl">
-                    <div className="flex-1 bg-black/60 rounded-full px-6 py-4 flex items-center gap-3 border border-white/5">
-                        <MapPin size={16} className="text-[#D4AF37]"/>
-                        <select value={city} onChange={e=>setCity(e.target.value)} className="bg-transparent outline-none text-sm font-bold w-full appearance-none text-white">
-                            <option disabled>Ville</option>
-                            {CITIES.map(c=><option key={c} value={c}>{c}</option>)}
-                        </select>
+            
+            <header className="py-20 px-6 max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+                <div className="space-y-8">
+                    <h1 className="text-6xl md:text-8xl leading-none text-zinc-900" style={fontTitle}>Votre bureau,<br/>c'est la route.</h1>
+                    <p className="text-lg text-zinc-500">L'agenda intelligent pour les pros nomades. Gérez vos tournées, encaissez sur mobile.</p>
+                    
+                    <div className="bg-white p-2 rounded-full shadow-2xl border border-zinc-100 flex flex-col md:flex-row gap-2">
+                        <div className="flex-1 bg-zinc-50 rounded-full px-4 py-3 flex items-center gap-2">
+                            <MapPin size={16} className="text-yellow-600"/>
+                            <select className="bg-transparent w-full text-sm font-bold outline-none" onChange={e=>actions.setSearch({city:e.target.value})}><option>Genève</option>{CITIES.map(c=><option key={c}>{c}</option>)}</select>
+                        </div>
+                        <button onClick={actions.convertClient} className="px-6 py-3 bg-yellow-600 text-white rounded-full font-bold uppercase text-xs">Explorer</button>
                     </div>
-                    <div className="flex-1 bg-black/60 rounded-full px-6 py-4 flex items-center gap-3 border border-white/5">
-                        <Filter size={16} className="text-[#D4AF37]"/>
-                        <select value={cat} onChange={e=>setCat(e.target.value)} className="bg-transparent outline-none text-sm font-bold w-full appearance-none text-white">
-                            <option value="ALL">Tout</option>
-                            {CATEGORIES.filter(c=>c.id!=='ALL').map(c=><option key={c.id} value={c.id}>{c.label}</option>)}
-                        </select>
+                </div>
+                <div className="relative p-8 bg-zinc-100 rounded-3xl">
+                    <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-xl animate-bounce border border-zinc-100">
+                        <div className="flex items-center gap-3"><CheckCircle2 className="text-green-500"/><span className="font-bold">Paiement Reçu 120.-</span></div>
                     </div>
-                    <button onClick={() => onSearch({ city, category: cat, role:'CLIENT' })} className="bg-[#D4AF37] text-black px-8 py-4 rounded-full font-bold uppercase text-xs tracking-widest hover:scale-105 transition shadow-[0_0_30px_rgba(212,175,55,0.3)] flex items-center gap-2"><Search size={14}/> Explorer</button>
+                    <div className="aspect-square bg-zinc-200 rounded-2xl flex items-center justify-center text-zinc-400">Image App Mobile</div>
                 </div>
-            </div>
-        </div>
-    );
-};
+            </header>
 
-// --- COMPONENT: PRO STUDIO (CONFIG & SETUP) ---
-const ProStudio = ({ profile, actions }) => {
-    const [tab, setTab] = useState('SERVICES'); // SERVICES, TEAM, HOURS, INFO
-    const [local, setLocal] = useState(profile || {name:'', services:[], staff:[], hours:{}});
-    const [editSvc, setEditSvc] = useState(null);
-
-    return (
-        <div className="min-h-screen bg-[#080808] text-white font-sans flex flex-col">
-            <div className="p-6 border-b border-white/5 flex justify-between items-center bg-zinc-900">
-                <div><h2 className="font-bold text-lg">Studio</h2><p className="text-[10px] text-zinc-500 uppercase">Configuration</p></div>
-                <div className="flex gap-2">
-                    <button onClick={actions.logout} className="p-2 bg-black rounded-full"><LogOut size={16}/></button>
-                    <button onClick={()=>{actions.saveProfile(local); actions.go('PRO_COCKPIT')}} className="bg-[#D4AF37] text-black px-4 py-2 rounded-lg text-xs font-bold uppercase">Sauvegarder & Go Ops</button>
-                </div>
-            </div>
-            <div className="flex border-b border-white/5">
-                {['SERVICES', 'EQUIPE', 'HORAIRES', 'INFOS'].map(t => (
-                    <button key={t} onClick={()=>setTab(t)} className={`flex-1 py-4 text-[10px] font-bold uppercase ${tab===t?'text-[#D4AF37] border-b-2 border-[#D4AF37]':'text-zinc-500'}`}>{t}</button>
-                ))}
-            </div>
-            <div className="flex-1 p-6 overflow-y-auto">
-                {tab === 'SERVICES' && (
-                    <div className="space-y-4">
-                        {!editSvc ? (
-                            <>
-                                <button onClick={()=>setEditSvc({name:'', price:0, addons:[]})} className="w-full py-3 border border-dashed border-zinc-700 text-zinc-500 rounded-xl text-xs uppercase hover:text-white hover:border-white">+ Nouveau Service</button>
-                                {local.services?.map((s,i)=><div key={i} onClick={()=>setEditSvc(s)} className="flex justify-between items-center bg-zinc-900 p-4 rounded-xl border border-zinc-800 cursor-pointer hover:border-[#D4AF37]"><div><span className="font-bold block">{s.name}</span><span className="text-xs text-zinc-500">{s.time} min • {s.addons?.length} options</span></div><span className="text-[#D4AF37] font-bold">{s.price || s.sPrice}.-</span></div>)}
-                            </>
-                        ) : (
-                            <div className="space-y-4 bg-zinc-900 p-4 rounded-xl border border-zinc-800 animate-slide-in-from-right">
-                                <div className="flex justify-between"><h3 className="font-bold text-sm">Édition Service</h3><X size={16} className="cursor-pointer" onClick={()=>setEditSvc(null)}/></div>
-                                <div className="flex gap-4">
-                                    <div className="w-20 h-20 bg-black rounded-lg border border-dashed border-zinc-700 flex items-center justify-center"><ImageIcon className="text-zinc-600"/></div>
-                                    <div className="flex-1 space-y-2">
-                                        <input value={editSvc.name} onChange={e=>setEditSvc({...editSvc, name:e.target.value})} placeholder="Nom" className="w-full bg-black p-3 rounded-lg text-white text-sm font-bold"/>
-                                        <div className="flex gap-2">
-                                            <input type="number" value={editSvc.sPrice} onChange={e=>setEditSvc({...editSvc, sPrice:Number(e.target.value)})} placeholder="Prix Studio" className="bg-black p-2 rounded-lg text-white text-xs w-full"/>
-                                            <input type="number" value={editSvc.mPrice} onChange={e=>setEditSvc({...editSvc, mPrice:Number(e.target.value)})} placeholder="Prix Domicile" className="bg-black p-2 rounded-lg text-white text-xs w-full"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="border-t border-white/5 pt-2">
-                                    <label className="text-[9px] uppercase text-zinc-500">Options (Upsell)</label>
-                                    {editSvc.addons?.map((ad,k)=><div key={k} className="flex justify-between text-xs py-1"><span>{ad.name}</span><span>+{ad.price}</span></div>)}
-                                    <button onClick={()=>setEditSvc({...editSvc, addons:[...(editSvc.addons||[]), {name:'Option Extra', price:10}]})} className="text-xs text-[#D4AF37] underline">+ Ajouter Option</button>
-                                </div>
-                                <button onClick={()=>{
-                                    const newSvcs = editSvc.id ? local.services.map(s=>s.id===editSvc.id?editSvc:s) : [...(local.services||[]), {...editSvc, id:Date.now()}];
-                                    setLocal({...local, services: newSvcs}); setEditSvc(null);
-                                }} className="w-full py-3 bg-white text-black font-bold uppercase rounded-lg text-xs">Sauvegarder</button>
+            <section className="py-20 bg-zinc-900 text-white px-6">
+                <div className="max-w-4xl mx-auto">
+                    <h2 className="text-4xl mb-12 text-center" style={fontTitle}>Tarifs Transparents</h2>
+                    <div className="grid md:grid-cols-2 gap-8">
+                        {PLANS.map(p => (
+                            <div key={p.id} className={`p-8 rounded-3xl border ${p.id==='EMPIRE'?'bg-white text-black border-transparent':'border-zinc-700'}`}>
+                                <h3 className="text-2xl font-bold mb-2">{p.name}</h3>
+                                <div className="text-4xl font-bold mb-6" style={fontTitle}>{p.price}.-</div>
+                                <ul className="space-y-3 mb-8 text-sm opacity-80">{p.features.map(f=><li key={f} className="flex gap-2"><Check size={14}/> {f}</li>)}</ul>
+                                <button onClick={()=>actions.convertPro(p.id)} className={`w-full py-4 rounded-xl font-bold uppercase text-xs ${p.id==='EMPIRE'?'bg-black text-white':'bg-white text-black'}`}>Choisir</button>
                             </div>
-                        )}
+                        ))}
                     </div>
-                )}
-                {tab === 'EQUIPE' && (
-                    <div className="space-y-4">
-                        {local.staff?.map((s,i)=><div key={i} className="flex justify-between items-center bg-zinc-900 p-4 rounded-xl"><span>{s.name}</span><span className="text-xs text-zinc-500">{s.role}</span></div>)}
-                        <button onClick={()=>setLocal({...local, staff:[...(local.staff||[]), {id:Date.now(), name:'Nouveau', role:'Staff'}]})} className="w-full py-3 border border-zinc-800 rounded-xl text-xs text-zinc-500 uppercase">+ Ajouter Membre</button>
-                    </div>
-                )}
-                {tab === 'HORAIRES' && (
-                    <div className="space-y-2">
-                        {DAYS.map(d=>(<div key={d} className="flex justify-between items-center bg-zinc-900 p-3 rounded-lg"><span className="text-sm font-bold w-10">{d}</span><input placeholder="Fermé" value={local.hours[d]||''} onChange={e=>setLocal({...local, hours:{...local.hours, [d]:e.target.value}})} className="bg-transparent text-right outline-none text-zinc-400 text-sm"/></div>))}
-                    </div>
-                )}
-                {tab === 'INFOS' && (
-                    <div className="space-y-4">
-                        <input value={local.name} onChange={e=>setLocal({...local, name:e.target.value})} className="w-full bg-zinc-900 p-4 rounded-xl text-white font-bold" placeholder="Nom du Salon"/>
-                        <input value={local.address} onChange={e=>setLocal({...local, address:e.target.value})} className="w-full bg-zinc-900 p-4 rounded-xl text-white" placeholder="Adresse"/>
-                    </div>
-                )}
-            </div>
+                </div>
+            </section>
         </div>
     );
 };
 
-// --- COMPONENT: PRO COCKPIT (OPS & POS & CRM) ---
-const ProCockpit = ({ profile, bookings, ledger, inventory, campaigns, clients, actions }) => {
-    const [view, setView] = useState('AGENDA'); // AGENDA, POS, CRM, MARKETING
-    const [posOrder, setPosOrder] = useState(null); // { booking, items: [] }
+/* --- 2. PRO APP (WIZARD & COCKPIT) --- */
+const ProOnboarding = ({ actions }) => (
+    <div className="min-h-screen bg-zinc-900 text-white p-8 flex flex-col justify-center max-w-md mx-auto">
+        <h2 className="text-3xl mb-6 text-yellow-500" style={fontTitle}>Initialisation</h2>
+        <input placeholder="Nom du Salon" className="bg-black p-4 rounded-xl mb-4 text-white border border-zinc-800" onChange={e=>actions.saveProfile({name:e.target.value})}/>
+        <button onClick={()=>actions.go('PRO_COCKPIT')} className="w-full py-4 bg-white text-black font-bold uppercase rounded-xl">Lancer le Cockpit</button>
+    </div>
+);
 
-    const hours = Array.from({length:11},(_,i)=>9+i);
+const ProCockpit = ({ brain, actions }) => {
+    const [view, setView] = useState('AGENDA');
+    const [pos, setPos] = useState(null);
 
     return (
         <div className="min-h-screen bg-[#050505] text-white font-sans flex flex-col">
-            <div className="p-4 pt-8 flex justify-between items-center bg-zinc-900 border-b border-white/5">
+            <div className="p-4 border-b border-white/10 flex justify-between items-center bg-zinc-900">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-zinc-800 border border-[#D4AF37] overflow-hidden"><img src={profile.cover} className="w-full h-full object-cover"/></div>
-                    <div><h2 className="font-bold text-sm">{profile.name}</h2><p className="text-[9px] text-green-500 uppercase flex items-center gap-1"><span className="w-1.5 h-1.5 bg-green-500 rounded-full"/> Cockpit</p></div>
+                    <div className="w-10 h-10 bg-yellow-600 rounded-full flex items-center justify-center font-bold text-black">{brain.proProfile?.name?.[0] || 'M'}</div>
+                    <div><h2 className="font-bold text-sm">Cockpit Pro</h2><span className="text-[9px] text-green-500 uppercase">En ligne</span></div>
                 </div>
-                <div className="flex gap-2">
-                    <button onClick={actions.goProStudio} className="p-2 bg-black border border-zinc-700 rounded-full text-zinc-400 hover:text-white"><Settings size={16}/></button>
-                    <button onClick={actions.logout} className="p-2 bg-black border border-zinc-700 rounded-full hover:text-red-500"><LogOut size={16}/></button>
-                </div>
+                <button onClick={actions.logout} className="p-2 bg-black rounded-full"><LogOut size={16}/></button>
             </div>
 
-            <div className="flex p-2 gap-2 bg-black overflow-x-auto">
-                {[
-                    {id:'AGENDA', icon:CalIcon, label:'Agenda'}, {id:'POS', icon:Printer, label:'Caisse'}, 
-                    {id:'CRM', icon:Users, label:'Clients'}, {id:'MARKETING', icon:Megaphone, label:'Pub'}
-                ].map(v => (
-                    <button key={v.id} onClick={()=>setView(v.id)} className={`flex-1 py-3 rounded-xl flex flex-col items-center gap-1 ${view===v.id?'bg-zinc-800 text-[#D4AF37]':'text-zinc-600 border border-zinc-900'}`}><v.icon size={18}/><span className="text-[9px] font-bold uppercase">{v.label}</span></button>
+            <div className="flex bg-black border-b border-white/10 p-2 gap-2 overflow-x-auto">
+                {['AGENDA', 'POS', 'CLIENTS', 'MARKETING'].map(v => (
+                    <button key={v} onClick={()=>setView(v)} className={`flex-1 py-3 rounded-lg flex flex-col items-center gap-1 text-[10px] font-bold ${view===v?'bg-zinc-800 text-yellow-500':'text-zinc-600'}`}>{v}</button>
                 ))}
             </div>
 
-            <div className="flex-1 overflow-y-auto bg-[#0a0a0a] p-4">
-                {/* AGENDA VISUEL */}
+            <div className="flex-1 overflow-y-auto p-4 bg-[#0a0a0a]">
                 {view === 'AGENDA' && (
                     <div className="space-y-4">
-                        <div className="flex justify-between items-center"><h3 className="font-bold text-lg">Aujourd'hui</h3><button onClick={()=>setPosOrder({items:[], total:0})} className="text-xs bg-zinc-800 px-3 py-1 rounded">+ Vente Directe</button></div>
-                        <div className="relative border-l border-zinc-800 ml-4 space-y-4 py-2">
-                            {hours.map(h => {
-                                const b = bookings.find(x => parseInt(x.time) === h);
+                        <div className="flex justify-between items-center"><h3 className="font-bold">Aujourd'hui</h3><button onClick={()=>setPos({total:0, items:[]})} className="text-xs bg-white text-black px-3 py-1 rounded">+ Vente</button></div>
+                        <div className="space-y-2 border-l border-zinc-800 ml-2 pl-4">
+                            {Array.from({length:10},(_,i)=>9+i).map(h => {
+                                const b = brain.bookings.find(x => new Date(x.id).getHours() === h); 
                                 return (
-                                    <div key={h} className="relative pl-6 min-h-[70px]">
-                                        <span className="absolute -left-3 top-0 text-[10px] text-zinc-600 bg-[#0a0a0a] py-1">{h}:00</span>
-                                        {b ? (
-                                            <div onClick={()=>setPosOrder({booking:b, items:[], total:b.total})} className={`p-3 rounded-lg border-l-4 cursor-pointer shadow-lg ${b.paid?'border-green-500 bg-zinc-900/50':'border-[#D4AF37] bg-zinc-800'}`}>
-                                                <div className="flex justify-between"><span className="font-bold text-sm">{b.clientName}</span><span>{b.total}.-</span></div>
-                                                <div className="text-[10px] text-zinc-400 mt-1">{b.serviceName} • {b.staffName}</div>
-                                                {!b.paid && <div className="mt-2 text-[9px] font-bold text-[#D4AF37] flex items-center gap-1"><Printer size={10}/> Encaisser</div>}
-                                            </div>
-                                        ) : <div className="h-full border-b border-zinc-900/50"/>}
+                                    <div key={h} className="min-h-[60px] relative">
+                                        <span className="absolute -left-8 text-[10px] text-zinc-600">{h}:00</span>
+                                        {b ? <div onClick={()=>setPos({booking:b, total:b.total, items:[]})} className="bg-zinc-800 p-3 rounded border-l-2 border-yellow-600 cursor-pointer"><div className="font-bold text-sm">{b.clientName}</div><div className="text-xs text-zinc-500">{b.serviceName} • {b.total}.-</div></div> : <div className="border-b border-zinc-900 h-full"/>}
                                     </div>
-                                );
+                                )
                             })}
                         </div>
                     </div>
                 )}
 
-                {/* POS RETAIL & SERVICE */}
                 {view === 'POS' && (
-                    <div className="text-center py-20 text-zinc-500 text-xs">
+                    <div className="text-center py-20">
                         <Printer size={48} className="mx-auto mb-4 opacity-50"/>
-                        <p>Sélectionnez un RDV dans l'agenda ou créez une vente.</p>
-                        <div className="mt-8 grid grid-cols-2 gap-4 text-left">
-                            <div className="bg-zinc-900 p-4 rounded-xl border border-zinc-800"><span className="text-[10px] uppercase text-zinc-500">CA Jour</span><div className="text-2xl font-bold text-white">{ledger.total}.-</div></div>
-                            <div className="bg-zinc-900 p-4 rounded-xl border border-zinc-800"><span className="text-[10px] uppercase text-zinc-500">Clients</span><div className="text-2xl font-bold text-white">{clients.length}</div></div>
-                        </div>
+                        <p className="text-zinc-500 text-xs">Ouvrez un RDV ou scannez un produit</p>
+                        <div className="mt-8 bg-zinc-900 p-4 rounded-xl"><span className="text-xs uppercase text-zinc-500">CA Jour</span><div className="text-3xl font-bold">{brain.ledger.total}.-</div></div>
                     </div>
                 )}
-
-                {/* CRM */}
-                {view === 'CRM' && (
-                    <div className="space-y-4">
-                        {clients.map(c => (
-                            <div key={c.id} className="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex justify-between items-center">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center font-bold text-zinc-500">{c.name[0]}</div>
-                                    <div><div className="font-bold text-sm">{c.name}</div><div className="text-[10px] text-zinc-500">Visites: {c.visits} • Dernier: {c.last}</div></div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
-
-                {/* MARKETING */}
+                
                 {view === 'MARKETING' && (
-                    <div className="space-y-4">
-                        <div className="bg-gradient-to-r from-zinc-900 to-zinc-800 p-6 rounded-2xl border border-white/5">
-                            <h3 className="font-bold text-lg mb-2">Campagne SMS</h3>
-                            <button onClick={()=>actions.sendCampaign({title:'Promo'})} className="w-full py-3 bg-[#D4AF37] text-black font-bold uppercase text-xs rounded-xl flex items-center justify-center gap-2"><Megaphone size={14}/> Envoyer Offre (-20%)</button>
-                        </div>
-                        <div className="space-y-2">
-                            <h4 className="text-xs font-bold text-zinc-500 uppercase">Historique</h4>
-                            {campaigns.map((c,i)=><div key={i} className="bg-zinc-900 p-3 rounded-lg text-xs flex justify-between"><span>{c.title}</span><span className="text-green-500">Envoyé</span></div>)}
-                        </div>
+                    <div className="p-4 bg-zinc-900 rounded-xl">
+                        <h3 className="font-bold mb-4">Campagne SMS</h3>
+                        <button onClick={()=>actions.sendCampaign({title:'Promo'})} className="w-full py-3 bg-yellow-600 text-black font-bold rounded-lg text-xs">Envoyer Promo (-20%)</button>
+                        <div className="mt-4 text-xs text-zinc-500">Campagnes envoyées: {brain.campaigns.length}</div>
                     </div>
                 )}
             </div>
 
-            {/* POS MODAL (OVERLAY) */}
-            {posOrder && (
+            {pos && (
                 <div className="fixed inset-0 z-50 bg-[#0F0F11] flex flex-col animate-slide-in-from-bottom">
-                    <div className="p-6 border-b border-white/5 flex justify-between items-center bg-zinc-900">
-                        <h3 className="font-bold text-white">Caisse</h3>
-                        <button onClick={()=>setPosOrder(null)}><X size={20}/></button>
-                    </div>
-                    <div className="flex-1 p-6 overflow-y-auto">
-                        <div className="bg-zinc-900 p-4 rounded-xl mb-4 border border-zinc-800">
-                            {posOrder.booking && <div className="flex justify-between text-sm mb-2 font-bold"><span>{posOrder.booking.serviceName}</span><span>{posOrder.booking.total}.-</span></div>}
-                            {posOrder.items.map((it, i) => (
-                                <div key={i} className="flex justify-between text-sm text-[#D4AF37]"><span>+ {it.name}</span><span>{it.price}.-</span></div>
-                            ))}
-                            <div className="border-t border-zinc-800 my-2"/>
-                            <div className="text-xs text-zinc-500 uppercase font-bold mb-2">Ajouter Produit (Retail)</div>
-                            <div className="grid grid-cols-2 gap-2">
-                                {inventory.map(p => (
-                                    <button key={p.id} onClick={()=>setPosOrder({...posOrder, items: [...posOrder.items, p], total: posOrder.total + p.price})} className="p-2 border border-zinc-700 rounded text-xs text-left hover:border-[#D4AF37]">{p.name} ({p.price}.-)</button>
-                                ))}
-                            </div>
+                    <div className="p-4 border-b border-white/10 flex justify-between items-center bg-zinc-900"><h3 className="font-bold">Caisse</h3><button onClick={()=>setPos(null)}><X/></button></div>
+                    <div className="flex-1 p-4 overflow-y-auto">
+                        {pos.booking && <div className="bg-zinc-900 p-4 rounded mb-4 flex justify-between"><span>{pos.booking.serviceName}</span><span>{pos.booking.total}.-</span></div>}
+                        <div className="text-xs text-zinc-500 uppercase mb-2">Ajouter Produit</div>
+                        <div className="grid grid-cols-2 gap-2">{brain.inventory.map(p => <button key={p.id} onClick={()=>setPos(s=>({...s, items: [...(s.items||[]), p], total:(s.total||0)+p.price}))} className="p-3 border border-zinc-800 rounded text-left text-xs hover:border-yellow-600">{p.name} <br/><b>{p.price}.-</b></button>)}</div>
+                        <div className="mt-4">
+                            {pos.items?.map((it, i) => <div key={i} className="flex justify-between text-sm text-yellow-600"><span>+ {it.name}</span><span>{it.price}.-</span></div>)}
                         </div>
                     </div>
-                    <div className="p-6 bg-zinc-900 border-t border-white/5">
-                        <div className="flex justify-between items-end mb-6">
-                            <span className="text-zinc-500 text-sm uppercase font-bold">Total à payer</span>
-                            <span className="text-5xl font-bold text-white" style={fontTitle}>{posOrder.total}.-</span>
-                        </div>
-                        <div className="grid grid-cols-2 gap-3">
-                            <button onClick={()=>{actions.checkout(posOrder.booking?.id, 'CASH', posOrder.total, posOrder.items); setPosOrder(null);}} className="py-4 bg-zinc-800 rounded-xl font-bold border border-zinc-700 hover:bg-[#D4AF37] hover:text-black">Espèces</button>
-                            <button onClick={()=>{actions.checkout(posOrder.booking?.id, 'CARD', posOrder.total, posOrder.items); setPosOrder(null);}} className="py-4 bg-white text-black rounded-xl font-bold hover:scale-105">Carte</button>
-                        </div>
+                    <div className="p-4 border-t border-white/10 bg-zinc-900">
+                        <div className="flex justify-between mb-4"><span className="text-zinc-500">Total</span><span className="text-4xl font-bold" style={fontTitle}>{pos.total || 0}.-</span></div>
+                        <button onClick={()=>{actions.checkout(pos.booking?.id, 'CARD', pos.total, pos.items); setPos(null)}} className="w-full py-4 bg-white text-black font-bold uppercase rounded text-xs">Encaisser</button>
                     </div>
                 </div>
             )}
@@ -361,126 +218,42 @@ const ProCockpit = ({ profile, bookings, ledger, inventory, campaigns, clients, 
     );
 };
 
-// --- COMPONENT: CLIENT EXPLORER (MAP + BOOKING V3) ---
+/* --- 3. CLIENT APP --- */
 const ClientExplorer = ({ brain, actions }) => {
-    const [viewMode, setViewMode] = useState('LIST');
-    const [selectedPro, setSelectedPro] = useState(null);
-    const [booking, setBooking] = useState(null); // { step, service, options, staff }
-    const [tab, setTab] = useState('EXPLORE');
+    const [view, setView] = useState('LIST');
+    const [selected, setSelected] = useState(null);
 
-    // MERGE MOCK + REAL
-    const PROS = brain.proProfile ? [brain.proProfile, SEED_PRO] : [SEED_PRO];
-    const filtered = PROS.filter(p => brain.searchCtx.category==='ALL' || p.category === brain.searchCtx.category);
-
-    const handleConfirm = () => {
-        const total = booking.service.sPrice + (booking.options?.reduce((a,o)=>a+o.price,0)||0);
-        actions.addBooking({
-            proId: selectedPro.id, clientName: "Moi", 
-            total, serviceName: booking.service.name, staffName: booking.staff?.name,
-            time: "14:00"
-        });
-        setSelectedPro(null); setBooking(null); setTab('BOOKINGS');
-    };
+    const PROS = [{id:'p1', name:'Maison Or', city:'Genève', price:50, cover:'https://images.unsplash.com/photo-1503951914875-452162b7f304?auto=format&fit=crop&w=800&q=80'}];
+    const filtered = PROS.filter(p => brain.searchCtx.city === p.city || brain.searchCtx.city === 'Genève');
 
     return (
         <div className="min-h-screen bg-[#050505] text-white font-sans flex flex-col relative">
-            {/* Header */}
-            <div className="p-6 pt-8 flex justify-between items-center border-b border-white/5 bg-black/90 backdrop-blur sticky top-0 z-30">
-                <div className="flex items-center gap-2 bg-zinc-900 px-4 py-2 rounded-full border border-white/5"><MapPin size={14} className="text-[#D4AF37]"/><span className="text-sm font-bold">{brain.searchCtx.city}</span></div>
-                <div className="flex bg-zinc-900 rounded-full p-1"><button onClick={()=>setViewMode('LIST')} className={`p-2 rounded-full ${viewMode==='LIST'?'bg-white text-black':''}`}><List size={14}/></button><button onClick={()=>setViewMode('MAP')} className={`p-2 rounded-full ${viewMode==='MAP'?'bg-white text-black':''}`}><MapIcon size={14}/></button></div>
-                <button onClick={actions.logout} className="p-2 rounded-full bg-zinc-900"><LogOut size={16}/></button>
+            <div className="p-6 pt-8 flex justify-between items-center sticky top-0 bg-black/90 backdrop-blur z-20">
+                <div className="flex items-center gap-2 bg-zinc-900 px-3 py-1 rounded-full"><MapPin size={14} className="text-yellow-600"/><span className="text-xs font-bold">{brain.searchCtx.city}</span></div>
+                <button onClick={()=>setView(v => v==='LIST'?'MAP':'LIST')} className="p-2 bg-zinc-900 rounded-full"><MapIcon size={16}/></button>
+                <button onClick={actions.logout} className="p-2 bg-zinc-900 rounded-full"><LogOut size={16}/></button>
             </div>
 
-            <div className="flex-1 p-6 overflow-y-auto space-y-6 pb-32">
-                {tab === 'EXPLORE' && (
-                    viewMode === 'LIST' ? filtered.map(pro => (
-                        <div key={pro.id} onClick={()=>{setSelectedPro(pro); setBooking({step:'SERVICE', options:[]})}} className="relative aspect-[16/9] rounded-3xl overflow-hidden border border-white/10 cursor-pointer group shadow-2xl">
-                            <img src={pro.cover} className="w-full h-full object-cover transition duration-700 group-hover:scale-105"/>
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"/>
-                            <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end">
-                                <div><h3 style={fontTitle} className="text-2xl text-white">{pro.name}</h3><p className="text-zinc-400 text-xs">{pro.category}</p></div>
-                                <div className="bg-white/10 backdrop-blur px-3 py-1.5 rounded-lg text-[#D4AF37] font-bold text-sm">Dès {pro.services?.[0]?.sPrice}.-</div>
-                            </div>
+            <div className="flex-1 p-6 overflow-y-auto">
+                {view === 'LIST' ? filtered.map(p => (
+                    <div key={p.id} onClick={()=>setSelected(p)} className="mb-6 relative aspect-video bg-zinc-900 rounded-2xl overflow-hidden cursor-pointer group">
+                        <img src={p.cover} className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition"/>
+                        <div className="absolute bottom-4 left-4">
+                            <h3 className="text-xl font-bold" style={fontTitle}>{p.name}</h3>
+                            <div className="flex items-center gap-2 mt-1"><span className="bg-white text-black text-[10px] font-bold px-2 py-0.5 rounded">Dès {p.price}.-</span></div>
                         </div>
-                    )) : (
-                        <div className="absolute inset-0 bg-[#111]">
-                            <div className="absolute inset-0" style={{backgroundImage: 'radial-gradient(#333 1px, transparent 1px)', backgroundSize: '30px 30px', opacity: 0.3}}></div>
-                            {filtered.map(pro => (
-                                <div key={pro.id} onClick={()=>{setSelectedPro(pro); setBooking({step:'SERVICE', options:[]})}} className="absolute flex flex-col items-center cursor-pointer hover:scale-110 transition" style={{top: `${pro.lat}%`, left: `${pro.lng}%`}}>
-                                    <div className="bg-white text-black px-2 py-1 rounded-lg text-[10px] font-bold shadow-xl mb-1">{pro.services?.[0]?.sPrice}.-</div>
-                                    <div className="w-3 h-3 bg-[#D4AF37] rounded-full ring-4 ring-[#D4AF37]/30"/>
-                                </div>
-                            ))}
-                        </div>
-                    )
-                )}
-
-                {tab === 'BOOKINGS' && (
-                    <div className="space-y-4">
-                        <h2 style={fontTitle} className="text-3xl mb-6">Mes RDV.</h2>
-                        {brain.bookings.map(b => (
-                            <div key={b.id} className="bg-zinc-900 border border-white/5 p-5 rounded-2xl flex justify-between items-center">
-                                <div><div className="font-bold text-lg">{b.serviceName}</div><div className="text-xs text-zinc-500">{b.staffName} • {b.total}.-</div></div>
-                                {b.status === 'COMPLETED' && !b.reviewed ? <button onClick={()=>actions.addReview(b.id, 5)} className="px-3 py-1 bg-[#D4AF37] text-black text-xs font-bold rounded">Noter</button> : <div className="text-xs font-bold bg-white/10 px-2 py-1 rounded">{b.status}</div>}
-                            </div>
-                        ))}
                     </div>
-                )}
+                )) : <div className="h-full flex items-center justify-center text-zinc-600 text-xs bg-[#111]">Carte Interactive (Module GPS)</div>}
             </div>
 
-            {/* DOCK */}
-            <div className="p-4 pb-8 bg-black/90 backdrop-blur border-t border-white/5 flex justify-around items-center z-50">
-                <button onClick={()=>setTab('EXPLORE')} className={`flex flex-col items-center gap-1 ${tab==='EXPLORE'?'text-[#D4AF37]':'text-zinc-600'}`}><Search size={20}/><span className="text-[9px] font-bold uppercase">Explorer</span></button>
-                <button onClick={()=>setTab('BOOKINGS')} className={`flex flex-col items-center gap-1 ${tab==='BOOKINGS'?'text-[#D4AF37]':'text-zinc-600'}`}><CalIcon size={20}/><span className="text-[9px] font-bold uppercase">Agenda</span></button>
-                <button className={`flex flex-col items-center gap-1 text-zinc-600`}><User size={20}/><span className="text-[9px] font-bold uppercase">Moi</span></button>
-            </div>
-
-            {/* BOOKING MODAL */}
-            {selectedPro && (
-                <div className="fixed inset-0 z-[60] bg-[#0F0F11] flex flex-col animate-slide-in-from-bottom">
-                    <div className="p-6 border-b border-white/5 flex justify-between items-center"><h3 style={fontTitle} className="text-2xl">{selectedPro.name}</h3><button onClick={()=>setSelectedPro(null)} className="p-2 bg-zinc-900 rounded-full"><X size={16}/></button></div>
-                    <div className="flex-1 overflow-y-auto p-6">
-                        {booking?.step === 'SERVICE' && (
-                            <div className="space-y-4">
-                                <h4 className="text-xs font-bold uppercase text-zinc-500">Choisir Prestation</h4>
-                                {selectedPro.services.map((s,i) => (
-                                    <div key={i} onClick={()=>setBooking({...booking, step:'OPTIONS', service:s})} className="p-4 bg-zinc-900 border border-zinc-800 rounded-xl flex justify-between items-center hover:border-[#D4AF37] cursor-pointer">
-                                        <div><div className="font-bold">{s.name}</div><div className="text-xs text-zinc-500">{s.time} min</div></div>
-                                        <div className="font-bold text-[#D4AF37]">{s.sPrice}.-</div>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                        {booking?.step === 'OPTIONS' && (
-                            <div className="space-y-6">
-                                <h4 className="text-xs font-bold uppercase text-zinc-500">Ajouter Options</h4>
-                                {(booking.service.addons || []).map((opt, i) => (
-                                    <div key={i} onClick={()=>{const exists=booking.options.includes(opt); setBooking({...booking, options: exists ? booking.options.filter(x=>x!==opt) : [...booking.options, opt]})}} className={`p-4 border rounded-xl flex justify-between cursor-pointer ${booking.options.includes(opt) ? 'bg-[#D4AF37] text-black border-[#D4AF37]' : 'bg-zinc-900 border-zinc-800'}`}><span className="font-bold">{opt.name}</span><span>+{opt.price}.-</span></div>
-                                ))}
-                                <button onClick={()=>setBooking({...booking, step:'STAFF'})} className="w-full py-4 bg-white text-black font-bold uppercase rounded-xl">Continuer</button>
-                            </div>
-                        )}
-                        {booking?.step === 'STAFF' && (
-                            <div className="space-y-6 animate-slide-in-from-right">
-                                <h4 className="text-xs font-bold uppercase text-zinc-500">Choisir Expert</h4>
-                                <div className="grid grid-cols-2 gap-3">
-                                    {(selectedPro.staff || []).map((st, i) => (
-                                        <div key={i} onClick={()=>setBooking({...booking, step:'CONFIRM', staff: st})} className="p-4 bg-zinc-900 border border-zinc-800 rounded-xl text-center cursor-pointer hover:border-[#D4AF37]">
-                                            <div className="w-12 h-12 bg-black rounded-full mx-auto mb-2 flex items-center justify-center font-bold text-zinc-600">{st.name[0]}</div>
-                                            <div className="font-bold text-sm">{st.name}</div>
-                                            <div className="text-[10px] text-zinc-500">{st.role}</div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                        {booking?.step === 'CONFIRM' && (
-                            <div className="space-y-6 text-center pt-8">
-                                <h2 className="text-4xl font-bold text-white mb-2" style={fontTitle}>{booking.service.sPrice + booking.options.reduce((a,o)=>a+o.price,0)}.-</h2>
-                                <p className="text-zinc-500 text-sm">Avec {booking.staff?.name}</p>
-                                <button onClick={handleConfirm} className="w-full py-4 bg-[#D4AF37] text-black font-black uppercase rounded-xl shadow-lg">Confirmer</button>
-                            </div>
-                        )}
+            {selected && (
+                <div className="fixed inset-0 z-50 bg-[#0F0F11] flex flex-col animate-slide-in-from-bottom">
+                    <div className="p-6 flex justify-between"><h3 className="text-xl font-bold">{selected.name}</h3><button onClick={()=>setSelected(null)}><X/></button></div>
+                    <div className="flex-1 p-6 space-y-4">
+                        <div onClick={()=>{actions.addBooking({clientName:'Moi', serviceName:'Coupe', total:50}); setSelected(null)}} className="p-4 bg-zinc-900 border border-zinc-800 rounded-xl flex justify-between cursor-pointer hover:border-yellow-600">
+                            <div><div className="font-bold">Coupe Signature</div><div className="text-xs text-zinc-500">45 min</div></div>
+                            <div className="font-bold text-yellow-600">50.-</div>
+                        </div>
                     </div>
                 </div>
             )}
@@ -488,13 +261,12 @@ const ClientExplorer = ({ brain, actions }) => {
     );
 };
 
-// --- ROOT ---
+/* --- RACINE DE L'APPLICATION --- */
 export default function App() {
     const { state, actions } = useNexusBrain();
-    if(state.view === 'LANDING') return <LandingPage onSearch={(ctx) => { actions.setSearch(ctx); actions.login(ctx.role); }} context={state.searchCtx}/>;
-    if(state.view === 'PRO_SETUP') return <ProStudio profile={null} actions={actions}/>; // First time setup
-    if(state.view === 'PRO_COCKPIT') return <ProCockpit profile={state.proProfile} bookings={state.bookings} ledger={state.ledger} inventory={state.inventory} campaigns={state.campaigns} clients={state.clients} actions={actions}/>;
-    if(state.view === 'PRO_STUDIO') return <ProStudio profile={state.proProfile} actions={actions}/>;
-    if(state.view === 'CLIENT_EXPLORER') return <ClientExplorer brain={state} actions={actions}/>;
+    if(state.view === 'LANDING') return <LandingPage actions={actions} ctx={state.searchCtx} />;
+    if(state.view === 'PRO_ONBOARDING') return <ProOnboarding actions={actions} />;
+    if(state.view === 'PRO_COCKPIT') return <ProCockpit brain={state} profile={state.proProfile} actions={actions} />;
+    if(state.view === 'CLIENT_EXPLORER') return <ClientExplorer brain={state} actions={actions} />;
     return null;
 }

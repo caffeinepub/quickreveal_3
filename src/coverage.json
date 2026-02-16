@@ -1,7 +1,7 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-14T00:40:04.314Z",
+  "generatedAt": "2026-02-14T16:11:44.933Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
@@ -11,8 +11,8 @@
     "implemented": 2,
     "items": [
       {
-        "id": "REQ-292",
-        "summary": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V10000 “NEXUS OMNIVERSE” code provided by the user (full overwrite), preserving all components, local mock data/constants, imports, Tailwind classes, UI strings, and interaction logic as given.",
+        "id": "REQ-298",
+        "summary": "Fully overwrite `frontend/src/AppV1.jsx` with the exact “Nexus Singularity (Landing Page + SaaS)” code provided by the user (verbatim replacement of the entire file). Do not add features or refactor the provided UI/logic; only apply the minimum mechanical edits required for this repository to compile/run (e.g., missing imports, unresolved identifiers, invalid JSX, duplicate default exports).",
         "status": "implemented",
         "plannedFiles": [
           "frontend/src/AppV1.jsx"
@@ -22,25 +22,24 @@
         ]
       },
       {
-        "id": "REQ-293",
-        "summary": "Ensure the V10000 `frontend/src/AppV1.jsx` implementation compiles and runs in this repository by applying only minimal mechanical fixes required by repo wiring/dependencies (e.g., missing/incorrect imports, undefined identifiers referenced in JSX, invalid JSX, missing action functions referenced by components, or duplicate default exports), without changing the intended V10000 UI layout, styling, copy, datasets, or interaction behavior.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/AppV1.jsx",
-          "frontend/src/index.css"
-        ],
-        "matchedFiles": [
-          "frontend/src/AppV1.jsx"
-        ]
-      },
-      {
-        "id": "REQ-294",
-        "summary": "Preserve the repository entry wiring: do not modify `frontend/src/App.tsx` (must remain a thin wrapper rendering `AppV1`) and do not modify any frontend immutable entry files; the application must continue to mount through `frontend/src/main.tsx` as currently wired.",
+        "id": "REQ-299",
+        "summary": "Preserve the existing application entry wiring: do not modify `frontend/src/App.tsx` (must remain a thin wrapper rendering `AppV1`) and do not modify any frontend immutable entry files. The app must continue to mount via the existing `frontend/src/main.tsx` wiring.",
         "status": "missing",
         "plannedFiles": [
-          "frontend/src/ENTRY_WIRING_NOTE.md"
+          "frontend/src/entry-wiring.md"
         ],
         "matchedFiles": []
+      },
+      {
+        "id": "REQ-300",
+        "summary": "Keep the implementation frontend-only for now: remove/avoid any backend calls and Internet Identity dependency usage inside the new `AppV1.jsx` implementation (the app should function purely with in-file mock data + localStorage as per the provided code).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/AppV1.jsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/AppV1.jsx"
+        ]
       }
     ]
   },

@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-completely-delete-the-current-contents-of-frontend-src-appv1-jsx-and-replace-the-entire-file-with-the-exact-v10000-nexus-omniverse-code-provided-by-the-user-full-overwrite-preserving-all-components-local-mock-data-constants-imports-tailwind-classes-ui-strings-and-interaction-logic-as-given",
-      "featureTitle": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V10000 “NEXUS OMNIVERSE” code provided by the user (full overwrite), preserving all components, local mock data/constants, imports, Tailwind classes, UI strings, and interaction logic as given.",
+      "featureId": "feature-fully-overwrite-frontend-src-appv1-jsx-with-the-exact-nexus-singularity-landing-page-saas-code-provided-by-the-user-verbatim-replacement-of-the-entire-file-do-not-add-features-or-refactor-the-provided-ui-logic-only-apply-the-minimum-mechanical-edits-required-for-this-repository-to-compile-run-e-g-missing-imports-unresolved-identifiers-invalid-jsx-duplicate-default-exports",
+      "featureTitle": "Fully overwrite `frontend/src/AppV1.jsx` with the exact “Nexus Singularity (Landing Page + SaaS)” code provided by the user (verbatim replacement of the entire file). Do not add features or refactor the provided UI/logic; only apply the minimum mechanical edits required for this repository to compile/run (e.g., missing imports, unresolved identifiers, invalid JSX, duplicate default exports).",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -17,13 +17,13 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-292"
+        "REQ-298"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-v10000-frontend-src-appv1-jsx-implementation-compiles-and-runs-in-this-repository-by-applying-only-minimal-mechanical-fixes-required-by-repo-wiring-dependencies-e-g-missing-incorrect-imports-undefined-identifiers-referenced-in-jsx-invalid-jsx-missing-action-functions-referenced-by-components-or-duplicate-default-exports-without-changing-the-intended-v10000-ui-layout-styling-copy-datasets-or-interaction-behavior",
-      "featureTitle": "Ensure the V10000 `frontend/src/AppV1.jsx` implementation compiles and runs in this repository by applying only minimal mechanical fixes required by repo wiring/dependencies (e.g., missing/incorrect imports, undefined identifiers referenced in JSX, invalid JSX, missing action functions referenced by components, or duplicate default exports), without changing the intended V10000 UI layout, styling, copy, datasets, or interaction behavior.",
+      "featureId": "feature-keep-the-implementation-frontend-only-for-now-remove-avoid-any-backend-calls-and-internet-identity-dependency-usage-inside-the-new-appv1-jsx-implementation-the-app-should-function-purely-with-in-file-mock-data-localstorage-as-per-the-provided-code",
+      "featureTitle": "Keep the implementation frontend-only for now: remove/avoid any backend calls and Internet Identity dependency usage inside the new `AppV1.jsx` implementation (the app should function purely with in-file mock data + localStorage as per the provided code).",
       "files": [
         "frontend/src/AppV1.jsx"
       ],
@@ -37,7 +37,7 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-293"
+        "REQ-300"
       ],
       "confidence": "high"
     }

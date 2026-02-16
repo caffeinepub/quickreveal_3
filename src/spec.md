@@ -1,12 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Replace the current `AppV1` UI with the user-provided V10000 “NEXUS OMNIVERSE” implementation and ensure it compiles and runs locally with persisted state.
+**Goal:** Replace the current `AppV1` with the user-provided “Nexus Singularity” frontend-only app (Landing + Pro Onboarding/Cockpit + Client Explorer) while keeping existing app entry wiring unchanged.
 
 **Planned changes:**
-- Fully overwrite `frontend/src/AppV1.jsx` with the exact V10000 “NEXUS OMNIVERSE” code provided by the user, preserving all UI/logic, mock data/constants, imports, Tailwind classes, copy, and interactions as given.
-- Ensure local-only “brain” persistence uses the exact storage key `nexus_omniverse_v10000` (load on init, save on state changes) as defined by the V10000 code.
-- Apply only minimal mechanical fixes required for this repo to compile/run (e.g., missing/incorrect imports, undefined identifiers, invalid JSX, missing referenced functions/components), without changing intended layout/styling/text/behavior.
-- Preserve existing app entry wiring by leaving `frontend/src/App.tsx` unchanged (continues to render `AppV1`) and keeping the current Vite/React mount flow.
+- Fully overwrite `frontend/src/AppV1.jsx` with the user-provided “Nexus Singularity (Landing Page + SaaS)” code as a verbatim replacement.
+- Apply only minimal mechanical fixes (e.g., missing imports, unresolved identifiers, invalid JSX, duplicate exports) required for the repository to compile/run.
+- Ensure the app remains frontend-only with local state + localStorage persistence (key: `nexus_v12_clean`), with no backend/Internet Identity usage.
+- Preserve existing mounting/wiring by leaving `frontend/src/App.tsx` and `frontend/src/main.tsx` unchanged.
 
-**User-visible outcome:** The app boots through the existing entrypoints and displays the V10000 “NEXUS OMNIVERSE” experience (Landing → Client Explorer → Pro Studio/Cockpit) with local persisted state and no backend calls.
+**User-visible outcome:** Users can navigate and use the provided flows as coded: Landing → Client Explorer, and Landing → Pro Onboarding → Pro Cockpit, with state persisting via localStorage.

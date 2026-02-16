@@ -1,58 +1,53 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Overwrite AppV1 with V10000 “NEXUS OMNIVERSE” (local-only) and ensure it compiles",
+  "title": "Nexus Singularity AppV1 full overwrite (frontend-only)",
   "requirements": [
     {
-      "id": "REQ-292",
-      "summary": "Fully overwrite frontend/src/AppV1.jsx with the user-provided V10000 “NEXUS OMNIVERSE” code, including local-only persisted brain behavior.",
+      "id": "REQ-298",
+      "summary": "Fully overwrite frontend/src/AppV1.jsx with the user-provided Nexus Singularity (Landing + SaaS) code and make only minimal compile/run fixes.",
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` matches the user-provided V10000 code block as the complete application UI/logic (Landing → Client Explorer → Pro Studio/Cockpit).",
-        "The local persistence key used by the app brain is exactly `nexus_omniverse_v10000` (read on init, write on any state change).",
-        "No backend calls are introduced; the app remains local-only state as defined in the V10000 code."
+        "`frontend/src/AppV1.jsx` contents are fully replaced by the user-provided code (no partial merges).",
+        "The app builds successfully with Vite/TypeScript tooling used by this repo.",
+        "The runtime behavior matches the provided code: Landing → Client Explorer and Landing → Pro Onboarding → Pro Cockpit flows render and are navigable as coded.",
+        "Persistence uses the same localStorage key as in the provided code: `nexus_v12_clean`."
       ],
       "file_operations": [
         {
           "path": "frontend/src/AppV1.jsx",
           "operation": "modify",
-          "description": "Delete the entire existing file contents and paste in the exact user-provided V10000 “NEXUS OMNIVERSE” code as a full overwrite, preserving all imports, local mock data/constants, Tailwind classes, UI strings, and interaction logic; ensure the brain persistence key is exactly `nexus_omniverse_v10000` and remains localStorage-based (no backend usage)."
+          "description": "Replace the entire file content verbatim with the user-provided “Nexus Singularity (Landing Page + SaaS)” code. Apply only minimal mechanical edits required for this repository to compile/run (e.g., add any missing imports such as framer-motion pieces referenced in the provided code, fix unresolved identifiers/exports/JSX syntax issues without refactoring behavior). Ensure the localStorage key matches `nexus_v12_clean` exactly as in the provided code."
         }
       ]
     },
     {
-      "id": "REQ-293",
-      "summary": "Apply minimal mechanical fixes so the pasted V10000 AppV1 compiles and runs in this repo without changing intended UI/behavior.",
+      "id": "REQ-299",
+      "summary": "Preserve existing entry wiring so the app continues to mount via main.tsx and App.tsx stays a thin wrapper rendering AppV1.",
       "acceptanceCriteria": [
-        "`npm run build` and `npm run dev` succeed without runtime crashes on initial load.",
-        "Any compile/runtime fixes are strictly mechanical (import/identifier/JSX wiring) and do not alter visible design, text, or flow behavior described by the V10000 code.",
-        "All referenced icons/components/hooks used in JSX are defined/imported (e.g., lucide-react icons, Framer Motion exports, React hooks like `useRef`)."
+        "`frontend/src/App.tsx` remains a thin wrapper that renders `AppV1`.",
+        "No changes are made to any frontend immutable paths listed in SYSTEM_CONTEXT.",
+        "The application still mounts through `frontend/src/main.tsx` as currently wired."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/AppV1.jsx",
-          "operation": "modify",
-          "description": "Make only mechanical build/run fixes required by the repository setup: add/adjust missing React hook imports (e.g., useRef), ensure any referenced identifiers in JSX exist, resolve invalid/imbalanced JSX, ensure any referenced icons/components are correctly imported/declared, and ensure exports are valid (no duplicate defaults), without changing the intended layout/styling/copy/interaction logic from V10000."
-        },
-        {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "If (and only if) the V10000 code references custom animation utility class names or keyframes not currently defined, add the minimal corresponding CSS definitions here to avoid runtime/visual errors, without altering existing theme tokens or global styling behavior."
-        }
-      ]
-    },
-    {
-      "id": "REQ-294",
-      "summary": "Preserve existing app entry wiring (App.tsx remains a thin AppV1 wrapper; app mounts via main.tsx) and avoid edits to immutable entry paths.",
-      "acceptanceCriteria": [
-        "`frontend/src/App.tsx` remains functionally unchanged (still renders `AppV1` as the root).",
-        "No edits are made to immutable frontend paths listed in SYSTEM_CONTEXT.",
-        "The app still boots through the existing Vite/React entry and renders the new V10000 AppV1 UI."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/ENTRY_WIRING_NOTE.md",
+          "path": "frontend/src/entry-wiring.md",
           "operation": "create",
-          "description": "Add a short internal note documenting the required entry wiring invariants for this repo (App.tsx must remain a thin wrapper rendering AppV1; main.tsx continues to mount App), and explicitly state that these files must not be modified for this build."
+          "description": "Add a short developer note documenting the required invariants for this change set: do not modify frontend immutable paths, keep `frontend/src/App.tsx` as a thin wrapper rendering `AppV1`, and keep mounting via `frontend/src/main.tsx` unchanged."
+        }
+      ]
+    },
+    {
+      "id": "REQ-300",
+      "summary": "Keep AppV1 frontend-only by avoiding backend calls and Internet Identity usage within the new AppV1.jsx implementation.",
+      "acceptanceCriteria": [
+        "No calls to Motoko canister actors are introduced in `frontend/src/AppV1.jsx`.",
+        "All state is managed locally using React state and localStorage exactly as in the provided code."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/AppV1.jsx",
+          "operation": "modify",
+          "description": "During the verbatim overwrite, verify the resulting `AppV1.jsx` has no imports/usages of backend actor hooks (e.g., useActor) or Internet Identity hooks/providers, and contains no backend interaction logic; keep all state management purely in-file with React state + localStorage as in the provided code."
         }
       ]
     }

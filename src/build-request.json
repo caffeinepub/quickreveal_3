@@ -1,77 +1,87 @@
 {
   "kind": "build_request",
-  "title": "Overwrite AppV1 with V10000 “NEXUS OMNIVERSE” and ensure it compiles/runs (local-only, persisted brain)",
+  "title": "Full overwrite AppV1 with provided “Nexus Singularity” (Landing + Pro Cockpit + Client Explorer), frontend-only",
   "priority": "high",
   "requirements": [
     {
-      "id": "REQ-292",
-      "text": "Completely delete the current contents of `frontend/src/AppV1.jsx` and replace the entire file with the exact V10000 “NEXUS OMNIVERSE” code provided by the user (full overwrite), preserving all components, local mock data/constants, imports, Tailwind classes, UI strings, and interaction logic as given.",
+      "id": "REQ-298",
+      "text": "Fully overwrite `frontend/src/AppV1.jsx` with the exact “Nexus Singularity (Landing Page + SaaS)” code provided by the user (verbatim replacement of the entire file). Do not add features or refactor the provided UI/logic; only apply the minimum mechanical edits required for this repository to compile/run (e.g., missing imports, unresolved identifiers, invalid JSX, duplicate default exports).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-2"
         ],
         "quotes": [
-          "INSTRUCTION : Efface tout le contenu actuel de `frontend/src/AppV1.jsx` et remplace-le par le code ci-dessous.\n\nVOICI LE CODE V10000 COMPLET À ÉCRIRE :\n\nimport React, { useState, useEffect, useRef } from 'react';\n..."
+          "Je confirme l'action : remplace intégralement le fichier actuel par le code ci-dessous. Ignore le backend pour l'instant.\n\nVoici le code complet de l'application \"Nexus Singularity\" (Landing Page + SaaS) à écrire maintenant :\n\nimport React, { useState, useEffect } from 'react';\nimport { motion, AnimatePresence } from 'framer-motion';\nimport { \n  Search, MapPin, X, Scissors, Sparkles, Feather, Zap, \n  CheckCircle2, Calendar as CalIcon, Clock, User, Users, \n  Briefcase, Plus, Trash2, LayoutGrid, Wallet, Home, \n  ChevronLeft, ChevronRight, ArrowUpRight, TrendingUp, \n  Settings, Edit3, Image as ImageIcon, LogOut, Bell, Star, \n  CreditCard, QrCode, Smartphone, Map as MapIcon, List,\n  Lock, ShieldCheck, Globe, Check, Printer, ShoppingBag, \n  Megaphone, Menu, Store, PenTool, Filter, Navigation as NavIcon, \n  Heart, UserCheck, Package, FileText, Download, AlertTriangle, Crown,\n  Route, CheckSquare, Smile\n} from 'lucide-react';\n...\nexport default function App() {\n    const { state, actions } = useNexusBrain();\n    if(state.view === 'LANDING') return <LandingPage actions={actions} ctx={state.searchCtx} />;\n    if(state.view === 'PRO_ONBOARDING') return <ProOnboarding actions={actions} />;\n    if(state.view === 'PRO_COCKPIT') return <ProCockpit brain={state} profile={state.proProfile} actions={actions} />;\n    if(state.view === 'CLIENT_EXPLORER') return <ClientExplorer brain={state} actions={actions} />;\n    return null;\n}"
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/src/AppV1.jsx` matches the user-provided V10000 code block as the complete application UI/logic (Landing → Client Explorer → Pro Studio/Cockpit).",
-        "The local persistence key used by the app brain is exactly `nexus_omniverse_v10000` (read on init, write on any state change).",
-        "No backend calls are introduced; the app remains local-only state as defined in the V10000 code."
+        "`frontend/src/AppV1.jsx` contents are fully replaced by the user-provided code (no partial merges).",
+        "The app builds successfully with Vite/TypeScript tooling used by this repo.",
+        "The runtime behavior matches the provided code: Landing → Client Explorer and Landing → Pro Onboarding → Pro Cockpit flows render and are navigable as coded.",
+        "Persistence uses the same localStorage key as in the provided code: `nexus_v12_clean`."
       ]
     },
     {
-      "id": "REQ-293",
-      "text": "Ensure the V10000 `frontend/src/AppV1.jsx` implementation compiles and runs in this repository by applying only minimal mechanical fixes required by repo wiring/dependencies (e.g., missing/incorrect imports, undefined identifiers referenced in JSX, invalid JSX, missing action functions referenced by components, or duplicate default exports), without changing the intended V10000 UI layout, styling, copy, datasets, or interaction behavior.",
+      "id": "REQ-299",
+      "text": "Preserve the existing application entry wiring: do not modify `frontend/src/App.tsx` (must remain a thin wrapper rendering `AppV1`) and do not modify any frontend immutable entry files. The app must continue to mount via the existing `frontend/src/main.tsx` wiring.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-2"
         ],
         "quotes": [
-          "Assurer que ça compile et s’exécute (minimal mechanical fixes only)."
+          "Ignore le backend pour l'instant."
         ]
       },
       "acceptanceCriteria": [
-        "`npm run build` and `npm run dev` succeed without runtime crashes on initial load.",
-        "Any compile/runtime fixes are strictly mechanical (import/identifier/JSX wiring) and do not alter visible design, text, or flow behavior described by the V10000 code.",
-        "All referenced icons/components/hooks used in JSX are defined/imported (e.g., lucide-react icons, Framer Motion exports, React hooks like `useRef`)."
+        "`frontend/src/App.tsx` remains a thin wrapper that renders `AppV1`.",
+        "No changes are made to any frontend immutable paths listed in SYSTEM_CONTEXT.",
+        "The application still mounts through `frontend/src/main.tsx` as currently wired."
       ]
     },
     {
-      "id": "REQ-294",
-      "text": "Preserve the repository entry wiring: do not modify `frontend/src/App.tsx` (must remain a thin wrapper rendering `AppV1`) and do not modify any frontend immutable entry files; the application must continue to mount through `frontend/src/main.tsx` as currently wired.",
+      "id": "REQ-300",
+      "text": "Keep the implementation frontend-only for now: remove/avoid any backend calls and Internet Identity dependency usage inside the new `AppV1.jsx` implementation (the app should function purely with in-file mock data + localStorage as per the provided code).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-2"
         ],
         "quotes": [
-          "Efface tout le contenu actuel de `frontend/src/AppV1.jsx` et remplace-le par le code ci-dessous."
+          "Ignore le backend pour l'instant."
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/src/App.tsx` remains functionally unchanged (still renders `AppV1` as the root).",
-        "No edits are made to immutable frontend paths listed in SYSTEM_CONTEXT.",
-        "The app still boots through the existing Vite/React entry and renders the new V10000 AppV1 UI."
+        "No calls to Motoko canister actors are introduced in `frontend/src/AppV1.jsx`.",
+        "All state is managed locally using React state and localStorage exactly as in the provided code."
       ]
     }
   ],
   "constraints": [
+    "Frontend immutable paths listed in SYSTEM_CONTEXT must not be modified.",
     "Do not modify `frontend/src/App.tsx`; it must remain the thin wrapper that renders `AppV1`.",
-    "Do not modify any frontend immutable entry files/paths specified by SYSTEM_CONTEXT (compose instead of editing those files).",
-    "Apply only minimal mechanical changes needed to make the pasted V10000 code compile/run; do not refactor, redesign, or rewrite features beyond build-fixing adjustments.",
-    "Keep the app local-only as per the provided V10000 code (no new backend integration).",
-    "Use English for any user-facing text in this build request (implementation UI strings must remain as provided by the user)."
+    "Ignore the backend for this change set (no Motoko/backend requirements, no canister API wiring).",
+    "User-facing text in this build request must be written in English (the injected app code’s UI strings remain as provided)."
   ],
   "nonGoals": [
-    "Implementing or restoring older backend-driven features (Motoko persistence, Internet Identity, React Query data fetching, on-chain image upload) beyond what exists in the provided V10000 code.",
-    "Adding new product features not explicitly present in the provided V10000 code block.",
-    "Changing the visual design system, copy, or interaction model of the provided V10000 UI (except for unavoidable build-fix adjustments)."
+    "Do not implement or re-enable Internet Identity authentication flows for this version.",
+    "Do not add React Query data fetching or wire any canister actor methods.",
+    "Do not translate or rewrite the user-provided UI copy inside `AppV1.jsx` (keep it verbatim).",
+    "Do not redesign the UI or introduce additional screens/features beyond what exists in the provided code."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }
